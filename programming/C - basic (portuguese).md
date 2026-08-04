@@ -2,36 +2,36 @@
 
 # 1. Características da linguagem
 
-## Paradigmas
+## 1.1 Paradigmas
 
 * **Imperativa:** O código atua como uma série de comandos diretos que alteram o estado do programa passo a passo. O programador dita exatamente *como* o computador deve chegar ao resultado.
 * **Estruturada:** O fluxo de controle é feito por meio de estruturas organizadas e bem definidas (sequência, seleção como `if`/`switch`, e iteração como `for`/`while`), evitando saltos e desvios incondicionais que dificultam a leitura.
 * **Procedural:** O programa é dividido em procedimentos (funções), que encapsulam uma série de instruções e passos computacionais. Isso facilita a organização, a legibilidade e o reaproveitamento de código.
 
-## Tipagem
+## 1.2 Tipagem
 
 * **Estática:** A verificação de tipos é feita em tempo de compilação (o tipo de cada variável deve ser declarado). 
 * **Fraca:** Permite muitas conversões implícitas (coerções) entre tipos diferentes (por exemplo, tratar um `char` como `int`, ou converter implicitamente entre ponteiros de tipos distintos usando `void*`).
 
-## Nível de abstração
+## 1.3 Nível de abstração
 
 **Intermediário:** possui abstrações, mas também muitos recursos de gestão manual do hardware. A proximidade com a CPU é o que garante boa parte de sua velocidade de execução.
 
-## Modelo de execução
+## 1.4 Modelo de execução
 
 **Compilada:** o arquivo `.c` precisa ser compilado (o compilador mais usado é o `gcc`) para gerar um executável.
 
-## Gerenciamento de memória
+## 1.5 Gerenciamento de memória
 
-**Manual:** A linguagem permite controle quase absoluto sobre a memória. Todavia, esse recurso exige gerenciamento manual na alocação e liberação daquele espaço de memória (ver seção 8 e 9.2).
+**Manual:** A linguagem permite controle quase absoluto sobre a memória. Todavia, esse recurso exige gerenciamento manual na alocação e liberação daquele espaço de memória (ver seção 8/9).
 
-## Principais aplicações
+## 1.6 Principais aplicações
 
 * Sistemas operacionais;
 * Sistemas embarcados;
 * Programação de alto desempenho;
 
-## Características marcantes
+## 1.7 Características marcantes
 
 * Aritmética de ponteiros;
 * Acesso direto à memória;
@@ -74,11 +74,11 @@ Em C, todos os dados são essencialmente numéricos (representados em binário).
 
 **`stdbool.h`:** A biblioteca disponibiliza um tipo booleano (`true`/`false`) para quem preferir essa notação.
 
-Cada tipo possui um formatador associado, usado por `printf`/`scanf` (ver 9.1) para indicar explicitamente o tipo de dado na conversão de/para `string`: `%c` (char), `%d` (int), `%f` (float), `%lf` (double), entre outros (evitando erros de conversão).
+Cada tipo possui um formatador associado, usado por `printf`/`scanf` (ver seção 9) para indicar explicitamente o tipo de dado na conversão de/para `string`: `%c` (char), `%d` (int), `%f` (float), `%lf` (double), entre outros (evitando erros de conversão).
 
 ### Qualificadores e modificadores
 
-* **`const`:** Impede que o valor da variável seja alterado após sua inicialização (ver 2.3).
+* **`const`:** Impede que o valor da variável seja alterado após sua inicialização.
 * **`volatile`:** Informa ao compilador que o valor da variável pode ser alterado a qualquer momento por algo externo ao código (hardware, *threads*, interrupções). Isso impede o compilador de fazer otimizações assumindo que o valor permanecerá o mesmo.
 * **`long` / `short`:** Modificam a quantidade de espaço de um tipo numérico. O `long` aumenta o tamanho reservado (evitando *overflow*/*underflow*), gerando formatadores como `%ld` (`long int`). O `short` diminui o tamanho (economia de memória em casos críticos).
 * **`signed` / `unsigned`:** O `signed` (comportamento padrão numérico - não precisa ser explicitado na declaração) permite armazenar números positivos e negativos usando um bit como sinal. `unsigned` remove o bit de sinal, permitindo apenas valores positivos (potencialmente dobrando a capacidade máxima armazenável naquele mesmo espaço de memória se forem usados apenas números positivos).
@@ -176,9 +176,9 @@ int main(){
 }
 ```
 
-#### Duração/*lifetime*
+### Duração/*lifetime*
 
-A duração de um elemento (por quanto tempo sua memória permanece reservada) não se confunde com seu escopo (onde ele pode ser acessado). Em C, essa duração é controlada pelas classes de armazenamento `auto`, `static` e `extern` (ver 7.3 e seção 8).
+A duração de um elemento (por quanto tempo sua memória permanece reservada) não se confunde com seu escopo (onde ele pode ser acessado). Em C, essa duração é controlada pelas classes de armazenamento `auto`, `static` e `extern` (ver seção 7/8).
 
 ## 2.5 Operadores e expressões
 
@@ -231,7 +231,7 @@ int maior = (a > b) ? a : b; // Atribui 20 à variável maior
 
 # 3. Controle de fluxo
 
-Em C padrão não existe um tipo booleano nativo (ver 2.2). A linguagem entende `0` como falso e qualquer outro valor (de qualquer tipo) como verdadeiro.
+Em C padrão não existe um tipo booleano nativo (ver seção 2). A linguagem entende `0` como falso e qualquer outro valor (de qualquer tipo) como verdadeiro.
 
 ## 3.1 Condicionais
 
@@ -401,7 +401,7 @@ int main(){
 
 #### `goto`
 
-**Conceito:** redireciona a execução para a linha marcada por `LABEL` (ver 11.4).
+**Conceito:** redireciona a execução para a linha marcada por `LABEL` (ver seção 11).
 **Sintaxe:** `goto LABEL;` 
 
 ```c
@@ -462,9 +462,9 @@ int funcaoComPrototipo(){   // void implícito no argumento
 
 ## 4.2 Parâmetros e retorno
 
-Parâmetros são variáveis locais declaradas no escopo da função, que copiam os dados passados na chamada (ver 4.3). Em C padrão, a quantidade de parâmetros de uma função é fixa (ver 9.4). O tipo de retorno precisa ser definido (`void` indica que a função não retorna valor).
+Parâmetros são variáveis locais declaradas no escopo da função, que copiam os dados passados na chamada. Em C padrão, a quantidade de parâmetros de uma função é fixa (ver seção 9). O tipo de retorno precisa ser definido (`void` indica que a função não retorna valor).
 
-#### Parâmetros do `main` (`argc`/`argv`)
+### Parâmetros do `main` (`argc`/`argv`)
 
 A função `main` pode receber parâmetros vindos da linha de comando:
 
@@ -532,6 +532,8 @@ Uso prolongado reduz a eficiência e, em casos extremos (memória limitada), pod
 ---
 
 # 5. Estruturas de dados
+
+## 5.1 Arrays e vetores
 
 **Conceito:** São coleções de variáveis do mesmo tipo agrupadas sob um único nome, armazenadas de forma sequencial na memória. 
 
@@ -615,7 +617,7 @@ char* string_literal = "Texto";
 // string_literal[0] = 'M';      // ERRO: comportamento indefinido, possivelmente crash.
 ```
 
-O ferramental completo para manipulação (*strcpy*, *strcat*, etc) fica em `string.h` (ver 9.5).
+O ferramental completo para manipulação (*strcpy*, *strcat*, etc) fica em `string.h` (ver seção 9).
 
 ## 5.3 Estruturas compostas
 
@@ -687,7 +689,7 @@ typedef struct carta carta;      // "carta" passa a ser um apelido para "struct 
 typedef struct lista* listaPtr;  // Apelido para ponteiro de struct (bastante usado com listas)
 ```
 
-Além de `typedef`, `struct` (Seção 5.3) e `enum` (Seção 5.4) e `union` (Seção 8) também funcionam como mecanismos de criação de tipos.
+Além de `typedef`, `struct` e `enum` e `union` (ver seção 5/8) também funcionam como mecanismos de criação de tipos.
 
 ---
 
@@ -706,9 +708,9 @@ Como modelo didático, a memória de um programa em C pode ser representada orga
 
 ## 7.2 Alocação
 
-* **Estática:** o código do programa, variáveis globais e `static` - alocadas durante toda a execução (ver 7.3 e seção 8).
+* **Estática:** o código do programa, variáveis globais e `static` - alocadas durante toda a execução (ver seção 8).
 * **Automática:** variáveis locais, parâmetros, chamadas de função - alocadas e desalocadas automaticamente pelo compilador.
-* **Dinâmica:** realizada e gerenciada diretamente pelo programador, do início (reservar espaço no *heap*) ao fim (liberar o espaço depois de usar) (ver seção 8). As funções para isso ficam na biblioteca `stdlib.h` (ver 9.2).
+* **Dinâmica:** realizada e gerenciada diretamente pelo programador, do início (reservar espaço no *heap*) ao fim (liberar o espaço depois de usar) (ver seção 8). As funções para isso ficam na biblioteca `stdlib.h` (ver seção 9).
 
 ```c
 #include <stdlib.h>
@@ -726,7 +728,7 @@ Variáveis automáticas (locais) deixam de existir ao final do bloco onde foram 
 
 # 8. Recursos característicos da linguagem
 
-## Ponteiros
+## 8.1 Ponteiros
 
 **Conceito:** elementos especiais que armazenam o endereço de outra variável, permitindo alterá-la sem contato direto (o endereço é acessado com o prefixo `&`).
 
@@ -824,9 +826,9 @@ int* const ptr2 = &valor;
 const int* const ptr3 = &valor;
 ```
 
-## Gerenciamento manual de memória
+## 8.2 Gerenciamento manual de memória
 
-As funções de alocação dinâmica (`malloc`, `calloc`, `free`, `realloc`) ficam na biblioteca `stdlib.h` (ver 9.2). Após alocar, é responsabilidade do programador liberar a memória (`free`) quando ela não for mais necessária.
+As funções de alocação dinâmica (`malloc`, `calloc`, `free`, `realloc`) ficam na biblioteca `stdlib.h` (ver seção 9). Após alocar, é responsabilidade do programador liberar a memória (`free`) quando ela não for mais necessária.
 
 ### Erros comuns envolvendo controle manual:
 
@@ -835,9 +837,9 @@ As funções de alocação dinâmica (`malloc`, `calloc`, `free`, `realloc`) fic
 * **Use-after-free:** Tentar dereferenciar (acessar ou editar) um ponteiro que já passou pelo `free()`. É um comportamento indefinido.
 * **Ponteiro pendente (*Dangling pointer*):** Após um `free()`, o endereço de memória que o ponteiro armazena ainda existe lá dentro (embora não deva ser acessado). Para prevenir os dois erros anteriores, uma boa prática universal é atribuir `NULL` imediatamente a qualquer ponteiro após seu `free()`.
 
-**ATENÇÃO:** depois de usar `malloc`/`calloc`, é importante verificar se o ponteiro retornado é diferente de `NULL` antes de usá-lo - caso contrário, a alocação pode ter falhado (ver 9.2).
+**ATENÇÃO:** depois de usar `malloc`/`calloc`, é importante verificar se o ponteiro retornado é diferente de `NULL` antes de usá-lo - caso contrário, a alocação pode ter falhado (ver seção 9).
 
-## Preprocessador e macros
+## 8.3 Preprocessador e macros
 
 **Conceito:** diretivas (`#comando`) executadas antes da compilação - inclusão de arquivos, definição de constantes/macros, compilação condicional etc.
 
@@ -891,7 +893,7 @@ Testam a condição de uma diretiva, válida até o próximo teste ou até
 * **`__DATE__`:** `string` com a data atual (`Mmm dd aaaa`, ex.: `Feb  7 2026`).
 * **`__TIME__`:** `string` com a hora atual (`hh:mm:ss`).
 
-## Classes de armazenamento (`auto`, `static`, `extern`)
+## 8.4 Classes de armazenamento (`auto`, `static`, `extern`)
 
 * **`auto`:** duração apenas durante a execução da função onde foi declarada; não acessível diretamente por outras funções/arquivos. É o tipo implícito de uma variável local (não precisa declarar explicitamente).
 * **`static`:** dentro de uma função, faz com que a variável mantenha seu espaço de memória (e seu valor entre chamadas) durante toda a execução do programa, mas continua com escopo local à função. Como elemento global, impede o acesso direto por código externo ao arquivo (só sendo alcançado indiretamente, como por funções).
@@ -915,7 +917,7 @@ int main() {
 }
 ```
 
-## `union`
+## 8.5 `union`
 
 **Conceito:** É uma estrutura de dados semelhante a uma `struct`, contudo, todos os seus campos compartilham exatamente a mesma localização de memória. Consequentemente, o tamanho total da `union` é equivalente ao tamanho de seu maior membro, e apenas um membro pode armazenar um valor válido por vez.
 
@@ -1238,11 +1240,11 @@ int main(){
 
 Vários erros comuns já foram registrados nas seções:
 
-* variável usada sem inicialização (lixo de memória) (ver 2.3);
-* comparação `signed` × `unsigned` sem conversão explícita (ver 2.2);
-* *buffer* do `scanf` "sujo" antes da leitura (ver 9.1);
-* *overflow*/*underflow* em tipos numéricos pequenos (ver 2.2);
-* ponteiro não verificado após `malloc`/`calloc` e `fopen` (ver seção 8 e 9.2/9.3);
+* variável usada sem inicialização (lixo de memória) (ver seção 2);
+* comparação `signed` × `unsigned` sem conversão explícita (ver seção 2);
+* *buffer* do `scanf` "sujo" antes da leitura (ver seção 9);
+* *overflow*/*underflow* em tipos numéricos pequenos (ver seção 2);
+* ponteiro não verificado após `malloc`/`calloc` e `fopen` (ver seção 8/9);
 * vazamento de memória por não liberar antes de reatribuir um ponteiro (ver seção 8);
 
 ## 11.2 Comportamentos perigosos
@@ -1251,7 +1253,7 @@ Muitos dos desastres e falhas em programas C emanam do chamado **Comportamento I
 
 ## 11.3 Recursos desencorajados
 
-**`goto`** (ver 3.3): seu uso é desencorajado, pois deixa o programa desorganizado (dificultando *debugging* e manutenção) e pode causar falhas lógicas (como avançar para uma área do código que depende de uma variável que deveria ter sido declarada, mas cuja instrução de declaração foi pulada pelo `goto`).
+**`goto`** (ver seção 3): seu uso é desencorajado, pois deixa o programa desorganizado (dificultando *debugging* e manutenção) e pode causar falhas lógicas (como avançar para uma área do código que depende de uma variável que deveria ter sido declarada, mas cuja instrução de declaração foi pulada pelo `goto`).
 
 ---
 
