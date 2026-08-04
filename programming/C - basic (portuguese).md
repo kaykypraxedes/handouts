@@ -1263,7 +1263,6 @@ Muitos dos desastres e falhas em programas C emanam do chamado **Comportamento I
 2. ZIVIANI, Nivio. *Projeto de algoritmos com implementações em Pascal e C*. 4. ed. São Paulo: Pioneira, 1999.
 3. BATISTA, Natália Cosse. *Ponteiros e alocação dinâmica de memória*. 2022. 40 f. Slides (PDF) da disciplina Algoritmos e Estruturas de Dados. Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG), 2025.
 4. PEIXOTO, Daniela Cristina Cascini. *Disciplina: Lógica de programação*. Curso de graduação em Engenharia de Computação - CEFET-MG, 2024.
-5. CAMPOS, Luciana Maria de Assis. *Disciplina: Programação orientada a objetos*. Curso de graduação em Engenharia de Computação - CEFET-MG,
-2024.
+5. CAMPOS, Luciana Maria de Assis. *Disciplina: Programação orientada a objetos*. Curso de graduação em Engenharia de Computação - CEFET-MG, 2024.
 6. BATISTA, Natália Cosse. *Disciplina: Algoritmos e estruturas de dados*. Curso de graduação em Engenharia de Computação - CEFET-MG, 2025.
 7. cppreference.com. *C reference*. Disponível em: [https://en.cppreference.com/w/c](https://en.cppreference.com/w/c). Acesso em: 04 ago. 2026.
