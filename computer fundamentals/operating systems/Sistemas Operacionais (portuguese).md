@@ -125,8 +125,8 @@ Apesar da sua organização, a **burocracia de comunicação** entre as camadas 
         - **Hipervisor de Aplicação:** Suporta apenas uma única aplicação de uma linguagem específica, abstraindo o sistema operacional base (**JVM** do Java, **CLR** do C#, etc.).
         - **Hipervisor de Sistemas:** Suporta a execução de um sistema operacional inteiro. Pode executar diretamente sobre o hardware, sem um sistema operacional intermediário (**Hipervisor Nativo**, como Xen, VMware ESXi), ou então executar sobre um sistema operacional hospedeir (**Hipervisor Convidado**, como VirtualBox, VMware Workstation, etc.).
         
-        ![Hipervisor Nativo x Convidado](images/screenshot004.png)<br>
-        *Fonte: MAZIERO, Carlos A. Sistemas Operacionais: Conceitos e Mecanismos, 1ª ed., 2019, p. 33.*
+![Hipervisor Nativo x Convidado](images/screenshot004.png)<br>
+*Fonte: MAZIERO, Carlos A. Sistemas Operacionais: Conceitos e Mecanismos, 1ª ed., 2019, p. 33.*
     
     3. **Sistema virtual (*Guest*):** O sistema simulado em si.
 
@@ -147,8 +147,8 @@ Apesar da sua organização, a **burocracia de comunicação** entre as camadas 
     - **Características:** Possui apenas um espaço de endereçamento e roda estritamente um único processo.
     - **Vantagens:** Tempo de inicialização quase instantâneo, uso mínimo de memória e altíssima segurança (por não possuir um *shell*, utilitários ou processos secundários, a superfície de ataque para invasores é drasticamente reduzida).
     
-    ![Sistema Unikernel](images/screenshot005.png)<br>
-    *Fonte: MAZIERO, Carlos A. Sistemas Operacionais: Conceitos e Mecanismos, 1ª ed., 2019, p. 36.*
+![Sistema Unikernel](images/screenshot005.png)<br>
+*Fonte: MAZIERO, Carlos A. Sistemas Operacionais: Conceitos e Mecanismos, 1ª ed., 2019, p. 36.*
     
 ---
 
@@ -300,8 +300,8 @@ Responsável por definir a ordem de execução das tarefas prontas.
     - **Mecanismo (*Aging* / Envelhecimento):** A prioridade da tarefa vai aumentando gradativamente enquanto ela aguarda na fila.
     - **Retorno ao padrão:** Quando a tarefa finalmente é executada, sua prioridade volta para o seu valor base original.
     
-    ![Escalonamento PRIOd](images/screenshot013.png)<br>
-    *Fonte: MAZIERO, Carlos A. Sistemas Operacionais: Conceitos e Mecanismos, 1ª ed., 2019, p. 80.*
+![Escalonamento PRIOd](images/screenshot013.png)<br>
+*Fonte: MAZIERO, Carlos A. Sistemas Operacionais: Conceitos e Mecanismos, 1ª ed., 2019, p. 80.*
     
 **Comparação entre os algorítimos:**
 
