@@ -47,6 +47,7 @@ O sistema operacional se encontra exatamente na interseção entre o hardware (c
 - Utilitários: Funcionalidades e ferramentas complementares do sistema, englobando recursos como formatação de disco, *shell* (interpretador de comandos), interface com o usuário, entre outros.
 
 ![Estrutura de um SO](images/screenshot001.png)
+
 *Fonte: MAZIERO, Carlos A. Sistemas Operacionais: Conceitos e Mecanismos, 1ª ed., 2019, p. 14.*
 
 ### Políticas e Mecanismos:
