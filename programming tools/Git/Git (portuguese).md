@@ -55,6 +55,28 @@ Uma **branch** é uma referência móvel para um commit. Normalmente, `HEAD` apo
 
 Quando `HEAD` aponta diretamente para um commit, em vez de uma branch, o repositório está em estado de **`detached HEAD`**. É possível inspecionar e até criar commits nesse estado, mas deve-se criar uma branch para conservar facilmente essa nova linha de desenvolvimento.
 
+## Estrutura dos comandos:
+
+A forma geral da interface é `git {opções_globais} {comando} {opções} {argumentos}`. A notação deste resumo é didática: itens entre chaves são espaços genéricos a serem substituídos, e `{opções}` pode representar nenhuma ou várias opções; colchetes destacam argumentos posicionais que podem ser omitidos. As opções normalmente devem aparecer antes dos argumentos; quando um nome puder ser interpretado tanto como referência quanto como caminho, `--` pode separar as duas partes.
+
+O Git também permite criar aliases personalizados com `git config set --global alias.{nome} "{expansão}"`. A expansão é escrita sem o `git` inicial. Esses aliases são apenas abreviações configuradas pelo usuário e não devem ser confundidos com comandos distintos que possuem funcionalidades parcialmente semelhantes.
+
+## Pesquisa e ajuda:
+
+Como cada comando possui muitas opções, o resumo apresenta apenas as mais importantes. A documentação integrada e as referências oficiais devem ser consultadas para casos específicos.
+
+- `git --help` - Mostra os comandos mais comuns e as opções globais.
+
+- `git {comando} -h` - Mostra um resumo curto da sintaxe e das opções do comando.
+
+- `git help {comando}` - Abre o manual completo do comando. `git {comando} --help` é uma forma equivalente.
+
+- `git help --all` - Lista todos os comandos disponíveis.
+
+- `git help --guides` - Lista os guias conceituais instalados.
+
+Também podem ser consultadas a [Git Reference Documentation](https://git-scm.com/docs) e a obra [Pro Git](https://git-scm.com/book/en/v2).
+
 ---
 
 # 01. Configuração e Identidade
@@ -67,18 +89,17 @@ As configurações do Git podem ser aplicadas em diferentes escopos. Uma configu
 - **Global** (`--global`): aplica-se ao usuário atual e normalmente fica em `~/.gitconfig` ou `~/.config/git/config`.
 - **Local** (`--local`): aplica-se somente ao repositório atual e fica em `.git/config`; este é o escopo padrão quando nenhum é informado dentro de um repositório.
 
-> Nos comandos a seguir, o `{localização}` representa a abrangência daquela configuração. `--global` marca aquela configuração para todas as operações do usuário, enquanto `--local` define apenas para o repositório atual. 
-- `git config {localização} user.name {nome}` - Define o nome normalmente gravado nos commits do usuário.
+Nos comandos a seguir, `{escopo}` representa uma opção como `--system`, `--global` ou `--local`.
 
-- `git config {localização} user.email {email@exemplo.com}` - Define o e-mail normalmente gravado nos commits do usuário.
+- `git config set {escopo} {nome} {valor}` - Define uma configuração. Algumas das chaves mais importantes são:
 
-- `git config {localização} init.defaultBranch main` - Define `main` como nome inicial dos novos repositórios.
+  - `user.name` - Nome normalmente gravado nos commits do usuário.
+  - `user.email` - E-mail normalmente gravado nos commits do usuário.
+  - `init.defaultBranch` - Nome inicial das branches de novos repositórios, como `main`.
 
-- `git config --list` - Lista as configurações aplicáveis ao contexto atual.
+- `git config get {opções} {nome}` - Mostra o valor efetivo de uma configuração específica (as configurações como `user.name` definidas pelo `set`).
 
-- `git config --show-origin --list` - Lista as configurações e os arquivos dos quais elas foram lidas.
-
-- `git config --get user.email` - Mostra o valor efetivo de uma configuração específica.
+- `git config list {opções}` - Lista as configurações aplicáveis ao contexto atual. A opção `--show-origin` também mostra os arquivos dos quais elas foram lidas.
 
 `user.name` e `user.email` definem a **identidade registrada no commit**; eles não autenticam o usuário no GitHub. A conta usada para enviar o commit a um servidor pode ser diferente do nome e do e-mail gravados nele.
 
@@ -88,34 +109,28 @@ As configurações do Git podem ser aplicadas em diferentes escopos. Uma configu
 
 ## Inicialização:
 
-- `git init {pasta}` - Cria a pasta, se necessário, e inicia nela um novo repositório Git.
-> O comando `git init` sem pasta inicia um repositório no diretório atual, criando `.git` dentro dele.
+- `git init {opções} [{diretório}]` - Inicia um novo repositório Git. Quando um diretório é informado, ele é criado se necessário; quando omitido, o repositório é iniciado no diretório atual.
 
-- `git -C {pasta} {comando}` - Executa um comando como se o Git tivesse sido iniciado naquela pasta.
+- `git -C {diretório} {comando}` - Executa um comando como se o Git tivesse sido iniciado naquele diretório.
 
 A maioria dos comandos procura `.git` no diretório atual e em seus diretórios-pai. Por isso, normalmente eles podem ser executados em uma subpasta do projeto, sem que o terminal esteja exatamente na raiz do repositório.
 
 ## Inspeção do estado:
 
-- `git status {opções}` - Resume as diferenças entre `HEAD`, *Index* e diretório de trabalho, além de indicar arquivos não rastreados e a branch atual.
-> `git status --short` - Mostra o mesmo estado em formato compacto.
+- `git status {opções}` - Resume as diferenças entre `HEAD`, *Index* e diretório de trabalho, além de indicar arquivos não rastreados e a branch atual. A opção `--short` mostra o estado em formato compacto.
 
-- `git diff {opções} {commit_1} {commit_2}` - Compara dois commits.
-> Utilizando a opção `--staged`, é mostrado as alterações já preparadas para o próximo commit em relação a `HEAD`.
-> Se não for passado nenhum commit, ele simplesmente mostra as alterações do diretório de trabalho que ainda não estão preparadas.
+- `git diff {opções} [{referências}] [--] [{caminhos}]` - Mostra diferenças entre estados do projeto. Sem referências, compara o diretório de trabalho com o *Index*; `--staged` compara o *Index* com `HEAD`; uma referência compara o diretório de trabalho com ela; e duas referências comparam os estados indicados. `--` pode separar referências de caminhos.
 
 ## Preparação e registro:
 
-- `git add {arquivo/pasta}` - Prepara o estado atual de um arquivo ou todos os arquivos, recursivamente, de um diretório.
-> É possível selecionar todos os arquivos, a partir do diretório atual, com o `git add .` (respeitando as regras de exclusão).
+- `git add {opções} {caminhos}` - Prepara no *Index* o estado atual dos caminhos selecionados. `.` seleciona as alterações a partir do diretório atual, `-A` considera toda a árvore de trabalho, `-u` considera apenas arquivos já rastreados e `-p` permite escolher trechos interativamente. As regras de exclusão continuam sendo respeitadas.
 
-- `git commit {opções} -m "{mensagem}"` - Cria um commit com o estado presente no *Index*.
+- `git commit {opções}` - Cria um commit com o estado presente no *Index*. `-m "{mensagem}"` fornece a mensagem pela linha de comando, enquanto `-a` prepara automaticamente modificações e exclusões de arquivos já rastreados, mas não inclui arquivos novos.
 
-- `git log {opções}` - Mostra o histórico.
-> Para mostrar de forma mais legível, pode ser utilizado o comando `git log --oneline --graph --decorate --all`.
+- `git log {opções} [{referências}] [--] [{caminhos}]` - Mostra o histórico. As opções `--oneline`, `--graph`, `--decorate` e `--all` produzem uma visualização compacta das relações entre branches e outras referências.
 
 Um commit inclui apenas o estado preparado. Arquivos não rastreados ou alterações feitas depois do último `git add` não entram automaticamente no commit.
- - Mostra, em formato compacto, o histórico e a relação entre branches e outras referências.
+
 ## Exclusão de arquivos:
 
 O arquivo `.gitignore` contém padrões de arquivos **não rastreados** que o Git deve ignorar, como dependências baixadas, arquivos de compilação e credenciais locais. Exemplos:
@@ -138,9 +153,10 @@ O `.gitignore` não deixa de rastrear um arquivo que já foi incluído em commit
 
 ## Restauração:
 
-- `git restore {opções} {arquivo}` - Restaura o arquivo no diretório de trabalho a partir do *Index*, descartando alterações ainda não preparadas.
->`git restore --staged {arquivo}` - Restaura o arquivo no *Index* a partir de `HEAD`, retirando suas alterações da área de preparação sem descartá-las do diretório de trabalho.
->`git restore --source={commit} {arquivo}` - Restaura no diretório de trabalho a versão do arquivo existente no commit indicado.
+- `git restore {opções} {caminhos}` - Restaura os caminhos selecionados. Por padrão, atualiza o diretório de trabalho a partir do *Index*, descartando alterações ainda não preparadas.
+
+  - `--staged` - Atualiza o *Index* a partir de `HEAD`, retirando as alterações da área de preparação sem descartá-las do diretório de trabalho.
+  - `--source={commit}` - Escolhe outra referência como origem da restauração.
 
 Como o *Index* costuma corresponder a `HEAD` antes de `git add`, `git restore {arquivo}` frequentemente parece restaurar o último commit. A origem padrão, porém, é o *Index*. Essas operações podem descartar conteúdo; antes de executá-las, deve-se conferir `git status` e `git diff`.
 
@@ -150,33 +166,29 @@ Como o *Index* costuma corresponder a `HEAD` antes de `git add`, `git restore {a
 
 ## Alteração do último commit:
 
-- `git commit --amend -m "nova mensagem"` - Substitui o último commit, usando o conteúdo atualmente preparado e a nova mensagem.
-
-`--amend` não edita o commit existente: ele cria outro commit e move a branch para ele. Se houver alterações no *Index*, elas também serão incorporadas ao novo commit. Para apenas abrir o editor e alterar a mensagem, pode-se usar `git commit --amend` sem `-m`.
+A opção `--amend` de `git commit` substitui o último commit usando o conteúdo atualmente preparado. Ela não edita o commit existente: cria outro commit e move a branch para ele. Se houver alterações no *Index*, elas também serão incorporadas; `-m "{mensagem}"` fornece uma nova mensagem, enquanto sua ausência abre o editor configurado.
 
 ## `reset`:
 
-- `git reset {opções} {commit}` - Move `HEAD` e, normalmente, a branch atual para outro commit. 
+- `git reset {opções} {commit}` - Move `HEAD` e, normalmente, a branch atual para outro commit.
 
 O modo escolhido determina o que também acontece com o *Index* e o diretório de trabalho:
 
-- `git reset --soft HEAD~1` - Move a branch, mas mantém no *Index* e no diretório de trabalho o conteúdo do commit desfeito.
-
-- `git reset --mixed HEAD~1` - Move a branch e redefine o *Index*, mas mantém as alterações no diretório de trabalho. `--mixed` é o modo padrão.
-
-- `git reset --hard HEAD~1` - Move a branch e torna o *Index* e os arquivos rastreados do diretório de trabalho iguais ao commit indicado, descartando as alterações rastreadas afetadas.
+- `--soft` - Move a branch, mas mantém no *Index* e no diretório de trabalho o conteúdo dos commits desfeitos.
+- `--mixed` - Move a branch e redefine o *Index*, mas mantém as alterações no diretório de trabalho. É o modo padrão.
+- `--hard` - Move a branch e torna o *Index* e os arquivos rastreados do diretório de trabalho iguais ao commit indicado, descartando as alterações rastreadas afetadas.
 
 `reset --hard` normalmente não remove arquivos não rastreados que não interfiram na restauração, mas pode apagar arquivos ou diretórios não rastreados que estejam no caminho de arquivos rastreados que precisam ser escritos. Por isso, deve ser usado somente depois de conferir o alvo e o estado do repositório.
 
 ## Reversão:
 
-- `git revert {commit}` - Cria um novo commit que aplica o inverso das alterações introduzidas pelo commit indicado.
+- `git revert {opções} {commits}` - Cria novos commits que aplicam o inverso das alterações introduzidas pelos commits indicados. A opção `--no-commit` aplica as reversões ao *Index* e ao diretório de trabalho sem registrá-las imediatamente.
 
 `revert` preserva o histórico existente e, por isso, costuma ser a alternativa mais segura para desfazer alterações já publicadas. O resultado pode gerar conflitos se o projeto tiver mudado desde o commit revertido.
 
 ## Recuperação com `reflog`:
 
-- `git reflog` - Mostra o registro local dos movimentos recentes de `HEAD` e de outras referências.
+- `git reflog [{subcomando}] {opções} [{referência}]` - Consulta ou gerencia os registros locais dos movimentos de referências. Sem subcomando, mostra o histórico de `HEAD`; `show` consulta uma referência específica.
 
 - `git branch {nova_branch} {commit}` - Cria uma branch apontando para um commit recuperado pelo `reflog`.
 
@@ -192,29 +204,23 @@ O `reflog` pode ajudar a localizar commits que deixaram de ser alcançáveis dep
 
 Ao inicializar um repositório, o Git define o nome de uma branch inicial ainda sem commits, chamada de **unborn branch**. A branch passa a apontar para um commit quando o primeiro é criado; antes disso, diversos comandos que precisam de um commit como referência ainda não podem operar normalmente.
 
-- `git branch {opções}` - Lista as branches locais; `*` indica a branch atual.
+- `git branch {opções} [{nome} [{ponto_inicial}]]` - Lista, cria, renomeia ou exclui branches, conforme os argumentos e opções. Sem argumentos, lista as branches locais e utiliza `*` para indicar a atual.
 
-Essa é uma das seções mais importantes para o versionamento, sendo usadas muitas configurações de branch, sendo as principais:
+Algumas das opções mais importantes são:
 
-- `git branch -a` - Lista branches locais e referências de branches remotas.
+- `-a` - Inclui as referências de branches remotas na listagem.
+- `-vv` - Mostra também o último commit e a *upstream* de cada branch, quando configurada.
+- `-m [{nome_antigo}] {nome_novo}` - Renomeia a branch atual ou a branch especificada.
+- `-d {branches}` - Exclui branches já integradas à sua *upstream* ou, na ausência dela, ao histórico alcançado por `HEAD`.
+- `-D {branches}` - Força a exclusão das referências, mesmo sem integração.
 
-- `git branch -m {novo_nome}` - Renomeia a branch atual.
-
-- `git branch -m {nome_antigo} {nome_novo}` - Renomeia uma branch específica.
-
-- `git branch -d {branch}` - Exclui uma branch já integrada à sua *upstream* ou, na ausência dela, ao histórico alcançado por `HEAD`.
-
-- `git branch -D {branch}` - Força a exclusão da referência, mesmo sem integração.
-
-- `git switch {opções} {branch}` - Troca para a branch indicada e atualiza o diretório de trabalho.
-
-- `git switch -c {nova_branch}` - Cria uma branch a partir da posição atual e troca para ela.
+- `git switch {opções} {branch}` - Troca para a branch indicada e atualiza o diretório de trabalho. A opção `-c {nova_branch}` cria uma branch a partir da posição atual e já troca para ela.
 
 Excluir uma branch remove sua referência, não necessariamente seus commits de imediato. Ainda assim, trabalhos não integrados podem se tornar difíceis de localizar; confira o conteúdo antes de usar `-D`.
 
 ## Merge:
 
-- `git merge {outra_branch}` - Integra na branch atual o histórico alcançável pela outra branch.
+- `git merge {opções} {commits}` - Integra na branch atual os históricos alcançáveis pelos commits ou branches indicados. `--ff-only` aceita apenas avanço direto, enquanto `--no-ff` força a criação de um commit de *merge* quando a integração for possível.
 
 Quando a branch atual pode apenas avançar até o mesmo ponto da outra, ocorre um **fast-forward**. Quando as linhas de desenvolvimento divergiram, o Git normalmente cria um commit de *merge* que possui mais de um pai, desde que consiga combinar as alterações.
 
@@ -229,7 +235,7 @@ O fluxo básico para concluir um *merge* com conflitos é:
 3. Executar `git add {arquivo}` para marcar cada conflito como resolvido.
 4. Executar `git commit` para concluir o *merge*, quando o Git não o concluir automaticamente.
 
-- `git merge --abort` - Tenta retornar ao estado anterior ao início do *merge*.
+A opção `--abort` de `git merge` tenta retornar ao estado anterior ao início da integração.
 
 ---
 
@@ -245,43 +251,29 @@ Uma branch local pode ter uma **upstream branch** configurada, por exemplo, `mai
 
 ## Configuração de remotos:
 
-- `git remote {opções}` - Lista os nomes dos remotos configurados.
+- `git remote [{subcomando}] {opções} {argumentos}` - Consulta e gerencia os remotos configurados. Sem subcomando, lista seus nomes. As principais operações são:
 
-Algumas das opções mais importantes desse comando são:
+  - `-v` - Inclui as URLs de busca e envio na listagem.
+  - `add {nome} {URL}` - Registra um repositório remoto com o nome escolhido.
+  - `set-url {nome} {nova_URL}` - Altera a URL de um remoto.
+  - `rename {nome_antigo} {nome_novo}` - Renomeia um remoto.
+  - `remove {nome}` - Remove sua configuração local e as referências de rastreamento associadas; não apaga o repositório hospedado.
 
-- `git remote -v` - Lista os remotos e suas URLs de busca e envio.
-
-- `git remote add {nome} {URL}` - Registra um repositório remoto com o nome escolhido.
-
-- `git remote set-url {nome} {nova_URL}` - Altera a URL de um remoto.
-
-- `git remote rename {nome_antigo} {nome_novo}` - Renomeia um remoto.
-
-- `git remote remove {nome}` - Remove sua configuração local e as referências de rastreamento associadas; não apaga o repositório hospedado.
-
-- `git branch -vv` - Mostra as branches locais, seus últimos commits e suas *upstreams*, quando configuradas.
-
-- `git branch --set-upstream-to={remoto}/{branch_remota} {branch_local}` - Define explicitamente a *upstream* de uma branch local.
+A opção `--set-upstream-to={remoto}/{branch_remota}` de `git branch` define explicitamente a *upstream* da branch atual ou de uma branch local informada como argumento. A opção `-vv`, apresentada anteriormente, permite conferir essa associação.
 
 ## Transferência e integração:
 
-- `git clone {URL} {pasta}` - Cria uma cópia local do repositório, incluindo seu histórico, configura um remoto normalmente chamado `origin` e obtém uma versão de trabalho.
+- `git clone {opções} {URL} [{diretório}]` - Cria uma cópia local do repositório, incluindo seu histórico, configura um remoto normalmente chamado `origin` e obtém uma versão de trabalho. Opções importantes: `--branch {branch}` seleciona a branch inicial, `--depth {n}` limita a profundidade do histórico obtido e `--recurse-submodules` inicializa os submódulos configurados.
 
-- `git fetch {remoto}` - Baixa os objetos e atualiza as referências de rastreamento do remoto sem integrar automaticamente as alterações à branch local.
+- `git fetch {opções} [{remoto} [{refspecs}]]` - Baixa objetos e atualiza referências sem integrar automaticamente as alterações à branch local. Opções importantes: `--all` consulta todos os remotos, `--prune` remove referências de rastreamento que deixaram de existir no remoto e `--tags` busca todas as tags.
 
-- `git fetch {remoto} {branch}` - Busca a branch ou referência indicada no remoto.
+- `git pull {opções} [{remoto} [{refspecs}]]` - Executa primeiro um `fetch` e depois integra o conteúdo obtido à branch atual. `--rebase` utiliza *rebase*, `--no-rebase` utiliza *merge* e `--ff-only` aceita somente um avanço direto.
 
-- `git pull` - Executa primeiro um `fetch` e depois integra a *upstream* à branch atual, conforme as opções e configurações de *merge*, *rebase* ou avanço direto.
-
-- `git pull {remoto} {branch}` - Busca a branch informada e a integra à branch atual; o segundo argumento não é necessariamente o nome da branch local.
-
-- `git push {remoto} {branch}` - Tenta atualizar no remoto a branch indicada com os commits locais correspondentes.
-
-- `git push -u {remoto} {branch}` - Realiza o envio e, se bem-sucedido, configura a branch remota como *upstream* da branch local.
+- `git push {opções} [{remoto} [{refspecs}]]` - Tenta atualizar referências no remoto com o conteúdo local. `-u` ou `--set-upstream` também configura a *upstream*, `--tags` envia todas as tags e `--force-with-lease` condiciona uma atualização forçada ao estado remoto esperado.
 
 `fetch` permite inspecionar as alterações antes da integração, por exemplo, com `git log HEAD..origin/main` e `git diff HEAD..origin/main`. Ele não solicita confirmação para mesclar porque não realiza a mesclagem. Já `pull` pode alterar imediatamente a branch e o diretório de trabalho.
 
-Um `push` pode ser recusado quando o remoto contém commits que a atualização local descartaria. Nesse caso, normalmente é necessário obter e integrar o trabalho remoto antes de tentar novamente. O envio forçado reescreve o histórico remoto e não deve ser usado como solução automática.
+Um `push` pode ser recusado quando o remoto contém commits que a atualização local descartaria. Nesse caso, normalmente é necessário obter e integrar o trabalho remoto antes de tentar novamente. O envio forçado reescreve o histórico remoto e não deve ser usado como solução automática; `--force-with-lease` adiciona uma verificação de segurança, mas ainda exige cuidado e coordenação.
 
 ---
 
@@ -309,11 +301,10 @@ Ao utilizar um PAT manualmente:
 3. Executar a operação Git utilizando uma URL HTTPS.
 4. Informar o usuário quando solicitado e inserir o PAT no campo de senha.
 
-Não é necessário gerar um token a cada `push`. Um **credential helper** pode recuperar uma credencial já autorizada:
+Não é necessário gerar um token a cada `push`. Um **credential helper** pode recuperar uma credencial já autorizada. A configuração geral é `git config set --global credential.helper {helper}`. Entre os helpers básicos estão:
 
-- `git config --global credential.helper cache` - Mantém a credencial temporariamente em memória; ela volta a ser solicitada depois da expiração ou do encerramento do serviço de cache.
-
-- `git config --global credential.helper store` - Grava a credencial persistentemente em arquivo **sem criptografia**, normalmente em `~/.git-credentials`. Evita novas solicitações, mas não é recomendado para tokens importantes ou computadores compartilhados.
+- `cache` - Mantém a credencial temporariamente em memória; ela volta a ser solicitada depois da expiração ou do encerramento do serviço de cache.
+- `store` - Grava a credencial persistentemente em arquivo **sem criptografia**, normalmente em `~/.git-credentials`. Evita novas solicitações, mas não é recomendado para tokens importantes ou computadores compartilhados.
 
 Para armazenamento persistente, prefira o GitHub CLI, o Git Credential Manager ou um *helper* integrado ao cofre de credenciais do sistema, como GNOME Keyring ou KDE Wallet quando houver integração disponível. O armazenamento seguro depende das ferramentas instaladas e da sessão do sistema.
 
@@ -365,9 +356,7 @@ Uma *passphrase* protege a chave privada caso o arquivo seja copiado. O `ssh-age
 
 O **stash** armazena temporariamente alterações ainda não commitadas e restaura um diretório de trabalho mais limpo, sendo útil para trocar de contexto sem criar um commit provisório.
 
-- `git stash push -m "descrição"` - Guarda alterações rastreadas com uma descrição.
-
-- `git stash push -u -m "descrição"` - Inclui também arquivos não rastreados.
+- `git stash push {opções}` - Guarda temporariamente alterações rastreadas. `-m "{descrição}"` atribui uma mensagem e `-u` inclui também arquivos não rastreados.
 
 - `git stash list` - Lista os *stashes* existentes.
 
@@ -381,13 +370,9 @@ O **stash** armazena temporariamente alterações ainda não commitadas e restau
 
 Uma **tag** atribui um nome estável a um ponto do histórico, sendo frequentemente usada para marcar versões como `v1.0.0`. Diferentemente de uma branch, ela não avança automaticamente com novos commits.
 
-- `git tag` - Lista as tags locais.
+- `git tag {opções} [{nome} [{commit}]]` - Lista ou cria tags. Sem argumentos, lista as tags locais; `-a` cria uma tag anotada e `-m "{mensagem}"` registra sua mensagem. Quando o commit é omitido, a tag aponta para `HEAD`.
 
-- `git tag -a v1.0.0 -m "Versão 1.0.0"` - Cria uma tag anotada no commit atual.
-
-- `git tag -a v1.0.0 {commit} -m "Versão 1.0.0"` - Cria uma tag anotada no commit indicado.
-
-- `git push {remoto} v1.0.0` - Envia uma tag específica ao remoto; tags não são necessariamente enviadas por um `push` comum.
+Tags não são necessariamente enviadas por um `push` comum. Uma tag específica pode ser enviada como refspec, por exemplo, `git push {remoto} {tag}`; a opção `--tags` envia todas as tags locais.
 
 ## Rebase:
 
@@ -395,11 +380,7 @@ O **rebase** reaplica uma sequência de commits sobre uma nova base. Por exemplo
 
 Como os commits reaplicados recebem novos identificadores, o *rebase* reescreve essa parte do histórico. Ele é útil para organizar trabalho local, mas não deve ser aplicado sem coordenação a commits publicados que outras pessoas já utilizam.
 
-- `git rebase {nova_base}` - Reaplica os commits da branch atual sobre a base indicada.
-
-- `git rebase --continue` - Continua o processo depois da resolução dos conflitos e da preparação dos arquivos.
-
-- `git rebase --abort` - Cancela o processo e tenta restaurar o estado anterior ao *rebase*.
+- `git rebase {opções} [{nova_base}]` - Reaplica os commits da branch atual sobre a base indicada. Durante uma interrupção por conflitos, `--continue` prossegue depois da resolução e preparação dos arquivos, enquanto `--abort` cancela o processo e tenta restaurar o estado anterior.
 
 ---
 
