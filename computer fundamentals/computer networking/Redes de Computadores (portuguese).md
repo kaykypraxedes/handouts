@@ -80,12 +80,12 @@ A maneira como os dispositivos são organizados e conectados fisicamente (ou log
 
 **Conexão Ponto a Ponto em Redes Comutadas (Nós Intermediários):** Para reduzir o custo da malha completa, utilizam-se dispositivos intermediários (como switches e roteadores) para fazer a conexão entre as extremidades. Isso permite interligar os dispositivos sem exigir uma conexão direta entre todos eles e, quando existem caminhos redundantes, possibilita redirecionar a informação em caso de falha.
 
-![Redes Ponto a Ponto](images/screenshot001.png)
+![Redes Ponto a Ponto](images/screenshot001.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 37.*
 
 **Conexão Multiponto:** Ocorre quando três ou mais dispositivos compartilham exatamente o mesmo meio físico de comunicação (um único cabo).
 
-![Redes Multiponto](images/screenshot002.png)
+![Redes Multiponto](images/screenshot002.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 38.*
 
 ## Comutação por Pacotes:
@@ -96,7 +96,7 @@ Como mencionado nas redes comutadas, a comunicação entre dois pontos não prec
 * **Caminhos Dinâmicos:** A grande vantagem dos comutadores é que o caminho de comunicação não é fixo.
 * **Resiliência e Eficiência:** Como o roteamento pode ser dinâmico, se um ponto da rede falhar ou estiver lidando com um tráfego muito alto, podem existir rotas alternativas até o destino. Além disso, é possível que pacotes pertencentes à mesma informação percorram caminhos diferentes durante a transmissão.
 
-![Redes com comutação por circuito](images/screenshot003.png)
+![Redes com comutação por circuito](images/screenshot003.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 41.*
 
 ## Serviços Oferecidos pelas Redes:
@@ -235,19 +235,19 @@ Durante o processo de transmissão, o sinal pode sofrer degradações que causam
 * **Causas:** Pode ser originado por diversas fontes, como interferência de ondas eletromagnéticas externas, ruído térmico (ou ruído branco, gerado pela agitação natural dos elétrons nos componentes) e *crosstalk* (interferência causada por cabos e antenas vizinhas).
 * **Relação Sinal-Ruído (SNR):** É a métrica utilizada para medir o impacto do ruído na comunicação. Ela é calculada pela razão (divisão) entre a potência do sinal transmitido e a potência do ruído presente no canal. Quanto maior for a Relação Sinal-Ruído, melhor será a qualidade do sinal, pois indica que o sinal útil é significativamente mais forte do que a interferência indesejada.
 
-![Representação da interferência por ruído](images/screenshot004.png)
+![Representação da interferência por ruído](images/screenshot004.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 98.*
 
 ### Atenuação:
 
 É a perda progressiva da energia (potência) do sinal à medida que ele percorre o meio de transmissão até chegar ao destino, fazendo com que a amplitude da onda se reduza ao longo do trajeto. Em transmissões digitais, os "picos" de energia (que representam o bit '1', por exemplo) ficam tão fracos e próximos de zero que o receptor não consegue mais interpretá-los corretamente.
 
-![Representação da interferência por atenuação](images/screenshot005.png)
+![Representação da interferência por atenuação](images/screenshot005.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 100.*
 
 **Circuitos Regeneradores (Repetidores):** O problema da atenuação é contornado instalando equipamentos intermediários que recebem o sinal enfraquecido e o reconstroem (regeneram) de volta à potência original antes de repassá-lo para frente.
 
-![Circuito regenerador](images/screenshot006.png)
+![Circuito regenerador](images/screenshot006.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 100.*
 
 A regeneração é **altamente sensível à presença de ruídos**. Se um sinal chegar demasiadamente atenuado ao regenerador, o ruído pode já ter deformado a informação original (corrompendo os picos). Nesse caso, o circuito acaba regenerando e repassando adiante um dado completamente danificado.
@@ -312,7 +312,7 @@ A técnica mais utilizada para digitalizar áudio é o **PCM** (*Pulse Code Modu
 2. Cada pulso é associado a um intervalo de valores, chamado **nível de quantização**.
 3. Cada nível de quantização recebe um conjunto de bits.
 
-![Digitalização](images/screenshot007.png)
+![Digitalização](images/screenshot007.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 117.*
 
 ## Técnicas para transmissão da informação:
@@ -325,17 +325,17 @@ Algumas das principais técnicas de codificação digital são apresentadas a se
 
 **NRZ-L** (*Non Return to Zero-Level*): Associa um valor de voltagem fixo (arbitrário) a cada bit.
 
-![NRZ-L](images/screenshot008.png)
+![NRZ-L](images/screenshot008.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 118.*
 
 **NRZ-I** (*Non Return to Zero Invert*, ou codificação diferencial): Se o sinal se mantém constante, representa o 0; se trocar de fase, representa o 1.
 
-![NRZ-I](images/screenshot009.png)
+![NRZ-I](images/screenshot009.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 118.*
 
 **Codificação Manchester:** Existe sempre uma transição no meio do período de cada bit (se a primeira metade estiver ativa, representa o 0; se a segunda metade estiver alta, representa o 1). Esse método é mais robusto pensando em sincronização, tendo em vista que cada ciclo é sinalizado (transição de fase), sendo possível acompanhar mais facilmente.
 
-![Codificação Manchester](images/screenshot010.png)
+![Codificação Manchester](images/screenshot010.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 119.*
 
 ### Sinalização Analógica:
@@ -346,29 +346,29 @@ A modulação consiste em alterar uma característica dessa onda (amplitude, fre
 
 **ASK** (*Amplitude Shift Keying*): A amplitude da onda representa os bits (por exemplo, ausência de amplitude = bit 0 e presença de amplitude = bit 1). É **simples de implementar**, mas **mais suscetível a ruídos e interferências**.
 
-![ASK](images/screenshot011.png)
+![ASK](images/screenshot011.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 121.*
 
 **FSK** (*Frequency Shift Keying*): A frequência da onda representa os bits (cada bit corresponde a uma frequência diferente).
 
-![FSK](images/screenshot012.png)
+![FSK](images/screenshot012.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 121.*
 
 **PSK** (*Phase Shift Keying*): A fase da onda representa os bits.
 
-![PSK](images/screenshot013.png)
+![PSK](images/screenshot013.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 122.*
 
 **QAM** (*Quadrature Amplitude Modulation*): Utilização simultânea desses modelos para aumentar a capacidade de representação da informação.
 
-![QAM](images/screenshot014.png)
+![QAM](images/screenshot014.png)<br>
 *Fonte: FRAGA, Marcelo Caramuru Pimentel. Redes de Computadores - 6ª Aula, p. 23.*
 
 ## Sinalização Multinível:
 
 Os exemplos anteriores codificam apenas **um bit por sinal** (**monobit**). É possível aumentar a taxa de transmissão enviando mais de um bit por sinal através da **sinalização multinível** (aplicável a sinais digitais e analógicos). A relação entre bits e níveis de sinalização é: para enviar **n bits por sinal, são necessários 2ⁿ níveis distintos**.
 
-![Sinal Multinível](images/screenshot015.png)
+![Sinal Multinível](images/screenshot015.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 123.*
 
 **Baud x bps:** São unidades diferentes e frequentemente confundidas. O **baud** mede quantas vezes por segundo o modem sinaliza o meio (ou seja, quantas amostras/sinais são enviados por segundo); o **bps** mede quantos bits por segundo são efetivamente transmitidos. As duas taxas só coincidem na sinalização monobit. Em uma transmissão dibit, por exemplo, um modem de 2400 baud (2400 sinais por segundo) transmite, na prática, 4800 bps (2 bits por sinal).
@@ -492,7 +492,7 @@ O tamanho de cada uma dessas estruturas varia de acordo com o protocolo.
 
 Como a Camada de Enlace trabalha com quadros que podem ter tamanhos variáveis, é necessário identificar exatamente onde cada mensagem começa e termina. Para estabelecer esses limites, a maioria dos protocolos utiliza uma **flag** (marcador). Essa flag atua como um sinalizador de início e fim do quadro, podendo ser representada por um caractere específico ou por uma sequência especial de bits.
 
-![Enquadramento](images/screenshot016.png)
+![Enquadramento](images/screenshot016.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 153.*
 
 ### Problemas na Utilização de Flags:
@@ -533,7 +533,7 @@ Para identificar falhas que podem ter ocorrido na mensagem durante a transmissã
 
 * **Paridade Múltipla:** O bit de paridade por si só é consideravelmente inseguro (muita margem na modificação dos *bits* que passaria, inclusive no *bit* de paridade). Para contornar isso, pode ser utilizado a técnica de **paridade múltipla**, realizando a paridade individual das linhas, de cada uma das colunas, e até da linha de paridade múltipla.
 
-![Paridade múltipla](images/screenshot017.png)
+![Paridade múltipla](images/screenshot017.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 159.*
 
 * ***Checksum*:** É um método de detecção utilizado principalmente quando a mensagem é estruturada em blocos de caracteres. Nele, realiza-se a soma dos valores numéricos dos blocos divide o resultado por uma constante pré-definida (depende do tamanho do bloco - com 8 *bit*s, 256), e o **resto dessa divisão** torna-se o valor do *checksum* (CDE).
@@ -542,7 +542,7 @@ Para identificar falhas que podem ter ocorrido na mensagem durante a transmissã
 
 * **CRC (*Cyclic Redundancy Check*):** Técnica de detecção de erros baseada em uma divisão binária. O transmissor e o receptor utilizam uma mesma sequência de bits, chamada **polinômio gerador**. Antes da transmissão, o emissor divide os dados por esse gerador utilizando operações XOR e adiciona o **resto da divisão** ao final do quadro. No destino, o receptor realiza novamente a divisão utilizando o mesmo gerador. Se o resto obtido for zero, considera-se que os dados chegaram corretamente; caso seja diferente de zero, é detectada uma alteração durante a transmissão.
 
-![CRC](images/screenshot018.png)
+![CRC](images/screenshot018.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 161.*
 
 # Fontes:

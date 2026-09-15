@@ -69,7 +69,7 @@ O hardware pode desviar o fluxo de execução de um processo em algum dos três 
 - **Exceção:** Desvia a execução para um evento interno, erro numérico, falha na alocação de memória, etc.
 - **Trap:** Desvia a execução a pedido do software.
 
-![Exemplo de interrupção](images/screenshot002.png)
+![Exemplo de interrupção](images/screenshot002.png)<br>
 *Fonte: MAZIERO, Carlos A. Sistemas Operacionais: Conceitos e Mecanismos, 1ª ed., 2019, p. 18.*
 
 1. Execução de um processo;
@@ -90,7 +90,7 @@ Embora os sistemas operacionais modernos possuam quatro níveis de privilégio, 
 
 Os aplicativos conseguem utilizar os recursos do hardware através de **chamadas de sistema** (*syscalls*). A partir delas, eles conseguem executar operações restritas ao SO, como ler e fechar arquivos, enviar e receber dados através da rede, ler o teclado, escrever na tela, etc.
 
-![Exemplo de *syscall*](images/screenshot003.png)
+![Exemplo de *syscall*](images/screenshot003.png)<br>
 *Fonte: MAZIERO, Carlos A. Sistemas Operacionais: Conceitos e Mecanismos, 1ª ed., 2019, p. 23.*
 
 ---
@@ -125,7 +125,7 @@ Apesar da sua organização, a **burocracia de comunicação** entre as camadas 
         - **Hipervisor de Aplicação:** Suporta apenas uma única aplicação de uma linguagem específica, abstraindo o sistema operacional base (**JVM** do Java, **CLR** do C#, etc.).
         - **Hipervisor de Sistemas:** Suporta a execução de um sistema operacional inteiro. Pode executar diretamente sobre o hardware, sem um sistema operacional intermediário (**Hipervisor Nativo**, como Xen, VMware ESXi), ou então executar sobre um sistema operacional hospedeir (**Hipervisor Convidado**, como VirtualBox, VMware Workstation, etc.).
         
-        ![Hipervisor Nativo x Convidado](images/screenshot004.png)
+        ![Hipervisor Nativo x Convidado](images/screenshot004.png)<br>
         *Fonte: MAZIERO, Carlos A. Sistemas Operacionais: Conceitos e Mecanismos, 1ª ed., 2019, p. 33.*
     
     3. **Sistema virtual (*Guest*):** O sistema simulado em si.
@@ -147,7 +147,7 @@ Apesar da sua organização, a **burocracia de comunicação** entre as camadas 
     - **Características:** Possui apenas um espaço de endereçamento e roda estritamente um único processo.
     - **Vantagens:** Tempo de inicialização quase instantâneo, uso mínimo de memória e altíssima segurança (por não possuir um *shell*, utilitários ou processos secundários, a superfície de ataque para invasores é drasticamente reduzida).
     
-    ![Sistema Unikernel](images/screenshot005.png)
+    ![Sistema Unikernel](images/screenshot005.png)<br>
     *Fonte: MAZIERO, Carlos A. Sistemas Operacionais: Conceitos e Mecanismos, 1ª ed., 2019, p. 36.*
     
 ---
@@ -231,7 +231,7 @@ Um novo processo não surge do vazio; ele é sempre criado a partir de um proces
 - **Substituição de Código (*Exec*):** O código de um processo pode ser inteiramente substituído pelo executável de outro programa. Normalmente, logo após um processo filho ser criado por duplicação, ele utiliza essa chamada para descartar a cópia do código do pai e carregar o seu próprio código na memória.
 - **Hierarquia:** Como um processo pode criar outros processos (que também podem gerar novos filhos), estabelece-se uma relação de dependência e controle (onde o pai geralmente monitora o estado de execução ou o encerramento de seus filhos).
 
-![Implementação de um *fork*](images/screenshot006.png)
+![Implementação de um *fork*](images/screenshot006.png)<br>
 *Fonte: MAZIERO, Carlos A. Sistemas Operacionais: Conceitos e Mecanismos, 1ª ed., 2019, p. 56.*
 
 ## *Threads*:
@@ -264,34 +264,34 @@ Responsável por definir a ordem de execução das tarefas prontas.
 
 - **FCFS (*First-Come, First-Served*):** Executa as tarefas estritamente à medida que elas chegam (ordem de chegada).
 
-![Escalonamento FCFS](images/screenshot007.png)
+![Escalonamento FCFS](images/screenshot007.png)<br>
 *Fonte: MAZIERO, Carlos A. Sistemas Operacionais: Conceitos e Mecanismos, 1ª ed., 2019, p. 73.*
 
 - ***Round Robin* (Revezamento):** Utiliza preempção de tempo. Faz a troca da execução das tarefas, intercalando-as e considerando a ordem em que foram colocadas na fila de prontas.
 
-![Escalonamento *Round Robin*](images/screenshot008.png)
+![Escalonamento *Round Robin*](images/screenshot008.png)<br>
 *Fonte: MAZIERO, Carlos A. Sistemas Operacionais: Conceitos e Mecanismos, 1ª ed., 2019, p. 74.*
 
 - **SJF (*Shortest Job First*):** Prioriza sempre a tarefa que possui o menor trabalho (tempo total de execução) a ser feito.
 
-![Escalonamento SJF](images/screenshot009.png)
+![Escalonamento SJF](images/screenshot009.png)<br>
 *Fonte: MAZIERO, Carlos A. Sistemas Operacionais: Conceitos e Mecanismos, 1ª ed., 2019, p. 76.*
 
 - **SRTF (*Shortest Remaining Time First*):** Executa a tarefa que possui o menor tempo restante para conclusão. Pode interromper (sofrer preempção) o funcionamento da tarefa atual caso chegue uma nova tarefa ainda menor na fila.
 
-![Escalonamento SRTF](images/screenshot010.png)
+![Escalonamento SRTF](images/screenshot010.png)<br>
 *Fonte: MAZIERO, Carlos A. Sistemas Operacionais: Conceitos e Mecanismos, 1ª ed., 2019, p. 77.*
 
 > Na prática, esses dois últimos modelos são amplamente teóricos ou implementados através de estimativas (heurísticas). Como não é possível saber com precisão absoluta quanto tempo uma tarefa demorará para ser concluída antes dela acabar, o sistema tenta "chutar" e prever esse tempo com base no histórico de execução.
 
 - **PRIOc (Prioridade Cooperativa):** Utiliza um sistema de prioridade entre as tarefas, onde a ordem de execução é definida pela sua importância. Por ser cooperativa, a tarefa em execução não sofre interrupção, indo até o fim ou até bloquear.
 
-![Escalonamento PRIOc](images/screenshot011.png)
+![Escalonamento PRIOc](images/screenshot011.png)<br>
 *Fonte: MAZIERO, Carlos A. Sistemas Operacionais: Conceitos e Mecanismos, 1ª ed., 2019, p. 78.*
 
 - **PRIOp (Prioridade Preemptiva):** Parecido com o modelo cooperativo, porém utiliza preempção. Se entra uma tarefa de maior prioridade na fila de prontas, a execução atual é pausada para realizar a execução dessa nova tarefa mais prioritária.
 
-![Escalonamento PRIOp](images/screenshot012.png)
+![Escalonamento PRIOp](images/screenshot012.png)<br>
 *Fonte: MAZIERO, Carlos A. Sistemas Operacionais: Conceitos e Mecanismos, 1ª ed., 2019, p. 78.*
 
 - **PRIOd (Prioridade Dinâmica):** Diferente dos outros métodos de prioridade estática, neste modelo a prioridade é dinâmica e se ajusta ao longo do tempo.
@@ -300,19 +300,19 @@ Responsável por definir a ordem de execução das tarefas prontas.
     - **Mecanismo (*Aging* / Envelhecimento):** A prioridade da tarefa vai aumentando gradativamente enquanto ela aguarda na fila.
     - **Retorno ao padrão:** Quando a tarefa finalmente é executada, sua prioridade volta para o seu valor base original.
     
-    ![Escalonamento PRIOd](images/screenshot013.png)
+    ![Escalonamento PRIOd](images/screenshot013.png)<br>
     *Fonte: MAZIERO, Carlos A. Sistemas Operacionais: Conceitos e Mecanismos, 1ª ed., 2019, p. 80.*
     
 **Comparação entre os algorítimos:**
 
-![Comparação entre os algorítimos](images/screenshot014.png)
+![Comparação entre os algorítimos](images/screenshot014.png)<br>
 *Fonte: MAZIERO, Carlos A. Sistemas Operacionais: Conceitos e Mecanismos, 1ª ed., 2019, p. 82.*
 
 ### Inversão de Prioridade:
 
 Ocorre quando uma tarefa de alta prioridade é forçada a esperar por uma tarefa de menor prioridade devido ao compartilhamento de um recurso exclusivo (e é obrigatório que a tarefa de baixa prioridade termine o seu uso antes para manter a coerência dos dados).
 
-![Inversão de prioridade](images/screenshot015.png)
+![Inversão de prioridade](images/screenshot015.png)<br>
 *Fonte: MAZIERO, Carlos A. Sistemas Operacionais: Conceitos e Mecanismos, 1ª ed., 2019, p. 88.*
 
 ### Protocolo de Herança de Prioridade:
@@ -321,7 +321,7 @@ Para evitar esse problema, supondo uma instrção de prioridade baixa gerando de
 
 **Exemplo Prático de Herança de Prioridade:**
 
-![Protocolo de Herança de Prioridade](images/screenshot016.png)
+![Protocolo de Herança de Prioridade](images/screenshot016.png)<br>
 *Fonte: MAZIERO, Carlos A. Sistemas Operacionais: Conceitos e Mecanismos, 1ª ed., 2019, p. 88.*
 
 1. **Tarefa Baixa** inicia a execução e adquire o recurso exclusivo (R).
