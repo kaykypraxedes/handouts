@@ -88,8 +88,8 @@ Na configuração tradicional (*rootful*), o daemon executa como `root` e cria u
 Para permitir que o usuário atual acesse o daemon sem `sudo`:
 
 ```bash
-$ sudo groupadd docker              # necessário apenas se o grupo ainda não existir
-$ sudo usermod -aG docker "$USER"
+$ sudo groupadd docker  # necessário apenas se o grupo ainda não existir (dá para verificar com "cat /etc/group | grep docker")
+$ sudo usermod -aG docker "$USER" # adiciona o usuário atual ao grupo docker (permissão de execução)
 ```
 
 A nova associação de grupo só é aplicada a novos processos. O procedimento recomendado é encerrar completamente a sessão do usuário e entrar novamente. Como alternativa imediata, `newgrp docker` inicia um novo shell usando `docker` como grupo principal.
