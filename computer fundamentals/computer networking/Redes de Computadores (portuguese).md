@@ -535,7 +535,7 @@ Para identificar falhas que podem ter ocorrido na mensagem durante a transmissã
 
 - ***Checksum*:** É um método de detecção utilizado principalmente quando a mensagem é estruturada em blocos de caracteres. Nele, realiza-se a soma dos valores numéricos dos blocos, divide-se o resultado por uma constante predefinida (depende do tamanho do bloco - com 8 *bits*, 256), e o **resto dessa divisão** torna-se o valor do *checksum* (CDE).
 
-  Considerando a mensagem "MODEM!": Tira-se o valor ASCII (77 79 68 69 77 33), soma-se tudo (403), obtém-se o resultado modular (147 = ô) e adiciona-se esse valor ao final da mensagem (MODEM!ô).
+> Considerando a mensagem "MODEM!": Tira-se o valor ASCII (77 79 68 69 77 33), soma-se tudo (403), obtém-se o resultado modular (147 = ô) e adiciona-se esse valor ao final da mensagem (MODEM!ô).
 
 - **CRC (*Cyclic Redundancy Check*):** Técnica de detecção de erros baseada em uma divisão binária. O transmissor e o receptor utilizam uma mesma sequência de bits, chamada **polinômio gerador**. Antes da transmissão, o emissor divide os dados por esse gerador utilizando operações XOR e adiciona o **resto da divisão** ao final do quadro. No destino, o receptor realiza novamente a divisão utilizando o mesmo gerador. Se o resto obtido for zero, considera-se que os dados chegaram corretamente; caso seja diferente de zero, é detectada uma alteração durante a transmissão.
 
