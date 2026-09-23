@@ -326,7 +326,7 @@ Considere a seguinte tabela de tarefas para exemplificar o funcionamento dos alg
     - **Retorno ao padrão:** Quando a tarefa finalmente é executada, sua prioridade volta para o seu valor base original.
 
 ![Escalonamento PRIOd](images/screenshot014.png)<br>
-*Fonte: MAZIERO, Carlos A. Sistemas Operacionais: Conceitos e Mecanismos, 1ª ed., 2019, p. 80.*
+*Fonte: **Adaptado** de MAZIERO, Carlos A. Sistemas Operacionais: Conceitos e Mecanismos, 1ª ed., 2019, p. 80.*
 
 **Comparação entre os algoritmos:**
 
