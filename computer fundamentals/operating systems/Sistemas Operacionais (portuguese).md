@@ -400,6 +400,8 @@ A comunicação entre as tarefas pode ocorrer de duas maneiras principais:
 - **Comunicação síncrona/assíncrona:** Na operação síncrona, **as operações bloqueiam as tarefas envolvidas**. Existe uma necessidade de sincronização (espera) entre as partes: o receptor precisa esperar até os dados ficarem prontos e chegarem, e o emissor precisa esperar que o receptor esteja pronto para concluir o envio. Já na comunicação assíncrona, **o emissor não é bloqueado**. A partir do momento em que envia os dados (geralmente depositados em um canal ou *buffer*), o emissor fica livre para continuar sua execução. O receptor coleta essas informações quando estiver pronto, concluindo a etapa de recepção.
 - **Comunicação semi-síncrona:** As operações bloqueiam as tarefas apenas durante um prazo predefinido (*timeout*). Funciona como um meio-termo entre o envio indiscriminado contínuo (assíncrono) e a sincronização forçada indefinida (síncrona), criando uma "janela de comunicação" com tempo limite para que a troca de dados ocorra.
 
+> REVISADO ATÉ AQUI!
+
 # Fontes
 
 - MAZIERO, Carlos A. Sistemas Operacionais: Conceitos e Mecanismos. 1. ed. Curitiba: Editora UFPR, 2019.
