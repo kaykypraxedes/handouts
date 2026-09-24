@@ -25,7 +25,7 @@ ______            _                   _
 
 **Propósito inicial:** A principal motivação foi a necessidade de trocar informações de forma rápida, substituindo métodos antigos que eram demorados, de uso exclusivo e de alto custo.
 
-**Compartilhamento:** A rede permite o compartilhamento de recursos de hardware e software (por exemplo, uma firma dividindo o uso de uma impressora ou um sistema de fax), otimizando a estrutura e os custos.
+**Compartilhamento:** A rede permite o compartilhamento de recursos de *hardware* e *software* (por exemplo, uma firma dividindo o uso de uma impressora ou um sistema de *fax*), otimizando a estrutura e os custos.
 
 ## Comunicação:
 
@@ -46,7 +46,7 @@ Em geral, a comunicação em uma rede funciona com três elementos básicos:
 A escolha e a avaliação de uma rede dependem das requisições específicas da aplicação que será utilizada. Os principais fatores a serem considerados são:
 
 - **Custo:** Envolve o preço de aquisição dos equipamentos, bem como os custos contínuos de operação e manutenção da rede.
-- **Desempenho:** Relacionado à eficiência da comunicação. Os principais indicadores são a **banda** (capacidade do canal de comunicação, medida em bits por segundo) e a **taxa de transmissão** (a velocidade real com que os dados trafegam).
+- **Desempenho:** Relacionado à eficiência da comunicação. Os principais indicadores são a **banda** (capacidade do canal de comunicação, medida em *bits* por segundo) e a **taxa de transmissão** (a velocidade real com que os dados trafegam).
 - **Escalabilidade:** É a capacidade da rede de crescer, permitindo a adição de novos dispositivos com o menor impacto possível à estrutura e ao desempenho já estabelecidos.
 - **Disponibilidade:** Refere-se à capacidade de fornecimento ininterrupto do serviço. O nível de exigência varia conforme o cenário (por exemplo, alguns serviços requerem acesso 24/7, enquanto outros só precisam estar operacionais em horário comercial).
 - **Segurança:** Envolve garantir a **confidencialidade** (apenas pessoas autorizadas acessam a informação) e a **integridade** (os dados não são alterados durante a transmissão).
@@ -56,13 +56,13 @@ A escolha e a avaliação de uma rede dependem das requisições específicas da
 
 As redes de computadores recebem designações específicas dependendo da sua área de cobertura.
 
-**PAN (Personal Area Network):** Rede de área pessoal. Interliga dispositivos em uma área muito pequena e restrita ao usuário. **Exemplos:** conexão entre celular, computador, impressora e fones sem fio, utilizando tecnologias como Bluetooth.
+**PAN (*Personal Area Network*):** Rede de área pessoal. Interliga dispositivos em uma área muito pequena e restrita ao usuário. **Exemplos:** conexão entre celular, computador, impressora e fones sem fio, utilizando tecnologias como Bluetooth.
 
-**LAN (Local Area Network):** Rede de área local. Abrange uma região um pouco maior, mas ainda geograficamente restrita a um espaço físico específico. **Exemplos:** rede de apartamentos de um condomínio, andares de um escritório ou um prédio inteiro.
+**LAN (*Local Area Network*):** Rede de área local. Abrange uma região um pouco maior, mas ainda geograficamente restrita a um espaço físico específico. **Exemplos:** rede de apartamentos de um condomínio, andares de um escritório ou um prédio inteiro.
 
-**MAN (Metropolitan Area Network):** Rede de área metropolitana. Oferece conectividade e taxa de transmissão para locais que saem do escopo local. **Exemplos:** redes que cobrem cidades inteiras ou regiões metropolitanas.
+**MAN (*Metropolitan Area Network*):** Rede de área metropolitana. Oferece conectividade e taxa de transmissão para locais que saem do escopo local. **Exemplos:** redes que cobrem cidades inteiras ou regiões metropolitanas.
 
-**WAN (Wide Area Network):** Rede de longa distância. Interliga grandes espaços geográficos de terra. **Exemplos:** redes que conectam estados, países e até continentes.
+**WAN (*Wide Area Network*):** Rede de longa distância. Interliga grandes espaços geográficos de terra. **Exemplos:** redes que conectam estados, países e até continentes.
 
 ## Meios de Transmissão:
 
@@ -70,13 +70,13 @@ A infraestrutura que conecta os dispositivos de uma rede pode ser dividida em du
 
 **Com Fio:** O sinal de comunicação é conduzido e confinado através de um material físico (como **Cabo de Par Trançado**, **Cabo Coaxial** e **Fibra Óptica**).
 
-**Sem Fio (*Wireless*):** Não existe uma infraestrutura física direta guiando o sinal — a comunicação ocorre pela propagação de ondas eletromagnéticas através de meios como o ar, a água ou mesmo o vácuo (como **Ondas de Rádio**, **Micro-ondas**, **Transmissão via Satélite** e **Infravermelho**).
+**Sem Fio (*Wireless*):** Não existe uma infraestrutura física direta guiando o sinal - a comunicação ocorre pela propagação de ondas eletromagnéticas através de meios como o ar, a água ou mesmo o vácuo (como **Ondas de Rádio**, **Micro-ondas**, **Transmissão via Satélite** e **Infravermelho**).
 
 ## Formas de Interconexão:
 
 A maneira como os dispositivos são organizados e conectados fisicamente (ou logicamente) impacta diretamente o custo e a eficiência da rede.
 
-**Conexão Ponto a Ponto em Malha (*Mesh*):** Uma conexão ponto a ponto é um link direto e exclusivo entre duas máquinas. Se conectarmos *todos* os elementos da rede diretamente uns aos outros (Topologia em Malha Completa), temos altíssima redundância, mas o projeto se torna extremamente caro e pouco escalável devido à quantidade massiva de cabos.
+**Conexão Ponto a Ponto em Malha (*Mesh*):** Uma conexão ponto a ponto é um *link* direto e exclusivo entre duas máquinas. Se conectarmos *todos* os elementos da rede diretamente uns aos outros (Topologia em Malha Completa), temos altíssima redundância, mas o projeto se torna extremamente caro e pouco escalável devido à quantidade massiva de cabos.
 
 **Conexão Ponto a Ponto em Redes Comutadas (Nós Intermediários):** Para reduzir o custo da malha completa, utilizam-se dispositivos intermediários (como *switches* e roteadores) para fazer a conexão entre as extremidades. Isso permite interligar os dispositivos sem exigir uma conexão direta entre todos eles e, quando existem caminhos redundantes, possibilita redirecionar a informação em caso de falha.
 
@@ -107,7 +107,7 @@ Para evitar que a queda de um servidor deixe os clientes isolados, adotam-se esq
 
 Alguns exemplos de serviços básicos são:
 
-- **Serviço Web:** A *World Wide Web* (WWW) é o sistema de documentos em formato de hipertexto (textos, imagens e áudios) interligados por links;
+- **Serviço *Web*:** A *World Wide Web* (WWW) é o sistema de documentos em formato de hipertexto (textos, imagens e áudios) interligados por *links*;
 - **HTTP:** Protocolo responsável por transferir essas páginas do servidor para o *browser* do cliente;
 - **Transferência de Arquivos:** Permite o envio e o recebimento de arquivos entre dispositivos conectados à rede;
 - **Acesso e Gerenciamento Remoto:** Permite submeter comandos a um sistema distante como se estivesse conectado localmente a ele (**terminal remoto**) e administrar, configurar e diagnosticar problemas nos dispositivos de rede à distância (**gerência remota**);
@@ -119,9 +119,9 @@ Alguns exemplos de serviços básicos são:
 
 ## Vantagens na sua Adoção:
 
-O desenvolvimento de arquiteturas de redes de computadores é uma tarefa altamente complexa, pois envolve inúmeros aspectos simultâneos (hardware, software, interfaces de transmissão, verificação de erros, protocolos etc.). Para lidar com essa complexidade, utiliza-se a abordagem de dividir o sistema em camadas, o que traz as seguintes vantagens:
+O desenvolvimento de arquiteturas de redes de computadores é uma tarefa altamente complexa, pois envolve inúmeros aspectos simultâneos (*hardware*, *software*, interfaces de transmissão, verificação de erros, protocolos etc.). Para lidar com essa complexidade, utiliza-se a abordagem de dividir o sistema em camadas, o que traz as seguintes vantagens:
 
-- **Modularidade e Organização:** O problema complexo é dividido em partes menores (camadas), cada uma responsável por uma tarefa específica, tornando o projeto do software e do modelo de rede muito mais simples e organizado.
+- **Modularidade e Organização:** O problema complexo é dividido em partes menores (camadas), cada uma responsável por uma tarefa específica, tornando o projeto do *software* e do modelo de rede muito mais simples e organizado.
 - **Independência entre as Partes:** Cada camada atua de forma isolada e se comunica com as outras através de **interfaces** claras. Isso impede que a complexidade de uma camada interfira na outra.
 - **Facilidade de Manutenção e Evolução:** Graças a esse isolamento, se uma parte do processo apresentar algum problema ou se uma nova tecnologia surgir, apenas a camada correspondente precisará ser alterada ou substituída, preservando o restante do sistema intacto.
 
@@ -135,18 +135,18 @@ O desenvolvimento de arquiteturas de redes de computadores é uma tarefa altamen
 
 Este é o modelo prático utilizado atualmente. Ele consiste em uma adaptação e evolução do modelo TCP/IP original (a primeira arquitetura de Internet implementada globalmente pelo governo norte-americano).
 
-1. **Camada Física:** É a camada responsável pela transferência literal dos bits brutos através do meio de transmissão.
+1. **Camada Física:** É a camada responsável pela transferência literal dos *bits* brutos através do meio de transmissão.
 
    - Inicia, mantém e finaliza a **comunicação física** entre as máquinas.
    - Mantém o sincronismo entre os dispositivos de origem e destino, além de gerenciar a divisão do meio físico (**multiplexação**).
-   - Determina a **duração e a intensidade do envio dos sinais** (por exemplo, como converter os bits em pulsos elétricos ou eletromagnéticos).
+   - Determina a **duração e a intensidade do envio dos sinais** (por exemplo, como converter os *bits* em pulsos elétricos ou eletromagnéticos).
    - Lida com as características físicas e mecânicas da comunicação (fios, antenas, cabos metálicos, fibra óptica etc.).
    - Alguns exemplos de padrões e especificações que definem aspectos da camada física são V.92, EIA-232-F, IEEE 802.3 e IEEE 802.11.
 
 2. **Camada de Enlace:** Atua como a transição entre o meio físico de transmissão e as funções lógicas da rede.
 
-   - Transforma os bits brutos enviados e recebidos da camada física em blocos estruturados que podem ser interpretados (**Quadros/*frames***).
-   - Detecta (e, dependendo da tecnologia, corrige) erros que possam ter ocorrido na transmissão física dos bits.
+   - Transforma os *bits* brutos enviados e recebidos da camada física em blocos estruturados que podem ser interpretados (**Quadros/*frames***).
+   - Detecta (e, dependendo da tecnologia, corrige) erros que possam ter ocorrido na transmissão física dos *bits*.
    - Regula o volume de dados enviados para evitar que a máquina de destino ou a rede sejam sobrecarregadas.
    - Alguns exemplos de protocolos da camada de enlace são PPP, HDLC, LAPB, IEEE 802.3 (Ethernet) e IEEE 802.11 (Wi-Fi).
 
@@ -165,21 +165,21 @@ Este é o modelo prático utilizado atualmente. Ele consiste em uma adaptação 
 4. **Camada de Transporte:** É a responsável por criar uma abstração na transferência de dados, estabelecendo uma comunicação lógica de ponta a ponta (diretamente entre a origem e o destino).
 
    - Oculta toda a complexidade da rede física e do roteamento (ignorando caminhos intermediários e técnicas de comutação). **Cria a ilusão de que existe uma conexão direta**, dedicada e exclusiva entre os dois pontos.
-   - Atua como uma interface universal para os softwares. Utiliza identificadores chamados de "Portas" para **garantir que a informação recebida seja entregue à aplicação correta na máquina** (separando, por exemplo, o tráfego do navegador web do tráfego de um e-mail).
+   - Atua como uma interface universal para os *softwares*. Utiliza identificadores chamados de "Portas" para **garantir que a informação recebida seja entregue à aplicação correta na máquina** (separando, por exemplo, o tráfego do navegador *web* do tráfego de um *e-mail*).
    - Diferentemente da camada de enlace (que verifica erros entre pontos diretamente conectados), protocolos confiáveis da camada de transporte, como o TCP, podem verificar se os dados chegaram corretamente ao destino final (controle *End-to-End*), ordenando os pacotes e solicitando o reenvio de partes perdidas.
    - Alguns exemplos de protocolos da camada de transporte são TCP (focado em confiabilidade e garantia de entrega) e UDP (focado em velocidade, sem garantia de entrega).
 
 5. **Camada de Aplicação:** É a camada de mais alto nível e a mais próxima do usuário final, responsável por lidar diretamente com a informação que será transmitida para o destinatário.
 
-   - Atua como a **ponte de comunicação** entre os aplicativos de software (que geram ou consomem a informação) e a estrutura técnica da rede.
-   - É composta pelos serviços práticos e aplicações de rede que utilizamos no dia a dia. Ela estrutura como os dados de serviços web, correio eletrônico, transferência de arquivos, acessos remotos e gerenciamento de mídias (áudio, texto e vídeo) devem ser formatados e compreendidos pela máquina de destino.
-   - Alguns exemplos de protocolos da camada de aplicação são HTTP/HTTPS (navegação web), SMTP e IMAP (e-mail), FTP (transferência de arquivos) e SSH (acesso remoto).
+   - Atua como a **ponte de comunicação** entre os aplicativos de *software* (que geram ou consomem a informação) e a estrutura técnica da rede.
+   - É composta pelos serviços práticos e aplicações de rede que utilizamos no dia a dia. Ela estrutura como os dados de serviços *web*, correio eletrônico, transferência de arquivos, acessos remotos e gerenciamento de mídias (áudio, texto e vídeo) devem ser formatados e compreendidos pela máquina de destino.
+   - Alguns exemplos de protocolos da camada de aplicação são HTTP/HTTPS (navegação *web*), SMTP e IMAP (*e-mail*), FTP (transferência de arquivos) e SSH (acesso remoto).
 
 ## Outros Modelos de Camadas:
 
 Como o foco prático atual é o modelo de 5 camadas (Internet), os modelos clássicos servem principalmente como base teórica ou contexto histórico, não necessitando do mesmo rigor técnico de detalhamento em suas descrições.
 
-**Modelo TCP/IP Original:** Foi a primeira arquitetura de Internet implementada na prática pelo governo americano. Suas camadas são **Aplicação**, **Transporte**, **Internet** (equivalente à Rede) e **Acesso à Rede**. A camada de **Acesso à Rede** agrupava o que hoje conhecemos como as camadas de Enlace e Física. Futuramente, viu-se a necessidade técnica de separar essas partes para dar mais independência aos hardwares e aos protocolos lógicos de enlace.
+**Modelo TCP/IP Original:** Foi a primeira arquitetura de Internet implementada na prática pelo governo americano. Suas camadas são **Aplicação**, **Transporte**, **Internet** (equivalente à Rede) e **Acesso à Rede**. A camada de **Acesso à Rede** agrupava o que hoje conhecemos como as camadas de Enlace e Física. Futuramente, viu-se a necessidade técnica de separar essas partes para dar mais independência aos *hardwares* e aos protocolos lógicos de enlace.
 
 **Modelo OSI:** Modelo de referência teórica criado pela ISO. Propôs uma divisão extremamente detalhada, que acabou se provando rígida e burocrática demais para a implementação prática comercial. Suas camadas são **Aplicação**, **Apresentação**, **Sessão**, **Transporte**, **Rede**, **Enlace** e **Física**.
 
@@ -189,16 +189,16 @@ A **Camada de Sessão** é responsável por estabelecer, manter e encerrar sess�
 
 A **Camada de Apresentação** é focada na sintaxe e na semântica da informação. Realiza a formatação dos dados, a conversão de códigos (como tabelas de caracteres), a compressão e a criptografia.
 
-Sem rigor técnico excessivo, pode-se entender que as antigas camadas de Sessão, Apresentação e Aplicação do modelo OSI foram aglutinadas na **Camada de Aplicação** do modelo de 5 camadas. Muitos dos recursos propostos pelo OSI geravam uma camada burocrática desnecessária, sendo mais simples transferir e incorporar essas características opcionais diretamente no software do usuário final.
+Sem rigor técnico excessivo, pode-se entender que as antigas camadas de Sessão, Apresentação e Aplicação do modelo OSI foram aglutinadas na **Camada de Aplicação** do modelo de 5 camadas. Muitos dos recursos propostos pelo OSI geravam uma camada burocrática desnecessária, sendo mais simples transferir e incorporar essas características opcionais diretamente no *software* do usuário final.
 
-## Gateway:
+## *Gateway*:
 
-Em vez de forçar os dispositivos a suportarem nativamente múltiplos protocolos diferentes (o que aumenta a complexidade e a chance de falhas), utiliza-se o Gateway como um nó intermediário focado na tradução entre sistemas incompatíveis (**conversor de protocolos**). Suas principais características são:
+Em vez de forçar os dispositivos a suportarem nativamente múltiplos protocolos diferentes (o que aumenta a complexidade e a chance de falhas), utiliza-se o *Gateway* como um nó intermediário focado na tradução entre sistemas incompatíveis (**conversor de protocolos**). Suas principais características são:
 
 - **Tradução de Protocolos:** Atua convertendo regras, velocidades e formatos entre redes que possuem arquiteturas completamente diferentes, garantindo uma comunicação estável entre elas.
-- **Modularidade e Isolamento:** Funciona como uma camada dedicada de tradução. Isso mantém a rede modularizada: se houver um erro de compatibilidade ou falha na conversão, o problema fica isolado no Gateway e pode ser resolvido sem afetar a estrutura principal da rede.
+- **Modularidade e Isolamento:** Funciona como uma camada dedicada de tradução. Isso mantém a rede modularizada: se houver um erro de compatibilidade ou falha na conversão, o problema fica isolado no *Gateway* e pode ser resolvido sem afetar a estrutura principal da rede.
 
-Alguns exemplos de uso do Gateway são a tradução de pacotes IPv4 para IPv6, a conexão de redes de sensores industriais (IoT) à Internet tradicional e a comunicação entre redes corporativas fechadas e a rede pública.
+Alguns exemplos de uso do *Gateway* são a tradução de pacotes IPv4 para IPv6, a conexão de redes de sensores industriais (IoT) à Internet tradicional e a comunicação entre redes corporativas fechadas e a rede pública.
 
 ## Padrão IEEE 802:
 
@@ -207,7 +207,7 @@ Trata-se de um projeto de padronização criado para unificar o desenvolvimento 
 **Divisão da Camada de Enlace:** Para integrar diferentes tecnologias de forma eficiente, o padrão dividiu a camada de enlace em duas subcamadas complementares:
 
 - **MAC (*Medium Access Control*):** É a subcamada inferior. Fica responsável pelo controle de acesso ao meio físico (decidindo quando a máquina pode transmitir) e pela detecção de erros nos quadros recebidos.
-- **LLC (*Logical Link Control*):** É a subcamada superior. Compatibiliza os diversos tipos de hardware e padrões MAC com a Camada de Rede superior, ocultando as diferenças físicas e entregando uma interface padronizada.
+- **LLC (*Logical Link Control*):** É a subcamada superior. Compatibiliza os diversos tipos de *hardware* e padrões MAC com a Camada de Rede superior, ocultando as diferenças físicas e entregando uma interface padronizada.
 
 Alguns exemplos dos padrões gerenciados pelo IEEE 802 são IEEE 802.2 (LLC), IEEE 802.3 (Ethernet padrão com fio), IEEE 802.4 (Token Bus), IEEE 802.11 (redes locais sem fio / Wi-Fi), IEEE 802.15 (redes pessoais sem fio / Bluetooth) e IEEE 802.16 (redes metropolitanas sem fio / WiMAX).
 
@@ -241,7 +241,7 @@ Durante o processo de transmissão, o sinal pode sofrer degradações que causam
 
 ### Atenuação:
 
-É a perda progressiva da energia (potência) do sinal à medida que ele percorre o meio de transmissão até chegar ao destino, fazendo com que a amplitude da onda se reduza ao longo do trajeto. Em transmissões digitais, os "picos" de energia (que representam o bit '1', por exemplo) ficam tão fracos e próximos de zero que o receptor não consegue mais interpretá-los corretamente.
+É a perda progressiva da energia (potência) do sinal à medida que ele percorre o meio de transmissão até chegar ao destino, fazendo com que a amplitude da onda se reduza ao longo do trajeto. Em transmissões digitais, os "picos" de energia (que representam o *bit* '1', por exemplo) ficam tão fracos e próximos de zero que o receptor não consegue mais interpretá-los corretamente.
 
 ![Representação da interferência por atenuação](images/screenshot005.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 100.*
@@ -259,9 +259,9 @@ A **largura de banda** é uma característica física do próprio meio de transm
 
 ## Capacidade de Transmissão:
 
-Para calcular quantos bits por segundo (bps) um canal realmente consegue transportar, utilizam-se os seguintes teoremas:
+Para calcular quantos *bits* por segundo (bps) um canal realmente consegue transportar, utilizam-se os seguintes teoremas:
 
-- **Teorema de Nyquist:** Calcula a capacidade máxima de transmissão (CMT) **na ausência de ruído**. A fórmula é `CMT = 2W log2 N`, em que `W` é a largura de banda e `N` é o número de níveis de sinalização utilizados. Ou seja, a quantidade de níveis é proporcional à quantidade de bits transmitidos.
+- **Teorema de Nyquist:** Calcula a capacidade máxima de transmissão (CMT) **na ausência de ruído**. A fórmula é `CMT = 2W log2 N`, em que `W` é a largura de banda e `N` é o número de níveis de sinalização utilizados. Ou seja, a quantidade de níveis é proporcional à quantidade de *bits* transmitidos.
 - **Teorema de Shannon:** É o Teorema de Nyquist levando em conta a existência de **ruído** no canal (mais especificamente, o ruído térmico). A fórmula é `CMT = W log2 (1 + RSR)`, em que `RSR` é a relação sinal-ruído do canal. Não leva em conta outros tipos de ruído nem a atenuação.
 
 ## Meios de Transmissão:
@@ -285,7 +285,7 @@ Os meios de transmissão se dividem em **com fio** (par trançado, cabo coaxial 
 
 **STP (*Shielded Twisted Pair* — par trançado blindado):** Possui um revestimento externo que reduz interferências, permitindo maiores distâncias e taxas de transmissão. Por ser mais caro e difícil de manusear, é raramente utilizado (aplicações típicas: redes Token Ring e Ethernet de 10 Gbits).
 
-**Cabo Coaxial:** Formado por um condutor interno (de cobre) e um externo (malha metálica de blindagem), separados por um material isolante e revestidos por uma proteção plástica. É menos suscetível a ruídos que o par trançado, oferecendo taxas de transmissão mais altas e maiores distâncias, porém com maior custo e instalação mais complexa. É utilizado em sistemas de TV a cabo (áudio, vídeo e acesso à Internet) e já foi muito usado em redes locais e em transmissões telefônicas de longa distância (substituídos pela fibra óptica).
+**Cabo Coaxial:** Formado por um condutor interno (de cobre) e um externo (malha metálica de blindagem), separados por um material isolante e revestidos por uma proteção plástica. É menos suscetível a ruídos que o par trançado, oferecendo taxas de transmissão mais altas e maiores distâncias, porém com maior custo e instalação mais complexa. É utilizado em sistemas de TV a cabo (áudio, vídeo e acesso à Internet) e já foi muito usado em redes locais e em transmissões telefônicas de longa distância, tendo sido substituído pela fibra óptica.
 
 **Fibra Óptica:** Transmite dados por meio de **luz**, utilizando o princípio da **reflexão interna total**: o cabo é formado por um núcleo (de vidro ou plástico), envolvido por um revestimento com índice de refração menor que o do núcleo, de forma que a luz emitida na origem seja refletida pelo revestimento e guiada pelo núcleo até o destino. Ela possui **grande largura de banda** e **maior imunidade a ruídos eletromagnéticos e à atenuação**, além de **maior segurança** (não emite radiação, dificultando a escuta), e é **fácil de instalar** (cabo leve e fino). Todavia, **seu custo é maior** e o **reparo é mais complicado** em caso de rompimento.
 
@@ -311,7 +311,7 @@ A técnica mais utilizada para digitalizar áudio é o **PCM** (*Pulse Code Modu
 
 1. O sinal analógico é amostrado (medido) periodicamente, formando pulsos estreitos chamados **PAM** (*Pulse Amplitude Modulated*).
 2. Cada pulso é associado a um intervalo de valores, chamado **nível de quantização**.
-3. Cada nível de quantização recebe um conjunto de bits.
+3. Cada nível de quantização recebe um conjunto de *bits*.
 
 ![Digitalização](images/screenshot007.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 117.*
@@ -324,7 +324,7 @@ Utiliza variações discretas do sinal físico para representar os dados digitai
 
 Algumas das principais técnicas de codificação digital são apresentadas a seguir.
 
-**NRZ-L** (*Non Return to Zero-Level*): Associa um valor de voltagem fixo (arbitrário) a cada bit.
+**NRZ-L** (*Non Return to Zero-Level*): Associa um valor de voltagem fixo (arbitrário) a cada *bit*.
 
 ![NRZ-L](images/screenshot008.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 118.*
@@ -334,28 +334,28 @@ Algumas das principais técnicas de codificação digital são apresentadas a se
 ![NRZ-I](images/screenshot009.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 118.*
 
-**Codificação Manchester:** Existe sempre uma transição no meio do período de cada bit (se a primeira metade estiver ativa, representa o 0; se a segunda metade estiver alta, representa o 1). Esse método é mais robusto pensando em sincronização, tendo em vista que cada ciclo é sinalizado (transição de fase), sendo possível acompanhar mais facilmente.
+**Codificação Manchester:** Existe sempre uma transição no meio do período de cada *bit* (se a primeira metade estiver ativa, representa o 0; se a segunda metade estiver alta, representa o 1). Esse método é mais robusto pensando em sincronização, tendo em vista que cada ciclo é sinalizado (transição de fase), sendo possível acompanhar mais facilmente.
 
 ![Codificação Manchester](images/screenshot010.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 119.*
 
 ### Sinalização Analógica:
 
-Usa sinais analógicos para transmitir os dados. Um exemplo é a conexão de um computador à Internet por linha telefônica, em que os dispositivos se conectam ao meio através de um **modem** (modulador-demodulador), responsável por converter (modular) o dado digital em sinal analógico na origem e por fazer o processo inverso (demodular) no destino.
+Usa sinais analógicos para transmitir os dados. Um exemplo é a conexão de um computador à Internet por linha telefônica, em que os dispositivos se conectam ao meio através de um ***modem*** (modulador-demodulador), responsável por converter (modular) o dado digital em sinal analógico na origem e por fazer o processo inverso (demodular) no destino.
 
-A modulação consiste em alterar uma característica dessa onda (amplitude, frequência ou fase) para representar os bits que estão sendo enviados.
+A modulação consiste em alterar uma característica dessa onda (amplitude, frequência ou fase) para representar os *bits* que estão sendo enviados.
 
-**ASK** (*Amplitude Shift Keying*): A amplitude da onda representa os bits (por exemplo, ausência de amplitude = bit 0 e presença de amplitude = bit 1). É **simples de implementar**, mas **mais suscetível a ruídos e interferências**.
+**ASK** (*Amplitude Shift Keying*): A amplitude da onda representa os *bits* (por exemplo, ausência de amplitude = *bit* 0 e presença de amplitude = *bit* 1). É **simples de implementar**, mas **mais suscetível a ruídos e interferências**.
 
 ![ASK](images/screenshot011.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 121.*
 
-**FSK** (*Frequency Shift Keying*): A frequência da onda representa os bits (cada bit corresponde a uma frequência diferente).
+**FSK** (*Frequency Shift Keying*): A frequência da onda representa os *bits* (cada *bit* corresponde a uma frequência diferente).
 
 ![FSK](images/screenshot012.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 121.*
 
-**PSK** (*Phase Shift Keying*): A fase da onda representa os bits.
+**PSK** (*Phase Shift Keying*): A fase da onda representa os *bits*.
 
 ![PSK](images/screenshot013.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 122.*
@@ -367,12 +367,12 @@ A modulação consiste em alterar uma característica dessa onda (amplitude, fre
 
 ## Sinalização Multinível:
 
-Os exemplos anteriores codificam apenas **um bit por sinal** (**monobit**). É possível aumentar a taxa de transmissão enviando mais de um bit por sinal através da **sinalização multinível** (aplicável a sinais digitais e analógicos). A relação entre bits e níveis de sinalização é: para enviar **n bits por sinal, são necessários 2ⁿ níveis distintos**.
+Os exemplos anteriores codificam apenas **um *bit* por sinal** (**monobit**). É possível aumentar a taxa de transmissão enviando mais de um *bit* por sinal através da **sinalização multinível** (aplicável a sinais digitais e analógicos). A relação entre *bits* e níveis de sinalização é: para enviar **n *bits* por sinal, são necessários 2ⁿ níveis distintos**.
 
 ![Sinal Multinível](images/screenshot015.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 123.*
 
-**Baud x bps:** São unidades diferentes e frequentemente confundidas. O **baud** mede quantas vezes por segundo o modem sinaliza o meio (ou seja, quantas amostras/sinais são enviados por segundo); o **bps** mede quantos bits por segundo são efetivamente transmitidos. As duas taxas só coincidem na sinalização monobit. Em uma transmissão dibit, por exemplo, um modem de 2400 baud (2400 sinais por segundo) transmite, na prática, 4800 bps (2 bits por sinal).
+**Baud x bps:** São unidades diferentes e frequentemente confundidas. O **baud** mede quantas vezes por segundo o *modem* sinaliza o meio (ou seja, quantas amostras/sinais são enviados por segundo); o **bps** mede quantos *bits* por segundo são efetivamente transmitidos. As duas taxas só coincidem na sinalização monobit. Em uma transmissão dibit, por exemplo, um *modem* de 2400 baud (2400 sinais por segundo) transmite, na prática, 4800 bps (2 *bits* por sinal).
 
 ## Multiplexação:
 
@@ -390,39 +390,39 @@ Todo esse processo é implementado por um aparelho chamado **multiplexador** (ou
 ### Multiplexação por Divisão de Tempo (TDM):
 
 - Aproveita-se do fato de que, mesmo quando o meio é usado em sua capacidade máxima (o que raramente ocorre o tempo todo), grande parte do tempo está ocioso.
-- Cada dispositivo utiliza **toda** a largura de banda do meio, mas apenas durante um intervalo de tempo específico, chamado **slot**. As informações são divididas em pedaços menores (pacotes) e enviadas aos poucos.
+- Cada dispositivo utiliza **toda** a largura de banda do meio, mas apenas durante um intervalo de tempo específico, chamado ***slot***. As informações são divididas em pedaços menores (pacotes) e enviadas aos poucos.
 
-**TDM assíncrono:** Os slots de tempo têm sempre o mesmo tamanho, independentemente dos dados a serem transmitidos (desperdício com informações menores).
+**TDM síncrono:** Os *slots* de tempo têm sempre o mesmo tamanho, independentemente dos dados a serem transmitidos (desperdício com informações menores).
 
-**TDM síncrono (ou estatístico):** Os slots não têm tamanho fixo. A alocação de tempo pode variar dinamicamente conforme o tipo de dado ou a prioridade do dispositivo.
+**TDM assíncrono (ou estatístico):** Os *slots* não têm tamanho fixo. A alocação de tempo pode variar dinamicamente conforme o tipo de dado ou a prioridade do dispositivo.
 
 É possível, inclusive, combinar FDM e TDM no mesmo meio: TVs a cabo com acesso à Internet, por exemplo, usam FDM para dividir o meio em três grandes faixas (canais, *upload* e *download*) e, dentro da faixa de *upload*/*download*, usam TDM para compartilhar o acesso entre os vários usuários.
 
-## Transmissão Simplex, Half-Duplex e Full-Duplex:
+## Transmissão *Simplex*, *Half-Duplex* e *Full-Duplex*:
 
 Classificação de uma transmissão conforme a direção do fluxo de dados entre transmissor e receptor.
 
-**Simplex:** Os dados trafegam em um único sentido (transmissor → receptor, como rádio, televisão etc.).
+***Simplex*:** Os dados trafegam em um único sentido (transmissor → receptor, como rádio, televisão etc.).
 
-**Half-Duplex:** Os dados podem trafegar nas duas direções, mas nunca ao mesmo tempo (é necessário um intervalo para inverter o sentido da transmissão, como em *walkie-talkies*).
+***Half-Duplex*:** Os dados podem trafegar nas duas direções, mas nunca ao mesmo tempo (é necessário um intervalo para inverter o sentido da transmissão, como em *walkie-talkies*).
 
-**Full-Duplex** (ou apenas *duplex*): Os dados trafegam nas duas direções **simultaneamente**, sem necessidade de *turnaround*. É o modelo predominante em redes de computadores atuais, podendo ser implementado com dois canais independentes (um para cada sentido — comum em fibra óptica, que usa duas fibras) ou multiplexando um único canal em duas faixas de frequência (esquema usado pela maioria dos modems). É o modo utilizado em redes locais Ethernet que utilizam *switches*.
+***Full-Duplex*** (ou apenas *duplex*): Os dados trafegam nas duas direções **simultaneamente**, sem necessidade de *turnaround*. É o modelo predominante em redes de computadores atuais, podendo ser implementado com dois canais independentes (um para cada sentido — comum em fibra óptica, que usa duas fibras) ou multiplexando um único canal em duas faixas de frequência (esquema usado pela maioria dos *modems*). É o modo utilizado em redes locais Ethernet que utilizam *switches*.
 
 ## Transmissão Serial e Paralela:
 
 Classificação conforme a forma como os sinais são encaminhados entre transmissor e receptor.
 
-**Paralela:** Os sinais são transmitidos simultaneamente, seja através de canais independentes (por exemplo, cada bit de um byte indo por um fio diferente - método mais defasado e quase integralmente substituído pela transmissão serial), como os padrões SCSI e ATA, ou multiplexando um único meio em várias faixas de frequência.
+**Paralela:** Os sinais são transmitidos simultaneamente, seja através de canais independentes (por exemplo, cada *bit* de um *byte* indo por um fio diferente - método mais defasado e quase integralmente substituído pela transmissão serial), como os padrões SCSI e ATA, ou multiplexando um único meio em várias faixas de frequência.
 
-**Serial:** Os sinais (bits) são transmitidos sequencialmente, um após o outro, por um único canal. É o modelo mais utilizado em computadores (discos como SSDs, SATA — *Serial ATA*, PCIe etc.), justamente por sua simplicidade, baixo custo de implementação e velocidade (suporta frequências maiores sem interferência eletromagnética e sem *overhead* na organização dos *bits*).
+**Serial:** Os sinais (*bits*) são transmitidos sequencialmente, um após o outro, por um único canal. É o modelo mais utilizado em computadores (discos como SSDs, SATA — *Serial ATA*, PCIe etc.), justamente por sua simplicidade, baixo custo de implementação e velocidade (suporta frequências maiores sem interferência eletromagnética e sem *overhead* na organização dos *bits*).
 
 ## Transmissão Assíncrona e Síncrona:
 
 Para garantir que um sinal não seja perdido ou lido duas vezes, corrompendo o dado (problema conhecido como **sincronização**), a transmissão de informação é controlada por uma espécie de "relógio" presente nas interfaces do transmissor e do receptor, e a diferença entre as duas técnicas está em como esses relógios se relacionam.
 
-**Transmissão assíncrona (ou start/stop):** O transmissor e o receptor **não** estão sincronizados entre si. Para compensar isso, a sincronização é feita **por caractere**: cada caractere transmitido é precedido por um bit de início e finalizado por um ou dois bits de término. É simples e barata de implementar, mas relativamente lenta, além do *overhead* de informação com os *bits* extras.
+**Transmissão assíncrona (ou *start/stop*):** O transmissor e o receptor **não** estão sincronizados entre si. Para compensar isso, a sincronização é feita **por caractere**: cada caractere transmitido é precedido por um *bit* de início e finalizado por um ou dois *bits* de término. É simples e barata de implementar, mas relativamente lenta, além do *overhead* de informação com os *bits* extras.
 
-**Transmissão síncrona:** O transmissor e o receptor estão sincronizados entre si. A sincronização é feita **por blocos** de caracteres ou bits. Cada bloco é precedido por um ou mais caracteres de sincronismo, chamados **SYN**, que permitem ao receptor ajustar seu relógio ao do transmissor. É mais eficiente que a transmissão assíncrona, mas exige interfaces mais precisas (e, portanto, mais caras).
+**Transmissão síncrona:** O transmissor e o receptor estão sincronizados entre si. A sincronização é feita **por blocos** de caracteres ou *bits*. Cada bloco é precedido por um ou mais caracteres de sincronismo, chamados **SYN**, que permitem ao receptor ajustar seu relógio ao do transmissor. É mais eficiente que a transmissão assíncrona, mas exige interfaces mais precisas (e, portanto, mais caras).
 
 Vale lembrar que o sincronismo também pode ser obtido através da própria codificação do sinal (como visto na codificação Manchester).
 
@@ -460,7 +460,7 @@ A **topologia** de uma rede define como os dispositivos estão fisicamente conec
 
 **Anel:** Os dispositivos compartilham o mesmo canal de comunicação, organizado em forma de anel. Suas vantagens e desvantagens são semelhantes às da topologia em barra.
 
-O controle de acesso ao meio mais comum nessa topologia é a **passagem de token**: um token (uma espécie de "permissão para transmitir") circula pelo anel; o dispositivo que deseja transmitir precisa esperar a chegada do token, retirá-lo do anel, enviar seus dados e, em seguida, reinserir um novo token, liberando o meio para os demais.
+O controle de acesso ao meio mais comum nessa topologia é a **passagem de *token***: um *token* (uma espécie de "permissão para transmitir") circula pelo anel; o dispositivo que deseja transmitir precisa esperar a chegada do *token*, retirá-lo do anel, enviar seus dados e, em seguida, reinserir um novo *token*, liberando o meio para os demais.
 
 ---
 
@@ -468,18 +468,18 @@ O controle de acesso ao meio mais comum nessa topologia é a **passagem de token
 
 ## Introdução e Comparação com a Camada Física:
 
-Enquanto a **Camada Física** foca na transmissão bruta dos bits através do canal, a **Camada de Enlace** atua como uma transição lógica. Ela não avalia se o conteúdo da informação "faz sentido" para a aplicação final, mas organiza os dados e garante que a entrega local entre dois pontos ocorra de forma íntegra e estruturada.
+Enquanto a **Camada Física** foca na transmissão bruta dos *bits* através do canal, a **Camada de Enlace** atua como uma transição lógica. Ela não avalia se o conteúdo da informação "faz sentido" para a aplicação final, mas organiza os dados e garante que a entrega local entre dois pontos ocorra de forma íntegra e estruturada.
 
 Para garantir essa integridade, a Camada de Enlace exerce as seguintes funções principais:
 
-- **Enquadramento:** Agrupa os bits brutos recebidos em blocos lógicos chamados **quadros** (*frames*).
-- **Controle de Erros:** Detecta (e, dependendo da tecnologia, corrige) danos ou anomalias sofridos pelos bits durante a transmissão física.
+- **Enquadramento:** Agrupa os *bits* brutos recebidos em blocos lógicos chamados **quadros** (*frames*).
+- **Controle de Erros:** Detecta (e, dependendo da tecnologia, corrige) danos ou anomalias sofridos pelos *bits* durante a transmissão física.
 - **Controle de Fluxo:** Regula a velocidade e o volume do envio de dados para não sobrecarregar o receptor.
 - **Controle de Acesso ao Meio:** Em redes com canais compartilhados, gerencia quando cada dispositivo pode transmitir, a fim de evitar colisões.
 
 ## Quadros (*Frames*):
 
-Em vez de trabalhar com bits brutos, a Camada de Enlace organiza a informação em blocos estruturados de bits, chamados de **quadros** ou ***frames***. Um quadro é tipicamente formado por três estruturas básicas.
+Em vez de trabalhar com *bits* brutos, a Camada de Enlace organiza a informação em blocos estruturados de *bits*, chamados de **quadros** ou ***frames***. Um quadro é tipicamente formado por três estruturas básicas.
 
 **Cabeçalho:** Contém as informações de controle para que haja a comunicação horizontal entre as camadas (origem e destino da mensagem, e protocolo utilizado).
 
@@ -491,44 +491,44 @@ O tamanho de cada uma dessas estruturas varia de acordo com o protocolo.
 
 ## Enquadramento:
 
-Como a Camada de Enlace trabalha com quadros que podem ter tamanhos variáveis, é necessário identificar exatamente onde cada mensagem começa e termina. Para estabelecer esses limites, a maioria dos protocolos utiliza uma **flag** (marcador). Essa flag atua como um sinalizador de início e fim do quadro, podendo ser representada por um caractere específico ou por uma sequência especial de bits.
+Como a Camada de Enlace trabalha com quadros que podem ter tamanhos variáveis, é necessário identificar exatamente onde cada mensagem começa e termina. Para estabelecer esses limites, a maioria dos protocolos utiliza uma ***flag*** (marcador). Essa *flag* atua como um sinalizador de início e fim do quadro, podendo ser representada por um caractere específico ou por uma sequência especial de *bits*.
 
 ![Enquadramento](images/screenshot016.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 153.*
 
-### Problemas na Utilização de Flags:
+### Problemas na Utilização de *Flags*:
 
-Um problema comum ao utilizar flags é que o padrão de bits ou o caractere que as representa pode aparecer espontaneamente no meio da mensagem.
+Um problema comum ao utilizar *flags* é que o padrão de *bits* ou o caractere que as representa pode aparecer espontaneamente no meio da mensagem.
 
 Para evitar que o receptor confunda esse pedaço de dado com o fim do quadro, pode-se adicionar um dado extra à mensagem para quebrar esse padrão acidental (*stuffing*). O receptor, ao ler a mensagem, identifica e retira esse dado extra antes de repassá-la para frente.
 
-**Stuffing:** Insere caracteres (transmissões orientadas a byte - *byte stuffing*) ou bits (orientadas a bits - *bit stuffing*) extras logo antes da flag que apareceu acidentalmente nos dados.
+***Stuffing*:** Insere caracteres (transmissões orientadas a *byte* - *byte stuffing*) ou *bits* (orientadas a *bits* - *bit stuffing*) extras logo antes da *flag* que apareceu acidentalmente nos dados.
 
 > REVISADO ATÉ AQUI!
 
 ## Endereçamento:
 
-Na camada de enlace, a identificação dos dispositivos é feita através do **endereço físico**, também conhecido como **Endereço MAC** (*Medium Access Control*). Esse endereço possui o tamanho padrão de **6 bytes** (2^48 endereços únicos possíveis).
+Na camada de enlace, os endereços usados na comunicação local identificam interfaces de rede. Em tecnologias como Ethernet, eles são chamados de endereços **MAC (*Medium Access Control*)**. Esse endereço possui o tamanho padrão de **6 *bytes*** (2^48 endereços possíveis, mas uma parte é reservada à identificação do fabricante).
 
 ### Alvos do Endereçamento:
 
 Existem três maneiras de direcionar uma mensagem na rede, dependendo da quantidade de destinatários desejados:
 
-- **Unicast:** A mensagem é enviada para apenas um dispositivo específico (comunicação um-para-um).
-- **Multicast:** A mensagem é enviada para um grupo selecionado de dispositivos (comunicação um-para-vários).
-- **Broadcast:** A mensagem é transmitida para todos os dispositivos conectados na rede local (comunicação um-para-todos).
+- ***Unicast*:** A mensagem é enviada para apenas um dispositivo específico (comunicação um-para-um).
+- ***Multicast*:** A mensagem é enviada para um grupo selecionado de dispositivos (comunicação um-para-vários).
+- ***Broadcast*:** A mensagem é transmitida para todos os dispositivos conectados na rede local (domínio do *broadcast* - comunicação um-para-todos).
 
 ## Detecção de Erros:
 
-Para identificar falhas que podem ter ocorrido na mensagem durante a transmissão física (como aquelas causadas por ruído ou atenuação) e, em alguns casos, até mesmo reverter o erro, a camada de enlace aplica mecanismos de controle. Esse processo é feito utilizando o **CDE**.
+Para identificar falhas que podem ter ocorrido na mensagem durante a transmissão física (como aquelas causadas por ruído ou atenuação) e, em alguns casos, até mesmo reverter o erro, a camada de enlace aplica mecanismos de controle. Esse processo é feito utilizando o **CDE (Código de Detecção de Erro)**.
 
-**CDE (Código de Detecção de Erro):** Trata-se de um conjunto de bits gerado a partir de operações matemáticas aplicadas aos dados da mensagem pelo remetente. Ao receber o quadro, o destinatário refaz essas mesmas operações para verificar a integridade da informação. Se o valor calculado pelo receptor for diferente do CDE original recebido, a mensagem sofreu alterações e é considerada inválida.
+**CDE:** Trata-se de um conjunto de *bits* gerado a partir de operações matemáticas aplicadas aos dados da mensagem pelo remetente. Ao receber o quadro, o destinatário refaz essas mesmas operações para verificar a integridade da informação. Se o valor calculado pelo receptor for diferente do CDE original recebido, a mensagem sofreu alterações e é considerada inválida.
 
 ### Mecanismos de Detecção: 
 
-- **Bit de Paridade:** É a técnica mais simples de detecção de erros. Consiste em adicionar um único bit extra (atuando como CDE) ao final do bloco de dados transmitido para garantir que a quantidade de ***bits* '1'** presentes na mensagem seja par (**paridade par** - CDE = 1 se a quantidade de *bits* '1' da mensagem for **ímpar**) ou ímpar (**paridade ímpar** - lógica inversa).
+- ***Bit* de Paridade:** É a técnica mais simples de detecção de erros. Consiste em adicionar um único *bit* extra (atuando como CDE) ao final do bloco de dados transmitido para garantir que a quantidade de ***bits* '1'** presentes na mensagem seja par (**paridade par** - CDE = 1 se a quantidade de *bits* '1' da mensagem for **ímpar**) ou ímpar (**paridade ímpar** - lógica inversa).
 
-- **Paridade Múltipla:** O bit de paridade por si só é consideravelmente inseguro (muita margem na modificação dos *bits* que passaria, inclusive no *bit* de paridade). Para contornar isso, pode ser utilizada a técnica de **paridade múltipla**, realizando a paridade individual das linhas, de cada uma das colunas, e até da linha de paridade múltipla.
+- **Paridade Múltipla:** O *bit* de paridade por si só é consideravelmente inseguro (alterações em múltiplos *bits*, inclusive no *bit* de paridade, podem passar despercebidas). Para contornar isso, pode ser utilizada a técnica de **paridade múltipla**, realizando a paridade individual das linhas, de cada uma das colunas, e até da linha de paridade múltipla.
 
 ![Paridade múltipla](images/screenshot017.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 159.*
@@ -537,12 +537,50 @@ Para identificar falhas que podem ter ocorrido na mensagem durante a transmissã
 
 > Considerando a mensagem "MODEM!": Tira-se o valor ASCII (77 79 68 69 77 33), soma-se tudo (403), obtém-se o resultado modular (147 = ô) e adiciona-se esse valor ao final da mensagem (MODEM!ô).
 
-- **CRC (*Cyclic Redundancy Check*):** Técnica de detecção de erros baseada em uma divisão binária. O transmissor e o receptor utilizam uma mesma sequência de bits, chamada **polinômio gerador**. Antes da transmissão, o emissor divide os dados por esse gerador utilizando operações XOR e adiciona o **resto da divisão** ao final do quadro. No destino, o receptor realiza novamente a divisão utilizando o mesmo gerador. Se o resto obtido for zero, considera-se que os dados chegaram corretamente; caso seja diferente de zero, é detectada uma alteração durante a transmissão.
+- **CRC (*Cyclic Redundancy Check*):** Técnica de detecção de erros baseada em uma divisão binária feita com operações `XOR`. O transmissor e o receptor usam a mesma sequência de *bits*, chamada **polinômio gerador**. Para calcular o CRC, o transmissor acrescenta temporariamente zeros ao fim dos dados, faz a divisão e coloca o **resto obtido** no lugar desses zeros. O receptor divide o conjunto recebido pelo mesmo gerador. Neste modelo simplificado, um resto diferente de zero indica erro; um resto igual a zero indica apenas que **nenhum erro foi detectado**.
+> Não é uma garantia absoluta de que os dados estão intactos, mas é um dos melhores métodos de detecção levando em conta sua eficiência.
 
 ![CRC](images/screenshot018.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 161.*
 
+## Hamming:
+
+### Distância de Hamming:
+
+É uma métrica para definir a **distância mínima** (quantidade de *bits* divergentes) entre dois blocos válidos de dados (111000 e 110001 têm uma distância de 2).
+
+- **Detecção de Erros:** Para detectar `n` erros, a distância mínima suportada (intrínseca ao algoritmo) precisa ser igual a `n + 1`.
+- **Correção de Erros:** Para corrigir `n` erros, a distância mínima suportada (intrínseca ao algoritmo) precisa ser igual a `2n + 1`.
+
+### Algoritmo de Hamming:
+
+É uma técnica que insere ***bits* de redundância** (paridade) em posições estratégicas da mensagem original. Esse método permite não apenas detectar, mas localizar e corrigir um erro simples que tenha ocorrido durante a transmissão da informação.
+
+- ***Bits* de paridade:** Os *bits* de paridade ocupam exclusivamente as posições da mensagem correspondentes às potências de 2 (posições 2^0 = 1, 2^1 = 2, 2^2 = 4, ...). Os espaços restantes (3, 5, 6, 7, 9, etc.) são preenchidos sequencialmente pelos *bits* de dados da mensagem original. O tamanho da mensagem final é igual à `n + (⌊log2(n)⌋ + 1)`, onde `n` é a quantidade original.
+- **Verificação:** Cada *bit* de paridade atua como um "fiscal" de um conjunto específico de posições. A composição desse conjunto obedece a uma lógica matemática: um *bit* de dado será verificado pelos *bits* de paridade da sua posição em binário. Por exemplo, o dado na posição 7 = 111 será verificado pelas paridades na posição 100 = 4, 10 = 2 e 1.
+- **Localização do Erro:** A grande vantagem desse método reside na verificação cruzada. Quando um *bit* de dado é corrompido na transmissão, as paridades responsáveis por ele apresentarão erro, sendo possível localizar o ponto de falha pela interseção das paridades.
+
+Por exemplo, considerando uma mensagem qualquer, originalmente de 16 *bits* (passa a ter 21), com o seguinte resultado das paridades:
+
+  1. `b1` (1,3,5,7,9,11,13,15,17,19,21): Falha;
+  2. `b2` (2,3,6,7,10,11,14,15,18,19): Acerto;
+  3. `b4` (4,5,6,7,12,13,14,15,20,21): Falha;
+  4. `b8` (8,9,10,11,12,13,14,15): Acerto;
+  5. `b16` (16,17,18,19,20,21): Acerto;
+
+Os potenciais *bits* problemáticos são dados por `b1 ∩ b4 - (b2 U b8 U b16)`, resultando apenas no *bit* 5 como problemático.
+> Para obter o resultado mais facilmente, pode-se realizar a soma ponderada `1 * b1 + 2 * b2 + 4 * b4 + 8 * b8 + ...`, em que `bi` é 0 se houver acerto e 1 se houver erro.
+
+O Algoritmo de Hamming possui uma Distância de Hamming igual a 3. Por conta dessa limitação, ele consegue lidar de maneira precisa com, no máximo, **1 erro simples** por mensagem (`2n + 1 = 3 => n = 1` - múltiplos erros simultâneos geram resultado incorreto).
+
+## Correções de Erros:
+
+É importante salientar que **nem sempre a camada de enlace implementará métodos para correção de erros**, pois eles podem ser dispensáveis quando se usam meios de transmissão muito resistentes a ruído (como a fibra óptica), ou a responsabilidade pela correção pode ser delegada às camadas superiores.
+
+
+
 # Fontes:
 
 - MAIA, Luiz Paulo. Arquitetura de Redes de Computadores. 2. ed. Rio de Janeiro: LTC, 2013.
+- TANENBAUM, Andrew; FEAMSTER, Nick; WEATHERALL, David. Redes de Computadores. 6. ed. São Paulo: Pearson, 2021.*
 - FRAGA, Marcelo Caramuru Pimentel. Disciplina: Redes de Computadores I. Curso de graduação em Engenharia de Computação – Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG), 2026.
