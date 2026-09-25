@@ -536,6 +536,8 @@ Como dito, o *shell* interpreta as expansões automaticamente e separa argumento
 
 > REVISADO ATÉ AQUI.
 
+---
+
 # Fontes:
 
 - FREE SOFTWARE FOUNDATION. *GNU Bash Reference Manual*. Versão 5.3. [S. l.]: Free Software Foundation, 2025.

@@ -402,8 +402,12 @@ A comunicação entre as tarefas pode ocorrer de duas maneiras principais:
 
 > REVISADO ATÉ AQUI!
 
+---
+
 # Fontes
 
 - MAZIERO, Carlos A. Sistemas Operacionais: Conceitos e Mecanismos. 1. ed. Curitiba: Editora UFPR, 2019.
+
 - MACHADO, Francis Berenger; MAIA, Luiz Paulo. Arquitetura de sistemas operacionais. 5. ed. Rio de Janeiro: LTC, 2013.
+
 - ANDRADE, Michelle Hanne Soares de. Disciplina: Sistemas Operacionais. Curso de graduação em Engenharia de Computação – Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG), 2026.
