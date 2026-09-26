@@ -1,1268 +1,2104 @@
-# `C` - Básico
+```
+ .´‾‾‾‾‾‾‾`.
+/     _____|
+▏   /        
+▏   ▏      
+▏   \      
+\     ‾‾‾‾‾|
+ `.______.´
+```
 
-# 1. Características da linguagem
+# 00. Características Básicas da Linguagem
 
-## 1.1 Paradigmas
+> Esta apostila utiliza o **C17** como referência.
 
-* **Imperativa:** O código atua como uma série de comandos diretos que alteram o estado do programa passo a passo. O programador dita exatamente *como* o computador deve chegar ao resultado.
-* **Estruturada:** O fluxo de controle é feito por meio de estruturas organizadas e bem definidas (sequência, seleção como `if`/`switch`, e iteração como `for`/`while`), evitando saltos e desvios incondicionais que dificultam a leitura.
-* **Procedural:** O programa é dividido em procedimentos (funções), que encapsulam uma série de instruções e passos computacionais. Isso facilita a organização, a legibilidade e o reaproveitamento de código.
+C é uma linguagem de propósito geral, utilizada em aplicações e em componentes próximos ao *hardware*. Combina funções e estruturas de controle com operações sobre endereços de memória e representações binárias.
 
-## 1.2 Tipagem
+## Paradigmas:
 
-* **Estática:** A verificação de tipos é feita em tempo de compilação (o tipo de cada variável deve ser declarado). 
-* **Fraca:** Permite muitas conversões implícitas (coerções) entre tipos diferentes (por exemplo, tratar um `char` como `int`, ou converter implicitamente entre ponteiros de tipos distintos usando `void*`).
+C é **imperativa**: as instruções modificam o estado do programa, representado pelos valores mantidos na memória.
 
-## 1.3 Nível de abstração
+```c
+int saldo = 100;
+saldo = saldo + 50;  // 150.
+saldo = saldo - 30;  // 120.
+```
 
-**Intermediário:** possui abstrações, mas também muitos recursos de gestão manual do hardware. A proximidade com a CPU é o que garante boa parte de sua velocidade de execução.
+Também é **procedural**: operações são agrupadas em funções reutilizáveis, como um cálculo de média aplicado a diferentes valores. A **programação estruturada** organiza o fluxo por sequência, decisão e repetição, como ao verificar uma compra ou percorrer um estoque.
 
-## 1.4 Modelo de execução
+## Tipagem:
 
-**Compilada:** o arquivo `.c` precisa ser compilado (o compilador mais usado é o `gcc`) para gerar um executável.
+C possui **tipagem estática**: os tipos são conhecidos durante a compilação e orientam a interpretação dos dados e a verificação das operações. A linguagem admite conversões **implícitas**, automáticas, e **explícitas**, indicadas no código.
 
-## 1.5 Gerenciamento de memória
+```c
+int quantidade = 3;
+double preco = 12.50;
+double total = quantidade * preco;  // 37.50.
+```
 
-**Manual:** A linguagem permite controle quase absoluto sobre a memória. Todavia, esse recurso exige gerenciamento manual na alocação e liberação daquele espaço de memória (ver seção 8/9).
+Na multiplicação, o valor de `quantidade` é convertido para `double` (a variável continua sendo `int`). Conversões podem perder informações ou produzir resultados inesperados.
 
-## 1.6 Principais aplicações
+> A descrição “tipagem fraca” não possui definição única. As regras de tipos e conversões explicam melhor o comportamento da linguagem.
 
-* Sistemas operacionais;
-* Sistemas embarcados;
-* Programação de alto desempenho;
+## Nível de Abstração:
 
-## 1.7 Características marcantes
+Funções e variáveis permitem programar sem descrever cada instrução da CPU. Ao mesmo tempo, C oferece acesso a endereços, bits e organização da memória. O nome de uma variável identifica um espaço de armazenamento; ponteiros permitem trabalhar também com seu endereço.
 
-* Aritmética de ponteiros;
-* Acesso direto à memória;
-* Controle de layout de dados;
-* Proximidade com o hardware;
+> Proximidade com o *hardware* não significa acesso irrestrito à memória: em sistemas operacionais, o programa continua sujeito às permissões e aos limites de seu processo.
+
+## Compilação e Execução:
+
+No uso habitual, arquivos `.c` são traduzidos pelo **compilador**, e o **ligador** combina as partes necessárias ao executável. Essa tradução antecipada precisa ser refeita após mudanças no código-fonte para que apareçam no programa executado.
+
+> O **GCC** é uma das ferramentas utilizadas. Pré-processamento, compilação e ligação serão aprofundados no capítulo correspondente.
+
+### Desempenho:
+
+O controle dos dados e da memória, combinado às otimizações do compilador, permite construir programas eficientes. O desempenho depende também do algoritmo, da implementação e do *hardware* (a linguagem, isoladamente, não garante velocidade).
+
+### Portabilidade:
+
+Código padronizado pode ser recompilado para diferentes plataformas, mas o executável normalmente depende da arquitetura e do sistema de destino. Tamanhos de tipos, representações e recursos específicos do sistema também limitam a portabilidade.
+
+## Gerenciamento de Memória:
+
+C combina gerenciamento **automático**, como o de variáveis locais comuns, e **manual**, para alocações dinâmicas. Estas podem sobreviver à função que as solicitou, exigindo controle de utilização e liberação.
+
+> C não possui um coletor de lixo automático integrado à linguagem para recuperar, de forma geral, alocações dinâmicas sem utilização.
+
+## Principais Aplicações:
+
+- **Sistemas operacionais:** *kernels*, *drivers* e ferramentas de sistema.
+- **Sistemas embarcados:** microcontroladores e dispositivos com recursos limitados ou interação com periféricos.
+- **Bibliotecas e ferramentas:** funcionalidades reutilizadas por programas e outras linguagens.
+- **Alto desempenho:** componentes que exigem controle do custo das operações e da memória.
+
+## Características Marcantes:
+
+- **Ponteiros:** acesso indireto a objetos e funções.
+- **Operações sobre bits:** manipulação da representação binária de inteiros.
+- **Organização dos dados:** agrupamentos com arrays e estruturas.
+- **Alocação dinâmica:** solicitação e liberação de memória durante a execução.
+- **Biblioteca padrão:** entrada e saída, *strings*, matemática e outras operações comuns.
+- **Pré-processamento:** inclusão de arquivos, macros e seleção de trechos antes da compilação propriamente dita.
 
 ---
 
-# 2. Fundamentos da linguagem
+# 01. Fundamentos da Linguagem
 
-## 2.1 Sintaxe e estrutura
+> Este capítulo reúne os fundamentos de programação no geral e suas particularidades em C: tipos descrevem os dados, operadores realizam cálculos, estruturas de controle definem o fluxo e funções organizam operações reutilizáveis.
 
-* **Hierarquia de funções:** todo programa em C precisa de uma função `main`, responsável por definir as ações executadas **(função ativa)**. Ela é o ponto de entrada do programa. Por padrão, o tipo de retorno adotado para `main` é `int`, por conta da convenção de usar o valor de retorno `0` como indicativo de execução bem-sucedida. As demais funções funcionam como ferramentas **(função passiva)**.
-* **Comentários:** `// comentário de uma linha` e `/* comentário de bloco, podendo ocupar mais de uma linha */`. Não alteram o funcionamento do código, apenas a legibilidade e organização.
-* **Blocos:** delimitados por chaves (`{ }`) são usados em funções e em estruturas de controle (condicionais e *loops*) para definir sua área de atuação.
-* **Delimitadores:** cada instrução é finalizada por ponto e vírgula (`;`).
-* **Imports/includes:** bibliotecas são adicionadas com `#include <nome_da_biblioteca.h>` (bibliotecas padrão) ou `#include "nome_do_arquivo.h"` (arquivos próprios/locais, se estiverem na mesma pasta, ou `#include "caminho/do/arquivo.h"`). O uso de bibliotecas evita redundância de programação e reduz *bugs*, já que as funções fornecidas já foram testadas e otimizadas.
+Os programas completos incluem cabeçalhos e `main`. Nos fragmentos, instruções pressupõem sua inserção em uma função (definições de funções ficam fora dela). Exemplos com `printf` pressupõem `stdio.h`. Fragmentos separados são independentes, salvo indicação de continuidade.
 
-### Exemplo
+## Estrutura de um Programa:
 
-```c
-#include <stdio.h>              // Biblioteca para uso de elementos de input e output
-
-int main(void) {                // Função de execução do programa, com retorno int e sem argumentos
-    printf("Hello, World!\n");  // Instrução que imprime uma mensagem no terminal
-    return 0;                   // Retorno indicando execução bem-sucedida
-}
-```
-
-## 2.2 Tipos de dados
-
-### Tipos fundamentais
-
-Em C, todos os dados são essencialmente numéricos (representados em binário). O que muda é o especificador de tipo, o que facilita conversões entre tipos, e a quantidade de informação que conseguem armazenar (a depender da arquitetura).
-
-* **`char`:** caracteres, dentro da tabela ASCII. Como a tabela ASCII associa códigos numéricos a caracteres, é possível realizar operações aritméticas (soma, subtração) diretamente com valores `char` (útil para formatação de caracteres e cifragem). Normalmente ocupa 1 *byte* (8*bits*).
-* **`int`:** números inteiros. Normalmente ocupa 4 *bytes* (-2.147.483.648 - 2.147.483.647).
-* **`float`:** números racionais (ponto flutuante). Normalmente ocupa 4 *bytes*.
-* **`double`:** números racionais, com o dobro da capacidade do `float` (normalmente 8 *bytes*). Capaz de gerar números mais extremos (maiores em módulo ou próximos de zero) e manter maior precisão.
-
-**`stdbool.h`:** A biblioteca disponibiliza um tipo booleano (`true`/`false`) para quem preferir essa notação.
-
-Cada tipo possui um formatador associado, usado por `printf`/`scanf` (ver seção 9) para indicar explicitamente o tipo de dado na conversão de/para `string`: `%c` (char), `%d` (int), `%f` (float), `%lf` (double), entre outros (evitando erros de conversão).
-
-### Qualificadores e modificadores
-
-* **`const`:** Impede que o valor da variável seja alterado após sua inicialização.
-* **`volatile`:** Informa ao compilador que o valor da variável pode ser alterado a qualquer momento por algo externo ao código (hardware, *threads*, interrupções). Isso impede o compilador de fazer otimizações assumindo que o valor permanecerá o mesmo.
-* **`long` / `short`:** Modificam a quantidade de espaço de um tipo numérico. O `long` aumenta o tamanho reservado (evitando *overflow*/*underflow*), gerando formatadores como `%ld` (`long int`). O `short` diminui o tamanho (economia de memória em casos críticos).
-* **`signed` / `unsigned`:** O `signed` (comportamento padrão numérico - não precisa ser explicitado na declaração) permite armazenar números positivos e negativos usando um bit como sinal. `unsigned` remove o bit de sinal, permitindo apenas valores positivos (potencialmente dobrando a capacidade máxima armazenável naquele mesmo espaço de memória se forem usados apenas números positivos).
-
-### Conversões
-
-* **Conversão explícita (*casting*):** adição do prefixo `(novo_tipo)` na frente da variável, feita explicitamente pelo programador. Normalmente usada para converter um tipo maior em um tipo menor (ex.: `double` → `int`).
-* **Conversão implícita (coerção):** feita automaticamente pelo compilador. Normalmente usada para converter um tipo menor em um tipo maior (`float` → `double`).
-
-É preferível sempre realizar a conversão de forma explícita (torna o código mais claro e evita *bugs*).
-
-```c
-#include <stdio.h>
-int main(){
-    // Conversão explícita:
-    double pi = 3.1415926535;
-    int i_pi = (int) pi;    // i_pi = 3
-
-    unsigned int u = 5;
-    int s = -5;
-    if (s < (int) u) { /* ação */ }
-    // Sem a conversão, ambos seriam tratados como unsigned. 
-    // Em binário: -5 = 11111111 11111111 11111111 11111011 = 4.294.967.291 (unsigned) > 5
-
-    // Conversão implícita:
-    char a = 'A';           // char (65 na tabela ASCII)
-    int b = a;              // char -> int implícito
-    float c = b;            // int -> float implícito
-    double d = c;           // float -> double implícito
-    int e = d;              // double -> int implícito
-    double op1 = b/10;      // op1 = (double)(65/10) = 6.0  (divisão inteira antes da conversão)
-    double op2 = b/10.0;    // op2 = 65.0/10.0 = 6.5
-
-    return 0;
-}
-```
-
-**ATENÇÃO:** comparar um valor `signed` com um `unsigned` sem conversão explícita pode gerar resultados incorretos, pois o valor `signed` é implicitamente convertido para `unsigned` antes da comparação.
-
-## 2.3 Variáveis
-
-* **Declaração:** `tipo_de_dado nome_da_variável = valor;` (a atribuição pode ser feita depois da declaração).
-* **Atribuição:** o valor atribuído pode ser um literal ou um valor indireto (resultado de outra variável, retorno de função, expressão), desde que condizente com o tipo da variável.
-* **Declaração múltipla:** é possível declarar várias variáveis do mesmo tipo em uma linha, misturando atribuição literal e indireta.
-* **Valores padrão / elemento nulo:** cada tipo tem sua própria forma de representar "ausência de valor": `0` para tipos numéricos, `'\0'` para `char`, `NULL` para ponteiros, *arrays* e *strings*.
-
-**ATENÇÃO:** enquanto nenhum valor for atribuído a uma variável após sua declaração, ela não fica "vazia" - contém lixo de memória (dados residuais do endereço reservado). É necessário atribuir algum valor (mesmo que nulo) antes de utilizá-la.
+Em programas convencionais sobre um sistema operacional, **`main`** é o ponto de entrada definido pela linguagem. `stdio.h` declara recursos de entrada e saída e `#include` incorpora o cabeçalho durante o pré-processamento.
 
 ```c
 #include <stdio.h>
 
-int main(){
-    char a;                    // Declaração
-    a = 'c';                   // Atribuição de valor literal
-    int b = 20;                // Declaração com atribuição direta
-    int c = b, d = 40 + 20;    // Declaração múltipla: indireta (c) e literal/expressão (d)
-    printf("a = %c, b = %d, c = %d, d = %d\n", a, b, c, d);
-    // output: a = c, b = 20, c = 20, d = 60
-    return 0;
+int main(void) {                             // Retorno int; sem parâmetros.
+    int quantidade = 5;
+    quantidade += 2;
+    printf("Quantidade: %d\n", quantidade);  // 7.
+    /* Comentário de bloco,
+       que pode ocupar várias linhas. */
+    return 0;                                // Encerramento bem-sucedido.
 }
 ```
 
-### Constantes
+As chaves delimitam **blocos**. O ponto e vírgula encerra declarações e instruções como atribuições, chamadas e retornos. Um bloco de `if` ou `for` normalmente não recebe `;` após a chave final (a definição de `struct` e o `do while` exigem esse delimitador).
 
-Elementos cujo valor, após a declaração, não pode ser modificado. **A atribuição só pode ocorrer nesse momento**.
+Comentários `//` terminam na quebra de linha; `/* ... */` pode abranger várias linhas, mas não admite aninhamento. A indentação evidencia a organização, enquanto a sintaxe determina os blocos. Dentro de *strings*, espaços e quebras representadas fazem parte do conteúdo.
 
-Sintaxe: `const tipo_de_dado nome_da_variável = valor;`.
+> Ambientes embarcados sem sistema operacional podem adotar outra inicialização, definida pela implementação.
 
-## 2.4 Escopo e duração
+### Compilação Básica:
 
-* **Escopo local:** elemento declarado dentro de um bloco. Sua memória fica reservada apenas durante a execução do bloco, e é acessível diretamente apenas por esse bloco e seus sub-blocos.
-* **Escopo global:** elemento declarado fora de qualquer bloco. Seu endereço de memória fica alocado durante toda a execução do programa e pode ser acessado por qualquer função.
+Com o código em `programa.c`, o GCC produz o executável, que pode ser iniciado em um terminal Linux:
 
-### Sombreamento (*shadowing*)
-
-Elementos pertencentes ao mesmo bloco (ou sub-blocos) não podem ter o mesmo nome, mas elementos em blocos diferentes podem. Quando um dado global e um local têm o mesmo nome, o dado **local** é o processado nas chamadas dentro daquele escopo.
-
-```c
-#include <stdio.h>
-
-const int constante_global = 10;
-int variavel_global = 20;
-
-int main(){
-    const int constante_local = 30;
-    int variavel_local = 40;
-    int variavel_global = 50;   // Sombreamento da variável global
-    printf("constante_global = %d\nvariavel_global = %d\n", constante_global, variavel_global);
-    // output: 
-    // constante_global = 10
-    // variavel_global = 50
-    for (int i = 0; i < 10; i++) { /* i só existe dentro do for */ }
-    int i = 5;                  // Nome reaproveitado, pois o i do for não existe mais aqui
-    return 0;
-}
+```sh
+gcc -std=c17 -Wall -Wextra -Wpedantic programa.c -o programa # Compilação, linkagem e criação do executável.
+./programa
+gcc programa.c -o programa # Compilação resumida: versão default da linguagem (definida pelo compilador); indica apenas warnings e erros.
 ```
 
-### Duração/*lifetime*
+`-std=c17` seleciona o padrão; `-Wall` e `-Wextra` habilitam grupos de avisos; `-Wpedantic` solicita diagnósticos adicionais ligados ao padrão; `-o` define o nome da saída. A ausência de avisos não garante a correção do programa.
 
-A duração de um elemento (por quanto tempo sua memória permanece reservada) não se confunde com seu escopo (onde ele pode ser acessado). Em C, essa duração é controlada pelas classes de armazenamento `auto`, `static` e `extern` (ver seção 7/8).
+## Tipos de Dados e Variáveis:
 
-## 2.5 Operadores e expressões
+O **tipo** determina valores representáveis e operações permitidas. Uma **variável** é um objeto identificado por um nome. Como em um compartimento, o nome identifica o espaço, o tipo orienta a interpretação e a atribuição substitui o conteúdo.
 
-### Operadores
+### Tipos Básicos:
 
-De forma resumida, a hierarquia de operadores segue, do maior para o menor nível de prioridade:
-
-1. Parênteses.
-2. Operadores aritméticos, lógicos, comparativos etc.
-3. Operadores de atribuição.
-
-É recomendável definir explicitamente a ordem das operações por meio de parênteses, para evitar *bugs* e comportamentos inesperados.
-
-### Tabela de precedência completa
-
-Da maior para a menor prioridade:
-
-1. **Parênteses:** `( )`.
-2. **Acesso a valores:** índice de array (`[ ]`), chamada de função, acesso a membro de struct (`.`), acesso a membro via ponteiro (`->`).
-3. **Operadores unários** (avaliados da direita para a esquerda): inversão de sinal (`-`), NOT lógico (`!`), NOT bit a bit (`~`), incremento (`++`), decremento (`--`), operador de endereço (`&`), desreferenciação de ponteiro (`*`), `sizeof`.
-4. **Aritméticos:** `*`, `/`, `%` têm prioridade maior que `+`, `-`.
-5. **Deslocamento de bits:** `<<`, `>>`.
-6. **Relacionais:** `>`, `>=`, `<`, `<=`, `==`, `!=`.
-7. **Bit a bit:** AND (`&`), XOR (`^`), OR (`|`).
-8. **Booleanos:** AND lógico (`&&`), OR lógico (`||`).
-9. **Operador condicional (ternário):** `condição ? valor_se_verdadeiro : valor_se_falso`.
-10. **Atribuição** (avaliados da direita para a esquerda): simples (`=`) e compostas (`+=`, `-=`, `*=`, `/=`, `%=`, `&=`, `|=`, `^=`, `<<=`, `>>=`).
-11. **Vírgula:** `,`.
-
-**Observação:** os operadores de incremento/decremento, quando à esquerda da variável (`++x`), realizam a operação antes de retornar o valor; quando à direita (`x++`), retornam o valor antes de realizar a operação.
-
-**Operador condicional (ternário):**
-Avalia uma condição em linha e retorna um dos dois valores dependendo do resultado (funciona como um `if-else` compacto capaz de retornar valor).
-
-Sintaxe: `condição ? valor_se_verdadeiro : valor_se_falso`
-
-Exemplo:
+| Tipo | Utilização |
+|---|---|
+| `char` | Tipo inteiro utilizado frequentemente para caracteres. |
+| `int` | Números inteiros. |
+| `float` | Números em ponto flutuante. |
+| `double` | Ponto flutuante, normalmente com maior precisão e alcance que `float`. |
+| `_Bool` | Valores booleanos: `0` e `1`. |
+| `void` | Ausência de valor em contextos como o retorno de uma função. |
 
 ```c
-int argc = 1;
-char* args[] = {"programa"};
-// Se argc for 1 imprime a primeira string, senão imprime o último argumento
-printf("%s\n", argc == 1 ? "Nao foi enviado nada" : args[argc - 1]);
+int pessoas = 4;
+float temperatura = 26.5f;  // Sufixo f: constante float.
+double distancia = 1234.56789;  // Sem sufixo: constante double.
+char letra = 'A';
+```
 
+Ponto flutuante possui precisão limitada: muitos decimais são aproximados, como uma divisão interrompida após certo número de casas. `char` ocupa um byte de C, normalmente de oito bits. Tamanhos como quatro bytes para `int` e `float` e oito para `double` são comuns, mas dependem da implementação.
+
+> C não exige ASCII. Um caractere visual pode ocupar vários bytes em codificações como UTF-8.
+
+### Inteiros com e sem Sinal:
+
+`int` equivale a `signed int`; `unsigned int` representa valores não negativos. `short`, `long` e `long long` selecionam outras categorias de inteiros, e a palavra `int` pode ser omitida nessas combinações.
+
+```c
+int saldo = -20;
+unsigned int quantidade = 20;
+short pequeno = 100;
+long populacao = 1000000L;
+long long contador = 10000000000LL;
+unsigned long capacidade = 500000UL;
+```
+
+Tipos distintos podem ter o mesmo tamanho: `long` não garante mais espaço que `int` em qualquer plataforma. `char`, `signed char` e `unsigned char` são tipos diferentes (o comportamento de `char` quanto ao sinal depende da implementação).
+
+### Valores Booleanos:
+
+No C17, `stdbool.h` fornece `bool`, `true` e `false` para facilitar o uso de `_Bool`. Na conversão numérica, zero se torna falso e qualquer outro valor se torna verdadeiro.
+
+```c
+#include <stdbool.h>
+bool ativo = true;
+bool bloqueado = false;
+bool possui_itens = 5;  // Armazena 1.
+```
+
+### Literais e Caracteres Especiais:
+
+Valores escritos diretamente incluem `10`, `3.5`, `'A'` e `"Texto"`. Aspas simples delimitam uma constante de caractere; aspas duplas delimitam uma *string*.
+
+```c
+int decimal = 25, hexadecimal = 0x19, octal = 031;  // Mesmo valor.
+printf("Nome:\tAna\nCaminho: pasta\\arquivo\nMensagem: \"Ola\"\n");
+```
+
+| Escape | Significado |
+|---|---|
+| `\n` | Nova linha. |
+| `\t` | Tabulação horizontal. |
+| `\\` | Barra invertida. |
+| `\"` | Aspas duplas. |
+| `\'` | Aspas simples. |
+| `\0` | Caractere nulo, de valor zero. |
+
+> `'0'` é o caractere usado para escrever o algarismo zero; `'\0'` é o caractere nulo. Seus valores são diferentes.
+
+### Declaração, Inicialização e Atribuição:
+
+A declaração informa tipo e nome; a inicialização fornece o primeiro valor; uma atribuição posterior altera o objeto existente. A cópia de um valor não estabelece uma ligação permanente entre variáveis.
+
+```c
+int a;                     // Declaração sem inicialização.
+a = 10;                    // Atribuição.
+int b = 20, c = b;         // Declaração múltipla com inicialização.
+b = 30;                    // c continua valendo 20.
+int largura = 10, altura = 5;
+int area = largura * altura;
+int total = 0;             // Valor inicial conhecido.
+```
+
+Uma variável local comum sem inicialização possui **valor indeterminado** (sua leitura pode causar comportamento indefinido). Objetos com duração estática, como variáveis fora das funções, recebem inicialização padrão quando não há inicializador explícito. A diferença será aprofundada no capítulo de memória.
+
+> Zero só representa “ausência de informação” quando o programa adota essa convenção.
+
+### Constantes com `const`:
+
+`const` impede a alteração por uma expressão que trate o objeto como constante. Para uma variável simples, o valor normalmente é fornecido na inicialização.
+
+```c
+const double taxa = 0.15;
+double preco = 100.0;
+double acrescimo = preco * taxa;
+// taxa = 0.20;  // Inválido.
+```
+
+> Em C17, uma variável `const int` não é automaticamente uma expressão constante aceita em contextos como os rótulos de `case`.
+
+`volatile` caracteriza acessos sujeitos às regras da implementação para objetos voláteis, como em determinadas interações com dispositivos. Será retomado junto de memória e otimizações (não garante atomicidade nem sincronização entre *threads*).
+
+### Tamanho com `sizeof`:
+
+`sizeof` informa o tamanho de um tipo ou objeto em bytes. Seu resultado possui tipo `size_t`, apresentado por `%zu`.
+
+```c
+int numero = 10;
+printf("Tipo: %zu; objeto: %zu\n", sizeof(int), sizeof numero);
+```
+
+## Operadores e Expressões:
+
+Uma **expressão** combina valores e operadores para produzir um resultado. Atribuições e incrementos também modificam o estado do programa.
+
+### Aritmética e Conversões:
+
+| Operador | Operação | Exemplo |
+|---|---|---|
+| `+` | Adição. | `7 + 2` → `9`. |
+| `-` | Subtração. | `7 - 2` → `5`. |
+| `*` | Multiplicação. | `7 * 2` → `14`. |
+| `/` | Divisão. | `7 / 2` → `3`. |
+| `%` | Resto inteiro. | `7 % 2` → `1`. |
+
+Se os dois operandos são inteiros, a divisão descarta a parte fracionária em direção a zero. O tipo do destino não altera retroativamente a operação. Conversões **implícitas** seguem as regras da linguagem; um *cast* explícito usa `(tipo) expressao`.
+
+```c
+int a = 7 / 2, b = -7 / 2;      // 3 e -3.
+double c = 7 / 2;               // Divisão inteira, depois conversão: 3.0.
+double d = 7 / 2.0;             // Divisão em ponto flutuante: 3.5.
+double total = a;               // Conversão implícita: 3 → 3.0.
+int parte_inteira = (int) 8.9;  // 8.
+int soma = 15, elementos = 2;
+double media = (double) soma / elementos;  // 7.5.
+```
+
+Um *cast* não garante segurança: o destino pode ser incapaz de representar o valor. Misturar inteiros com e sem sinal também pode mudar a interpretação da comparação:
+
+```c
+int saldo = -1;
+unsigned int limite = 10;
+int resultado = saldo < limite;  // 0: saldo é convertido para unsigned int.
+```
+
+> Divisão inteira por zero, resto por zero e estouro aritmético de inteiros com sinal causam **comportamento indefinido**: a linguagem não exige um resultado ou reação específicos. Inteiros sem sinal seguem redução modular, o que também pode contrariar a lógica pretendida.
+
+### Atribuição e Atualização:
+
+`=` atribui um valor; operadores compostos combinam cálculo e atualização. `++` e `--` acrescentam ou retiram uma unidade. A forma pós-fixada produz o valor anterior; a pré-fixada produz o atualizado.
+
+```c
+int saldo = 100;
+saldo += 20;  // Equivale, aqui, a saldo = saldo + 20.
+saldo -= 10;
+saldo *= 2;
+saldo /= 5;
+saldo %= 7;
+int contador = 5;
+int anterior = contador++;  // anterior = 5; contador = 6.
+int atual = ++contador;     // atual = 7; contador = 7.
+```
+
+> `i++ + i++` modifica o mesmo objeto sem o sequenciamento necessário e causa comportamento indefinido. Atualizações separadas deixam a ordem explícita.
+
+### Comparações e Operações Lógicas:
+
+Comparações produzem `1` para verdadeiro e `0` para falso. Em condições numéricas, zero é falso e qualquer outro valor é verdadeiro.
+
+| Operadores | Relação ou operação |
+|---|---|
+| `==`, `!=` | Igualdade e diferença. |
+| `<`, `<=`, `>`, `>=` | Menor, menor ou igual, maior, maior ou igual. |
+| `&&` | Verdadeiro quando ambas as condições são verdadeiras. |
+| `\|\|` | Verdadeiro quando pelo menos uma condição é verdadeira. |
+| `!` | Inverte o resultado lógico. |
+
+```c
+int idade = 20, possui_documento = 1;
+int entrada_permitida = idade >= 18 && possui_documento;  // 1.
+int entrada_bloqueada = !entrada_permitida;               // 0.
+int tem_dez_anos = idade == 10;                           // 0.
+int alternativa = idade < 18 || !possui_documento;        // 0.
+int divisor = 0;
+int resultado = divisor != 0 && 20 / divisor > 2;  // Não executa a divisão.
+```
+
+`&&` e `||` utilizam **curto-circuito**: só avaliam a segunda expressão quando ela ainda é necessária. `=` faz atribuição, não comparação; sua troca por `==` pode alterar a lógica sem impedir a compilação.
+
+> Intervalos exigem relações separadas: `valor >= 0 && valor <= 10`. `0 <= valor <= 10` não representa esse intervalo.
+
+### Operações sobre Bits:
+
+Cada bit pode ser visualizado como um interruptor. Os operadores atuam sobre as posições da representação de valores inteiros.
+
+| Operador | Operação |
+|---|---|
+| `&` | AND: bits presentes em ambos. |
+| `\|` | OR: bits presentes em pelo menos um. |
+| `^` | XOR: bits diferentes. |
+| `~` | Inversão de todos os bits do tipo utilizado. |
+| `<<`, `>>` | Deslocamento para esquerda e direita. |
+
+```c
+unsigned int a = 6, b = 3;  // Bits finais: 0110 e 0011.
+unsigned int intersecao = a & b;  // 0010 → 2.
+unsigned int uniao = a | b;       // 0111 → 7.
+unsigned int diferentes = a ^ b; // 0101 → 5.
+unsigned int dobro = a << 1;     // 1100 → 12.
+unsigned int metade = a >> 1;    // 0011 → 3.
+```
+
+> `&` e `|` não oferecem curto-circuito. Deslocamentos exigem quantidade não negativa e menor que a largura do operando promovido. Tipos sem sinal tornam essas operações mais previsíveis; `~` inverte também os bits omitidos na representação abreviada.
+
+### Operador Condicional:
+
+`condicao ? expressao_verdadeira : expressao_falsa` avalia somente a alternativa selecionada e produz um valor utilizável em outras expressões.
+
+```c
 int a = 10, b = 20;
-int maior = (a > b) ? a : b; // Atribui 20 à variável maior
+int maior = a > b ? a : b;  // 20.
 ```
 
----
+### Precedência e Agrupamento:
 
-# 3. Controle de fluxo
+A precedência determina o agrupamento: `2 + 3 * 4` resulta em `14`; `(2 + 3) * 4`, em `20`. A tabela segue da maior para a menor precedência; alguns operadores serão aprofundados adiante.
 
-Em C padrão não existe um tipo booleano nativo (ver seção 2). A linguagem entende `0` como falso e qualquer outro valor (de qualquer tipo) como verdadeiro.
+| Grupo | Operadores |
+|---|---|
+| Pós-fixados | Chamada `()`, índice `[]`, membros `.` e `->`, `x++`, `x--`. |
+| Unários | `++x`, `--x`, `+`, `-`, `!`, `~`, `&`, `*`, `sizeof`, `_Alignof`. |
+| Conversão explícita | `(tipo)`. |
+| Multiplicativos | `*`, `/`, `%`. |
+| Aditivos | `+`, `-`. |
+| Deslocamentos | `<<`, `>>`. |
+| Relacionais | `<`, `<=`, `>`, `>=`. |
+| Igualdade | `==`, `!=`. |
+| AND bit a bit | `&`. |
+| XOR bit a bit | `^`. |
+| OR bit a bit | `\|`. |
+| AND lógico | `&&`. |
+| OR lógico | `\|\|`. |
+| Condicional | `?:`. |
+| Atribuição | `=`, `+=`, `-=`, `*=`, `/=`, `%=`, `&=`, `^=`, `\|=`, `<<=`, `>>=`. |
+| Vírgula | `,`. |
 
-## 3.1 Condicionais
+A associatividade resolve operadores de mesma precedência: `a - b - c` corresponde a `(a - b) - c`; `a = b = 0`, a `a = (b = 0)`.
 
-### `if` / `else if` / `else`
+> Agrupamento não determina, em geral, a ordem de avaliação. Em `f() + g()`, não há garantia de qual função é chamada primeiro.
 
-**Conceito:** estrutura de escolha binária (verdadeiro ou falso).
+## Entrada e Saída Básica:
 
-**Sintaxe:**
+`stdio.h` oferece entrada e saída por fluxos. Em uma execução interativa comum, entrada e saída padrão se conectam ao terminal, mas também podem ser redirecionadas.
+
+### Saída com `printf`:
+
+`printf` combina o texto de formato com os argumentos seguintes. `%.2f` apresenta duas casas decimais; `%%` escreve o sinal de porcentagem.
 
 ```c
-if (condição) {
-    instruções;
-} else if (outra_condição) {
-    instruções;
-} else {
-    instruções;
-}
+int quantidade = 3;
+double preco = 12.5;
+char categoria = 'A';
+printf("Quantidade: %d; preco: %.2f; categoria: %c; desconto: 10%%\n",
+       quantidade, preco, categoria);
 ```
 
-Se a condição for verdadeira, executa o bloco correspondente; se for falsa, passa para o próximo teste (`else if` ou `else`).
+| Dado | `printf` | `scanf` |
+|---|---|---|
+| `int` | `%d` | `%d` |
+| `unsigned int` | `%u` | `%u` |
+| `long int` | `%ld` | `%ld` |
+| `long long int` | `%lld` | `%lld` |
+| `float` | `%f` | `%f` |
+| `double` | `%f` | `%lf` |
+| `long double` | `%Lf` | `%Lf` |
+| `char` como caractere | `%c` | `%c` |
+| String | `%s` | `%s` |
+| `size_t` | `%zu` | `%zu` |
 
-**Exemplo:**
+Em `printf`, `float` é promovido a `double`; em `scanf`, os destinos exigem distinguir `%f` e `%lf`. Formatos incompatíveis com os tipos esperados podem causar comportamento indefinido.
+
+### Entrada com `scanf`:
+
+`scanf` interpreta a entrada e retorna quantas conversões foram atribuídas com sucesso. `&` informa onde armazenar o resultado, como um endereço de entrega (ponteiros serão explicados no próximo capítulo).
 
 ```c
 #include <stdio.h>
 
-int main(){
-    int valor;
-    scanf(" %d", &valor);
-    if (valor == 10) {
-        printf("Eh 10!\n");
-        return 10;
-    } else if (valor == 20 || valor == 30) {
-        return 30;      // valor != 10
-    } else {            // valor != 10 && valor != 20 && valor != 30
-        if ('b')        // Diferente de 0, portanto sempre executado
-            printf("Acao alcancada!\n");
-        else
-            return 1;   // Nunca alcançado
+int main(void) {
+    int idade;
+    double altura;
+    char opcao;
+    printf("Idade, altura e opcao:\n");
+    if (scanf("%d %lf %c", &idade, &altura, &opcao) != 3) {
+        printf("Entrada invalida.\n");
+        return 1;
     }
+    printf("Idade: %d; altura: %.2f; opcao: %c\n", idade, altura, opcao);
     return 0;
 }
 ```
 
-**ATENÇÃO:** estruturas de controle podem ser usadas sem chaves, caso em que apenas a instrução imediatamente seguinte pertence ao bloco. É recomendável sempre usar chaves para evitar comportamento inesperado.
+O `if` impede o uso dos resultados quando a leitura não obtém os três valores. `%c` não ignora espaços automaticamente: o espaço anterior no formato consome espaços em branco, incluindo quebras de linha. Para lê-lo sozinho, aplica-se `scanf(" %c", &opcao)`.
 
-### `switch` / `case`
+> Entrada não consumida permanece para leituras posteriores. Valores fora da faixa do tipo e entradas arbitrárias exigem validação adicional.
 
-**Conceito:** executa diferentes ações a depender do valor de uma expressão.
+## Estruturas Condicionais:
 
-**Sintaxe:**
+### `if`, `else if` e `else`:
+
+`if` executa a alternativa verdadeira; `else` atende ao caso falso. Em uma cadeia, o primeiro teste satisfeito seleciona seu bloco e os demais são ignorados. Um `if` simples pode omitir tanto `else if` quanto `else`.
 
 ```c
-switch (valor) {
-    case opcao_1:
-        instruções;
+int nota = 5;
+if (nota >= 6) {
+    printf("Aprovado.\n");
+} else if (nota >= 4) {
+    printf("Recuperacao.\n");
+} else {
+    printf("Reprovado.\n");
+}
+```
+
+> Sem chaves, apenas a instrução seguinte pertence ao ramo. As chaves tornam o agrupamento explícito.
+
+### `switch` e `case`:
+
+`switch` seleciona um ponto de entrada identificado por uma constante inteira. `default`, opcional, atende a valores sem correspondência. `break` encerra o `switch` (sem interrupção, a execução continua nas instruções seguintes - *fall-through*).
+
+```c
+int opcao = 2;
+switch (opcao) {
+    case 1:
+        printf("Cadastrar.\n");
+        break;
+    case 2:
+        printf("Consultar.\n");
+        break;
+    case 3:
+    case 4:  // Duas opções compartilham a ação.
+        printf("Operacao administrativa.\n");
         break;
     default:
-        instruções;
-        break; // facultativo no default
+        printf("Opcao desconhecida.\n");
+        break;
 }
 ```
 
-**Exemplo:**
+> `break` depende do fluxo desejado, não é obrigatório em todo `case`. `switch` não compara diretamente *strings* nem ponto flutuante.
+
+## Estruturas de Repetição:
+
+### `while` e `do while`:
+
+`while` testa antes do corpo e pode não executá-lo. `do while` testa depois, garantindo uma execução inicial. A condição é reavaliada a cada repetição.
+
+```c
+int contador = 1;
+while (contador <= 3) {
+    printf("%d ", contador++);
+}
+printf("\n");  // 1 2 3.
+
+contador = 5;
+do {
+    printf("%d\n", contador++);  // 5: executa mesmo com condição falsa.
+} while (contador < 3);
+```
+
+> O `;` após a condição faz parte da sintaxe de `do while`.
+
+### `for`:
+
+`for (inicializacao; condicao; atualizacao)` executa a inicialização uma vez, testa antes do corpo e atualiza após cada repetição. Uma variável declarada no cabeçalho tem escopo restrito à estrutura.
+
+```c
+for (int i = 0; i < 4; i++) {
+    printf("%d ", i);
+}
+printf("\n");  // 0 1 2 3.
+
+int i;  // Também pode ser declarada antes do laço.
+for (i = 10; i >= 0; i -= 5) {
+    printf("%d ", i);
+}
+printf("\n");  // 10 5 0.
+```
+
+As três partes podem ser omitidas. Sem condição, ela é tratada como verdadeira: `for (;;) { break; }` só termina pela transferência de controle explícita.
+
+### `break` e `continue`:
+
+`break` encerra o laço ou `switch` mais interno que o contém. `continue` pula o restante da repetição: no `for`, segue para a atualização e o teste; no `while` e `do while`, para o teste.
+
+```c
+for (int i = 1; i <= 10; i++) {
+    if (i == 3) {
+        continue;
+    }
+    if (i == 6) {
+        break;
+    }
+    printf("%d ", i);
+}
+printf("\n");  // 1 2 4 5.
+```
+
+### Desvio com `goto`:
+
+`goto` transfere a execução para um rótulo da mesma função. O rótulo é um identificador seguido de `:` e, em C17, deve preceder uma instrução.
+
+```c
+int valor = -1;
+if (valor < 0) {
+    goto entrada_invalida;
+}
+printf("Valor aceito.\n");
+goto fim;
+entrada_invalida:
+printf("Valor invalido.\n");
+fim:
+printf("Encerramento.\n");
+```
+
+Desvios livres dificultam acompanhar o fluxo (decisões e repetições comuns costumam ser mais claras com estruturas próprias).
+
+## Funções:
+
+Uma função reúne operações sob um nome e informa entradas e retorno, como uma ferramenta com interface definida. **Parâmetros** são as variáveis da definição; **argumentos** são os valores fornecidos na chamada.
+
+### Retorno, Protótipos e Passagem por Valor:
+
+O **protótipo** declara nome, retorno e tipos dos parâmetros antes do uso. A definição pode vir depois. C passa argumentos **por valor**: alterar um parâmetro modifica sua cópia local.
 
 ```c
 #include <stdio.h>
 
-int main(){
-    int valor;
-    scanf(" %d", &valor);
-    switch (valor) {
-        case 10:            // valor == 10
-            // Ação 1
-            break;
-        case 30: case 40:   // valor == 30 || valor == 40
-            // Ação 3
-            break;
-        default:            // valor != 10 && valor != 30 && valor != 40
-            // Ação padrão
-            break;
+int incrementar(int valor);  // Também poderia ser int incrementar(int);
+void mostrar_linha(void);
+
+int main(void) {
+    int numero = 10;
+    int resultado = incrementar(numero);
+    mostrar_linha();
+    printf("Numero: %d; resultado: %d\n", numero, resultado);  // 10 e 11.
+    return 0;
+}
+
+int incrementar(int valor) {
+    valor++;
+    return valor;
+}
+
+void mostrar_linha(void) {
+    printf("----------------\n");
+}
+```
+
+`return expressao;` encerra a função e produz seu resultado. Uma função `void` não retorna valor: pode terminar pelo final do corpo ou antecipadamente com `return;`. Um protótipo fornece informações ao compilador, sem executar nem “pré-compilar” a função.
+
+```c
+int maior(int a, int b) {
+    if (a > b) {
+        return a;  // Encerra antecipadamente.
+    }
+    return b;
+}
+```
+
+> Em C17, `int funcao(void);` informa ausência de parâmetros; `int funcao();` deixa os parâmetros sem especificação. Uma função usada para produzir resultado precisa retornar um valor adequado (atingir o fim de `main` equivale a retornar zero).
+
+Ponteiros permitem alcançar objetos do chamador, mas o valor do próprio ponteiro também é passado por cópia.
+
+### Escopo:
+
+O **escopo** determina onde um nome pode ser usado, a partir da declaração. Nomes locais abrangem o restante do bloco e seus blocos internos; declarações fora de funções possuem escopo de arquivo, chamado informalmente de global.
+
+```c
+#include <stdio.h>
+int total = 100;
+
+int main(void) {
+    int quantidade = 5;
+    {
+        int quantidade = 2;  // Sombreamento do nome externo.
+        printf("%d\n", quantidade);  // 2.
+    }
+    printf("%d %d\n", quantidade, total);  // 5 e 100.
+    return 0;
+}
+```
+
+O **sombreamento** (*shadowing*) faz o nome identificar o objeto mais interno, sem eliminar o externo. Escopo indica onde o nome é utilizável; tempo de vida indica por quanto tempo o objeto existe.
+
+### Recursão:
+
+Uma função recursiva chama a si mesma, diretamente ou por outras funções, reduzindo o problema até uma condição de encerramento.
+
+```c
+unsigned int fatorial(unsigned int n) {
+    if (n <= 1) {
+        return 1;
+    }
+    return n * fatorial(n - 1);
+}
+// Chamada dentro de outra função: printf("%u\n", fatorial(5)); → 120.
+```
+
+`fatorial(5)` depende de `fatorial(4)` e assim sucessivamente (os resultados são combinados no retorno). Cada chamada possui parâmetros e variáveis locais automáticas próprios. Profundidade excessiva pode esgotar recursos, e resultados grandes podem ultrapassar a faixa do tipo: o exemplo atende a valores pequenos.
+
+## Grupos de Dados:
+
+### Arrays:
+
+Um **array** reúne elementos do mesmo tipo em posições consecutivas, como compartimentos iguais numerados a partir de zero. Um array de quatro elementos possui índices de `0` a `3`.
+
+```c
+int notas[4] = {8, 7, 9, 6};
+int inferido[] = {10, 20, 30};  // Tamanho deduzido: 3.
+int parcial[5] = {1, 2};       // {1, 2, 0, 0, 0}.
+int zerado[5] = {0};           // Todos recebem zero.
+int indefinido[5];            // Local comum: valores indeterminados.
+notas[1] = 10;                // Alteração individual.
+printf("%d %d\n", notas[0], notas[3]);  // 8 e 6.
+// notas = {1, 2, 3, 4};      // Inválido: não admite atribuição integral.
+```
+
+Um inicializador parcial inicializa também as posições restantes; para inteiros, elas recebem zero. Depois da criação, os elementos podem ser modificados individualmente, mas o array não é reatribuído com `=`.
+
+Laços percorrem as posições. A quantidade resulta da divisão do tamanho total pelo tamanho de um elemento:
+
+```c
+int notas[] = {8, 7, 9, 6};
+size_t quantidade = sizeof notas / sizeof notas[0];
+int soma = 0;
+for (size_t i = 0; i < quantidade; i++) {
+    soma += notas[i];
+}
+double media = (double) soma / quantidade;
+printf("Quantidade: %zu; media: %.2f\n", quantidade, media);  // 4 e 7.50.
+```
+
+> O cálculo exige o próprio array, não um ponteiro nem um parâmetro ajustado para ponteiro. Acessos fora dos limites causam comportamento indefinido (C não verifica automaticamente todos os índices).
+
+### Matrizes:
+
+Uma matriz pode ser representada como um array de arrays. Em `matriz[linha][coluna]`, o primeiro índice seleciona uma linha e o segundo um elemento dela. As linhas se sucedem de forma contígua na memória.
+
+```c
+int matriz[][3] = {  // Primeira dimensão deduzida: 2; também caberia [2][3].
+    {1, 2, 3},
+    {4, 5, 6}
+};
+printf("%d\n", matriz[1][2]);  // 6.
+for (int linha = 0; linha < 2; linha++) {
+    for (int coluna = 0; coluna < 3; coluna++) {
+        printf("%d ", matriz[linha][coluna]);
+    }
+    printf("\n");
+}
+// Linhas impressas: 1 2 3 e 4 5 6.
+```
+
+A primeira dimensão pode ser deduzida do inicializador; as seguintes definem a organização de cada elemento composto.
+
+### *Strings*:
+
+Uma **string** é uma sequência de caracteres terminada por `'\0'`. Capacidade do array e comprimento do texto são distintos: `"Ana"` contém três caracteres antes do terminador e exige quatro posições.
+
+```c
+char exato[] = "Ana";       // Quatro posições.
+char nome[20] = "Ana";      // Capacidade 20; comprimento inicial 3.
+char texto[] = {'O', 'l', 'a', '\0'};
+nome[0] = 'E';
+printf("%s: %s\n", nome, texto);  // Ena: Ola.
+puts(exato);                // Ana, seguida de uma nova linha.
+```
+
+`%s` apresenta uma *string*; `puts` acrescenta uma nova linha. Para ler uma palavra, a largura máxima reserva espaço ao terminador:
+
+```c
+char nome[20];
+if (scanf("%19s", nome) == 1) {
+    printf("Nome: %s\n", nome);
+} else {
+    printf("Falha na leitura.\n");
+}
+```
+
+O nome do array fornece acesso ao destino, sem `&nome`. `%s` para no espaço em branco; `fgets`, apresentada no capítulo seguinte, permite ler linhas com espaços.
+
+> A ausência de `'\0'` pode fazer funções ultrapassarem o array. `=` não copia integralmente arrays e `==` não compara o conteúdo de *strings* (as operações correspondentes serão apresentadas com `string.h`).
+
+### Estruturas (`struct`):
+
+Uma `struct` reúne membros de tipos diferentes, cada um com armazenamento próprio, como uma ficha com código, nome e preço. A definição descreve o formato; a declaração da variável cria o objeto; `.` seleciona um membro.
+
+```c
+struct Produto {
+    int codigo;
+    char nome[20];
+    double preco;
+};
+struct Produto produto = {10, "Caderno", 15.50};
+struct Produto outro = {.preco = 2.0, .codigo = 11, .nome = "Lapis"};
+produto.preco = 17.0;
+struct Produto copia = produto;
+copia.preco = 20.0;
+printf("%s: %.2f\n", produto.nome, produto.preco);  // Caderno: 17.00.
+```
+
+A inicialização pode seguir a ordem dos membros ou indicá-los por nome. A atribuição entre estruturas compatíveis copia seus membros, incluindo o array `nome` (alterar os membros dessa cópia não modifica os correspondentes de `produto`).
+
+> A definição de `struct` não admite valores padrão para seus membros. Seu tamanho pode incluir preenchimento de alinhamento. Membros ponteiros, estudados adiante, copiam endereços, não os objetos apontados.
+
+### Enumerações com `enum`:
+
+Enumerações nomeiam constantes inteiras. Sem valor explícito, a primeira recebe zero e as seguintes recebem o valor anterior mais um.
+
+```c
+enum Estado { DESLIGADO, LIGADO, EM_ESPERA };  // 0, 1 e 2.
+enum Codigo { SUCESSO = 0, ERRO_LEITURA = 10, ERRO_ESCRITA };  // Último: 11.
+enum Estado estado = LIGADO;
+if (estado == LIGADO) {
+    printf("Equipamento em funcionamento.\n");
+}
+```
+
+> Uma variável de enumeração não valida automaticamente se o valor corresponde a um dos nomes declarados. Esses nomes também podem ser usados em `switch`.
+
+### Uniões com `union`:
+
+Os membros de uma `union` compartilham armazenamento, como um compartimento que admite formatos diferentes de conteúdo, usados um de cada vez.
+
+```c
+union Valor {
+    int inteiro;
+    double decimal;
+};
+union Valor valor;
+valor.inteiro = 10;
+printf("%d\n", valor.inteiro);
+valor.decimal = 3.5;
+printf("%.1f\n", valor.decimal);
+```
+
+Seu tamanho comporta o maior membro e os requisitos de alinhamento, não a soma de espaços independentes. Ler outro membro após uma escrita não faz conversão numérica comum (no uso básico, o programa acompanha qual representação está válida e lê esse membro).
+
+## Apelidos com `typedef`:
+
+`typedef` cria um nome alternativo, sem modificar o armazenamento nem as operações do tipo original: `typedef unsigned long Contador;` permite declarar `Contador acessos = 0;`. Também simplifica nomes de estruturas.
+
+### Arrays de Estruturas:
+
+O exemplo combina o apelido com vários registros. O índice seleciona o aluno, e `.` seleciona um campo.
+
+```c
+#include <stdio.h>
+
+typedef struct {
+    char nome[20];
+    double nota;
+} Aluno;
+
+int main(void) {
+    Aluno turma[] = {{"Ana", 8.0}, {"Bruno", 6.5}, {"Carla", 9.0}};
+    size_t quantidade = sizeof turma / sizeof turma[0];
+    for (size_t i = 0; i < quantidade; i++) {
+        printf("%s: %.1f\n", turma[i].nome, turma[i].nota);
     }
     return 0;
 }
-```
-
-**ATENÇÃO:** todo `case` precisa obrigatoriamente de um `break` (no `default` é facultativo); sem ele, os `case`s seguintes também são executados (*fall-through*).
-
-## 3.2 Repetição
-
-### `while` / `do while`
-
-**Conceito:**
-
-* `while` executa uma ação enquanto a condição for verdadeira (podendo nunca entrar no bloco, se a condição já começar falsa).
-* `do while` executa o bloco antes de testar a condição, garantindo ao menos uma execução.
-
-**Sintaxe:**
-
-```c
-while (condição) { 
-    instruções; 
-}
-
-do { 
-    instruções; 
-} while (condição);
-```
-
-**Exemplo:**
-
-```c
-#include <stdio.h>
-
-int main(){
-    int valor;
-    scanf(" %d", &valor);
-    while (valor != 10) {           // Se valor == 10, nem entra
-        printf("Valor diferente de 10\n");
-        scanf(" %d", &valor);
-    }
-    do {
-        printf("%d\n", ++valor);    // output: 11
-    } while (valor <= 10);          // Executa ao menos uma vez
-    return 0;
-}
-```
-
-### `for`
-
-**Conceito:** *loop* cuja duração é delimitada no próprio escopo da estrutura.
-
-**Sintaxe:**
-
-```c
-for (tipo_de_dado variável = valor; condição_de_parada; operação) {
-    instruções;
-}
-```
-
-**Observação:** a variável de controle não precisa ser declarada no escopo do `for` (pode ser declarada antes). Se for criada no escopo, ela é local a ele (só existe dentro do laço).
-
-**Exemplo:**
-
-```c
-#include <stdio.h>
-
-int main(){
-    int u = 0;
-    for (int i = 0; u < 20; i++) { // i incrementado de 1 em 1, interno ao for
-        u += 2;
-        printf("%d ", u);
-    } printf("\n");                // output: 2 4 6 8 10 12 14 16 18 20
-
-    for (u; u >= 10; u -= 3)       // u, externo ao for, decrementado de 3 em 3
-        printf("%d ", u);
-    printf("\n");                  // output: 20 17 14 11
-    return 0;
-}
-```
-
-## 3.3 Controle da execução
-
-* **`break`:** sai imediatamente do bloco de execução (válido em *loops* e `switch`).
-* **`continue`:** ignora o restante das instruções abaixo dele no *loop* atual e inicia a próxima repetição (só funciona em *loops*).
-* **`return`:** encerra a função atual, opcionalmente retornando um valor.
-
-#### `goto`
-
-**Conceito:** redireciona a execução para a linha marcada por `LABEL` (ver seção 11).
-**Sintaxe:** `goto LABEL;` 
-
-```c
-#include <stdio.h>
-
-int main(){
-    int a = 10;
-    goto LABEL;
-    a *= 2; // Pulado pelo goto
-    LABEL:
-    printf("%d\n", a); // output: 10
-    return 0;
-}
+// Saída em três linhas: Ana: 8.0; Bruno: 6.5; Carla: 9.0.
 ```
 
 ---
 
-# 4. Funções
+# 02. Ponteiros
 
-## 4.1 Declaração e chamada
+> A partir desse capítulo são apresentadas ferramentas específicas e quase exclusivas da linguagem C.
 
-**Sintaxe:** 
+Ponteiros permitem acessar objetos indiretamente, compartilhar dados entre partes do programa e utilizar interfaces de *strings*, arquivos e outros recursos. O endereço indica a localização de um compartimento; o dado é seu conteúdo. Copiar o endereço permite alcançar o mesmo compartimento sem duplicar seu conteúdo.
 
-```c
-tipo_de_retorno nome_da_funcao(tipo_de_dado_1 arg1, tipo_de_dado_2 arg2, ...) { 
-    instruções 
-}
-```
+## Endereços e Acesso Indireto:
 
-Toda função deve ter seu tipo de retorno definido (`void` se não retornar nada) e pode admitir argumentos. Funções precisam ser escritas **acima** das funções que as chamam (por isso `main` costuma ser a última função do arquivo).
-
-### Protótipos
-
-Ferramenta que "pré-compila" as funções, permitindo posicioná-las livremente no código (como declarar uma variável e definir seu valor depois). No protótipo, basta declarar o tipo dos argumentos. Ainda assim, o protótipo precisa ficar acima de qualquer função que chame a função referenciada.
+O operador `&` obtém um endereço; `*` acessa o objeto indicado. O ponteiro também é um objeto, com endereço e tempo de vida próprios.
 
 ```c
 #include <stdio.h>
 
-int dobro(int);             // Protótipo - precisa vir acima, pois é chamado em funcaoSemPrototipo
-
-void funcaoSemPrototipo(int valor){
-    printf("%d\n", dobro(valor));
-}
-
-int funcaoComPrototipo();   // Protótipo que pode ficar abaixo
-
-int main(){
-    funcaoSemPrototipo(funcaoComPrototipo()); // Mesmo que: funcaoSemPrototipo(25)
-    return 0;               // output: 50
-}
-int dobro(int valor){
-    return (valor * 2);
-}
-int funcaoComPrototipo(){   // void implícito no argumento
-    return 25;
-}
-```
-
-## 4.2 Parâmetros e retorno
-
-Parâmetros são variáveis locais declaradas no escopo da função, que copiam os dados passados na chamada. Em C padrão, a quantidade de parâmetros de uma função é fixa (ver seção 9). O tipo de retorno precisa ser definido (`void` indica que a função não retorna valor).
-
-### Parâmetros do `main` (`argc`/`argv`)
-
-A função `main` pode receber parâmetros vindos da linha de comando:
-
-`int main(int argc, char* argv[])`.
-
-Ao executar o programa pelo terminal, os elementos digitados após o nome do executável (separados por espaço) são salvos em `argv`, e a quantidade de elementos é salva em `argc`.
-
-```c
-#include <stdio.h>
-
-int main(int argc, char* argv[]){
-    printf("Ultima mensagem: %s\n", argc == 1 ? "Nao foi enviado nada" : argv[argc - 1]);
+int main(void) {
+    int numero = 10, outro = 20;
+    int *ponteiro = &numero;
+    int *copia = ponteiro;  // Mesmo destino, sem duplicar numero.
+    printf("Valor: %d; endereco: %p\n", *ponteiro, (void *) ponteiro);
+    *copia = 25;
+    printf("%d\n", numero);  // 25.
+    ponteiro = &outro;       // Muda o destino.
+    *ponteiro = 30;          // Modifica outro.
+    printf("%d %d\n", numero, outro);  // 25 e 30.
     return 0;
 }
 ```
 
-**Observação:** se nenhum argumento for passado, `argc == 1` e `argv[0]` fica vazio (armazena apenas `'\n'`).
+`%p` espera `void *`, justificando a conversão na chamada de `printf`. O formato e o endereço apresentados dependem da implementação e da execução.
 
-## 4.3 Passagem de argumentos
+| Expressão | Significado |
+|---|---|
+| `numero` | Objeto inteiro. |
+| `&numero` | Endereço desse objeto. |
+| `ponteiro` | Variável que armazena um endereço. |
+| `*ponteiro` | Acesso ao objeto apontado. |
+| `&ponteiro` | Endereço da própria variável ponteiro. |
 
-Dentro de uma função, os valores passados na chamada são copiados para as variáveis locais correspondentes.
+### Declaração e Tipo do Destino:
 
-* **Passagem por valor:** ao passar um valor comum, ele é copiado para a variável local da função (não há interação com a variável original).
-* **Passagem por referência (via ponteiro):** ao passar um endereço, ele é copiado para o ponteiro local da função, que passa a interagir diretamente com a variável original (ver seção 8).
+O tipo informa como o destino será acessado e orienta a aritmética do ponteiro. Cada identificador exige seu próprio asterisco.
 
 ```c
-#include <stdio.h>
-
-void divisao(int valor, int* referencia){ // Recebe um int (valor) e o endereço de um int (referência)
-    valor /= 2;                           // Cópia local (não afeta a variável original)
-    *referencia /= 2;                     // Ponteiro para o endereço da variável original (afeta ela)
-}
-int main(){
-    int a = 10, b = 10;
-    divisao(a, &b);                       // Envia o valor de a e o endereço de b
-    printf("a = %d, b = %d\n", a, b);     // output: a = 10, b = 5
-    return 0;
-}
+int numero = 10;
+double medida = 2.5;
+char letra = 'A';
+int *p_numero = &numero;
+double *p_medida = &medida;
+char *p_letra = &letra;
+int *a, b;   // a: ponteiro; b: inteiro.
+int *c, *d;  // Ambos ponteiros.
 ```
 
-## 4.4 Recursão
+`int *p`, `int* p` e `int * p` são equivalentes. Declarar um ponteiro não cria seu destino: um ponteiro local comum sem inicialização possui valor indeterminado.
 
-**Mecanismo em C:** uma função chama a si mesma; quando a condição de parada é atingida, as chamadas retornam seus resultados gradualmente.
+> Converter `int` para `double` converte o valor. Forçar seu endereço para `double *` não transforma o objeto e pode violar regras de tipo e alinhamento ao acessá-lo.
 
-```c
-#include <stdio.h>
+## Ponteiros Nulos e Validade:
 
-void fibonacci_recursivo(int antecessor, int atual, int termo){
-    printf("%d, ", antecessor);
-    if (--termo > 1)
-        fibonacci_recursivo(atual, antecessor + atual, termo);
-    else
-        printf("%d\n", atual);
-}
-int main(){
-    fibonacci_recursivo(1, 1, 15); // Imprime os 15 primeiros termos de Fibonacci
-    return 0;
-    // output: 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610
-}
-```
-
-**Observação:** cada chamada recursiva mantém suas variáveis alocadas e ativas na *stack* até retornar - uma função com *n* variáveis, a cada chamada recursiva, adiciona um novo *frame* com mais *n* variáveis à pilha.
-Uso prolongado reduz a eficiência e, em casos extremos (memória limitada), pode causar *stack overflow*.
-
----
-
-# 5. Estruturas de dados
-
-## 5.1 Arrays e vetores
-
-**Conceito:** São coleções de variáveis do mesmo tipo agrupadas sob um único nome, armazenadas de forma sequencial na memória. 
-
-**Declaração:** Um *array* de `n` elementos é declarado como: `tipo_de_dado nome[n];`, sendo indexado de `nome[0]` até `nome[n-1]`.
-
-**Observação:** Em geral, múltiplos elementos de um *array* só podem ser inicializados simultaneamente durante a declaração; alterações posteriores são feitas individualmente (frequentemente usando *loops*).
+`NULL`, disponível em cabeçalhos como `stddef.h` e `stdio.h`, representa um ponteiro nulo. Ele indica ausência de destino válido, não um objeto vazio ou espaço para escrita.
 
 ```c
-#include <stdio.h>
-
-int main() {
-    int array_vazio[10];                // Declarado, mas com lixo de memória
-    int array_zerado[5] = {0};          // {0, 0, 0, 0, 0}
-    int array_inferido[] = {4, 5, 6};   // O compilador infere o tamanho como 3
-
-    int notas[4] = {8, 7, 9, 6};        // Inicialização na declaração
-    
-    notas[3] = 10; // Modificação individual posterior do último elemento
-    
-    for (int i = 0; i < 4; i++) {
-        printf("%d ", notas[i]);
+int *ponteiro = NULL;
+{
+    int temporario = 10;
+    ponteiro = &temporario;
+    if (ponteiro != NULL) {  // Também poderia ser if (ponteiro).
+        *ponteiro = 20;
+        printf("%d\n", temporario);  // 20.
     }
-    printf("\n"); // output: 8 7 9 10
-
-    return 0;
 }
+// temporario deixou de existir: desreferenciar ponteiro seria inválido.
+ponteiro = NULL;
 ```
 
-### Matrizes (arrays multidimensionais)
+Guardar o endereço não prolonga a existência do objeto. Isso também impede devolver com segurança o endereço de uma variável local automática que deixa de existir no retorno. Um ponteiro que perde a validade dessa forma é chamado de **pendente** (*dangling pointer*).
 
-Um vetor é uma matriz de dimensão 1; matrizes de *n* dimensões são conjuntos de matrizes de dimensão *n-1*. Na declaração, é obrigatório definir o tamanho de todas as dimensões.
+> Desreferenciar um ponteiro nulo causa comportamento indefinido. Testar `NULL` não comprova validade geral: tempo de vida, limites e permissões do objeto também precisam ser respeitados.
+
+## Ponteiros e `const`:
+
+A posição de `const` determina se a restrição recai sobre o acesso ao dado, sobre a variável ponteiro ou sobre ambos.
 
 ```c
-int matriz_2[3][3] = {0};                       // Todos zerados
-int matriz_3[3][3] = {1, 2, 3};                 // {{1,2,3},{0,0,0},{0,0,0}}
-int matriz_4[3][3] = {{9, 8, 7}, {6, 5, 4}};    // {{9,8,7},{6,5,4},{0,0,0}}
-int matriz_5[2][5] = {1,2,3,4,5,6,7,8,9,10};    // {{1,2,3,4,5},{6,7,8,9,10}}
+int numero = 10, outro = 20;
+const int *leitura = &numero;        // Também: int const *leitura.
+int *const fixo = &numero;
+const int *const ambos = &numero;
+
+leitura = &outro;  // Pode mudar de destino.
+// *leitura = 30;  // Não pode alterar o dado por esse acesso.
+*fixo = 30;        // Pode alterar numero.
+// fixo = &outro;  // Não pode mudar de destino.
+// *ambos = 40;    // Não pode alterar o dado por esse acesso.
+// ambos = NULL;   // Não pode mudar de destino.
+numero = 50;       // numero não foi definido como const.
+printf("%d\n", *ambos);  // 50.
 ```
+
+| Declaração | Reatribuir o ponteiro | Alterar o dado por ele |
+|---|---|---|
+| `int *p` | Sim. | Sim, se o objeto for modificável. |
+| `const int *p` | Sim. | Não. |
+| `int *const p` | Não. | Sim, se o objeto for modificável. |
+| `const int *const p` | Não. | Não. |
+
+Um ponteiro para dado constante não torna necessariamente o objeto original imutável. Por outro lado, remover `const` com um *cast* não permite modificar um objeto originalmente definido como constante: essa escrita causa comportamento indefinido.
+
+## Ponteiros em Funções:
+
+C passa o próprio ponteiro **por valor**, mas sua cópia local alcança o objeto do chamador. O mecanismo costuma ser chamado informalmente de “passagem por referência”. Destinos adicionais também permitem produzir vários resultados.
 
 ```c
 #include <stdio.h>
 
-int main() {
-    int matriz_zerada[3][3] = {0};                    // Todos os elementos zerados
-    int matriz_linear[2][3] = {1, 2, 3, 4, 5, 6};     // Preenchimento sequencial
-    
-    // Inicialização aninhada (mais legível)
-    int grade[2][3] = {
-        {9, 8, 7}, 
-        {6, 5, 4}
-    };    
-    
-    // Acessando os elementos da matriz aninhada
-    for(int i = 0; i < 2; i++) {
-        for(int j = 0; j < 3; j++) {
-            printf("%d ", grade[i][j]);
+void dividir(int dividendo, int divisor, int *quociente, int *resto) {
+    *quociente = dividendo / divisor;
+    *resto = dividendo % divisor;
+}
+
+int main(void) {
+    int quociente, resto;
+    dividir(17, 5, &quociente, &resto);
+    printf("Quociente: %d; resto: %d\n", quociente, resto);  // 3 e 2.
+    return 0;
+}
+```
+
+A interface pressupõe destinos válidos, divisor não nulo e divisão representável. Alterar `*quociente` muda o inteiro do chamador; atribuir outro endereço ao parâmetro `quociente` mudaria apenas a cópia local do ponteiro.
+
+### Ponteiros para Ponteiros:
+
+Para modificar uma variável ponteiro do chamador, a função recebe seu endereço. Cada acesso indireto percorre um nível, como uma ficha que indica outra ficha, que finalmente indica o dado.
+
+```c
+#include <stdio.h>
+
+void redirecionar(int **destino, int *novo) {
+    *destino = novo;
+}
+
+int main(void) {
+    int a = 10, b = 20;
+    int *ponteiro = &a;
+    redirecionar(&ponteiro, &b);
+    printf("%d\n", *ponteiro);  // 20.
+    return 0;
+}
+```
+
+Dentro da função, `destino` guarda o endereço do ponteiro do chamador; `*destino` acessa esse ponteiro; `**destino` acessa o inteiro alcançado por ele.
+
+## Arrays e Ponteiros:
+
+Um array **contém elementos**; uma variável ponteiro **armazena um endereço**. Na maioria das expressões, o array é convertido para um ponteiro ao primeiro elemento, processo chamado de **decaimento** (*array-to-pointer decay*). O armazenamento original continua sendo um array.
+
+### Indexação e Aritmética:
+
+`p[i]` equivale a `*(p + i)`, para acessos válidos. Somar uma unidade avança um elemento do tipo apontado, não necessariamente um byte.
+
+```c
+int valores[] = {10, 20, 30};
+int *ponteiro = valores;       // Mesmo destino que &valores[0].
+printf("%d %d %d\n", valores[1], ponteiro[1], *(ponteiro + 1));  // 20 20 20.
+(*ponteiro)++;                // Altera valores[0] para 11.
+int anterior = *ponteiro++;   // Equivale a *(ponteiro++).
+printf("%d %d\n", anterior, *ponteiro);  // 11 e 20.
+
+int *fim = valores + 3;
+for (int *atual = valores; atual != fim; atual++) {
+    printf("%d ", *atual);
+}
+printf("\n");  // 11 20 30.
+```
+
+Se `int` ocupa quatro bytes, um avanço corresponde a quatro bytes. Como compartimentos iguais, o tipo determina a distância entre posições. `(*p)++` altera o dado; `p++` altera o ponteiro.
+
+> A aritmética deve permanecer no mesmo array ou na posição imediatamente posterior. Essa última posição pode servir de limite, mas não pode ser desreferenciada. Não é válido deslocar ponteiros livremente pela memória.
+
+### Distância e Comparação:
+
+A diferença entre posições do mesmo array produz a quantidade de elementos entre elas, com tipo `ptrdiff_t`, de `stddef.h`, apresentado por `%td`.
+
+```c
+#include <stddef.h>
+int valores[5] = {10, 20, 30, 40, 50};
+ptrdiff_t distancia = &valores[4] - &valores[1];
+// Dentro de uma função, com stdio.h: printf("%td\n", distancia); -> 3.
+```
+
+Comparações de ordem também podem ser usadas entre posições do mesmo array. `<` e `>` não fornecem uma ordenação geral portável entre objetos independentes.
+
+### Tamanho, Identidade e Reatribuição:
+
+`sizeof` aplicado ao array mede o conjunto; aplicado ao ponteiro mede essa variável, sem informar quantos elementos estão disponíveis. O operador `&` também preserva a identidade do array.
+
+```c
+int valores[4] = {10, 20, 30, 40};
+int outros[4] = {50, 60, 70, 80};
+int *elemento = valores;
+int (*conjunto)[4] = &valores;
+printf("%zu %zu\n", sizeof valores, sizeof elemento);
+valores[0] = 15;      // Altera um elemento.
+elemento = outros;    // Reatribui o ponteiro.
+// valores = outros;  // Inválido.
+// valores++;         // Inválido.
+```
+
+Se `int` ocupa quatro bytes, `sizeof valores` é dezesseis (o tamanho do ponteiro depende da implementação). `elemento` aponta para um inteiro, enquanto `conjunto` aponta para quatro inteiros agrupados: os tipos e os avanços são diferentes.
+
+> `sizeof` e `&` são contextos importantes sem decaimento. Um array não é um “ponteiro constante”: seus elementos podem ser modificáveis, mas ele possui tipo e armazenamento próprios.
+
+## Arrays como Parâmetros:
+
+Em parâmetros, `int valores[]` é ajustado para `int *valores`. O tamanho não acompanha o ponteiro e pode ser fornecido separadamente.
+
+```c
+#include <stdio.h>
+
+void mostrar(const int *valores, size_t quantidade) {
+    for (size_t i = 0; i < quantidade; i++) {
+        printf("%d ", valores[i]);
+    }
+    printf("\n");
+}
+
+int main(void) {
+    int numeros[] = {10, 20, 30, 40};
+    mostrar(numeros, sizeof numeros / sizeof numeros[0]);  // 10 20 30 40.
+    mostrar(numeros + 1, 2);  // 20 30.
+    return 0;
+}
+```
+
+`const` impede modificar os inteiros por esse parâmetro. A segunda chamada fornece dois elementos a partir do segundo. Escrever `int valores[10]` no parâmetro não cria um array local nem verifica automaticamente seu tamanho (`sizeof valores` ali mediria o ponteiro ajustado).
+
+## Matrizes e Ponteiros:
+
+`int matriz[2][3]` contém duas linhas de três inteiros. Seu decaimento produz `int (*)[3]`, um ponteiro para linha. Avançar esse ponteiro percorre três inteiros de cada vez.
+
+### Ponteiro para Array e Parâmetros:
+
+```c
+#include <stdio.h>
+
+void mostrar_matriz(int matriz[][3], size_t linhas) {
+    for (size_t i = 0; i < linhas; i++) {
+        for (size_t j = 0; j < 3; j++) {
+            printf("%d ", matriz[i][j]);
         }
         printf("\n");
     }
-    // output: 
-    // 9 8 7 
-    // 6 5 4
-    
+}
+
+int main(void) {
+    int matriz[2][3] = {{1, 2, 3}, {4, 5, 6}};
+    int (*linha)[3] = matriz;
+    printf("%d\n", linha[0][2]);  // 3.
+    linha++;
+    printf("%d\n", linha[0][2]);  // 6.
+    mostrar_matriz(matriz, 2);    // Linhas: 1 2 3 e 4 5 6.
     return 0;
 }
 ```
 
-## 5.2 Strings
+O parâmetro `int matriz[][3]` é ajustado para `int (*matriz)[3]`. O número de colunas integra o tipo e permite calcular os deslocamentos.
 
-*Strings* não são tipos nativos em C; elas são manipuladas como *arrays* de `char` em que o seu final é estritamente demarcado pelo caractere nulo (`'\0'`). Esse caractere nulo dita o tamanho "lógico" da string, permitindo que a cadeia de texto varie dentro de um *array* fixo maior.
+| Declaração | Significado |
+|---|---|
+| `int (*p)[3]` | Ponteiro para array de três inteiros. |
+| `int *p[3]` | Array de três ponteiros para inteiros. |
 
-**Inicialização e mutabilidade:**
+### Arrays de Ponteiros:
 
-```c
-// Array mutável (alocado no stack, cada caractere pode ser modificado individualmente)
-char string_mutavel[] = "Texto"; // Cria um array de 6 posições ('T', 'e', 'x', 't', 'o', '\0')
-string_mutavel[0] = 'M';         // Agora é "Mexto"
-
-// Ponteiro para string literal (normalmente alocada em memória de leitura, imutável)
-char* string_literal = "Texto";
-// string_literal[0] = 'M';      // ERRO: comportamento indefinido, possivelmente crash.
-```
-
-O ferramental completo para manipulação (*strcpy*, *strcat*, etc) fica em `string.h` (ver seção 9).
-
-## 5.3 Estruturas compostas
-
-### `struct`
-
-**Conceito:** tipo derivado de dados que agrupa variáveis de múltiplos tipos relacionados entre si. Simula, de forma primitiva, algo como um
-"objeto" de linguagens orientadas a objeto (sem funções internas, encapsulamento ou polimorfismo).
-
-**Sintaxe:** 
+Outra representação utiliza um array de endereços. O primeiro acesso obtém o ponteiro guardado; o segundo acessa a sequência indicada.
 
 ```c
-struct nome { 
-    tipo_de_dado elem_1; 
-    tipo_de_dado elem_2; 
-    ... 
-};
+int primeira[] = {1, 2, 3}, segunda[] = {4, 5, 6};
+int *linhas[] = {primeira, segunda};
+int **ponteiro = linhas;
+printf("%d %d\n", ponteiro[0][2], ponteiro[1][2]);  // 3 e 6.
 ```
+
+As sequências podem ocupar regiões distintas e ter comprimentos diferentes, informados separadamente. Uma matriz contígua não se converte em `int **`: um *cast* não cria o array de ponteiros exigido por essa representação.
+
+## *Strings* e Ponteiros:
+
+Um ponteiro para o primeiro caractere permite acessar uma *string*, mas não informa sua capacidade nem se ela é modificável.
+
+### Array Modificável e Literal:
 
 ```c
-struct carta {
-    char *naipe, *face;
-    int valor;
-};
-typedef struct carta carta;             // Apelido mais curto para o tipo (antes era obrigatório declarar struct carta nome_da_variavel)
-typedef struct carta CartaDeBaralho;    // Outro apelido possível
-
-int main(){
-    struct carta a;
-    a.naipe = "Paus"; a.valor = 9; a.face = "Nove";
-
-    carta b = {"Ouros", "Rei", 10};                                    // Inicialização ordenada
-    CartaDeBaralho c = {.face = "As", .valor = 11, .naipe = "Copas"};  // Inicialização nomeada (ordem livre)
-    return 0;
-}
+char editavel[] = "Casa";       // Array inicializado com os caracteres.
+const char *literal = "Casa";  // Ponteiro para literal.
+editavel[0] = 'M';
+printf("%s %s\n", editavel, literal);  // Masa Casa.
+literal = "Outra";            // Pode mudar o destino.
+// literal[0] = 'X';          // Não permitido por esse acesso.
 ```
 
-**ATENÇÃO:** não é possível predefinir valores para os membros de uma `struct` em sua própria definição - só é possível atribuir valores durante ou depois da declaração de uma variável desse tipo. Essa estrutura, quando associada a um ponteiro para si mesma (auto-referência), cria a base para estruturas encadeadas como listas ligadas e árvores (ver seção 8).
+Literais têm duração estática, mas tentar modificá-los causa comportamento indefinido. C17 permite `char *p = "Texto"`, sem tornar o literal modificável (`const char *` expressa melhor a restrição).
 
-## 5.4 Enumerações
-
-As enumerações permitem agrupar e nomear constantes inteiras sob um tipo unificado, auxiliando fortemente na legibilidade e manutenção do código.
-
-**Sintaxe e uso:**
-
-```c
-// Cria um tipo enum onde, por padrão, o primeiro item vale 0 e o restante incrementa em 1.
-enum DiaSemana { DOMINGO, SEGUNDA, TERCA, QUARTA, QUINTA, SEXTA, SABADO };
-
-// Pode-se definir valores explícitos.
-enum Estado { DESLIGADO = 0, LIGADO = 10, EM_ESPERA = 15 };
-
-int main() {
-    enum DiaSemana hoje = SEGUNDA; // hoje == 1
-    if (hoje == SEGUNDA) { /* ... */ }
-    return 0;
-}
-```
-
----
-
-# 6. Paradigmas e abstração
-
-## 6.1 Tipos definidos pelo usuário
-
-`typedef` cria um apelido para um tipo já existente (muito usado para encurtar nomes de `struct`s e `enum`s).
-
-```c
-typedef struct carta carta;      // "carta" passa a ser um apelido para "struct carta"
-typedef struct lista* listaPtr;  // Apelido para ponteiro de struct (bastante usado com listas)
-```
-
-Além de `typedef`, `struct` e `enum` e `union` (ver seção 5/8) também funcionam como mecanismos de criação de tipos.
-
----
-
-# 7. Memória e gerenciamento de recursos
-
-## 7.1 Modelo de memória
-
-Como modelo didático, a memória de um programa em C pode ser representada organizada da região mais baixa (endereço menor) até a mais alta, dividida por tipo de alocação:
-
-* **Alocação estática:** região mais baixa, onde ficam os elementos fixos do programa (variáveis globais e `static`, código de `main`, definição de funções etc.) - memória alocada durante toda a execução.
-* **Alocação automática (*stack*/pilha):** região mais alta; o compilador aloca e desaloca automaticamente as informações temporárias das funções (parâmetros, variáveis locais, endereço de retorno). Novos dados costumam ser colocados no "topo" da pilha (um novo *frame* por chamada, em um endereço menor).
-* **Alocação dinâmica (*heap*):** região logo após a estática; controle manual pelo programador (alocação e liberação). Novos dados costumam ser salvos na base do *heap* (endereços crescentes).
-* **Memória livre:** região compartilhada de onde *stack* e *heap* retiram espaço conforme a necessidade.
-
-**Cuidado:** esta divisão é um modelo didático, não uma descrição universal do funcionamento interno de todo compilador/sistema.
-
-## 7.2 Alocação
-
-* **Estática:** o código do programa, variáveis globais e `static` - alocadas durante toda a execução (ver seção 8).
-* **Automática:** variáveis locais, parâmetros, chamadas de função - alocadas e desalocadas automaticamente pelo compilador.
-* **Dinâmica:** realizada e gerenciada diretamente pelo programador, do início (reservar espaço no *heap*) ao fim (liberar o espaço depois de usar) (ver seção 8). As funções para isso ficam na biblioteca `stdlib.h` (ver seção 9).
-
-```c
-#include <stdlib.h>
-
-int* ptr = (int*) malloc(sizeof(int)); // Aloca memória para um int (com lixo de memória)
-*ptr = 10;
-free(ptr);                             // Desaloca antes de reutilizar o ponteiro
-```
-
-## 7.3 Tempo de vida
-
-Variáveis automáticas (locais) deixam de existir ao final do bloco onde foram declaradas; variáveis `static` preservam seu valor entre chamadas da função, mas continuam com escopo local; variáveis globais e `extern` existem durante toda a execução do programa (ver seção 8).
-
----
-
-# 8. Recursos característicos da linguagem
-
-## 8.1 Ponteiros
-
-**Conceito:** elementos especiais que armazenam o endereço de outra variável, permitindo alterá-la sem contato direto (o endereço é acessado com o prefixo `&`).
-
-**Sintaxe:** `tipo_de_dado* nome = &variável;`. 
-
-Para desreferenciar (acessar o valor apontado): `*nome`.
+### Percurso pelo Terminador:
 
 ```c
 #include <stdio.h>
 
-int main(){
-    int a = 10;
-    int* b;             // Declaração de um ponteiro de int
-    b = &a;             // b recebe o endereço de a
-    (*b)++;             // Equivalente a a++
-    printf("%d\n", a);  // output: 11
+size_t comprimento(const char *texto) {
+    size_t quantidade = 0;
+    while (*texto != '\0') {
+        quantidade++;
+        texto++;
+    }
+    return quantidade;
+}
 
-    int* c = &a;        // Declaração e atribuição de um ponteiro
-    int** d, * e;       // d: ponteiro para ponteiro de int; e: ponteiro de int
-    d = &b;             // d == &b: *d == b == &a: **d == *b == a
+int main(void) {
+    printf("%zu\n", comprimento("Casa"));  // 4.
     return 0;
 }
 ```
 
-Podem existir ponteiros para qualquer tipo, inclusive ponteiros de ponteiros (`**`, `***`, e assim por diante).
+A função avança sua cópia local do ponteiro, sem modificar os caracteres. Pressupõe uma *string* acessível, terminada corretamente (`strlen` oferece essa operação na biblioteca padrão).
 
-### Ponteiros e Arrays (Vetores)
+### Argumentos de `main`:
 
-Um *array* pode funcionar como um ponteiro para o endereço do seu primeiro elemento (o array "decai" para um ponteiro). Por isso, a linguagem aceita usá-lo como ponteiro, e vice-versa.
+`argc` informa a quantidade de argumentos; `argv` permite acessar as *strings* correspondentes. Quando disponível, `argv[0]` identifica o programa; `argv[argc]` é um ponteiro nulo.
 
 ```c
 #include <stdio.h>
 
-void funcao_com_array(int arr[]) {
-    for (int i = 0; i < 3; i++) printf("%d ", arr[i]);
-    printf("\n");
-}
-void funcao_com_ponteiro(int *ptr) {
-    for (int i = 0; i < 3; i++) printf("%d ", ptr[i]); // Poderia ser *(ptr + i)
-    printf("\n");
-}
-int main(){
-    int array[3] = {1, 2, 3};
-    int* ptr = array;            // Ponteiro aponta para o primeiro elemento (array[0])
-                                 // Aritmética de ponteiros: ptr[n] == array[n] == *(ptr + n) == *(array + n)
-    funcao_com_array(array);     // output: 1 2 3
-    funcao_com_array(ptr);       // output: 1 2 3
-    funcao_com_ponteiro(ptr);    // output: 1 2 3
-    return 0;
-}
-```
-### Ponteiros e Matrizes (Arrays multidimensionais)
-
-Matrizes também podem ser representadas por ponteiros múltiplos (`int**`), mas os dois modelos possuem naturezas distintas e não devem ser misturados:
-
-* Uma função que espera `int matriz[][n]` exige uma matriz de verdade (memória contígua, alocada de forma sequencial).
-
-* Uma função que espera `int**` exige um vetor de ponteiros (um array cujos elementos são ponteiros para outras áreas de memória, que não estão necessariamente sequenciais).
-
-**ATENÇÃO:** Confundir uma matriz verdadeira com um vetor de ponteiros é um erro comum e gera problemas de compilação, pois cada uma exige uma assinatura de função diferente.
-
-### Ponteiros para função
-
-Assim como guardam endereços de variáveis, ponteiros podem armazenar o endereço de memória onde residem as instruções de uma função, permitindo passá-la dinamicamente por parâmetro (muito usado em *callbacks* e polimorfismo primitivo).
-
-```c
-int soma(int a, int b) { return a + b; }
-
-int main() {
-    // Declaração de um ponteiro para uma função que recebe (int, int) e retorna int
-    int (*ptrFunc)(int, int) = &soma;
-    int resultado = ptrFunc(5, 5);      // Chama a função, resultado = 10
+int main(int argc, char *argv[]) {
+    for (int i = 0; i < argc; i++) {
+        printf("Argumento %d: %s\n", i, argv[i]);
+    }
     return 0;
 }
 ```
 
-### Ponteiros constantes e constantes apontadas
+Em uma execução habitual, `./programa Ana 20` fornece `./programa`, `Ana` e `20`, com `argc` igual a três. Cada *string* termina com `'\0'`; argumentos numéricos chegam como texto e precisam ser convertidos.
 
-A posição da palavra-chave `const` afeta o que está sendo trancado de modificações.
+## Ponteiros para Estruturas:
 
-```c
-int valor = 10, outro = 20;
-
-// O valor apontado é constante, o ponteiro não.
-const int* ptr1 = &valor; 
-ptr1 = &outro;    // Válido
-// *ptr1 = 30;    // ERRO
-
-// O ponteiro é constante, o valor apontado não.
-int* const ptr2 = &valor;
-*ptr2 = 30;       // Válido
-// ptr2 = &outro; // ERRO
-
-// Ambos são constantes.
-const int* const ptr3 = &valor;
-```
-
-## 8.2 Gerenciamento manual de memória
-
-As funções de alocação dinâmica (`malloc`, `calloc`, `free`, `realloc`) ficam na biblioteca `stdlib.h` (ver seção 9). Após alocar, é responsabilidade do programador liberar a memória (`free`) quando ela não for mais necessária.
-
-### Erros comuns envolvendo controle manual:
-
-* **Vazamento de memória (*Memory Leak*):** se a memória alocada dinamicamente não for liberada (por exemplo, ao reatribuir um ponteiro sem antes chamar `free` no endereço anterior), ela permanece alocada mas inacessível. O uso prolongado pode esgotar a RAM do sistema.
-* **Double free:** Tentar dar `free()` duas ou mais vezes no mesmo endereço de memória. Isso corrompe as estruturas internas do *heap* gerenciado pela biblioteca C.
-* **Use-after-free:** Tentar dereferenciar (acessar ou editar) um ponteiro que já passou pelo `free()`. É um comportamento indefinido.
-* **Ponteiro pendente (*Dangling pointer*):** Após um `free()`, o endereço de memória que o ponteiro armazena ainda existe lá dentro (embora não deva ser acessado). Para prevenir os dois erros anteriores, uma boa prática universal é atribuir `NULL` imediatamente a qualquer ponteiro após seu `free()`.
-
-**ATENÇÃO:** depois de usar `malloc`/`calloc`, é importante verificar se o ponteiro retornado é diferente de `NULL` antes de usá-lo - caso contrário, a alocação pode ter falhado (ver seção 9).
-
-## 8.3 Preprocessador e macros
-
-**Conceito:** diretivas (`#comando`) executadas antes da compilação - inclusão de arquivos, definição de constantes/macros, compilação condicional etc.
-
-### `#include`
-
-Inclui arquivos para a execução do programa.
+`p->membro` equivale a `(*p).membro`. O acesso permite modificar uma estrutura existente (funções de consulta podem receber `const Produto *`).
 
 ```c
-#include <stdio.h>    // Biblioteca padrão
-#include "mylib.h"    // Biblioteca/arquivo próprio
+#include <stdio.h>
+typedef struct {
+    int codigo;
+    double preco;
+} Produto;
+
+void aplicar_desconto(Produto *produto, double taxa) {
+    produto->preco *= 1.0 - taxa;
+}
+
+int main(void) {
+    Produto produto = {10, 20.0};
+    aplicar_desconto(&produto, 0.25);
+    printf("%.2f\n", produto.preco);  // 15.00.
+    return 0;
+}
 ```
 
-### `#define` e `#undef`
+> Atribuir uma estrutura que contém ponteiros copia seus endereços (os objetos apontados continuam compartilhados).
 
-`#define` cria (e copia) uma macro - constante ou "função"; `#undef` a
-remove.
+## Ponteiros Genéricos com `void *`:
+
+`void *` transporta ponteiros para objetos sem especificar o tipo concreto. As conversões com ponteiros para objetos não exigem *cast* em C (antes do acesso, é necessário recuperar um tipo adequado).
 
 ```c
-#define PI 3.14
-#define NOME_PROGRAMA "Calculadora Financeira"
-#define AREA_CIRCULO(raio) (PI * (raio) * (raio)) // Macro do tipo "função"
-#undef DEZ
+int numero = 10;
+void *generico = &numero;
+int *ponteiro = generico;
+printf("%d\n", *ponteiro);  // 10.
 ```
 
-### `#if`, `#ifdef`, `#ifndef`, `#elif`, `#else`, `#endif`
+> `void *` não informa tamanho nem operações do destino. C17 não permite aritmética sobre ele nem acesso direto a um valor por `*`. Extensões de compiladores não fazem parte do padrão adotado.
 
-Testam a condição de uma diretiva, válida até o próximo teste ou até
-`#endif`.
+Esse tipo aparece em interfaces genéricas, incluindo alocação de memória.
 
-```c
-#ifndef DEZ // if (!defined(DEZ)); também existe #ifdef
-#warning "DEZ nao definido!"
-#define DEZ 15
-#endif
-#if (DEZ > 20)
-#undef DEZ
-#define DEZ 25
-#elif (DEZ < 15)
-#undef DEZ
-#define DEZ 5
-#else
-#undef DEZ
-#define DEZ 10
-#endif
-```
+## Ponteiros para Funções:
 
-### Macros predefinidas
-
-* **`__LINE__`:** `int` com o número da linha atual do código.
-* **`__FILE__`:** `string` com o nome do arquivo.
-* **`__DATE__`:** `string` com a data atual (`Mmm dd aaaa`, ex.: `Feb  7 2026`).
-* **`__TIME__`:** `string` com a hora atual (`hh:mm:ss`).
-
-## 8.4 Classes de armazenamento (`auto`, `static`, `extern`)
-
-* **`auto`:** duração apenas durante a execução da função onde foi declarada; não acessível diretamente por outras funções/arquivos. É o tipo implícito de uma variável local (não precisa declarar explicitamente).
-* **`static`:** dentro de uma função, faz com que a variável mantenha seu espaço de memória (e seu valor entre chamadas) durante toda a execução do programa, mas continua com escopo local à função. Como elemento global, impede o acesso direto por código externo ao arquivo (só sendo alcançado indiretamente, como por funções).
-* **`extern`:** define elementos acessíveis por todo o programa (código local e externo). É o tipo implícito de elementos globais. Não pode ser declarado dentro de blocos.
+Uma operação pode ser selecionada durante a execução ou recebida como argumento (*callback*). O ponteiro informa retorno e parâmetros compatíveis.
 
 ```c
 #include <stdio.h>
 
-int contExtern = 0; // extern int contExtern = 0;
-void inicializacao() {
-    static int contStatic = 0;
-    int contAuto = 0; // auto int contAuto = 0;
-    contExtern++, contStatic++, contAuto++;
-    printf("%d, %d, %d\n", contExtern, contStatic, contAuto);
+int somar(int a, int b) {
+    return a + b;
 }
-int main() {
-    inicializacao(); // output: 1, 1, 1
-    inicializacao(); // output: 2, 2, 1
-    inicializacao(); // output: 3, 3, 1
+int multiplicar(int a, int b) {
+    return a * b;
+}
+int calcular(int a, int b, int (*operacao)(int, int)) {
+    return operacao(a, b);
+}
+
+int main(void) {
+    int (*operacao)(int, int) = somar;      // Também poderia usar &somar.
+    printf("%d\n", operacao(4, 3));         // 7.
+    operacao = multiplicar;
+    printf("%d\n", (*operacao)(4, 3));      // 12; outra sintaxe de chamada.
+    printf("%d\n", calcular(4, 3, somar));  // 7.
     return 0;
 }
 ```
 
-## 8.5 `union`
+Callbacks aparecem, por exemplo, em critérios de ordenação. A função chamada deve ser compatível com o ponteiro. Ponteiros para funções não admitem aritmética de arrays, e C17 não garante sua conversão para `void *`.
 
-**Conceito:** É uma estrutura de dados semelhante a uma `struct`, contudo, todos os seus campos compartilham exatamente a mesma localização de memória. Consequentemente, o tamanho total da `union` é equivalente ao tamanho de seu maior membro, e apenas um membro pode armazenar um valor válido por vez.
+## Arquivos e Fluxos:
 
-```c
-union Dado {
-    int inteiro;
-    float decimal;
-};
+`stdio.h` trabalha com **fluxos** (*streams*), que mantêm modo de acesso, posição, armazenamento temporário e indicadores de erro. `FILE` é o tipo usado pela biblioteca (`FILE *` referencia seu controle, não diretamente os bytes do arquivo).
 
-int main() {
-    union Dado d;
-    d.inteiro = 10;
-    printf("%d\n", d.inteiro);   // Funciona: 10
-    
-    d.decimal = 3.14; 
-    // d.inteiro agora contém lixo porque a memória foi reescrita pela conversão em float
-    printf("%.2f\n", d.decimal); // Funciona: 3.14
-    return 0;
-}
-```
+### Abertura, Fechamento e Modos:
 
----
+`fopen(nome, modo)` abre o arquivo e retorna `NULL` quando falha. `fclose(arquivo)` encerra o fluxo, libera seus recursos e tenta encaminhar dados pendentes de saída (retorna zero no sucesso ou `EOF` em caso de erro).
 
-# 9. Biblioteca padrão
+| Modo | Leitura | Escrita | Inexistente | Conteúdo existente |
+|---|---|---|---|---|
+| `"r"` | Sim. | Não. | Falha. | Preservado. |
+| `"w"` | Não. | Sim. | Criado. | Apagado na abertura. |
+| `"a"` | Não. | Ao final. | Criado. | Preservado. |
+| `"r+"` | Sim. | Sim. | Falha. | Preservado. |
+| `"w+"` | Sim. | Sim. | Criado. | Apagado na abertura. |
+| `"a+"` | Sim. | Ao final. | Criado. | Preservado. |
 
-## 9.1 Entrada e saída
+O caractere `b` seleciona modo binário: `"rb"`, `"wb"`, `"ab"`, `"r+b"`, `"w+b"`, `"a+b"`. Modo texto pode traduzir representações como quebras de linha; binário evita essas traduções. A extensão do arquivo não define o modo.
 
-**`scanf`:** recebe uma *string* do *input* (terminal), converte os dados conforme os formatadores definidos e grava os valores nos endereços das variáveis fornecidas. **`printf`:** recebe informações de vários tipos, converte para *string* (via formatadores) e imprime no *output* padrão (terminal).
+> `fclose` não equivale a `free` nem elimina a variável ponteiro. Após a chamada, o fluxo não pode ser reutilizado, mesmo se o fechamento informar erro.
 
-**ATENÇÃO:** o `scanf` pode se comportar de forma inesperada por causa do *buffer* (área de memória que guarda dados de *input* provisoriamente) estar "sujo" antes de sua execução. Para contornar, basta colocar um espaço antes do primeiro formatador (`" %d"`), ou usar um `getchar` vazio / `fgets` para limpar o *buffer*.
+### Escrita e Leitura Formatada:
+
+`fprintf` converte valores para texto, como `printf`, e retorna a quantidade de caracteres ou um valor negativo em caso de erro. `fscanf` converte a entrada e informa quantas atribuições tiveram sucesso. O exemplo grava, fecha, reabre e lê um registro.
 
 ```c
 #include <stdio.h>
 
-int int_a; char char_b, vet_d[100], vet_e[100]; double double_f;
-scanf(" %d %c", &int_a, &char_b); // input assumido: 10 abc
+int main(void) {
+    FILE *arquivo = fopen("dados.txt", "w");
+    if (arquivo == NULL) {
+        return 1;
+    }
+    int falhou = fprintf(arquivo, "%d %.2f\n", 10, 15.50) < 0;
+    if (fclose(arquivo) == EOF) {
+        falhou = 1;
+    }
+    if (falhou) {
+        return 1;
+    }
+    arquivo = fopen("dados.txt", "r");
+    if (arquivo == NULL) {
+        return 1;
+    }
+    int codigo, lidos;
+    double preco;
+    while ((lidos = fscanf(arquivo, "%d %lf", &codigo, &preco)) == 2) {
+        printf("Codigo: %d; preco: %.2f\n", codigo, preco);
+    }
+    if (ferror(arquivo)) {
+        printf("Erro durante a leitura.\n");
+        falhou = 1;
+    } else if (lidos != EOF) {
+        printf("Registro incompleto ou formato invalido.\n");
+        falhou = 1;
+    }
+    if (fclose(arquivo) == EOF) {
+        falhou = 1;
+    }
+    return falhou;
+}
+```
 
-printf("int_a = %d, pi = %.2lf, Nome: %s\n", int_a, 3.141592, "Maria");
-// output: int_a = 10, pi = 3.14, Nome: Maria
+O arquivo contém `10 15.50` seguido de nova linha: `10` está representado pelos caracteres `'1'` e `'0'`. O laço só processa duas conversões completas e pressupõe números representáveis pelos destinos.
 
-sprintf(vet_e, "char_b = %c, num = %.4lf\n", char_b, 2.15); // printf para array de char
-printf("vet_e: %s", vet_e);
+> `feof` informa uma condição detectada por uma leitura anterior (não prevê a próxima). `while (!feof(arquivo))` pode processar uma leitura malsucedida. O retorno da função de leitura deve controlar o processamento.
 
-char_b = getchar();       // Pega o próximo caractere do buffer
-putchar(char_b);          // Imprime um char
+### Leitura de Linhas e Caracteres:
 
+`fgets` recebe até uma posição a menos que a capacidade e acrescenta `'\0'` no sucesso. Para em uma quebra de linha, no limite ou no fim do arquivo (preserva a quebra quando a lê). Linhas grandes são recebidas em partes.
+
+```c
+// Dentro de uma função, com arquivo aberto para leitura.
 char linha[100];
-fgets(linha, 100, stdin); // Lê uma linha (ou limpa o buffer)
-puts(linha);              // Imprime uma string, adicionando '\n' ao final
-
-sscanf(vet_e, "char_b = %c, num = %lf", &char_b, &double_f); // "scanf" de uma string
-```
-
-## 9.2 Memória e utilidades
-
-```c
-#include <stdlib.h>
-
-int* intptr = (int*) malloc(sizeof(int));          // Aloca memória (com lixo)
-int* intarr = (int*) calloc(10, sizeof(int));      // Aloca e ZERA a memória
-intarr = (int*) realloc(intarr, 20 * sizeof(int)); // Redimensiona a memória alocada
-free(intptr);
-free(intarr);
-```
-
-**Observação:** `malloc` e `calloc` retornam, por padrão, um ponteiro `void*`; a conversão para o tipo de ponteiro desejado é automática em C (o *cast* explícito, como em `(int*) malloc(...)`, é facultativo em C, embora obrigatório em C++).
-
-**ATENÇÃO:** É importante sempre verificar se o ponteiro retornado é diferente de `NULL` antes de usá-lo (podem ocorrer falhas de alocação, levando a bugs silenciosos e comportamento indefinido) (ver seção 8).
-
-## 9.3 Arquivos
-
-Cria-se um ponteiro para arquivo (`FILE* ponteiro;`) para navegar e manipular o arquivo, conforme o modo de acesso escolhido. Ao final, o ponteiro deve ser desalocado (`fclose`), garantindo o salvamento.
-
-### Modos de acesso (texto)
-
-| Modo | Efeito |
-| --- | --- |
-| `r` | Abre para leitura apenas. |
-| `w` | Cria/sobrescreve, para escrita apenas. |
-| `a` | Abre/cria, para anexar conteúdo ao final. |
-| `r+` | Abre para leitura e/ou escrita. |
-| `w+` | Cria/sobrescreve, para leitura e/ou escrita. |
-| `a+` | Abre/cria, para leitura e/ou anexar ao final. |
-
-Os equivalentes binários são, respectivamente: `rb`, `wb`, `ab`, `rb+`, `wb+`, `ab+`.
-
-### Texto
-
-Todo o conteúdo é tratado como *string*, exigindo conversão para o tipo desejado.
-
-```c
-#include <stdio.h>
-
-FILE* filePointer;
-if ((filePointer = fopen("dados.dat", "r")) == NULL) return -1; // Erro ao abrir
-for (int i = 0; !feof(filePointer); i++)
-    fscanf(filePointer, " %d %lf", &conta[i], &saldo[i]); // Espaço antes do %d limpa o buffer
-fclose(filePointer);
-
-if ((filePointer = fopen("novo.txt", "w")) == NULL) return -1;
-for (int j = 0; conta[j] != 0; j++)
-    fprintf(filePointer, "%d - %.1lf\n", conta[j], saldo[j]);
-fclose(filePointer);
-```
-
-**ATENÇÃO:** Assim como na alocação dinâmica pelo `malloc`, é importante sempre verificar se a alocação dinâmica e se o ponteiro do arquivo foram bem-sucedidas (`!= NULL`) antes de usar o ponteiro.
-
-### Binário
-
-A informação é armazenada numericamente, em blocos de memória (os valores não são convertidos em *string*).
-
-```c
-#include <stdio.h>
-
-typedef struct { int conta; double saldo; } Dados;
-
-FILE* filePointer;
-if ((filePointer = fopen("dados.bin", "wb")) == NULL) return -1;
-fwrite(&dados[i], sizeof(Dados), 1, filePointer); // (endereço, tamanho por objeto, quantidade, ponteiro)
-fclose(filePointer);
-
-if ((filePointer = fopen("dados.bin", "rb")) == NULL) return -1;
-fread(&lidos[i], sizeof(Dados), 1, filePointer);
-fclose(filePointer);
-```
-
-**Observação:** `rewind(ponteiro)` volta o ponteiro do arquivo para o
-início (não disponível nos modos `a`/`ab`).
-
-## 9.4 Parâmetros variáveis
-
-A biblioteca `stdarg.h` permite uma quantidade variável de argumentos (é necessário pelo menos um argumento fixo).
-
-```c
-#include <stdio.h>
-#include <stdarg.h>
-
-double media(double total, int i, ...){
-    va_list pointer;                            // "Ponteiro" para a lista de argumentos variáveis
-    va_start(pointer, i);                       // Posiciona o ponteiro após o último argumento fixo (i)
-    for (int j = 0; j < i; j++)
-        total += va_arg(pointer, double);       // Acessa o próximo argumento (tamanho double)
-    va_end(pointer);                            // Zera o ponteiro
-    return (total / i);
+while (fgets(linha, sizeof linha, arquivo) != NULL) {
+    printf("%s", linha);  // Até 99 caracteres mais o terminador.
 }
-int main(){
-    double w = 38.5, x = 22.5, y = 1.7, z = 10.2;
-    printf("%.3lf\n", media(0, 2, w, x));       // output: 30.500
-    printf("%.3lf\n", media(0, 3, w, x, y));    // output: 20.900
-    printf("%.3lf\n", media(0, 4, w, x, y, z)); // output: 18.225
+int falhou = ferror(arquivo) != 0;
+if (fclose(arquivo) == EOF) {
+    falhou = 1;
+}
+// falhou informa erro de leitura ou fechamento.
+```
+
+Para leitura caractere a caractere, o laço pode ser substituído por:
+
+```c
+int caractere;
+while ((caractere = fgetc(arquivo)) != EOF) {
+    putchar(caractere);
+}
+```
+
+`fgetc` retorna um caractere convertido de `unsigned char` para `int`, ou `EOF` por fim de arquivo ou erro. O resultado permanece em `int` até a comparação (guardá-lo antes em `char` pode perder essa distinção).
+
+> `EOF` é um valor de retorno, não um caractere obrigatoriamente gravado no final. `feof` e `ferror` distinguem os indicadores do fluxo; o segundo laço é uma alternativa anterior ao fechamento, não uma continuação após `fclose`.
+
+## Arquivos Binários:
+
+`fwrite(origem, tamanho_elemento, quantidade, arquivo)` e `fread(destino, tamanho_elemento, quantidade, arquivo)` transferem a representação dos objetos sem convertê-la para texto. O retorno conta **elementos completos** transferidos.
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    int valores[] = {10, 20, 30}, recuperados[3];
+    size_t quantidade = sizeof valores / sizeof valores[0];
+    FILE *arquivo = fopen("dados.bin", "wb");
+    if (arquivo == NULL) {
+        return 1;
+    }
+    size_t escritos = fwrite(valores, sizeof valores[0], quantidade, arquivo);
+    int falhou = escritos != quantidade;
+    if (fclose(arquivo) == EOF) {
+        falhou = 1;
+    }
+    if (falhou) {
+        return 1;
+    }
+    arquivo = fopen("dados.bin", "rb");
+    if (arquivo == NULL) {
+        return 1;
+    }
+    size_t lidos = fread(recuperados, sizeof recuperados[0], quantidade, arquivo);
+    falhou = lidos != quantidade;
+    if (fclose(arquivo) == EOF) {
+        falhou = 1;
+    }
+    if (falhou) {
+        return 1;
+    }
+    for (size_t i = 0; i < quantidade; i++) {
+        printf("%d ", recuperados[i]);
+    }
+    printf("\n");  // 10 20 30.
     return 0;
 }
 ```
 
-## 9.5 Strings
+Os dados só são utilizados após confirmar todas as leituras esperadas. A gravação direta depende de tamanhos, ordem dos bytes, representação e preenchimentos de estruturas. Um formato portável precisa definir esses detalhes.
 
-Funções de `string.h` (manipulação) e `ctype.h` (classificação/conversão de caracteres), normalmente usadas em conjunto:
+> Gravar um ponteiro não grava seu destino nem recupera esse acesso em outra execução. A cópia direta da memória atende a ambientes de representação conhecida e compatível.
 
-```c
-#include <string.h>
-#include <ctype.h>
+## Posição e Estado do Fluxo:
 
-// ctype.h - funções de comparação (retornam 1/0)
-isdigit('8'); isalpha('b'); isupper('F'); islower('c'); isalnum('A'); isspace(' ');
-// ctype.h - funções de modificação (retornam o mesmo char se não for possível alterar)
-toupper('u'); tolower('W');
+Leituras e escritas avançam um indicador de posição, como um marcador dentro do arquivo. Esse indicador não é a variável `FILE *` (reposicionar o fluxo não equivale a incrementar o ponteiro).
 
-char* str1 = "Feliz aniversario", str2[20], str3[20];
-strlen(str1);                       // Quantidade de caracteres (sem contar o '\0')
-strcpy(str2, str1);                 // Copia str1 para str2
-strncpy(str3, str2, 5);             // Copia os 5 primeiros caracteres
+### Reposicionamento:
 
-char str6[20] = "";
-strcat(str6, "Feliz ano novo");     // Anexa ao final de str6
-strncat(str6, "Feliz ano novo", 5); // Anexa os 5 primeiros caracteres
-
-strcmp("Abc", "Abc");               // 0 se as strings forem iguais
-strncmp("Abc", "Abd", 2);           // Compara os n primeiros caracteres
-
-strchr("Uma maquina voadora", 'q'); // A partir da primeira ocorrência do char (NULL se não achar)
-strstr("O bebe saiu dai", "iu");    // A partir da primeira ocorrência de uma substring
-```
-
-**Conversão string → número (`stdlib.h`):**
+`rewind(arquivo)` solicita o início e limpa os indicadores de erro e fim de arquivo. `ftell` obtém uma indicação de posição; `fseek` solicita uma posição e permite verificar a falha.
 
 ```c
-#include <stdlib.h>
-
-int a = atoi("99");                                // string (apenas dígitos) -> int
-double b = strtod("51.2% foram admitidos", &cPtr); // com detecção do que sobrou (b = 51.2)
-long bin = strtol("100101abc", &cPtr2, 2);         // base 2; bin = 37, cPtr2 aponta para "abc"
-```
-
-## 9.6 Matemática
-
-```c
-#include <math.h>
-
-ceil(98.0001);          // 99.00 - arredonda para cima
-floor(10.8);            // 10.00 - arredonda para baixo
-sqrt(8);                // Raiz quadrada
-pow(27, 1.0/3);         // Potenciação (também usada para raízes)
-sin(x); cos(x); tan(x);
-log(2.71828);           // Logaritmo natural
-log10(1000);            // Logaritmo na base 10
-```
-
-**`stdlib.h` (utilidades numéricas):**
-
-```c
-#include <stdlib.h>
-
-int c = abs(-25);        // Valor absoluto -> 25
-div_t res = div(70, 30); // Divisão inteira com quociente e resto: res.quot = 2, res.rem = 10
-```
-
-## 9.7 Algoritmos prontos
-
-`qsort` (ordenação) e `bsearch` (busca binária), ambos de `stdlib.h`, recebem uma função de comparação como parâmetro (implicitamente, um ponteiro de função) (ver seção 8).
-
-```c
-#include <stdlib.h>
-
-int crescente(const void* a, const void* b) {
-    return (*(int*) a - *(int*) b); // > 0 troca a posição dos elementos
+// Fluxo aberto e reposicionável; exemplo dentro de uma função.
+long posicao = ftell(arquivo);
+if (posicao == -1L || fseek(arquivo, posicao, SEEK_SET) != 0) {
+    printf("Falha na consulta ou no reposicionamento.\n");
 }
-int main(){
-    int numeros[] = {42, 13, 7, 99, 1, 25};
-    int n = sizeof(numeros) / sizeof(numeros[0]);
-    qsort(numeros, n, sizeof(int), crescente); // numeros = {1, 7, 13, 25, 42, 99}
-
-    int chave = 25;
-    int* resultado = bsearch(&chave, numeros, n, sizeof(int), crescente);
-    if (resultado != NULL) printf("Encontrado: %d\n", *resultado); // output: Encontrado: 25
-    return 0;
-}
+// Para solicitar o início: fseek(arquivo, 0L, SEEK_SET).
 ```
 
-## 9.8 Datas e tempo
+| Referência | Significado |
+|---|---|
+| `SEEK_SET` | Início. |
+| `SEEK_CUR` | Posição atual. |
+| `SEEK_END` | Final. |
 
-A biblioteca `<time.h>` fornece componentes e funções para gerenciamento de tempo e representações de data.
+Nem todo fluxo permite reposicionamento. Em texto, o valor de `ftell` não é uma contagem geral de bytes (seu uso portável inclui restaurá-lo com `SEEK_SET`). Fluxos de texto também restringem os deslocamentos aceitos.
+
+### Alternância entre Leitura e Escrita:
+
+Em modos com `+`, escrita seguida de leitura exige `fflush` adequado ou posicionamento. Leitura seguida de escrita exige posicionamento, exceto quando a leitura encontrou o fim do arquivo.
 
 ```c
-#include <time.h>
-#include <stdio.h>
-
-int main() {
-    time_t rawtime = time(NULL);                // Capta o tempo em formato numérico
-    struct tm* data_hora = localtime(&rawtime); // Converte para o tempo local 
-    printf("Atual: %s", asctime(data_hora));    // Converte e imprime como string formatada
-    return 0;
+// Fragmento dentro de uma função; stdio.h incluído.
+FILE *arquivo = fopen("dados.txt", "w+");
+if (arquivo == NULL) {
+    return 1;
 }
+int falhou = fprintf(arquivo, "10 20\n") < 0;
+if (!falhou && fseek(arquivo, 0L, SEEK_SET) != 0) {
+    falhou = 1;
+}
+if (!falhou) {
+    int a, b;
+    if (fscanf(arquivo, "%d %d", &a, &b) == 2) {
+        printf("%d\n", a + b);  // 30.
+    } else {
+        falhou = 1;
+    }
+}
+if (fclose(arquivo) == EOF) {
+    falhou = 1;
+}
+// falhou indica se alguma das operações não foi concluída.
 ```
 
-### Assertions
-
-A biblioteca `<assert.h>` fornece a macro `assert(condição)`, projetada para atestar pressupostos e apoiar o *debugging*. Se a condição entregue à *assertion* retornar falso (`0`), a execução do programa é imediatamente abortada exibindo o arquivo e a linha do erro no terminal. Costuma ser desabilitada na construção da versão de lançamento via pré-processador.
+Em anexação, escritas continuam no final mesmo após reposicionamento. Em `"a+"`, reposicionar define o início da leitura. `fflush` não é uma forma portável de “limpar a entrada” de `stdin`: seu uso padronizado atende à saída e a determinadas situações de fluxos de atualização.
 
 ---
 
-# 10. Ferramentas e ecossistema básico
+# 03. Memória e Alocação
 
-## 10.1 Compilador
+Alocar memória significa reservar armazenamento para dados. O tamanho necessário, o tempo de vida dos objetos e a responsabilidade pela liberação determinam a forma de administrar esse espaço.
 
-O código `.c` precisa obrigatoriamente ser traduzido em linguagem de máquina via software. O compilador mais consolidado e utilizado do ecossistema C é o **GCC** (*GNU Compiler Collection*).
+O ponteiro funciona como um endereço de acesso, enquanto a alocação fornece o armazenamento. Criar, copiar ou eliminar uma variável ponteiro não cria nem libera automaticamente o objeto apontado.
 
-**Fluxo básico por linha de comando:**
+## Duração dos Objetos:
 
-1. Escrever o código no arquivo `programa.c`.
-2. Compilar invocando `gcc programa.c -o programa`.
-3. Executar o binário gerado invocando `./programa` (Linux/MacOS) ou `programa.exe` (Windows).
+Os exemplos deste resumo utilizam principalmente três formas de duração de armazenamento:
 
-## 10.2 Gerenciador de pacotes
+| Duração | Exemplos | Tempo de vida | Controle da liberação |
+|---|---|---|---|
+| Automática | Parâmetros e variáveis locais comuns. | Normalmente, até sair do bloco correspondente. | Administrado automaticamente. |
+| Estática | Variáveis fora das funções e locais com `static`. | Toda a execução do programa. | Não depende de `free`. |
+| Alocada, ou dinâmica | Espaço obtido por `malloc` e `calloc`. | Da alocação à desalocação. | Controlado pelo programa com as funções apropriadas. |
 
-Diferente de linguagens modernas, C não possui um gerenciador de pacotes nativo universal e padronizado em volta da linguagem. A obtenção de bibliotecas externas ocorre primariamente:
+Uma variável automática se assemelha a um espaço de trabalho temporário, devolvido ao terminar a atividade. Uma variável estática mantém sua reserva durante toda a execução. Uma alocação dinâmica permanece reservada até sua liberação, mesmo após o retorno da função que a solicitou.
 
-* Através do gerenciador de pacotes do próprio Sistema Operacional (`apt` no Ubuntu, `pacman` no Arch, `brew` no MacOS);
-* Utilizando gerenciadores independentes de projetos modernos, como o `Conan` ou `vcpkg`;
-* Realizando o *build* manual a partir dos arquivos e código-fonte disponibilizado pelo autor.
+> **Escopo** determina onde um nome pode ser utilizado; **tempo de vida**, por quanto tempo o objeto existe; **ligação** determina se declarações podem identificar o mesmo objeto ou função em diferentes pontos do programa. Essas propriedades não são equivalentes.
 
-## 10.3 Build (Compilação e Múltiplos Arquivos)
+### Variáveis Automáticas e Estáticas:
 
-Programas reais com múltiplos arquivos-fonte (`.c`) e cabeçalhos (`.h`) precisam ser compilados em conjunto. Todavia, o processo pode ser automatizado utilizando o **Make** (através de um arquivo `Makefile`) ou o gerador de projetos **CMake**, orquestramdp as rotinas de compilação sem exigir que comandos gigantescos e repetitivos sejam digitados a cada teste.
-
-### Include guards e organização
-
-Para compilar de modo unificado, divide-se a arquitetura: o **arquivo fonte** (`.c`) guarda a implementação real, e o **arquivo cabeçalho/header** (`.h`) guarda as interfaces (protótipos de funções, structs). O *include guard* (usando pragmas do pré-processador) previne que o mesmo cabeçalho seja incluído duas vezes e trave a compilação gerando erros de redefinição.
+No C17, `auto` explicita a classe de armazenamento normalmente implícita nas variáveis locais comuns. Ele não realiza inferência de tipo. Uma variável local com `static` conserva seu valor entre chamadas, sem tornar seu nome acessível fora do bloco.
 
 ```c
-/* mylib.h */
-#ifndef QUALQUER_NOME_H
-#define QUALQUER_NOME_H
-typedef struct { int x, y; } Ponto;
-double media(double*, int); // Protótipo
+#include <stdio.h>
+
+int total;  // Duração estática; inicialização implícita com zero.
+
+void registrar(void) {
+    auto int local = 0;       // Equivale, aqui, a int local = 0.
+    static int persistente;  // Inicializada uma vez, com zero.
+    local++;
+    persistente++;
+    total++;
+    printf("%d %d %d\n", local, persistente, total);
+}
+
+int main(void) {
+    registrar();  // 1 1 1.
+    registrar();  // 1 2 2.
+    registrar();  // 1 3 3.
+    return 0;
+}
+```
+
+Cada chamada recria `local` e executa sua inicialização. `persistente` mantém o mesmo objeto e valor entre chamadas; `total` também existe durante toda a execução, mas seu nome possui escopo de arquivo.
+
+Sem inicialização explícita, objetos estáticos recebem inicialização padrão: tipos aritméticos recebem zero, ponteiros recebem um ponteiro nulo e agregados têm seus elementos ou membros inicializados conforme essas regras. Variáveis automáticas comuns, sem inicialização, possuem valores indeterminados.
+
+> Um inicializador de objeto estático precisa atender às regras de inicialização estática de C17. Uma chamada comum de função, como `static int valor = calcular();`, não é aceita para essa finalidade.
+
+### `static`, `extern` e Organização do Programa:
+
+Fora de funções, `static` também estabelece **ligação interna**: o nome identifica um objeto restrito àquela unidade de tradução. Isso não torna sua memória secreta (outra função ainda pode receber um ponteiro para ele).
+
+`extern` permite declarar um objeto definido em outro ponto. Na forma usual `extern int total;`, a declaração não cria um segundo inteiro: informa que aquele nome se refere a um objeto cuja definição será fornecida.
+
+```c
+// Fragmento em escopo de arquivo.
+static int reservado = 0;  // Duração estática e ligação interna.
+extern int compartilhado;  // Declaração; a definição precisa existir.
+
+void incrementar(void) {
+    extern int compartilhado;  // extern também é permitido em um bloco.
+    compartilhado++;
+    reservado++;
+}
+```
+
+Em um uso simples entre arquivos, a definição `int compartilhado = 0;` aparece uma vez, e as declarações `extern` permitem referenciá-la. Uma declaração `extern` com inicializador em escopo de arquivo, como `extern int compartilhado = 0;`, já é uma definição.
+
+> `extern` não significa “alocação dinâmica” nem amplia automaticamente o escopo de todo nome. A organização com arquivos `.c`, cabeçalhos e ligação será aprofundada no capítulo de compilação.
+
+`const` e `volatile` qualificam acessos e tipos (não escolhem, por si só), entre duração automática, estática e alocada. Um objeto `const` local comum, por exemplo, pode continuar tendo duração automática.
+
+## Organização da Memória:
+
+Em implementações usuais, a memória de um programa pode ser visualizada por regiões. Essa representação ajuda a compreender seu funcionamento, mas **C não exige um desenho físico único**.
+
+| Região usual | Papel |
+|---|---|
+| Código | Instruções executáveis das funções. |
+| Dados de duração estática | Variáveis globais e objetos `static`, frequentemente separados em áreas de dados inicializados e de inicialização com zero. |
+| Dados somente de leitura | Constantes e literais que a implementação decide colocar em uma região protegida contra escrita. |
+| *Stack* — pilha de chamadas | Armazenamento associado a chamadas, parâmetros, variáveis locais e informações de retorno. |
+| *Heap* — área de alocação dinâmica | Regiões administradas pelo alocador para atender a pedidos como `malloc`. |
+
+![Estrutura de memória](images/screenshot001.png)<br>
+*Fonte: BATISTA, Natália Cosse - Ponteiros e alocação dinâmica de memória, p. 23.*
+
+Na *stack*, uma chamada normalmente acrescenta um quadro de informações (*frame*), retirado quando ela retorna. A organização lembra uma pilha de fichas de atividades ainda em andamento. Chamadas recursivas podem acumular vários desses quadros.
+
+No *heap*, os blocos podem ter tempos de vida independentes da ordem das chamadas. O alocador mantém informações sobre áreas ocupadas e disponíveis, permitindo reservas e devoluções em momentos diferentes.
+
+> Variáveis locais podem ficar em registradores ou ser eliminadas por otimização; `const` não garante uma região somente de leitura. Código executável também não se confunde com objetos de duração estática.
+
+### Memória Disponível e Limites:
+
+Diagramas que mostram *stack* e *heap* crescendo em sentidos opostos sobre uma “área livre” são simplificações. Sistemas reais podem utilizar várias regiões e mapeamentos (não existe em C uma região obrigatória de “memória comum” entre as duas).
+
+Grandes objetos automáticos e recursão profunda podem esgotar a pilha disponível. A alocação dinâmica também tem limites e pode falhar. Liberar um bloco permite sua reutilização pelo alocador, mas não exige que o processo devolva imediatamente toda essa memória ao sistema operacional.
+
+## Escolha da Alocação:
+
+A alocação automática costuma atender a dados temporários e de tamanho administrável. A duração estática atende a dados que precisam persistir durante toda a execução. A dinâmica permite ajustar a reserva às necessidades e manter dados além da função que os criou.
+
+| Situação | Escolha usual |
+|---|---|
+| Poucos valores temporários de uma função. | Variáveis automáticas. |
+| Contador que preserva estado entre chamadas. | Variável local `static`. |
+| Quantidade de elementos conhecida apenas durante a execução. | Alocação dinâmica, especialmente quando o tamanho pode ser grande ou precisa mudar. |
+| Dados produzidos por uma função e utilizados após seu retorno. | Armazenamento fornecido pelo chamador ou alocação dinâmica com responsabilidade definida. |
+
+- **Vantagens da alocação dinâmica:** tamanho ajustável, tempo de vida independente do bloco e possibilidade de construir estruturas cujo volume varia.
+- **Desvantagens:** necessidade de tratar falhas e liberação, custo de administração e risco de fragmentação ou acessos inválidos.
+
+Fragmentação ocorre quando o aproveitamento da memória é prejudicado pela divisão das regiões disponíveis ou por espaços extras reservados internamente. Ter memória livre no conjunto não garante o atendimento de qualquer pedido.
+
+> Alocação dinâmica não é automaticamente mais rápida. Usá-la sem necessidade acrescenta trabalho de gerenciamento; escolher duração estática apenas para evitar esse trabalho também muda a persistência e o compartilhamento dos dados.
+
+## Funções de Alocação:
+
+As funções básicas estão declaradas em `stdlib.h`. Seus tamanhos utilizam `size_t`, e as funções de alocação retornam `void *`, convertido automaticamente para ponteiros de objetos em C.
+
+| Função | Operação |
+|---|---|
+| `malloc(bytes)` | Reserva uma região sem inicializar seus valores. |
+| `calloc(quantidade, tamanho)` | Reserva espaço para os elementos e preenche todos os bits com zero. |
+| `realloc(ponteiro, bytes)` | Solicita outro tamanho para uma alocação, preservando o conteúdo que cabe em ambos os tamanhos. |
+| `free(ponteiro)` | Libera uma alocação válida; `free(NULL)` não realiza operação. |
+
+Para pedidos de tamanho positivo, o retorno nulo indica falha. A região precisa ser obtida com sucesso antes de qualquer acesso.
+
+### Reserva, Inicialização, Redimensionamento e Liberação:
+
+O exemplo reúne as quatro funções. As quantidades são pequenas e fixadas no código para destacar o ciclo (a validação de tamanhos calculados aparece na seção seguinte).
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void) {
+    size_t quantidade = 3;
+    int *dados = malloc(quantidade * sizeof *dados);
+    int *zeros = calloc(quantidade, sizeof *zeros);
+    if (dados == NULL || zeros == NULL) {
+        free(dados);  // Também funciona se um dos ponteiros for NULL.
+        free(zeros);
+        return 1;
+    }
+    for (size_t i = 0; i < quantidade; i++) {
+        dados[i] = 10;  // malloc não forneceu um valor inicial.
+    }
+    printf("%d %d\n", dados[0], zeros[0]);  // 10 e 0.
+    free(zeros);
+    zeros = NULL;
+
+    size_t nova_quantidade = 5;
+    int *novo = realloc(dados, nova_quantidade * sizeof *dados);
+    if (novo == NULL) {
+        free(dados);  // Com tamanho positivo, a falha preserva a alocação anterior.
+        return 1;
+    }
+    dados = novo;
+    for (size_t i = quantidade; i < nova_quantidade; i++) {
+        dados[i] = 20;  // A parte acrescentada não vem inicializada.
+    }
+    quantidade = nova_quantidade;
+    for (size_t i = 0; i < quantidade; i++) {
+        printf("%d ", dados[i]);
+    }
+    printf("\n");  // 10 10 10 20 20.
+    free(dados);
+    dados = NULL;
+    return 0;
+}
+```
+
+`sizeof *dados` mede o tipo apontado, mantendo o cálculo ligado à declaração do ponteiro. Nesse caso, a expressão não acessa o conteúdo de `dados`. `sizeof dados`, por outro lado, mediria apenas o ponteiro.
+
+`dados` e `zeros` são variáveis locais automáticas; os blocos apontados têm duração alocada. O fim de `main` encerra a existência dessas variáveis, enquanto as chamadas de `free` demonstram a liberação explícita das regiões.
+
+> `calloc` zera bits. Isso produz zero para os inteiros do exemplo, mas não garante, em toda implementação, ponteiros nulos ou zero de ponto flutuante. Não equivale à inicialização por tipo feita pela linguagem em todos os casos.
+
+### Comportamento de `realloc`:
+
+O alocador pode manter a região no mesmo local ou transferir o conteúdo para outra área. Se houver sucesso, a alocação anterior deixa de ser válida: o programa utiliza o ponteiro retornado e atualiza quaisquer referências derivadas conforme necessário.
+
+Ao aumentar, os dados anteriores são preservados e a parte nova precisa de inicialização. Ao diminuir, somente o conteúdo que cabe no novo tamanho é preservado. Não existe garantia de que o endereço permaneça igual.
+
+```c
+// Forma problemática, se dados for o único acesso à alocação:
+// dados = realloc(dados, novo_tamanho);
+// Uma falha substituiria dados por NULL, perdendo o endereço anterior.
+```
+
+A variável temporária do programa evita essa perda. Em caso de falha com tamanho positivo, o bloco anterior continua disponível: a aplicação pode mantê-lo ou liberá-lo, como no exemplo. `realloc(NULL, tamanho)` funciona como `malloc(tamanho)`.
+
+> Pedidos de tamanho zero possuem particularidades dependentes da implementação no C17. Para liberar, utiliza-se `free`, sem depender de `realloc(p, 0)`.
+
+## Tamanho e Responsabilidade pela Memória:
+
+Uma reserva para `quantidade` elementos usa `quantidade * sizeof elemento`. Se a multiplicação ultrapassar o limite de `size_t`, pode produzir um tamanho pequeno e reservar menos espaço que o necessário. A verificação precisa ocorrer **antes** da multiplicação.
+
+`SIZE_MAX`, de `stdint.h`, informa o maior valor de `size_t`. Comparar a quantidade com `SIZE_MAX / tamanho_elemento` evita o estouro desse cálculo; a alocação ainda pode falhar por outros motivos.
+
+### Criação em uma Função e Liberação em Outra:
+
+A função abaixo reúne validação de tamanho, criação de um array zerado e devolução de seu endereço. O contrato estabelece que o chamador libera a região recebida.
+
+```c
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+int *criar_array(size_t quantidade) {
+    int *dados = NULL;
+    if (quantidade == 0 || quantidade > SIZE_MAX / sizeof *dados) {
+        return NULL;
+    }
+    dados = calloc(quantidade, sizeof *dados);
+    return dados;  // O bloco continua existindo após o retorno.
+}
+
+int main(void) {
+    size_t quantidade = 4;
+    int *valores = criar_array(quantidade);
+    if (valores == NULL) {
+        return 1;
+    }
+    valores[1] = 25;
+    for (size_t i = 0; i < quantidade; i++) {
+        printf("%d ", valores[i]);
+    }
+    printf("\n");  // 0 25 0 0.
+    free(valores);
+    return 0;
+}
+```
+
+A variável local `dados` deixa de existir, mas seu valor é copiado para o chamador. A alocação permanece válida até `free`. Isso difere de retornar o endereço de um array local automático, que deixa de existir ao sair da função.
+
+O exemplo rejeita quantidade zero por escolha da interface. Quando o tamanho vem de entrada externa, a validação também precisa rejeitar valores negativos ou inválidos **antes** de convertê-los para `size_t`.
+
+### Quem Libera o Bloco:
+
+A responsabilidade pela liberação, frequentemente chamada de *ownership*, é uma convenção do programa, não uma propriedade automaticamente acompanhada pelo ponteiro em C. Uma função pode apenas consultar um bloco, modificá-lo ou assumir sua liberação; isso precisa estar claro na interface.
+
+Copiar um endereço não duplica a região nem cria outra obrigação de `free`. Se o bloco for liberado, todos os ponteiros que o alcançavam perdem sua validade para acesso.
+
+```c
+// Fragmento dentro de uma função; stdlib.h incluído.
+int *dono = malloc(sizeof *dono);
+if (dono != NULL) {
+    *dono = 10;
+    int *emprestado = dono;  // Mesmo bloco, não uma segunda alocação.
+    printf("%d\n", *emprestado);  // 10; stdio.h necessário.
+    free(dono);
+    dono = NULL;
+    // *emprestado e free(emprestado) seriam inválidos após a liberação.
+}
+```
+
+> Atribuir `NULL` ao ponteiro liberado evita reutilizar esse valor por aquela variável, mas não corrige cópias existentes. `free` também não promete apagar o conteúdo anterior da memória.
+
+## Problemas Comuns:
+
+| Problema | Causa e consequência |
+|---|---|
+| Vazamento de memória (*memory leak*) | Uma reserva deixa de ser necessária, mas não é liberada; perder seu último endereço impede recuperá-la pelos acessos normais do programa. |
+| Uso após liberação (*use-after-free*) | Acesso a um objeto cujo tempo de vida terminou; comportamento indefinido. |
+| Liberação duplicada (*double free*) | Duas liberações da mesma alocação sem uma nova reserva válida; comportamento indefinido. |
+| Liberação inválida | `free` recebe endereço de variável automática, estática, posição interna do bloco ou outro valor não permitido. |
+| Reserva insuficiente | Quantidade errada, estouro no cálculo ou uso de `sizeof ponteiro` no lugar de `sizeof *ponteiro`. |
+| Leitura sem inicialização | Conteúdo de `malloc` ou da expansão de `realloc` é utilizado sem receber um valor adequado. |
+| Acesso fora dos limites | Índice ultrapassa a quantidade reservada, mesmo que o endereço pareça acessível. |
+
+`free` recebe o início de uma alocação válida, não um endereço deslocado como `dados + 1`. Também é necessário liberar reservas já obtidas quando uma operação posterior falha, como no primeiro programa.
+
+Perder uma variável ponteiro não encerra automaticamente a reserva; manter um ponteiro também não prolonga um objeto já liberado. A separação entre **endereço**, **armazenamento** e **tempo de vida** orienta tanto arrays dinâmicos quanto as estruturas do próximo capítulo.
+
+---
+
+# 04. Estruturas de Dados
+
+Estruturas de dados organizam informações conforme as operações que o programa precisa realizar: percorrer registros, atender solicitações, recuperar ações recentes ou procurar valores.
+
+Em C, essas organizações podem ser construídas combinando arrays, `structs`, ponteiros e alocação dinâmica. A escolha depende da forma de acesso, da frequência de alterações e do espaço disponível.
+
+## Armazenamento Contíguo e Encadeado:
+
+Um array mantém seus elementos em posições consecutivas. Uma estrutura encadeada utiliza referências para conectar elementos que podem estar em regiões diferentes da memória.
+
+| Organização | Vantagens | Limitações |
+|---|---|---|
+| Contígua | Acesso direto por índice, poucos dados auxiliares e boa proximidade entre elementos na memória. | Inserções e remoções intermediárias podem exigir deslocamentos (crescer uma região dinâmica pode exigir realocação). |
+| Encadeada | Permite conectar e desconectar nós sem deslocar os demais elementos. | Exige espaço para os ponteiros e normalmente precisa percorrer os nós para localizar uma posição. |
+
+Um array se assemelha a uma sequência de compartimentos numerados. No encadeamento, cada compartimento contém uma indicação de onde está o próximo.
+
+> Encadeamento não garante maior velocidade ou segurança. A busca pela posição de alteração pode custar mais que a própria alteração, e os ponteiros precisam permanecer válidos.
+
+## Listas Encadeadas:
+
+Uma **lista simplesmente encadeada** reúne nós que armazenam um dado e um ponteiro para o próximo nó. Um ponteiro inicial permite alcançar a sequência, e `NULL` pode indicar seu final.
+
+```c
+typedef struct No {
+    int valor;
+    struct No *proximo;
+} No;
+
+// Fragmento dentro de uma função; stdio.h incluído.
+No terceiro = {30, NULL};
+No segundo = {20, &terceiro};
+No primeiro = {10, &segundo};
+No *inicio = &primeiro;
+
+for (No *atual = inicio; atual != NULL; atual = atual->proximo) {
+    printf("%d ", atual->valor);
+}
+printf("\n");  // 10 20 30.
+```
+
+O membro `proximo` aponta para outro objeto do mesmo tipo. O exemplo utiliza nós automáticos para destacar o encadeamento (uma lista que cresce durante a execução pode obter seus nós com `malloc`).
+
+Inserir entre dois nós envolve conectar o novo nó ao sucessor e atualizar o antecessor. Retirar um nó exige reconectar a sequência e, quando ele foi alocado dinamicamente e não será mais utilizado, liberar sua memória.
+
+![Adição de elemento no meio de uma lista encadeada](images/screenshot002.png)<br>
+*Fonte: Elaborado pelo autor (2025).*
+
+- **Vantagem:** alterações locais podem preservar os demais nós e seus endereços.
+- **Aplicações:** sequências com inserções e remoções frequentes, agrupamentos de registros e implementação de pilhas ou filas.
+- **Limitação:** acessar o elemento de determinada posição normalmente exige percorrer os anteriores.
+
+> Uma lista não prioriza dados antigos ou recentes por definição. Essa ordem depende de onde os elementos são inseridos, consultados e retirados.
+
+Uma lista **duplamente encadeada** também guarda o endereço do antecessor, facilitando o percurso nos dois sentidos, ao custo de mais armazenamento e atualizações.
+
+## Estruturas lineares:
+
+Essas estruturas, como **pilhas** e **filas** definem principalmente uma **regra de acesso**. Ambas podem ser implementadas com arrays ou nós encadeados.
+
+| Estrutura | Regra de retirada | Entradas: `10`, `20`, `30` | Analogia |
+|---|---|---|---|
+| Pilha | Último a entrar, primeiro a sair — *LIFO*. | Retirada: `30`, `20`, `10`. | Pilha de pratos: o último colocado fica no topo. |
+| Fila | Primeiro a entrar, primeiro a sair — *FIFO*. | Retirada: `10`, `20`, `30`. | Fila de atendimento: quem chegou antes é atendido antes. |
+
+### Pilhas:
+
+Uma **pilha** concentra inserção e retirada no topo. Essa organização facilita recuperar os dados mais recentemente adicionados.
+
+- **Vantagem:** acesso simples ao item mais recente, sem procurar por toda a coleção.
+- **Aplicações:** desfazer ações, acompanhar chamadas de funções e guardar etapas que precisam ser retomadas em ordem inversa.
+- **Limitação:** alcançar diretamente um item antigo não é a operação principal da estrutura.
+
+Em um array, o topo pode ser acompanhado por um índice ou pela quantidade de elementos. Em uma lista encadeada, o início pode representar o topo, reunindo inserção e retirada nessa posição.
+
+> A pilha como estrutura de dados e a *stack* de chamadas utilizam uma organização semelhante, mas não são a mesma região de memória. Uma pilha criada pelo programa pode, por exemplo, utilizar memória dinâmica.
+
+### Filas:
+
+Uma **fila** insere elementos no final e retira do início. Ela favorece o processamento dos dados mais antigos ainda pendentes.
+
+- **Vantagem:** preserva a ordem de chegada.
+- **Aplicações:** solicitações aguardando atendimento, mensagens recebidas e tarefas pendentes.
+- **Limitação:** selecionar um elemento intermediário ou mais recente foge da operação básica de uma fila.
+
+Uma implementação encadeada pode manter ponteiros para início e final, evitando percorrer toda a sequência a cada inserção.
+
+Com arrays, uma **fila circular** reutiliza as posições liberadas no começo. Os índices retornam ao início ao atingir o limite, como marcadores que circulam por uma pista, evitando deslocar todos os elementos após cada retirada.
+
+> A fila facilita retirar o mais antigo (ela não torna automaticamente mais rápida a busca por um dado antigo arbitrário).
+
+## Árvores:
+
+Uma **árvore** organiza nós por ramificações. O nó inicial é a **raiz**, os nós ligados abaixo de outro são seus **filhos**, e os nós sem filhos são **folhas**.
+
+Essa organização representa relações hierárquicas, como categorias e subcategorias. Em uma árvore binária, cada nó possui no máximo dois filhos.
+
+```c
+typedef struct NoArvore {
+    int valor;
+    struct NoArvore *esquerda;
+    struct NoArvore *direita;
+} NoArvore;
+```
+
+A declaração define as ligações possíveis. As regras de inserção e consulta determinam o significado dessas ramificações.
+
+### Árvores Binárias de Busca:
+
+Em uma **árvore binária de busca**, os valores menores ficam na subárvore esquerda e os maiores na direita, considerando aqui valores distintos.
+
+![Árvores](images/screenshot003.png)<br>
+*Fonte: estrategiaconcursos - Percursos em Árvores Binárias para o CNU (TI), Disponível em: [https://www.estrategiaconcursos.com.br/blog/percursos-arvores-binarias/](https://www.estrategiaconcursos.com.br/blog/percursos-arvores-binarias/). Acesso em: 26 set. 2026.*
+
+Para procurar `5`, a comparação com `7` direciona a busca à esquerda; a comparação com `4`, à direita. A organização permite descartar partes da árvore sem visitar todos os seus elementos.
+
+Quando a árvore mantém altura proporcional ao logaritmo da quantidade de nós, a busca custa `O(log n)`. Se ficar muito desbalanceada, formando uma sequência alongada, o custo pode chegar a `O(n)`.
+
+- **Vantagem:** árvores de busca equilibradas permitem localizar valores e manter uma organização ordenada com eficiência.
+- **Aplicações:** conjuntos ordenados, índices e consultas por valor.
+- **Limitação:** manter uma boa organização exige regras adicionais (uma árvore binária qualquer não garante busca logarítmica).
+
+> `O(n)` indica crescimento proporcional à quantidade de elementos - `O(log n)` cresce mais lentamente. Uma lista encadeada simples normalmente exige busca linear, mas um array ordenado também pode admitir busca binária logarítmica: essa vantagem não é exclusiva das árvores.
+
+## Escolha da Estrutura:
+
+| Necessidade principal | Opção usual |
+|---|---|
+| Acessar diretamente uma posição conhecida. | Array. |
+| Conectar ou retirar elementos sem deslocar todo o conjunto. | Lista encadeada, considerando o custo de localizar o ponto da alteração. |
+| Recuperar primeiro o que foi adicionado por último. | Pilha. |
+| Processar pendências na ordem de chegada. | Fila. |
+| Representar relações hierárquicas. | Árvore. |
+| Manter dados ordenados com buscas e alterações frequentes. | Árvore de busca equilibrada, conforme as operações necessárias. |
+
+A regra de organização e a forma de armazenamento são escolhas relacionadas, mas diferentes. Uma fila não exige encadeamento, uma lista não exige necessariamente alocação dinâmica e uma árvore não é automaticamente uma árvore de busca.
+
+Os algoritmos de inserção, remoção, percurso e balanceamento são aprofundados na apostila de Algoritmos. Aqui, essas estruturas mostram como os recursos de C podem ser combinados para atender a diferentes formas de organizar e acessar os dados.
+
+---
+
+# 05. Pré-processamento, Compilação e Ligação
+
+A construção de um programa transforma o código-fonte em um executável. As diretivas orientam parte dessa preparação: incluem arquivos, definem substituições e selecionam quais trechos serão compilados.
+
+O pré-processamento pode ser comparado à preparação de um documento: reúne partes, substitui marcações e escolhe versões antes de encaminhar o resultado para a tradução.
+
+## Etapas de Construção:
+
+| Etapa | Função |
+|---|---|
+| Pré-processamento | Processa diretivas, inclui cabeçalhos e expande macros. |
+| Compilação propriamente dita | Analisa o código e produz uma representação de destino, normalmente com otimizações. |
+| Montagem | Converte código de montagem em arquivos objeto. |
+| Ligação | Combina arquivos objeto e bibliotecas, resolvendo referências entre eles. |
+
+Um arquivo objeto, normalmente `.o`, contém código e informações para a ligação. Ele ainda pode depender de funções ou dados definidos em outros arquivos.
+
+> As ferramentas podem integrar etapas internamente. Essa separação descreve o fluxo usual e ajuda a localizar problemas.
+
+## Diretivas:
+
+As diretivas começam com `#` e normalmente terminam na quebra de linha, sem `;`. Uma barra invertida `\` imediatamente antes da quebra permite continuar a diretiva na linha seguinte.
+
+### Inclusão com `#include`:
+
+`#include` disponibiliza o conteúdo de um cabeçalho no ponto da inclusão.
+
+```c
+#include <stdio.h>     // Cabeçalho da biblioteca padrão.
+#include "calculos.h"  // Cabeçalho do projeto.
+```
+
+Os delimitadores orientam a procura pelo cabeçalho. No uso habitual, aspas permitem procurar primeiro junto ao arquivo que realiza a inclusão, enquanto `<...>` utiliza os caminhos configurados para cabeçalhos. Os detalhes dependem da implementação.
+
+Um cabeçalho fornece informações como protótipos, tipos e macros. Incluir o cabeçalho de uma biblioteca não equivale a incorporar automaticamente toda a sua implementação ao executável.
+
+### Macros com `#define` e `#undef`:
+
+`#define` associa um nome a uma sequência de elementos que será substituída durante o pré-processamento. Uma macro pode representar um valor ou receber argumentos.
+
+```c
+#define PI 3.141592653589793
+#define NOME "Calculadora"
+#define QUADRADO(x) ((x) * (x))
+
+// Fragmento dentro de uma função:
+double area = PI * QUADRADO(2.0 + 1.0);  // PI * 9.
+printf("%s: %.2f\n", NOME, area);        // Calculadora: 28.27.
+
+#undef NOME  // Remove a definição para os usos posteriores.
+```
+
+Os parênteses preservam o agrupamento dos argumentos e da expressão resultante. `QUADRADO(2 + 1)` se expande para `((2 + 1) * (2 + 1))`.
+
+Uma macro não é uma função: não cria parâmetros locais e pode repetir a avaliação do argumento.
+
+```c
+int i = 2;
+// int resultado = QUADRADO(i++);  // Inválido: expande para dois i++ sem sequenciamento.
+```
+
+> Parênteses resolvem problemas de agrupamento, mas não impedem efeitos colaterais duplicados. Para operações comuns com argumentos, funções oferecem verificação de tipos e evitam essa repetição causada pela expansão.
+
+Macros também não seguem o escopo dos blocos de C. Uma definição permanece ativa, a partir de seu processamento, até `#undef` ou o final da unidade em processamento.
+
+### Compilação Condicional:
+
+As diretivas condicionais selecionam trechos durante a construção do programa. Um `if` comum expressa uma decisão do programa; `#if` decide qual código será encaminhado à compilação.
+
+| Diretiva | Papel |
+|---|---|
+| `#if expressao` | Testa uma expressão inteira do pré-processador. |
+| `#ifdef NOME` | Testa se a macro está definida. |
+| `#ifndef NOME` | Testa se a macro não está definida. |
+| `#elif expressao` | Testa outra condição. |
+| `#else` | Seleciona a alternativa restante. |
+| `#endif` | Encerra o grupo condicional. |
+| `#error mensagem` | Emite um diagnóstico de erro para a configuração selecionada. |
+
+```c
+#include <stdio.h>
+
+#ifndef NIVEL
+#define NIVEL 1
 #endif
 
-/* mylib.c */
-#include "mylib.h"
-double media(double* valores, int quantidade){
+#if NIVEL < 0
+#error "NIVEL nao pode ser negativo"
+#elif NIVEL == 0
+#define MENSAGEM "Modo simples"
+#else
+#define MENSAGEM "Modo detalhado"
+#endif
+
+int main(void) {
+#ifdef DEPURACAO
+    printf("Diagnostico habilitado\n");
+#endif
+    printf("%s\n", MENSAGEM);
+    return 0;
+}
+```
+
+No GCC, macros também podem ser definidas pelo comando de compilação:
+
+```sh
+gcc -std=c17 -DNIVEL=0 -DDEPURACAO diretivas.c -o programa
+```
+
+Nesse caso, a saída contém o diagnóstico e `Modo simples`. Sem essas opções, o exemplo utiliza `NIVEL` igual a um e apresenta apenas `Modo detalhado`.
+
+`#ifdef NOME` equivale a `#if defined(NOME)`. A existência da macro é diferente de seu valor: uma macro definida como zero ainda satisfaz `#ifdef`.
+
+> O pré-processador não consulta variáveis de C nem interpreta tipos como o compilador. Uma variável `const` ou uma expressão com `sizeof` não pode ser usada diretamente como condição de `#if`. `#warning`, aceito por algumas ferramentas, não pertence ao padrão C17.
+
+### Macros Predefinidas:
+
+| Macro | Informação |
+|---|---|
+| `__FILE__` | Nome do arquivo-fonte, como *string*. |
+| `__LINE__` | Número da linha, como constante inteira. |
+| `__DATE__` | Data do processamento do arquivo, como *string*. |
+| `__TIME__` | Horário do processamento do arquivo, como *string*. |
+| `__STDC_VERSION__` | Versão do padrão; para C17, `201710L`. |
+
+```c
+printf("Origem: %s, linha %d\n", __FILE__, __LINE__);
+printf("Construcao: %s %s\n", __DATE__, __TIME__);
+```
+
+> Data e horário são incorporados durante a construção. Eles não representam o momento em que o executável está sendo utilizado.
+
+## Cabeçalhos e Múltiplos Arquivos:
+
+O arquivo `.h`, ou *header*, apresenta a interface compartilhada. O arquivo `.c` normalmente contém as definições das funções. O cabeçalho funciona como uma descrição das ferramentas disponíveis; a implementação fornece seu funcionamento.
+
+O exemplo utiliza três arquivos, identificados nos comentários:
+
+```c
+/* calculos.h */
+#ifndef APOSTILA_CALCULOS_H
+#define APOSTILA_CALCULOS_H
+
+#include <stddef.h>
+double media(const double *valores, size_t quantidade);
+
+#endif
+```
+
+```c
+/* calculos.c */
+#include "calculos.h"
+
+double media(const double *valores, size_t quantidade) {
     double total = 0;
-    for (int i = 0; i < quantidade; i++) total += valores[i];
+    for (size_t i = 0; i < quantidade; i++) {
+        total += valores[i];
+    }
     return total / quantidade;
 }
+```
 
+```c
 /* main.c */
 #include <stdio.h>
-#include "mylib.h"
-int main(){
+#include "calculos.h"
+
+int main(void) {
     double valores[] = {10, 20, 30};
-    printf("Media = %.2lf\n", media(valores, 3));
+    printf("Media: %.2f\n", media(valores, 3));  // 20.00.
     return 0;
 }
 ```
 
+A interface pressupõe um array acessível com `quantidade` elementos e quantidade maior que zero. O cabeçalho inclui `stddef.h` porque seu protótipo utiliza `size_t`.
+
+A implementação também inclui seu próprio cabeçalho, permitindo ao compilador verificar a compatibilidade entre declaração e definição.
+
+### Proteção contra Inclusões Repetidas:
+
+A combinação `#ifndef`, `#define` e `#endif` forma uma **proteção de inclusão** (*include guard*). Na primeira inclusão, a macro é definida; nas seguintes, o conteúdo protegido é ignorado.
+
+Isso evita processar repetidamente definições como as de estruturas quando vários cabeçalhos incluem o mesmo arquivo.
+
+> A proteção atua dentro de cada unidade de tradução, não entre todos os arquivos do projeto. Cada cabeçalho precisa de um nome de proteção distinto. `#pragma once` é uma alternativa comum, mas não é padronizada em C17.
+
+### Declaração e Definição:
+
+Um cabeçalho pode reunir protótipos, definições de tipos, macros e declarações `extern`. Uma variável compartilhada pode ser declarada como `extern int total;` no cabeçalho e definida como `int total = 0;` em um único `.c`.
+
+Colocar definições comuns de variáveis ou funções com ligação externa em um cabeçalho pode gerar múltiplas definições quando ele é incluído por diferentes arquivos.
+
+> Incluir um `.h` não inclui automaticamente seu `.c`. A implementação precisa participar da construção (normalmente, arquivos `.c` são compilados separadamente, sem serem incluídos uns nos outros).
+
+## Compilação e Ligação do Projeto:
+
+Os dois arquivos-fonte podem ser compilados e ligados em um comando:
+
+```sh
+gcc -std=c17 -Wall -Wextra -Wpedantic main.c calculos.c -o programa
+./programa
+```
+
+O GCC também permite interromper o processo em etapas:
+
+| Opção | Resultado |
+|---|---|
+| `-E` | Código pré-processado. |
+| `-S` | Código de montagem. |
+| `-c` | Arquivo objeto, sem realizar a ligação. |
+
+```sh
+gcc -std=c17 -E main.c -o main.i
+gcc -std=c17 -c main.c calculos.c
+gcc main.o calculos.o -o programa
+```
+
+Cada `.c`, após o processamento das inclusões e diretivas, forma uma **unidade de tradução**. A ligação conecta as referências dessas unidades às definições correspondentes.
+
+Se `calculos.c` não participar da construção e nenhuma biblioteca fornecer `media`, sua declaração permitirá compilar a chamada, mas a ligação não encontrará a implementação.
+
+## Otimizações e Momento dos Erros:
+
+O compilador pode antecipar cálculos conhecidos, eliminar operações sem efeito observável e substituir chamadas por operações equivalentes. Por exemplo, `int total = 3 * 4;` pode resultar diretamente no valor `12`, sem uma multiplicação durante a execução.
+
+No GCC, opções como `-O2` habilitam conjuntos de otimizações. Elas podem aumentar o tempo de compilação e dificultar o acompanhamento passo a passo, sem garantir melhora de desempenho em todo programa.
+
+| Momento | Exemplos de problemas |
+|---|---|
+| Pré-processamento | Cabeçalho não encontrado ou configuração rejeitada por `#error`. |
+| Compilação | Sintaxe inválida ou certas incompatibilidades de tipos. |
+| Ligação | Definição externa ausente ou definida em duplicidade. |
+| Execução | Falha ao abrir um arquivo, falha de alocação ou acesso inválido dependente dos dados. |
+
+> Nem todo erro é diagnosticado. Comportamento indefinido pode passar despercebido e produzir resultados diferentes com otimização. O compilador pode assumir que as regras da linguagem são respeitadas ao transformar o código.
+
 ---
 
-# 11. Cuidados e boas práticas
+# Fontes:
 
-## 11.1 Erros comuns
+- DEITEL, Harvey M.; DEITEL, Paul J. *Como programar em C*. 2. ed. Rio de Janeiro: LTC, 1994.
 
-Vários erros comuns já foram registrados nas seções:
+- ZIVIANI, Nivio. *Projeto de algoritmos com implementações em Pascal e C*. 4. ed. São Paulo: Pioneira, 1999.
 
-* variável usada sem inicialização (lixo de memória) (ver seção 2);
-* comparação `signed` × `unsigned` sem conversão explícita (ver seção 2);
-* *buffer* do `scanf` "sujo" antes da leitura (ver seção 9);
-* *overflow*/*underflow* em tipos numéricos pequenos (ver seção 2);
-* ponteiro não verificado após `malloc`/`calloc` e `fopen` (ver seção 8/9);
-* vazamento de memória por não liberar antes de reatribuir um ponteiro (ver seção 8);
+- BATISTA, Natália Cosse. *Ponteiros e alocação dinâmica de memória*. 2022. 40 f. Slides (PDF) da disciplina Algoritmos e Estruturas de Dados. Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG), 2025.
 
-## 11.2 Comportamentos perigosos
+- PEIXOTO, Daniela Cristina Cascini. *Disciplina: Lógica de programação*. Curso de graduação em Engenharia de Computação - CEFET-MG, 2024.
 
-Muitos dos desastres e falhas em programas C emanam do chamado **Comportamento Indefinido** (*Undefined Behavior* ou UB). O Padrão de C dita regras sobre o que não pode ser feito (como acessar um array fora de seus limites, tentar escrever em um ponteiro de string nulo, ou dividir inteiros por zero), no entanto, a linguagem não dita o que *deve acontecer* se o erro for efetivado - o compilador frequentemente omite mecanismos de segurança presumindo que o seu código nunca ativará um UB, gerando execuções corrompidas ou silenciosas, tornando o teste manual da memória e o controle preciso muito mais exigentes do que em linguagens seguras.
+- CAMPOS, Luciana Maria de Assis. *Disciplina: Programação orientada a objetos*. Curso de graduação em Engenharia de Computação - CEFET-MG, 2024.
 
-## 11.3 Recursos desencorajados
+- BATISTA, Natália Cosse. *Disciplina: Algoritmos e estruturas de dados*. Curso de graduação em Engenharia de Computação - CEFET-MG, 2025.
 
-**`goto`** (ver seção 3): seu uso é desencorajado, pois deixa o programa desorganizado (dificultando *debugging* e manutenção) e pode causar falhas lógicas (como avançar para uma área do código que depende de uma variável que deveria ter sido declarada, mas cuja instrução de declaração foi pulada pelo `goto`).
+- cppreference.com. *C reference*. Disponível em: [https://en.cppreference.com/w/c](https://en.cppreference.com/w/c). Acesso em: 04 ago. 2026.
 
----
+- gcc.gnu.org. *Options Controlling C Dialect*. Disponível em: [https://gcc.gnu.org/onlinedocs/gcc/C-Dialect-Options.html](https://gcc.gnu.org/onlinedocs/gcc/C-Dialect-Options.html). Acesso em: 26 set. 2026.
 
-# 12. Referências
+- gcc.gnu.org. *Options to Request or Suppress Warnings*. Disponível em: [https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html](https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html). Acesso em: 26 set. 2026.
 
-1. DEITEL, Harvey M.; DEITEL, Paul J. *Como programar em C*. 2. ed. Rio de Janeiro: LTC, 1994.
-2. ZIVIANI, Nivio. *Projeto de algoritmos com implementações em Pascal e C*. 4. ed. São Paulo: Pioneira, 1999.
-3. BATISTA, Natália Cosse. *Ponteiros e alocação dinâmica de memória*. 2022. 40 f. Slides (PDF) da disciplina Algoritmos e Estruturas de Dados. Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG), 2025.
-4. PEIXOTO, Daniela Cristina Cascini. *Disciplina: Lógica de programação*. Curso de graduação em Engenharia de Computação - CEFET-MG, 2024.
-5. CAMPOS, Luciana Maria de Assis. *Disciplina: Programação orientada a objetos*. Curso de graduação em Engenharia de Computação - CEFET-MG, 2024.
-6. BATISTA, Natália Cosse. *Disciplina: Algoritmos e estruturas de dados*. Curso de graduação em Engenharia de Computação - CEFET-MG, 2025.
-7. cppreference.com. *C reference*. Disponível em: [https://en.cppreference.com/w/c](https://en.cppreference.com/w/c). Acesso em: 04 ago. 2026.
+- ISO/IEC. *Programming languages — C: Committee Draft N1570*. Disponível em: [https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf](https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf). Acesso em: 26 set. 2026.
+
+- FREE SOFTWARE FOUNDATION. *The C Preprocessor*. Disponível em: [https://gcc.gnu.org/onlinedocs/cpp/](https://gcc.gnu.org/onlinedocs/cpp/). Acesso em: 26 set. 2026.
+
+- FREE SOFTWARE FOUNDATION. *Using the GNU Compiler Collection*. Disponível em: [https://gcc.gnu.org/onlinedocs/gcc/](https://gcc.gnu.org/onlinedocs/gcc/). Acesso em: 26 set. 2026.
