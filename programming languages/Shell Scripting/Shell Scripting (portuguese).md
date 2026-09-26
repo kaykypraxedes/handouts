@@ -14,7 +14,7 @@
                       | |                     __/ |
                       |_|                    |___/   
 ```
-# 00. Comandos Básicos
+# 00. Conceitos Básicos
 
 ## *Shell*:
 
@@ -28,7 +28,7 @@ Os comandos executados pelo *shell* podem ser **internos** (*builtins*, implemen
 
 Quando um programa externo é chamado apenas pelo nome, sem indicar seu caminho, o `bash` procura por um executável correspondente nos diretórios definidos pela variável `$PATH`. Por isso é possível executar simplesmente `ls` em vez de escrever seu caminho completo, como `/usr/bin/ls`.
 
-### *Status* de saída:
+### *Status* de Saída:
 
 Além das informações que um comando pode imprimir, sua execução termina produzindo um ***status*** **de saída** (*exit status*), representado por um valor de `0` a `255`. Por convenção, `0` representa uma execução bem-sucedida, enquanto valores diferentes de `0` indicam algum tipo de falha ou condição diferente do sucesso.
 
@@ -82,7 +82,9 @@ line: nada apropriado.
 
 - `info {palavra}` - `man` melhorado (mais atualizado).
 
-## Informações sobre o sistema:
+## Comandos básicos:
+
+### Informações Sobre o Sistema:
 
 > Para obter informações mais aprofundadas, use as ferramentas de consulta sobre comandos.
 
@@ -113,7 +115,7 @@ line: nada apropriado.
 
 - `cal {opções} {data}` - Mostra um calendário em linha de comando.
 
-## Ações no terminal:
+### Ações no Terminal:
 
 - `clear` - Limpa o conteúdo da tela atual.
 
@@ -121,7 +123,7 @@ line: nada apropriado.
 
 - `logout` - Desconecta do usuário atual.
 
-## Automatização de processos:
+## Automatização de Processos:
 
 O *shell* pode ser utilizado diretamente no terminal, um comando por vez, ou de maneira automatizada por meio de *scripts*, o que permite maior velocidade, versatilidade e tarefas mais complexas. Para criar o *script*, é necessário:
 
@@ -133,7 +135,7 @@ O *shell* pode ser utilizado diretamente no terminal, um comando por vez, ou de 
 
 # 01. Processamento de Texto
 
-## Editores de texto no terminal:
+## Editores de Texto no Terminal:
 
 > As principais diferenças estão no número de ferramentas presentes no editor e na forma como editam.
 
@@ -143,7 +145,7 @@ O *shell* pode ser utilizado diretamente no terminal, um comando por vez, ou de 
 
 - `emacs {opções} {arquivo}` - Editor de texto mais robusto.
 
-## Visualização de textos:
+## Visualização de Textos:
 
 - `cat {opções} {arquivos}` - Concatena arquivos e imprime seu conteúdo. Se usado com um único arquivo, apenas o imprime.
 > O comando `tac` concatena os arquivos em ordem reversa (inverte o conteúdo, mas mantém a ordem de arquivos).
@@ -157,7 +159,7 @@ O *shell* pode ser utilizado diretamente no terminal, um comando por vez, ou de 
 
 - `tail {opções} {arquivo}` - Mostra as últimas partes de um arquivo.
 
-## Extrair dados de textos:
+## Extrair Dados de Textos:
 
 - `strings {opções} {arquivo}` - Extrai caracteres legíveis de arquivos (pode extrair dados de binários como `.jpg`, `.mp3`, etc.).
 
@@ -167,7 +169,7 @@ O *shell* pode ser utilizado diretamente no terminal, um comando por vez, ou de 
 
 - `diff {opções} {arquivo_1} {arquivo_2}` - Compara o conteúdo de arquivos.
 
-## Operações sobre textos:
+## Operações Sobre Textos:
 
 - `sort {opções} {arquivo}` - Ordena o conteúdo de um fluxo de dados de entrada ou arquivo.
 
@@ -191,7 +193,7 @@ Dessa maneira, estando no diretório `C/`, cujo caminho absoluto é `/A/B/C`, os
 
 Em sistemas de arquivos *Linux* comuns, nomes normalmente diferenciam letras maiúsculas e minúsculas (*case-sensitive*), portanto `Arquivo.txt` e `arquivo.txt` podem representar arquivos diferentes. Além disso, arquivos e diretórios cujo nome começa com `.` são convencionalmente tratados como **ocultos** e, por padrão, não são exibidos pelo `ls` (podem ser mostrados com `ls -a`).
 
-## Estrutura de pastas do *Linux*:
+## Estrutura de Pastas do *Linux*:
 
 > A estrutura e a função das pastas podem variar um pouco conforme a distribuição.
 
@@ -253,7 +255,7 @@ Ao se pesquisar informações detalhadas acerca de um arquivo específico (seja 
 
 - `fuser {opções} {arquivo}` - Mostra informações sobre os arquivos abertos.
 
-## Operações sobre arquivos e diretórios:
+## Operações Sobre Arquivos e Diretórios:
 
 > Nos comandos a seguir, se não for passado o caminho absoluto (começando a partir de `/` ou de `~/`), é considerado o caminho relativo (a partir da pasta atual).
 - `cd {opções} {caminho/diretório}` - Entra em diretório pelo terminal.
@@ -337,7 +339,7 @@ Todo programa em execução no *Linux* é tratado pelo *kernel* como um **proces
 
 O próprio *shell* também é um **processo**. Em uma execução comum a partir de um *shell* interativo, quando ele inicia um programa externo, esse programa normalmente passa a executar em outro processo, relacionado ao *shell* como seu processo filho. Já comandos internos (*builtins*) podem ser executados diretamente pelo próprio processo do *shell*.
 
-## Como funcionam processos:
+## Como Funcionam Processos:
 
 Um programa pode lançar (executar) outros programas, formando uma relação de parentesco entre processos:
 
@@ -384,7 +386,7 @@ O *Linux* expõe informações sobre os processos em execução por meio do sist
 
 - `tload {opções}` - Semelhante ao `xload`, mas desenhado no terminal.
 
-## Controlando processos:
+## Controlando Processos:
 
 O terminal executa programas em dois modos: **primeiro plano** (*foreground*, controlando o terminal) ou **segundo plano** (*background*, liberando o *prompt*). Para já iniciar em plano de fundo, basta seguir o comando com `&`:
 
@@ -482,17 +484,17 @@ Nomes de arquivos podem ser abreviados utilizando **caracteres coringa**. O *she
 - `[caracteres]`: Substitui um único caractere que faça parte do conjunto delimitado nos colchetes. Pode-se usar hifens para definir faixas, como `[0-9]` ou `[a-z]`, ou indicar apenas caracteres específicos, como `[159]`. Por exemplo, `less relatorio_[123].pdf` abre para leitura apenas os relatórios 1, 2 ou 3. Já `ls img_[a-d].png` lista imagens de "img_a.png" até "img_d.png".
 > `[!caracteres]` ou `[^caracteres]`: Atua como uma negação do conjunto. Substitui um caractere único que **não** esteja listado nos colchetes. Por exemplo, `rm arquivo_v[^3].doc` apaga "arquivo_v1.doc", "arquivo_v2.doc", "arquivo_v4.doc", "arquivo_vl.doc", "arquivo_v$.doc", mas ignora o "arquivo_v3.doc".
 - `[[:class:]]`: Substitui um único caractere que seja membro de uma classe pré-definida pelo sistema. Para usar, ele precisa estar dentro de um conjunto próprio de colchetes, resultando em algo como `ls doc_[[:digit:]].txt` (que lista "doc_1.txt", mas não "doc_A.txt"). As principais classes suportadas são:
-    - ***alnum:*** Caracteres alfanuméricos (letras e dígitos).
-    - ***alpha:*** Apenas letras do alfabeto.
-    - ***blank:*** Caracteres em branco (espaços e tabulações).
-    - ***cntrl:*** Caracteres de controle do terminal.
-    - ***digit:*** Apenas números (dígitos).
-    - ***graph:*** Caracteres gráficos (alfanuméricos e pontuações).
-    - ***lower:*** Apenas letras minúsculas.
-    - ***print:*** Caracteres imprimíveis (visíveis).
-    - ***space:*** Caracteres de espaçamento (espaço, tabulação, quebra de linha, etc.).
-    - ***upper:*** Apenas letras maiúsculas.
-    - ***xdigit:*** Dígitos hexadecimais (0 a 9, A a F).
+  - ***alnum:*** Caracteres alfanuméricos (letras e dígitos).
+  - ***alpha:*** Apenas letras do alfabeto.
+  - ***blank:*** Caracteres em branco (espaços e tabulações).
+  - ***cntrl:*** Caracteres de controle do terminal.
+  - ***digit:*** Apenas números (dígitos).
+  - ***graph:*** Caracteres gráficos (alfanuméricos e pontuações).
+  - ***lower:*** Apenas letras minúsculas.
+  - ***print:*** Caracteres imprimíveis (visíveis).
+  - ***space:*** Caracteres de espaçamento (espaço, tabulação, quebra de linha, etc.).
+  - ***upper:*** Apenas letras maiúsculas.
+  - ***xdigit:*** Dígitos hexadecimais (0 a 9, A a F).
 
 ### Expansão Til (~):
 
