@@ -540,14 +540,14 @@ Como dito, o *shell* interpreta as expansões automaticamente e separa argumento
 
 ---
 
-# Fontes:
-
-- FREE SOFTWARE FOUNDATION. *GNU Bash Reference Manual*. Versão 5.3. [S. l.]: Free Software Foundation, 2025.
-
-- FREE SOFTWARE FOUNDATION. *GNU Coreutils*. [S. l.]: Free Software Foundation, 2026.
-
-- LINUX MAN-PAGES PROJECT. *Linux man-pages*. Versão 6.19, 2026.
-
-- THE LINUX KERNEL DOCUMENTATION. *Linux Kernel Documentation*. [S. l.]: The Linux Kernel Organization, [s. d.].
+# Fontes
 
 - ALVARES, Andrei Rimsa. Disciplina: Tópicos Especiais em Fundamentos da Computação: *Shell Scripting*. Curso de graduação em Engenharia de Computação – Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG), 2026.
+
+- FREE SOFTWARE FOUNDATION. *GNU Bash Reference Manual*. Edição 5.3, para Bash 5.3. [S. l.], 2025. Disponível em: [https://www.gnu.org/software/bash/manual/bash.html](https://www.gnu.org/software/bash/manual/bash.html). Acesso em: 18 ago. 2026.
+
+- FREE SOFTWARE FOUNDATION. *GNU Coreutils*. Versão 9.11. [S. l.], 2026. Disponível em: [https://www.gnu.org/software/coreutils/manual/coreutils.html](https://www.gnu.org/software/coreutils/manual/coreutils.html). Acesso em: 4 set. 2026.
+
+- THE LINUX MAN-PAGES PROJECT. *Linux man-pages*. Versão 6.19. [S. l.], 2026. Disponível em: [https://www.kernel.org/pub/linux/docs/man-pages/man-pages-6.19.tar.xz](https://www.kernel.org/pub/linux/docs/man-pages/man-pages-6.19.tar.xz). Acesso em: 4 set. 2026.
+
+- THE KERNEL DEVELOPMENT COMMUNITY. *The Linux kernel documentation*. [S. l.], [s. d.]. Disponível em: [https://docs.kernel.org/](https://docs.kernel.org/). Acesso em: 4 set. 2026.

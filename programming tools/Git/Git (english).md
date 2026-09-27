@@ -360,20 +360,20 @@ Because the reapplied commits receive new identifiers, rebase rewrites that part
 
 ---
 
-# Sources:
+# Sources
 
-- CHACON, Scott; STRAUB, Ben. *Pro Git*. 2nd ed. New York: Apress, 2014. Available at: <https://git-scm.com/book/en/v2>. Accessed on: Sep. 15, 2026.
+- CHACON, Scott; STRAUB, Ben. *Pro Git*. 2nd ed. New York: Apress, 2014. Available at: [https://git-scm.com/book/en/v2](https://git-scm.com/book/en/v2). Accessed on: Sep. 15, 2026.
 
-- GIT PROJECT. *Git Reference Documentation*. Version 2.55.0. [N.p.]: Software Freedom Conservancy, 2026. Available at: <https://git-scm.com/docs>. Accessed on: Sep. 15, 2026.
+- GIT PROJECT. *Git Reference Documentation*. Version 2.55.0. [N.p.], 2026. Available at: [https://git-scm.com/docs](https://git-scm.com/docs). Accessed on: Sep. 15, 2026.
 
-- GITHUB. *About authentication to GitHub*. [N.p.]: GitHub, [n.d.]. Available at: <https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/about-authentication-to-github>. Accessed on: Sep. 15, 2026.
+- GITHUB. *About authentication to GitHub*. [N.p.], [n.d.]. Available at: [https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/about-authentication-to-github](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/about-authentication-to-github). Accessed on: Sep. 15, 2026.
 
-- GITHUB. *Caching your GitHub credentials in Git*. [N.p.]: GitHub, [n.d.]. Available at: <https://docs.github.com/en/get-started/git-basics/caching-your-github-credentials-in-git>. Accessed on: Sep. 15, 2026.
+- GITHUB. *Caching your GitHub credentials in Git*. [N.p.], [n.d.]. Available at: [https://docs.github.com/en/get-started/git-basics/caching-your-github-credentials-in-git](https://docs.github.com/en/get-started/git-basics/caching-your-github-credentials-in-git). Accessed on: Sep. 15, 2026.
 
-- GITHUB. *Managing your personal access tokens*. [N.p.]: GitHub, [n.d.]. Available at: <https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens>. Accessed on: Sep. 15, 2026.
+- GITHUB. *Managing your personal access tokens*. [N.p.], [n.d.]. Available at: [https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens). Accessed on: Sep. 15, 2026.
 
-- GITHUB. *Generating a new SSH key and adding it to the ssh-agent*. [N.p.]: GitHub, [n.d.]. Available at: <https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent>. Accessed on: Sep. 15, 2026.
+- GITHUB. *Generating a new SSH key and adding it to the ssh-agent*. [N.p.], [n.d.]. Available at: [https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent). Accessed on: Sep. 15, 2026.
 
-- GITHUB. *Testing your SSH connection*. [N.p.]: GitHub, [n.d.]. Available at: <https://docs.github.com/en/authentication/connecting-to-github-with-ssh/testing-your-ssh-connection>. Accessed on: Sep. 15, 2026.
+- GITHUB. *Testing your SSH connection*. [N.p.], [n.d.]. Available at: [https://docs.github.com/en/authentication/connecting-to-github-with-ssh/testing-your-ssh-connection](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/testing-your-ssh-connection). Accessed on: Sep. 15, 2026.
 
-- GITHUB. *GitHub CLI Manual: gh auth*. [N.p.]: GitHub, [n.d.]. Available at: <https://cli.github.com/manual/gh_auth>. Accessed on: Sep. 15, 2026.
+- GITHUB. *GitHub CLI Manual: gh auth*. [N.p.], [n.d.]. Available at: [https://cli.github.com/manual/gh_auth](https://cli.github.com/manual/gh_auth). Accessed on: Sep. 15, 2026.

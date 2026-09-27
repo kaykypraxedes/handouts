@@ -557,26 +557,26 @@ This command differs from `docker container logs`: `events` shows daemon events,
 
 ---
 
-# Sources:
+# Sources
 
-- DOCKER INC. *Docker Docs: Docker overview*. [N.p.]: Docker Inc., [n.d.]. Available at: <https://docs.docker.com/get-started/docker-overview/>. Accessed on: Sep. 15, 2026.
+- DOCKER INC. *Docker Docs: Docker overview*. [N.p.], [n.d.]. Available at: [https://docs.docker.com/get-started/docker-overview/>](https://docs.docker.com/get-started/docker-overview/>). Accessed on: Sep. 15, 2026.
 
-- DOCKER INC. *Docker Engine: Linux post-installation steps*. [N.p.]: Docker Inc., [n.d.]. Available at: <https://docs.docker.com/engine/install/linux-postinstall/>. Accessed on: Sep. 15, 2026.
+- DOCKER INC. *Docker Engine: Linux post-installation steps*. [N.p.]., [n.d.]. Available at: [https://docs.docker.com/engine/install/linux-postinstall/](https://docs.docker.com/engine/install/linux-postinstall/). Accessed on: Sep. 15, 2026.
 
-- DOCKER INC. *Docker Engine security: Rootless mode*. [N.p.]: Docker Inc., [n.d.]. Available at: <https://docs.docker.com/engine/security/rootless/>. Accessed on: Sep. 15, 2026.
+- DOCKER INC. *Docker Engine security: Rootless mode*. [N.p.], [n.d.]. Available at: [https://docs.docker.com/engine/security/rootless/](https://docs.docker.com/engine/security/rootless/). Accessed on: Sep. 15, 2026.
 
-- DOCKER INC. *Docker CLI reference*. [N.p.]: Docker Inc., [n.d.]. Available at: <https://docs.docker.com/reference/cli/docker/>. Accessed on: Sep. 15, 2026.
+- DOCKER INC. *Docker CLI reference*. [N.p.], [n.d.]. Available at: [https://docs.docker.com/reference/cli/docker/](https://docs.docker.com/reference/cli/docker/). Accessed on: Sep. 15, 2026.
 
-- DOCKER INC. *Dockerfile reference*. [N.p.]: Docker Inc., [n.d.]. Available at: <https://docs.docker.com/reference/dockerfile/>. Accessed on: Sep. 15, 2026.
+- DOCKER INC. *Dockerfile reference*. [N.p.], [n.d.]. Available at: [https://docs.docker.com/reference/dockerfile/](https://docs.docker.com/reference/dockerfile/). Accessed on: Sep. 15, 2026.
 
-- DOCKER INC. *Storage*. [N.p.]: Docker Inc., [n.d.]. Available at: <https://docs.docker.com/engine/storage/>. Accessed on: Sep. 15, 2026.
+- DOCKER INC. *Storage*. [N.p.], [n.d.]. Available at: [https://docs.docker.com/engine/storage/](https://docs.docker.com/engine/storage/). Accessed on: Sep. 15, 2026.
 
-- DOCKER INC. *Networking overview*. [N.p.]: Docker Inc., [n.d.]. Available at: <https://docs.docker.com/engine/network/>. Accessed on: Sep. 15, 2026.
+- DOCKER INC. *Networking overview*. [N.p.], [n.d.]. Available at: [https://docs.docker.com/engine/network/](https://docs.docker.com/engine/network/). Accessed on: Sep. 15, 2026.
 
-- DOCKER INC. *Docker Compose*. [N.p.]: Docker Inc., [n.d.]. Available at: <https://docs.docker.com/compose/>. Accessed on: Sep. 15, 2026.
+- DOCKER INC. *Docker Compose*. [N.p.], [n.d.]. Available at: [https://docs.docker.com/compose/](https://docs.docker.com/compose/). Accessed on: Sep. 15, 2026.
 
-- DOCKER INC. *How Compose works*. [N.p.]: Docker Inc., [n.d.]. Available at: <https://docs.docker.com/compose/intro/compose-application-model/>. Accessed on: Sep. 15, 2026.
+- DOCKER INC. *How Compose works*. [N.p.], [n.d.]. Available at: [https://docs.docker.com/compose/intro/compose-application-model/](https://docs.docker.com/compose/intro/compose-application-model/). Accessed on: Sep. 15, 2026.
 
-- DOCKER INC. *Compose file reference*. [N.p.]: Docker Inc., [n.d.]. Available at: <https://docs.docker.com/reference/compose-file/>. Accessed on: Sep. 15, 2026.
+- DOCKER INC. *Compose file reference*. [N.p.], [n.d.]. Available at: [https://docs.docker.com/reference/compose-file/](https://docs.docker.com/reference/compose-file/). Accessed on: Sep. 15, 2026.
 
-- DOCKER INC. *Set, use, and manage variables in a Compose file with interpolation*. [N.p.]: Docker Inc., [n.d.]. Available at: <https://docs.docker.com/compose/how-tos/environment-variables/variable-interpolation/>. Accessed on: Sep. 15, 2026.
+- DOCKER INC. *Set, use, and manage variables in a Compose file with interpolation*. [N.p.], [n.d.]. Available at: [https://docs.docker.com/compose/how-tos/environment-variables/variable-interpolation/](https://docs.docker.com/compose/how-tos/environment-variables/variable-interpolation/). Accessed on: Sep. 15, 2026.

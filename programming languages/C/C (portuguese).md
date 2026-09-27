@@ -1301,8 +1301,8 @@ Em implementações usuais, a memória de um programa pode ser visualizada por r
 | Código | Instruções executáveis das funções. |
 | Dados de duração estática | Variáveis globais e objetos `static`, frequentemente separados em áreas de dados inicializados e de inicialização com zero. |
 | Dados somente de leitura | Constantes e literais que a implementação decide colocar em uma região protegida contra escrita. |
-| *Stack* — pilha de chamadas | Armazenamento associado a chamadas, parâmetros, variáveis locais e informações de retorno. |
-| *Heap* — área de alocação dinâmica | Regiões administradas pelo alocador para atender a pedidos como `malloc`. |
+| *Stack* - pilha de chamadas | Armazenamento associado a chamadas, parâmetros, variáveis locais e informações de retorno. |
+| *Heap* - área de alocação dinâmica | Regiões administradas pelo alocador para atender a pedidos como `malloc`. |
 
 ![Estrutura de memória](images/screenshot001.png)<br>
 *Fonte: BATISTA, Natália Cosse - Ponteiros e alocação dinâmica de memória, p. 23.*
@@ -1562,8 +1562,8 @@ Essas estruturas, como **pilhas** e **filas** definem principalmente uma **regra
 
 | Estrutura | Regra de retirada | Entradas: `10`, `20`, `30` | Analogia |
 |---|---|---|---|
-| Pilha | Último a entrar, primeiro a sair — *LIFO*. | Retirada: `30`, `20`, `10`. | Pilha de pratos: o último colocado fica no topo. |
-| Fila | Primeiro a entrar, primeiro a sair — *FIFO*. | Retirada: `10`, `20`, `30`. | Fila de atendimento: quem chegou antes é atendido antes. |
+| Pilha | Último a entrar, primeiro a sair - *LIFO*. | Retirada: `30`, `20`, `10`. | Pilha de pratos: o último colocado fica no topo. |
+| Fila | Primeiro a entrar, primeiro a sair - *FIFO*. | Retirada: `10`, `20`, `30`. | Fila de atendimento: quem chegou antes é atendido antes. |
 
 ### Pilhas:
 
@@ -1893,14 +1893,14 @@ No GCC, opções como `-O2` habilitam conjuntos de otimizações. Elas podem aum
 
 - BATISTA, Natália Cosse. *Disciplina: Algoritmos e estruturas de dados*. Curso de graduação em Engenharia de Computação - CEFET-MG, 2025.
 
-- cppreference.com. *C reference*. Disponível em: [https://en.cppreference.com/w/c](https://en.cppreference.com/w/c). Acesso em: 04 ago. 2026.
+- CPPREFERENCE.COM. *C reference*. [S. l.], [s. d.]. Disponível em: [https://en.cppreference.com/w/c](https://en.cppreference.com/w/c). Acesso em: 4 ago. 2026.
 
-- gcc.gnu.org. *Options Controlling C Dialect*. Disponível em: [https://gcc.gnu.org/onlinedocs/gcc/C-Dialect-Options.html](https://gcc.gnu.org/onlinedocs/gcc/C-Dialect-Options.html). Acesso em: 26 set. 2026.
+- FREE SOFTWARE FOUNDATION. *Options Controlling C Dialect*. [S. l.], [s. d.]. Disponível em: [https://gcc.gnu.org/onlinedocs/gcc/C-Dialect-Options.html](https://gcc.gnu.org/onlinedocs/gcc/C-Dialect-Options.html). Acesso em: 26 set. 2026.
 
-- gcc.gnu.org. *Options to Request or Suppress Warnings*. Disponível em: [https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html](https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html). Acesso em: 26 set. 2026.
+- FREE SOFTWARE FOUNDATION. *Options to Request or Suppress Warnings*. [S. l.], [s. d.]. Disponível em: [https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html](https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html). Acesso em: 26 set. 2026.
 
-- ISO/IEC. *Programming languages — C: Committee Draft N1570*. Disponível em: [https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf](https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf). Acesso em: 26 set. 2026.
+- ISO/IEC JTC 1/SC 22/WG 14. *Programming languages — C*. [S. l.], 12 abr. 2011. Disponível em: [https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf](https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf). Acesso em: 26 set. 2026.
 
-- FREE SOFTWARE FOUNDATION. *The C Preprocessor*. Disponível em: [https://gcc.gnu.org/onlinedocs/cpp/](https://gcc.gnu.org/onlinedocs/cpp/). Acesso em: 26 set. 2026.
+- FREE SOFTWARE FOUNDATION. *The C Preprocessor*. [S. l.], [s. d.]. Disponível em: [https://gcc.gnu.org/onlinedocs/cpp/](https://gcc.gnu.org/onlinedocs/cpp/). Acesso em: 26 set. 2026.
 
-- FREE SOFTWARE FOUNDATION. *Using the GNU Compiler Collection*. Disponível em: [https://gcc.gnu.org/onlinedocs/gcc/](https://gcc.gnu.org/onlinedocs/gcc/). Acesso em: 26 set. 2026.
+- FREE SOFTWARE FOUNDATION. *Using the GNU Compiler Collection (GCC)*. [S. l.], [s. d.]. Disponível em: [https://gcc.gnu.org/onlinedocs/gcc/](https://gcc.gnu.org/onlinedocs/gcc/). Acesso em: 26 set. 2026.

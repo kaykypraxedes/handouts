@@ -864,7 +864,7 @@ Dispositivos de **VLANs diferentes** não passam a se comunicar diretamente só 
 
 ---
 
-# Fontes:
+# Fontes
 
 - MAIA, Luiz Paulo. Arquitetura de Redes de Computadores. 2. ed. Rio de Janeiro: LTC, 2013.
 
