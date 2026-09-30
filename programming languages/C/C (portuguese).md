@@ -249,11 +249,11 @@ Uma **expressão** combina valores e operadores para produzir um resultado. Atri
 
 | Operador | Operação | Exemplo |
 |---|---|---|
-| `+` | Adição. | `7 + 2` → `9`. |
-| `-` | Subtração. | `7 - 2` → `5`. |
-| `*` | Multiplicação. | `7 * 2` → `14`. |
-| `/` | Divisão. | `7 / 2` → `3`. |
-| `%` | Resto inteiro. | `7 % 2` → `1`. |
+| `+` | Adição. | `7 + 2` -> `9`. |
+| `-` | Subtração. | `7 - 2` -> `5`. |
+| `*` | Multiplicação. | `7 * 2` -> `14`. |
+| `/` | Divisão. | `7 / 2` -> `3`. |
+| `%` | Resto inteiro. | `7 % 2` -> `1`. |
 
 Se os dois operandos são inteiros, a divisão descarta a parte fracionária em direção a zero. O tipo do destino não altera retroativamente a operação. Conversões **implícitas** seguem as regras da linguagem; um *cast* explícito usa `(tipo) expressao`.
 
@@ -335,11 +335,11 @@ Cada bit pode ser visualizado como um interruptor. Os operadores atuam sobre as 
 
 ```c
 unsigned int a = 6, b = 3;  // Bits finais: 0110 e 0011.
-unsigned int intersecao = a & b;  // 0010 → 2.
-unsigned int uniao = a | b;       // 0111 → 7.
-unsigned int diferentes = a ^ b; // 0101 → 5.
-unsigned int dobro = a << 1;     // 1100 → 12.
-unsigned int metade = a >> 1;    // 0011 → 3.
+unsigned int intersecao = a & b;  // 0010 -> 2.
+unsigned int uniao = a | b;       // 0111 -> 7.
+unsigned int diferentes = a ^ b;  // 0101 -> 5.
+unsigned int dobro = a << 1;      // 1100 -> 12.
+unsigned int metade = a >> 1;     // 0011 -> 3.
 ```
 
 > `&` e `|` não oferecem curto-circuito. Deslocamentos exigem quantidade não negativa e menor que a largura do operando promovido. Tipos sem sinal tornam essas operações mais previsíveis; `~` inverte também os bits omitidos na representação abreviada.
@@ -637,7 +637,7 @@ unsigned int fatorial(unsigned int n) {
     }
     return n * fatorial(n - 1);
 }
-// Chamada dentro de outra função: printf("%u\n", fatorial(5)); → 120.
+// Chamada dentro de outra função: printf("%u\n", fatorial(5)); -> 120.
 ```
 
 `fatorial(5)` depende de `fatorial(4)` e assim sucessivamente (os resultados são combinados no retorno). Cada chamada possui parâmetros e variáveis locais automáticas próprios. Profundidade excessiva pode esgotar recursos, e resultados grandes podem ultrapassar a faixa do tipo: o exemplo atende a valores pequenos.
@@ -1251,7 +1251,7 @@ int total;  // Duração estática; inicialização implícita com zero.
 
 void registrar(void) {
     auto int local = 0;       // Equivale, aqui, a int local = 0.
-    static int persistente;  // Inicializada uma vez, com zero.
+    static int persistente;   // Inicializada uma vez, com zero.
     local++;
     persistente++;
     total++;
@@ -1553,7 +1553,8 @@ Um cabeçalho fornece informações como protótipos, tipos e *macros*. Incluir 
 double area = PI * QUADRADO(2.0 + 1.0);  // PI * 9.
 printf("%s: %.2f\n", NOME, area);        // Calculadora: 28.27.
 
-#undef NOME  // Remove a definição para os usos posteriores.
+// Remove a definição para os usos posteriores.
+#undef NOME  
 ```
 
 Os parênteses preservam o agrupamento dos argumentos e da expressão resultante. `QUADRADO(2 + 1)` se expande para `((2 + 1) * (2 + 1))`.
