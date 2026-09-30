@@ -15,7 +15,7 @@
        |_|                                                             
 ```
 
-# 00. Conceitos Básicos
+# 0. Conceitos Básicos
 
 ## O que é um Sistema Operacional:
 
@@ -97,7 +97,7 @@ Os aplicativos conseguem utilizar os recursos do *hardware* por meio de **chamad
 
 ---
 
-# 01. Arquitetura de Sistemas Operacionais
+# 1. Arquitetura de Sistemas Operacionais
 
 As arquiteturas são classificadas com base em sua estruturação interna, na divisão de tarefas, no nível de privilégio concedido às aplicações e na disposição dos seus componentes.
 
@@ -154,7 +154,7 @@ Apesar da sua organização, a **burocracia de comunicação** entre as camadas 
 
 ---
 
-# 02. Tarefas
+# 2. Tarefas
 
 ## Programa x Tarefa:
 
@@ -360,7 +360,7 @@ Para reduzir esse problema, quando uma tarefa de alta prioridade fica bloqueada 
 
 ---
 
-# 03. Comunicação
+# 3. Comunicação
 
 A interação entre tarefas (comunicação) é uma característica essencial e extremamente benéfica quando se pensa no *design* de sistemas grandes e escaláveis, visto que permite:
 

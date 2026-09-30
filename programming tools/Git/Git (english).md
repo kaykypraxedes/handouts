@@ -7,7 +7,7 @@
  \____/|_| \__|
 ```
 
-# 00. Basic Concepts
+# 0. Basic Concepts
 
 ## Git and GitHub:
 
@@ -63,7 +63,7 @@ You can also consult the [Git Reference Documentation](https://git-scm.com/docs)
 
 ---
 
-# 01. Configuration and Identity
+# 1. Configuration and Identity
 
 ## Configuration Scopes:
 
@@ -87,7 +87,7 @@ Git settings can be applied at different scopes. A more specific setting normall
 
 ---
 
-# 02. Versioning and Files
+# 2. Versioning and Files
 
 ## Initialization:
 
@@ -145,7 +145,7 @@ Because the Index usually matches `HEAD` before `git add`, `git restore {file}` 
 
 ---
 
-# 03. History and Recovery
+# 3. History and Recovery
 
 ## Changing the Last Commit:
 
@@ -178,7 +178,7 @@ The `reflog` can help locate commits that became unreachable after a `reset`, `r
 
 ---
 
-# 04. Branches and Integration
+# 4. Branches and Integration
 
 ## Branches:
 
@@ -217,7 +217,7 @@ The `--abort` option of `git merge` attempts to return to the state before the i
 
 ---
 
-# 05. Remote Repositories
+# 5. Remote Repositories
 
 ## Concepts:
 
@@ -253,7 +253,7 @@ The `--set-upstream-to={remote}/{remote_branch}` option of `git branch` explicit
 
 ---
 
-# 06. Authentication and Credentials
+# 6. Authentication and Credentials
 
 ## Identity and Authentication:
 
@@ -326,7 +326,7 @@ A passphrase protects the private key if the file is copied. `ssh-agent` keeps t
 
 ---
 
-# 07. Additional Tools
+# 7. Additional Tools
 
 ## `stash`:
 

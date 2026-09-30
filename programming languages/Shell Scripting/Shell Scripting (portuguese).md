@@ -14,7 +14,7 @@
                       | |                     __/ |
                       |_|                    |___/   
 ```
-# 00. Conceitos Básicos
+# 0. Conceitos Básicos
 
 ## *Shell*:
 
@@ -133,7 +133,7 @@ O *shell* pode ser utilizado diretamente no terminal, um comando por vez, ou de 
 
 ---
 
-# 01. Processamento de Texto
+# 1. Processamento de Texto
 
 ## Editores de Texto no Terminal:
 
@@ -180,7 +180,7 @@ O *shell* pode ser utilizado diretamente no terminal, um comando por vez, ou de 
 
 - `awk {opções} {programa} {arquivo}` - Formata o resultado de um comando.
 
-# 02. Sistema de Arquivos
+# 2. Sistema de Arquivos
 
 Antes de qualquer coisa, é importante entender como o *shell* identifica o caminho para um arquivo (e/ou diretório):
 
@@ -333,7 +333,7 @@ Na representação octal, podem ser utilizadas a representação de 4 valores, c
 
 ---
 
-# 03. Processos
+# 3. Processos
 
 Todo programa em execução no *Linux* é tratado pelo *kernel* como um **processo**. Como os sistemas operacionais modernos são multitarefa (*multitasking*), o *kernel* cria a ilusão de fazer várias coisas ao mesmo tempo, alternando rapidamente qual processo tem acesso à *CPU*.
 
@@ -415,7 +415,7 @@ $ xlogo &
 
 ---
 
-# 04. Entradas, Saídas e Redirecionamentos
+# 4. Entradas, Saídas e Redirecionamentos
 
 ## Entrada e Saída Padrão:
 
@@ -468,7 +468,7 @@ $ rm temp
 
    - O operador `<<-` realiza a mesma função, mas remove tabulações (apenas `TAB` - não funciona com espaços simples) do início de cada linha do bloco.
 
-# 05. Expansões
+# 5. Expansões
 
 Antes de executar o comando, o *shell* analisa a linha em busca de **metacaracteres** (caracteres especiais) e os substitui automaticamente por dados reais (**expansão**). Somente depois ele entrega a instrução completa (já "mastigada") para o programa executar.
 

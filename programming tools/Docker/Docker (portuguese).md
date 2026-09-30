@@ -7,7 +7,7 @@ ______               _
 |___/   \___/  \___||_|\_\ \___||_|   
 ```
 
-# 00. Conceitos Básicos
+# 0. Conceitos Básicos
 
 O ***Docker*** é uma plataforma para construir, distribuir e executar aplicações em ambientes isolados (***containers***). A aplicação é empacotada com suas dependências e configurações básicas, reduzindo diferenças entre os ambientes de desenvolvimento, teste e execução.
 
@@ -70,7 +70,7 @@ Também podem ser consultadas a [Docker CLI Reference](https://docs.docker.com/r
 
 ---
 
-# 01. Configuração e Permissões
+# 1. Configuração e Permissões
 
 ## Serviço do *Docker*:
 
@@ -101,7 +101,7 @@ O modo *rootless* possui instalação, *socket*, contexto e diretório de dados 
 
 ---
 
-# 02. Imagens e *Registries*
+# 2. Imagens e *Registries*
 
 ## Informações:
 
@@ -146,7 +146,7 @@ Uma imagem pode possuir várias *tags* ou compartilhar camadas com outras imagen
 
 ---
 
-# 03. *Containers*
+# 3. *Containers*
 
 ## Criação e execução:
 
@@ -227,7 +227,7 @@ $ docker container exec -it meu_container sh
 
 ---
 
-# 04. *Dockerfile* e Construção de Imagens
+# 4. *Dockerfile* e Construção de Imagens
 
 ## *Dockerfile*:
 
@@ -297,7 +297,7 @@ $ docker image build -t minha_aplicacao:1.0 .
 
 ---
 
-# 05. Armazenamento
+# 5. Armazenamento
 
 ## Tipos de armazenamento:
 
@@ -349,7 +349,7 @@ O *relabeling* modifica os rótulos *SELinux* dos arquivos do *host* e deve ser 
 
 ---
 
-# 06. Redes e Portas
+# 6. Redes e Portas
 
 ## Redes:
 
@@ -383,7 +383,7 @@ Se o endereço do *host* for omitido, a porta normalmente é vinculada a todas a
 
 ---
 
-# 07. *Docker Compose*
+# 7. *Docker Compose*
 
 ## *Compose*:
 
@@ -527,7 +527,7 @@ Por padrão, `down` não remove volumes nomeados nem recursos declarados como ex
 
 ---
 
-# 08. Manutenção e Segurança
+# 8. Manutenção e Segurança
 
 ## Uso de espaço:
 

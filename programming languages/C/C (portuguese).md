@@ -8,7 +8,7 @@
  `.______.´
 ```
 
-# 00. Características Básicas da Linguagem
+# 0. Características Básicas da Linguagem
 
 > Esta apostila utiliza o **C17** como referência.
 
@@ -82,7 +82,7 @@ C combina gerenciamento **automático**, como o de variáveis locais comuns, e *
 
 ---
 
-# 01. Fundamentos da Linguagem
+# 1. Fundamentos da Linguagem
 
 > Este capítulo reúne os fundamentos de programação no geral e suas particularidades em C: tipos de dados, operadores, estruturas de controle e funções.
 
@@ -809,7 +809,7 @@ int main(void) {
 
 ---
 
-# 02. Ponteiros
+# 2. Ponteiros
 
 > A partir desse capítulo são apresentadas ferramentas específicas e quase exclusivas da linguagem C.
 
@@ -1220,7 +1220,7 @@ int main(void) {
 
 ---
 
-# 03. Memória e Alocação
+# 3. Memória e Alocação
 
 Alocar memória significa **reservar armazenamento para dados**. O tamanho necessário, o tempo de vida dos objetos e a responsabilidade pela liberação determinam a forma de administrar esse espaço.
 
@@ -1504,7 +1504,7 @@ Perder uma variável ponteiro não encerra automaticamente a reserva; manter um 
 
 ---
 
-# 04. Pré-processamento, Compilação e Ligação
+# 4. Pré-processamento, Compilação e Ligação
 
 A construção de um programa transforma o código-fonte em um executável. As diretivas orientam parte dessa preparação: incluem arquivos, definem substituições e selecionam quais trechos serão compilados.
 

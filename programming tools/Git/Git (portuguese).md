@@ -7,7 +7,7 @@
  \____/|_| \__|
 ```
 
-# 00. Conceitos Básicos
+# 0. Conceitos Básicos
 
 ## *Git* e *GitHub*:
 
@@ -63,7 +63,7 @@ Também podem ser consultadas a [Git Reference Documentation](https://git-scm.co
 
 ---
 
-# 01. Configuração e Identidade
+# 1. Configuração e Identidade
 
 ## Escopos de configuração:
 
@@ -87,7 +87,7 @@ As configurações do *Git* podem ser aplicadas em diferentes escopos. Uma confi
 
 ---
 
-# 02. Versionamento e Arquivos
+# 2. Versionamento e Arquivos
 
 ## Inicialização:
 
@@ -145,7 +145,7 @@ Como o *index* costuma corresponder a `HEAD` antes de `git add`, `git restore {a
 
 ---
 
-# 03. Histórico e Recuperação
+# 3. Histórico e Recuperação
 
 ## Alteração do último *commit*:
 
@@ -178,7 +178,7 @@ O `reflog` pode ajudar a localizar *commits* que deixaram de ser alcançáveis d
 
 ---
 
-# 04. *Branches* e Integração
+# 4. *Branches* e Integração
 
 ## *Branches*:
 
@@ -217,7 +217,7 @@ A opção `--abort` de `git merge` tenta retornar ao estado anterior ao início 
 
 ---
 
-# 05. Repositórios Remotos
+# 5. Repositórios Remotos
 
 ## Conceitos:
 
@@ -253,7 +253,7 @@ O `fetch` permite inspecionar as alterações antes da integração, por exemplo
 
 ---
 
-# 06. Autenticação e Credenciais
+# 6. Autenticação e Credenciais
 
 ## Identidade e autenticação:
 
@@ -326,7 +326,7 @@ Uma *passphrase* protege a chave privada caso o arquivo seja copiado. O `ssh-age
 
 ---
 
-# 07. Ferramentas Adicionais
+# 7. Ferramentas Adicionais
 
 ## `stash`:
 

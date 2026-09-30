@@ -15,7 +15,7 @@ ______            _                   _
                          |_|                                                      
 ```
 
-# 00. Conceitos Básicos
+# 0. Conceitos Básicos
 
 ## Redes de Computadores:
 
@@ -115,7 +115,7 @@ Alguns exemplos de serviços básicos são:
 
 ---
 
-# 01. Modelo de Camadas
+# 1. Modelo de Camadas
 
 ## Vantagens na sua Adoção:
 
@@ -211,7 +211,7 @@ Trata-se de um projeto de padronização criado para unificar o desenvolvimento 
 
 ---
 
-# 02. Camada Física
+# 2. Camada Física
 
 ## Processo de Transmissão (Sinais e Dados):
 
@@ -449,7 +449,7 @@ A **topologia** de uma rede define como os dispositivos estão fisicamente conec
 
 ---
 
-# 03. Camada de Enlace
+# 3. Camada de Enlace
 
 ## Introdução e Comparação com a Camada Física:
 
@@ -618,7 +618,7 @@ Para gerenciar essa sincronização e evitar o afogamento do receptor, os protoc
 - **Sinalização de Parada:** O receptor monitora o limite da sua memória e envia um quadro de controle (ou *bits* específicos) avisando o transmissor de que o *buffer* está cheio. O transmissor pausa o envio até receber um novo sinal verde.
 - **Controle Baseado em Créditos (Janela):** É uma abordagem dinâmica na qual o receptor aproveita o envio do ACK para informar quanto espaço ainda tem livre no *buffer*. Assim, o transmissor ajusta a quantidade de mensagens que pode enviar antes de parar e esperar.
 
-# Apêndice A - Arquitetura Prática de Redes Locais
+# Apêndice A. Arquitetura Prática de Redes Locais
 
 Fugindo um pouco do modelo teórico e abstrato das seções anteriores, este se pauta em protocolos práticos e utilizados em diversas camadas da arquitetura de uma rede:
 

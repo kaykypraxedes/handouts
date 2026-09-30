@@ -7,7 +7,7 @@ ______               _
 |___/   \___/  \___||_|\_\ \___||_|   
 ```
 
-# 00. Basic Concepts
+# 0. Basic Concepts
 
 **Docker** is a platform for building, distributing, and running applications in isolated environments (**containers**). The application is packaged with its dependencies and basic configurations, reducing differences between development, testing, and runtime environments.
 
@@ -70,7 +70,7 @@ You can also consult the [Docker CLI Reference](https://docs.docker.com/referenc
 
 ---
 
-# 01. Configuration and Permissions
+# 1. Configuration and Permissions
 
 ## Docker service:
 
@@ -101,7 +101,7 @@ Rootless mode has its own installation, socket, context, and data directory, as 
 
 ---
 
-# 02. Images and Registries
+# 2. Images and Registries
 
 ## Information:
 
@@ -146,7 +146,7 @@ An image can have multiple tags or share layers with other images. Therefore, re
 
 ---
 
-# 03. Containers
+# 3. Containers
 
 ## Creation and execution:
 
@@ -227,7 +227,7 @@ $ docker container exec -it my_container sh
 
 ---
 
-# 04. Dockerfile and Image Building
+# 4. Dockerfile and Image Building
 
 ## Dockerfile:
 
@@ -297,7 +297,7 @@ $ docker image build -t my_application:1.0 .
 
 ---
 
-# 05. Storage
+# 5. Storage
 
 ## Storage types:
 
@@ -349,7 +349,7 @@ Relabeling changes the SELinux labels of the host files and should be applied on
 
 ---
 
-# 06. Networks and Ports
+# 6. Networks and Ports
 
 ## Networks:
 
@@ -383,7 +383,7 @@ If the host address is omitted, the port is normally bound to all interfaces and
 
 ---
 
-# 07. Docker Compose
+# 7. Docker Compose
 
 ## Compose:
 
@@ -527,7 +527,7 @@ By default, `down` does not remove named volumes or resources declared as extern
 
 ---
 
-# 08. Maintenance and Security
+# 8. Maintenance and Security
 
 ## Space usage:
 
