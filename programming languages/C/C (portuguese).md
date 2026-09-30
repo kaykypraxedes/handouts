@@ -28,7 +28,7 @@ Também é **procedural**: operações são agrupadas em funções reutilizávei
 
 ## Tipagem:
 
-C possui **tipagem estática**: os tipos são conhecidos durante a compilação e orientam a interpretação dos dados e a verificação das operações. A linguagem admite conversões **implícitas**, automáticas, e **explícitas**, indicadas no código.
+C possui **tipagem estática**: os tipos são conhecidos durante a compilação e orientam a interpretação dos dados e a verificação das operações. A linguagem admite conversões **implícitas**, automáticas (motivo pelo qual, muitas vezes, ela é descrita como tendo **tipagem fraca**), e **explícitas**, indicadas no código.
 
 ```c
 int quantidade = 3;
@@ -37,8 +37,6 @@ double total = quantidade * preco;  // 37.50.
 ```
 
 Na multiplicação, o valor de `quantidade` é convertido para `double` (a variável continua sendo `int`). Conversões podem perder informações ou produzir resultados inesperados.
-
-> A descrição “tipagem fraca” não possui definição única. As regras de tipos e conversões explicam melhor o comportamento da linguagem.
 
 ## Nível de Abstração:
 
@@ -77,16 +75,16 @@ C combina gerenciamento **automático**, como o de variáveis locais comuns, e *
 
 - **Ponteiros:** acesso indireto a objetos e funções.
 - **Operações sobre bits:** manipulação da representação binária de inteiros.
-- **Organização dos dados:** agrupamentos com arrays e estruturas.
+- **Organização dos dados:** agrupamentos com *arrays* e estruturas.
 - **Alocação dinâmica:** solicitação e liberação de memória durante a execução.
 - **Biblioteca padrão:** entrada e saída, *strings*, matemática e outras operações comuns.
-- **Pré-processamento:** inclusão de arquivos, macros e seleção de trechos antes da compilação propriamente dita.
+- **Pré-processamento:** inclusão de arquivos, *macros* e seleção de trechos antes da compilação propriamente dita.
 
 ---
 
 # 01. Fundamentos da Linguagem
 
-> Este capítulo reúne os fundamentos de programação no geral e suas particularidades em C: tipos descrevem os dados, operadores realizam cálculos, estruturas de controle definem o fluxo e funções organizam operações reutilizáveis.
+> Este capítulo reúne os fundamentos de programação no geral e suas particularidades em C: tipos de dados, operadores, estruturas de controle e funções.
 
 Os programas completos incluem cabeçalhos e `main`. Nos fragmentos, instruções pressupõem sua inserção em uma função (definições de funções ficam fora dela). Exemplos com `printf` pressupõem `stdio.h`. Fragmentos separados são independentes, salvo indicação de continuidade.
 
@@ -118,12 +116,13 @@ Comentários `//` terminam na quebra de linha; `/* ... */` pode abranger várias
 Com o código em `programa.c`, o GCC produz o executável, que pode ser iniciado em um terminal Linux:
 
 ```sh
-gcc -std=c17 -Wall -Wextra -Wpedantic programa.c -o programa # Compilação, linkagem e criação do executável.
+gcc -std=c17 -Wall -Wextra -Wpedantic programa.c -o programa # Compilação, ligação e criação do executável.
 ./programa
-gcc programa.c -o programa # Compilação resumida: versão default da linguagem (definida pelo compilador); indica apenas warnings e erros.
+gcc programa.c -o programa # Compilação resumida: versão padrão da linguagem (definida pelo compilador); indica apenas avisos e erros.
 ```
 
-`-std=c17` seleciona o padrão; `-Wall` e `-Wextra` habilitam grupos de avisos; `-Wpedantic` solicita diagnósticos adicionais ligados ao padrão; `-o` define o nome da saída. A ausência de avisos não garante a correção do programa.
+`-std=c17` seleciona o padrão; `-Wall` e `-Wextra` habilitam grupos de avisos; `-Wpedantic` solicita diagnósticos adicionais ligados ao padrão; `-o` define o nome da saída.
+> A ausência de avisos NÃO GARANTE que o programa funciona corretamente.
 
 ## Tipos de Dados e Variáveis:
 
@@ -137,12 +136,12 @@ O **tipo** determina valores representáveis e operações permitidas. Uma **var
 | `int` | Números inteiros. |
 | `float` | Números em ponto flutuante. |
 | `double` | Ponto flutuante, normalmente com maior precisão e alcance que `float`. |
-| `_Bool` | Valores booleanos: `0` e `1`. |
+| `_Bool` | Valores booleanos: `false` e `true`. |
 | `void` | Ausência de valor em contextos como o retorno de uma função. |
 
 ```c
 int pessoas = 4;
-float temperatura = 26.5f;  // Sufixo f: constante float.
+float temperatura = 26.5f;      // Sufixo f: constante float.
 double distancia = 1234.56789;  // Sem sufixo: constante double.
 char letra = 'A';
 ```
@@ -164,18 +163,21 @@ long long contador = 10000000000LL;
 unsigned long capacidade = 500000UL;
 ```
 
-Tipos distintos podem ter o mesmo tamanho: `long` não garante mais espaço que `int` em qualquer plataforma. `char`, `signed char` e `unsigned char` são tipos diferentes (o comportamento de `char` quanto ao sinal depende da implementação).
+Tipos distintos podem ter o mesmo tamanho: `long` não garante mais espaço que `int` em qualquer plataforma.
+
+`char`, `signed char` e `unsigned char` são tipos diferentes (o comportamento de `char` quanto ao sinal depende da implementação).
 
 ### Valores Booleanos:
 
-No C17, `stdbool.h` fornece `bool`, `true` e `false` para facilitar o uso de `_Bool`. Na conversão numérica, zero se torna falso e qualquer outro valor se torna verdadeiro.
+São utilizados para representar opções binárias (`true` e `false`). Na conversão numérica, **zero se torna falso** e **qualquer outro valor se torna verdadeiro**.
 
 ```c
-#include <stdbool.h>
-bool ativo = true;
-bool bloqueado = false;
-bool possui_itens = 5;  // Armazena 1.
+_Bool ativo = true;
+_Bool bloqueado = false;
+_Bool possui_itens = 5;   // Armazena 1.
 ```
+
+> Até o C18, o `bool` era uma *macro* externa da linguagem (acessada pela biblioteca `<stdbool.h>`), mas, a partir do C23, o `bool` se tornou uma palavra-chave da linguagem em si, funcionando sem adição de bibliotecas (`_Bool` passando a ser apenas um *alias*).
 
 ### Literais e Caracteres Especiais:
 
@@ -211,7 +213,7 @@ int area = largura * altura;
 int total = 0;             // Valor inicial conhecido.
 ```
 
-Uma variável local comum sem inicialização possui **valor indeterminado** (sua leitura pode causar comportamento indefinido). Objetos com duração estática, como variáveis fora das funções, recebem inicialização padrão quando não há inicializador explícito. A diferença será aprofundada no capítulo de memória.
+Uma variável local comum sem inicialização possui **valor indeterminado** (sua leitura pode causar comportamento indefinido). Objetos com duração estática, como variáveis fora das funções, recebem inicialização padrão quando não há inicializador explícito (a diferença será aprofundada no capítulo de memória).
 
 > Zero só representa “ausência de informação” quando o programa adota essa convenção.
 
@@ -256,10 +258,10 @@ Uma **expressão** combina valores e operadores para produzir um resultado. Atri
 Se os dois operandos são inteiros, a divisão descarta a parte fracionária em direção a zero. O tipo do destino não altera retroativamente a operação. Conversões **implícitas** seguem as regras da linguagem; um *cast* explícito usa `(tipo) expressao`.
 
 ```c
-int a = 7 / 2, b = -7 / 2;      // 3 e -3.
-double c = 7 / 2;               // Divisão inteira, depois conversão: 3.0.
-double d = 7 / 2.0;             // Divisão em ponto flutuante: 3.5.
-double total = a;               // Conversão implícita: 3 → 3.0.
+int a = 7 / 2, b = -7 / 2;      // a = 3 e b = -3.
+double c = 7 / 2;               // Divisão inteira, depois conversão: c = 3.0.
+double d = 7 / 2.0;             // Divisão em ponto flutuante: d = 3.5.
+double total = a;               // Conversão implícita: c 3.0 (a se mantém 3).
 int parte_inteira = (int) 8.9;  // 8.
 int soma = 15, elementos = 2;
 double media = (double) soma / elementos;  // 7.5.
@@ -270,7 +272,7 @@ Um *cast* não garante segurança: o destino pode ser incapaz de representar o v
 ```c
 int saldo = -1;
 unsigned int limite = 10;
-int resultado = saldo < limite;  // 0: saldo é convertido para unsigned int.
+int resultado = saldo < limite;  // 0: o valor de saldo (-1) é convertido para unsigned int (11111111111111111111111111111111 = 2^32 - 1).
 ```
 
 > Divisão inteira por zero, resto por zero e estouro aritmético de inteiros com sinal causam **comportamento indefinido**: a linguagem não exige um resultado ou reação específicos. Inteiros sem sinal seguem redução modular, o que também pode contrariar a lógica pretendida.
@@ -404,7 +406,7 @@ printf("Quantidade: %d; preco: %.2f; categoria: %c; desconto: 10%%\n",
 | `double` | `%f` | `%lf` |
 | `long double` | `%Lf` | `%Lf` |
 | `char` como caractere | `%c` | `%c` |
-| String | `%s` | `%s` |
+| *String* | `%s` | `%s` |
 | `size_t` | `%zu` | `%zu` |
 
 Em `printf`, `float` é promovido a `double`; em `scanf`, os destinos exigem distinguir `%f` e `%lf`. Formatos incompatíveis com os tipos esperados podem causar comportamento indefinido.
@@ -509,7 +511,7 @@ for (int i = 0; i < 4; i++) {
 }
 printf("\n");  // 0 1 2 3.
 
-int i;  // Também pode ser declarada antes do laço.
+int i;  // Também pode ser declarada antes do loop.
 for (i = 10; i >= 0; i -= 5) {
     printf("%d ", i);
 }
@@ -520,7 +522,7 @@ As três partes podem ser omitidas. Sem condição, ela é tratada como verdadei
 
 ### `break` e `continue`:
 
-`break` encerra o laço ou `switch` mais interno que o contém. `continue` pula o restante da repetição: no `for`, segue para a atualização e o teste; no `while` e `do while`, para o teste.
+`break` encerra o *loop* ou `switch` mais interno que o contém. `continue` pula o restante da repetição: no `for`, segue para a atualização e o teste; no `while` e `do while`, para o teste.
 
 ```c
 for (int i = 1; i <= 10; i++) {
@@ -565,7 +567,7 @@ O **protótipo** declara nome, retorno e tipos dos parâmetros antes do uso. A d
 ```c
 #include <stdio.h>
 
-int incrementar(int valor);  // Também poderia ser int incrementar(int);
+int incrementar(int valor);  // Também poderia ser "int incrementar(int);"
 void mostrar_linha(void);
 
 int main(void) {
@@ -586,7 +588,9 @@ void mostrar_linha(void) {
 }
 ```
 
-`return expressao;` encerra a função e produz seu resultado. Uma função `void` não retorna valor: pode terminar pelo final do corpo ou antecipadamente com `return;`. Um protótipo fornece informações ao compilador, sem executar nem “pré-compilar” a função.
+> Um protótipo fornece informações ao compilador, sem executar nem “pré-compilar” a função.
+
+`return expressao;` encerra a função e produz seu resultado. Uma função `void` não retorna valor: pode terminar pelo final do corpo ou antecipadamente com `return;`.
 
 ```c
 int maior(int a, int b) {
@@ -640,24 +644,24 @@ unsigned int fatorial(unsigned int n) {
 
 ## Grupos de Dados:
 
-### Arrays:
+### *Arrays*:
 
-Um **array** reúne elementos do mesmo tipo em posições consecutivas, como compartimentos iguais numerados a partir de zero. Um array de quatro elementos possui índices de `0` a `3`.
+Um ***array*** reúne elementos do mesmo tipo em posições consecutivas, como compartimentos iguais numerados a partir de zero. Um *array* de quatro elementos possui índices de `0` a `3`.
 
 ```c
 int notas[4] = {8, 7, 9, 6};
 int inferido[] = {10, 20, 30};  // Tamanho deduzido: 3.
-int parcial[5] = {1, 2};       // {1, 2, 0, 0, 0}.
-int zerado[5] = {0};           // Todos recebem zero.
-int indefinido[5];            // Local comum: valores indeterminados.
-notas[1] = 10;                // Alteração individual.
+int parcial[5] = {1, 2};        // {1, 2, 0, 0, 0}.
+int zerado[5] = {0};            // Todos recebem zero.
+int indefinido[5];              // Local comum: valores indeterminados.
+notas[1] = 10;                  // Alteração individual.
 printf("%d %d\n", notas[0], notas[3]);  // 8 e 6.
-// notas = {1, 2, 3, 4};      // Inválido: não admite atribuição integral.
+// notas = {1, 2, 3, 4};        // Inválido: não admite atribuição integral.
 ```
 
-Um inicializador parcial inicializa também as posições restantes; para inteiros, elas recebem zero. Depois da criação, os elementos podem ser modificados individualmente, mas o array não é reatribuído com `=`.
+Um inicializador parcial inicializa também as posições restantes (para inteiros, elas recebem zero). Depois da criação, os elementos podem ser modificados individualmente, mas o *array* não é reatribuído com `=`.
 
-Laços percorrem as posições. A quantidade resulta da divisão do tamanho total pelo tamanho de um elemento:
+*Loops* percorrem as posições. A quantidade resulta da divisão do tamanho total pelo tamanho de um elemento:
 
 ```c
 int notas[] = {8, 7, 9, 6};
@@ -670,11 +674,11 @@ double media = (double) soma / quantidade;
 printf("Quantidade: %zu; media: %.2f\n", quantidade, media);  // 4 e 7.50.
 ```
 
-> O cálculo exige o próprio array, não um ponteiro nem um parâmetro ajustado para ponteiro. Acessos fora dos limites causam comportamento indefinido (C não verifica automaticamente todos os índices).
+> O cálculo exige o próprio *array*, não um ponteiro nem um parâmetro ajustado para ponteiro. Acessos fora dos limites causam comportamento indefinido (C não verifica automaticamente todos os índices).
 
 ### Matrizes:
 
-Uma matriz pode ser representada como um array de arrays. Em `matriz[linha][coluna]`, o primeiro índice seleciona uma linha e o segundo um elemento dela. As linhas se sucedem de forma contígua na memória.
+Uma matriz pode ser representada como um *array* de *arrays*. Em `matriz[linha][coluna]`, o primeiro índice seleciona uma linha e o segundo um elemento dela. As linhas se sucedem de forma contígua na memória.
 
 ```c
 int matriz[][3] = {  // Primeira dimensão deduzida: 2; também caberia [2][3].
@@ -695,7 +699,7 @@ A primeira dimensão pode ser deduzida do inicializador; as seguintes definem a 
 
 ### *Strings*:
 
-Uma **string** é uma sequência de caracteres terminada por `'\0'`. Capacidade do array e comprimento do texto são distintos: `"Ana"` contém três caracteres antes do terminador e exige quatro posições.
+Uma ***string*** é uma sequência de caracteres terminada por `'\0'`. Capacidade do *array* e comprimento do texto são distintos: `"Ana"` contém três caracteres antes do terminador e exige quatro posições.
 
 ```c
 char exato[] = "Ana";       // Quatro posições.
@@ -717,9 +721,9 @@ if (scanf("%19s", nome) == 1) {
 }
 ```
 
-O nome do array fornece acesso ao destino, sem `&nome`. `%s` para no espaço em branco; `fgets`, apresentada no capítulo seguinte, permite ler linhas com espaços.
+O nome do *array* fornece acesso ao destino, sem `&nome`. `%s` para no espaço em branco; `fgets`, apresentada no capítulo seguinte, permite ler linhas com espaços.
 
-> A ausência de `'\0'` pode fazer funções ultrapassarem o array. `=` não copia integralmente arrays e `==` não compara o conteúdo de *strings* (as operações correspondentes serão apresentadas com `string.h`).
+> A ausência de `'\0'` pode fazer funções ultrapassarem o *array*. `=` não copia integralmente *arrays* e `==` não compara o conteúdo de *strings* (as operações correspondentes serão apresentadas com `string.h`).
 
 ### Estruturas (`struct`):
 
@@ -739,9 +743,9 @@ copia.preco = 20.0;
 printf("%s: %.2f\n", produto.nome, produto.preco);  // Caderno: 17.00.
 ```
 
-A inicialização pode seguir a ordem dos membros ou indicá-los por nome. A atribuição entre estruturas compatíveis copia seus membros, incluindo o array `nome` (alterar os membros dessa cópia não modifica os correspondentes de `produto`).
+A inicialização pode seguir a ordem dos membros ou indicá-los por nome. A atribuição entre estruturas compatíveis copia seus membros, incluindo o *array* `nome` (alterar os membros dessa cópia não modifica os correspondentes de `produto`). A definição de `struct` não admite valores padrão para seus membros.
 
-> A definição de `struct` não admite valores padrão para seus membros. Seu tamanho pode incluir preenchimento de alinhamento. Membros ponteiros, estudados adiante, copiam endereços, não os objetos apontados.
+> O tamanho de uma `struct` pode incluir preenchimento de alinhamento. Membros ponteiros, estudados adiante, copiam endereços, não os objetos apontados.
 
 ### Enumerações com `enum`:
 
@@ -780,7 +784,7 @@ Seu tamanho comporta o maior membro e os requisitos de alinhamento, não a soma 
 
 `typedef` cria um nome alternativo, sem modificar o armazenamento nem as operações do tipo original: `typedef unsigned long Contador;` permite declarar `Contador acessos = 0;`. Também simplifica nomes de estruturas.
 
-### Arrays de Estruturas:
+### *Arrays* de Estruturas:
 
 O exemplo combina o apelido com vários registros. O índice seleciona o aluno, e `.` seleciona um campo.
 
@@ -809,7 +813,7 @@ int main(void) {
 
 > A partir desse capítulo são apresentadas ferramentas específicas e quase exclusivas da linguagem C.
 
-Ponteiros permitem acessar objetos indiretamente, compartilhar dados entre partes do programa e utilizar interfaces de *strings*, arquivos e outros recursos. O endereço indica a localização de um compartimento; o dado é seu conteúdo. Copiar o endereço permite alcançar o mesmo compartimento sem duplicar seu conteúdo.
+**Ponteiros** permitem acessar objetos indiretamente, compartilhar dados entre partes do programa e utilizar interfaces de *strings*, arquivos e outros recursos. O endereço indica a localização de um compartimento; o dado é seu conteúdo. Copiar o endereço permite alcançar o mesmo compartimento sem duplicar seu conteúdo.
 
 ## Endereços e Acesso Indireto:
 
@@ -821,7 +825,7 @@ O operador `&` obtém um endereço; `*` acessa o objeto indicado. O ponteiro tam
 int main(void) {
     int numero = 10, outro = 20;
     int *ponteiro = &numero;
-    int *copia = ponteiro;  // Mesmo destino, sem duplicar numero.
+    int *copia = ponteiro;   // Mesmo destino, sem duplicar numero.
     printf("Valor: %d; endereco: %p\n", *ponteiro, (void *) ponteiro);
     *copia = 25;
     printf("%d\n", numero);  // 25.
@@ -956,9 +960,9 @@ int main(void) {
 
 Dentro da função, `destino` guarda o endereço do ponteiro do chamador; `*destino` acessa esse ponteiro; `**destino` acessa o inteiro alcançado por ele.
 
-## Arrays e Ponteiros:
+## *Arrays* e Ponteiros:
 
-Um array **contém elementos**; uma variável ponteiro **armazena um endereço**. Na maioria das expressões, o array é convertido para um ponteiro ao primeiro elemento, processo chamado de **decaimento** (*array-to-pointer decay*). O armazenamento original continua sendo um array.
+Um *array* **contém elementos**; uma variável ponteiro **armazena um endereço**. Na maioria das expressões, o *array* é convertido para um ponteiro ao primeiro elemento, processo chamado de **decaimento** (*array-to-pointer decay*). O armazenamento original continua sendo um *array*.
 
 ### Indexação e Aritmética:
 
@@ -968,8 +972,8 @@ Um array **contém elementos**; uma variável ponteiro **armazena um endereço**
 int valores[] = {10, 20, 30};
 int *ponteiro = valores;       // Mesmo destino que &valores[0].
 printf("%d %d %d\n", valores[1], ponteiro[1], *(ponteiro + 1));  // 20 20 20.
-(*ponteiro)++;                // Altera valores[0] para 11.
-int anterior = *ponteiro++;   // Equivale a *(ponteiro++).
+(*ponteiro)++;                 // Altera valores[0] para 11.
+int anterior = *ponteiro++;    // Equivale a *(ponteiro++).
 printf("%d %d\n", anterior, *ponteiro);  // 11 e 20.
 
 int *fim = valores + 3;
@@ -981,11 +985,11 @@ printf("\n");  // 11 20 30.
 
 Se `int` ocupa quatro bytes, um avanço corresponde a quatro bytes. Como compartimentos iguais, o tipo determina a distância entre posições. `(*p)++` altera o dado; `p++` altera o ponteiro.
 
-> A aritmética deve permanecer no mesmo array ou na posição imediatamente posterior. Essa última posição pode servir de limite, mas não pode ser desreferenciada. Não é válido deslocar ponteiros livremente pela memória.
+> A aritmética deve permanecer no mesmo *array* ou na posição imediatamente posterior. Essa última posição pode servir de limite, mas não pode ser desreferenciada. Não é válido deslocar ponteiros livremente pela memória.
 
 ### Distância e Comparação:
 
-A diferença entre posições do mesmo array produz a quantidade de elementos entre elas, com tipo `ptrdiff_t`, de `stddef.h`, apresentado por `%td`.
+A diferença entre posições do mesmo *array* produz a quantidade de elementos entre elas, com tipo `ptrdiff_t`, de `stddef.h`, apresentado por `%td`.
 
 ```c
 #include <stddef.h>
@@ -994,11 +998,11 @@ ptrdiff_t distancia = &valores[4] - &valores[1];
 // Dentro de uma função, com stdio.h: printf("%td\n", distancia); -> 3.
 ```
 
-Comparações de ordem também podem ser usadas entre posições do mesmo array. `<` e `>` não fornecem uma ordenação geral portável entre objetos independentes.
+Comparações de ordem também podem ser usadas entre posições do mesmo *array*. `<` e `>` não fornecem uma ordenação geral portável entre objetos independentes.
 
 ### Tamanho, Identidade e Reatribuição:
 
-`sizeof` aplicado ao array mede o conjunto; aplicado ao ponteiro mede essa variável, sem informar quantos elementos estão disponíveis. O operador `&` também preserva a identidade do array.
+`sizeof` aplicado ao *array* mede o conjunto; aplicado ao ponteiro mede essa variável, sem informar quantos elementos estão disponíveis. O operador `&` também preserva a identidade do *array*.
 
 ```c
 int valores[4] = {10, 20, 30, 40};
@@ -1014,9 +1018,9 @@ elemento = outros;    // Reatribui o ponteiro.
 
 Se `int` ocupa quatro bytes, `sizeof valores` é dezesseis (o tamanho do ponteiro depende da implementação). `elemento` aponta para um inteiro, enquanto `conjunto` aponta para quatro inteiros agrupados: os tipos e os avanços são diferentes.
 
-> `sizeof` e `&` são contextos importantes sem decaimento. Um array não é um “ponteiro constante”: seus elementos podem ser modificáveis, mas ele possui tipo e armazenamento próprios.
+> `sizeof` e `&` são contextos importantes sem decaimento. Um *array* não é um “ponteiro constante”: seus elementos podem ser modificáveis, mas ele possui tipo e armazenamento próprios.
 
-## Arrays como Parâmetros:
+## *Arrays* como Parâmetros:
 
 Em parâmetros, `int valores[]` é ajustado para `int *valores`. O tamanho não acompanha o ponteiro e pode ser fornecido separadamente.
 
@@ -1038,13 +1042,13 @@ int main(void) {
 }
 ```
 
-`const` impede modificar os inteiros por esse parâmetro. A segunda chamada fornece dois elementos a partir do segundo. Escrever `int valores[10]` no parâmetro não cria um array local nem verifica automaticamente seu tamanho (`sizeof valores` ali mediria o ponteiro ajustado).
+`const` impede modificar os inteiros por esse parâmetro. A segunda chamada fornece dois elementos a partir do segundo. Escrever `int valores[10]` no parâmetro não cria um *array* local nem verifica automaticamente seu tamanho (`sizeof valores` ali mediria o ponteiro ajustado).
 
 ## Matrizes e Ponteiros:
 
 `int matriz[2][3]` contém duas linhas de três inteiros. Seu decaimento produz `int (*)[3]`, um ponteiro para linha. Avançar esse ponteiro percorre três inteiros de cada vez.
 
-### Ponteiro para Array e Parâmetros:
+### Ponteiro para *Array* e Parâmetros:
 
 ```c
 #include <stdio.h>
@@ -1073,12 +1077,12 @@ O parâmetro `int matriz[][3]` é ajustado para `int (*matriz)[3]`. O número de
 
 | Declaração | Significado |
 |---|---|
-| `int (*p)[3]` | Ponteiro para array de três inteiros. |
-| `int *p[3]` | Array de três ponteiros para inteiros. |
+| `int (*p)[3]` | Ponteiro para *array* de três inteiros. |
+| `int *p[3]` | *Array* de três ponteiros para inteiros. |
 
-### Arrays de Ponteiros:
+### *Arrays* de Ponteiros:
 
-Outra representação utiliza um array de endereços. O primeiro acesso obtém o ponteiro guardado; o segundo acessa a sequência indicada.
+Outra representação utiliza um *array* de endereços. O primeiro acesso obtém o ponteiro guardado; o segundo acessa a sequência indicada.
 
 ```c
 int primeira[] = {1, 2, 3}, segunda[] = {4, 5, 6};
@@ -1087,17 +1091,17 @@ int **ponteiro = linhas;
 printf("%d %d\n", ponteiro[0][2], ponteiro[1][2]);  // 3 e 6.
 ```
 
-As sequências podem ocupar regiões distintas e ter comprimentos diferentes, informados separadamente. Uma matriz contígua não se converte em `int **`: um *cast* não cria o array de ponteiros exigido por essa representação.
+As sequências podem ocupar regiões distintas e ter comprimentos diferentes, informados separadamente. Uma matriz contígua não se converte em `int **`: um *cast* não cria o *array* de ponteiros exigido por essa representação.
 
 ## *Strings* e Ponteiros:
 
 Um ponteiro para o primeiro caractere permite acessar uma *string*, mas não informa sua capacidade nem se ela é modificável.
 
-### Array Modificável e Literal:
+### *Array* Modificável e Literal:
 
 ```c
-char editavel[] = "Casa";       // Array inicializado com os caracteres.
-const char *literal = "Casa";  // Ponteiro para literal.
+char editavel[] = "Casa";     // Array inicializado com os caracteres.
+const char *literal = "Casa"; // Ponteiro para literal.
 editavel[0] = 'M';
 printf("%s %s\n", editavel, literal);  // Masa Casa.
 literal = "Outra";            // Pode mudar o destino.
@@ -1212,13 +1216,13 @@ int main(void) {
 }
 ```
 
-Callbacks aparecem, por exemplo, em critérios de ordenação. A função chamada deve ser compatível com o ponteiro. Ponteiros para funções não admitem aritmética de arrays, e C17 não garante sua conversão para `void *`.
+*Callbacks* aparecem, por exemplo, em critérios de ordenação. A função chamada deve ser compatível com o ponteiro. Ponteiros para funções não admitem aritmética de *arrays*, e C17 não garante sua conversão para `void *`.
 
 ---
 
 # 03. Memória e Alocação
 
-Alocar memória significa reservar armazenamento para dados. O tamanho necessário, o tempo de vida dos objetos e a responsabilidade pela liberação determinam a forma de administrar esse espaço.
+Alocar memória significa **reservar armazenamento para dados**. O tamanho necessário, o tempo de vida dos objetos e a responsabilidade pela liberação determinam a forma de administrar esse espaço.
 
 O ponteiro funciona como um endereço de acesso, enquanto a alocação fornece o armazenamento. Criar, copiar ou eliminar uma variável ponteiro não cria nem libera automaticamente o objeto apontado.
 
@@ -1290,7 +1294,7 @@ Em um uso simples entre arquivos, a definição `int compartilhado = 0;` aparece
 
 > `extern` não significa “alocação dinâmica” nem amplia automaticamente o escopo de todo nome. A organização com arquivos `.c`, cabeçalhos e ligação será aprofundada no capítulo de compilação.
 
-`const` e `volatile` qualificam acessos e tipos (não escolhem, por si só), entre duração automática, estática e alocada. Um objeto `const` local comum, por exemplo, pode continuar tendo duração automática.
+`const` e `volatile` qualificam acessos e tipos; não escolhem, por si só, entre duração automática, estática e alocada. Um objeto `const` local comum, por exemplo, pode continuar tendo duração automática.
 
 ## Organização da Memória:
 
@@ -1304,7 +1308,7 @@ Em implementações usuais, a memória de um programa pode ser visualizada por r
 | *Stack* - pilha de chamadas | Armazenamento associado a chamadas, parâmetros, variáveis locais e informações de retorno. |
 | *Heap* - área de alocação dinâmica | Regiões administradas pelo alocador para atender a pedidos como `malloc`. |
 
-![Estrutura de memória](images/screenshot001.png)<br>
+![Estrutura de memória](images/screenshot001.png)
 *Fonte: BATISTA, Natália Cosse - Ponteiros e alocação dinâmica de memória, p. 23.*
 
 Na *stack*, uma chamada normalmente acrescenta um quadro de informações (*frame*), retirado quando ela retorna. A organização lembra uma pilha de fichas de atividades ainda em andamento. Chamadas recursivas podem acumular vários desses quadros.
@@ -1361,7 +1365,7 @@ O exemplo reúne as quatro funções. As quantidades são pequenas e fixadas no 
 int main(void) {
     size_t quantidade = 3;
     int *dados = malloc(quantidade * sizeof *dados);
-    int *zeros = calloc(quantidade, sizeof *zeros);
+    int *zeros = calloc(quantidade, sizeof(int)); // Sintaxe alternativa válida (os parênteses do sizeof são obrigatórios).
     if (dados == NULL || zeros == NULL) {
         free(dados);  // Também funciona se um dos ponteiros for NULL.
         free(zeros);
@@ -1425,7 +1429,7 @@ Uma reserva para `quantidade` elementos usa `quantidade * sizeof elemento`. Se a
 
 ### Criação em uma Função e Liberação em Outra:
 
-A função abaixo reúne validação de tamanho, criação de um array zerado e devolução de seu endereço. O contrato estabelece que o chamador libera a região recebida.
+A função abaixo reúne validação de tamanho, criação de um *array* zerado e devolução de seu endereço. O contrato estabelece que o chamador libera a região recebida.
 
 ```c
 #include <stdint.h>
@@ -1457,7 +1461,7 @@ int main(void) {
 }
 ```
 
-A variável local `dados` deixa de existir, mas seu valor é copiado para o chamador. A alocação permanece válida até `free`. Isso difere de retornar o endereço de um array local automático, que deixa de existir ao sair da função.
+A variável local `dados` deixa de existir, mas seu valor é copiado para o chamador. A alocação permanece válida até `free`. Isso difere de retornar o endereço de um *array* local automático, que deixa de existir ao sair da função.
 
 O exemplo rejeita quantidade zero por escolha da interface. Quando o tamanho vem de entrada externa, a validação também precisa rejeitar valores negativos ou inválidos **antes** de convertê-los para `size_t`.
 
@@ -1496,152 +1500,11 @@ if (dono != NULL) {
 
 `free` recebe o início de uma alocação válida, não um endereço deslocado como `dados + 1`. Também é necessário liberar reservas já obtidas quando uma operação posterior falha, como no primeiro programa.
 
-Perder uma variável ponteiro não encerra automaticamente a reserva; manter um ponteiro também não prolonga um objeto já liberado. A separação entre **endereço**, **armazenamento** e **tempo de vida** orienta tanto arrays dinâmicos quanto as estruturas do próximo capítulo.
+Perder uma variável ponteiro não encerra automaticamente a reserva; manter um ponteiro também não prolonga um objeto já liberado. A separação entre **endereço**, **armazenamento** e **tempo de vida** orienta tanto *arrays* dinâmicos quanto as estruturas do próximo capítulo.
 
 ---
 
-# 04. Estruturas de Dados
-
-Estruturas de dados organizam informações conforme as operações que o programa precisa realizar: percorrer registros, atender solicitações, recuperar ações recentes ou procurar valores.
-
-Em C, essas organizações podem ser construídas combinando arrays, `structs`, ponteiros e alocação dinâmica. A escolha depende da forma de acesso, da frequência de alterações e do espaço disponível.
-
-## Armazenamento Contíguo e Encadeado:
-
-Um array mantém seus elementos em posições consecutivas. Uma estrutura encadeada utiliza referências para conectar elementos que podem estar em regiões diferentes da memória.
-
-| Organização | Vantagens | Limitações |
-|---|---|---|
-| Contígua | Acesso direto por índice, poucos dados auxiliares e boa proximidade entre elementos na memória. | Inserções e remoções intermediárias podem exigir deslocamentos (crescer uma região dinâmica pode exigir realocação). |
-| Encadeada | Permite conectar e desconectar nós sem deslocar os demais elementos. | Exige espaço para os ponteiros e normalmente precisa percorrer os nós para localizar uma posição. |
-
-Um array se assemelha a uma sequência de compartimentos numerados. No encadeamento, cada compartimento contém uma indicação de onde está o próximo.
-
-> Encadeamento não garante maior velocidade ou segurança. A busca pela posição de alteração pode custar mais que a própria alteração, e os ponteiros precisam permanecer válidos.
-
-## Listas Encadeadas:
-
-Uma **lista simplesmente encadeada** reúne nós que armazenam um dado e um ponteiro para o próximo nó. Um ponteiro inicial permite alcançar a sequência, e `NULL` pode indicar seu final.
-
-```c
-typedef struct No {
-    int valor;
-    struct No *proximo;
-} No;
-
-// Fragmento dentro de uma função; stdio.h incluído.
-No terceiro = {30, NULL};
-No segundo = {20, &terceiro};
-No primeiro = {10, &segundo};
-No *inicio = &primeiro;
-
-for (No *atual = inicio; atual != NULL; atual = atual->proximo) {
-    printf("%d ", atual->valor);
-}
-printf("\n");  // 10 20 30.
-```
-
-O membro `proximo` aponta para outro objeto do mesmo tipo. O exemplo utiliza nós automáticos para destacar o encadeamento (uma lista que cresce durante a execução pode obter seus nós com `malloc`).
-
-Inserir entre dois nós envolve conectar o novo nó ao sucessor e atualizar o antecessor. Retirar um nó exige reconectar a sequência e, quando ele foi alocado dinamicamente e não será mais utilizado, liberar sua memória.
-
-![Adição de elemento no meio de uma lista encadeada](images/screenshot002.png)<br>
-*Fonte: Elaborado pelo autor (2025).*
-
-- **Vantagem:** alterações locais podem preservar os demais nós e seus endereços.
-- **Aplicações:** sequências com inserções e remoções frequentes, agrupamentos de registros e implementação de pilhas ou filas.
-- **Limitação:** acessar o elemento de determinada posição normalmente exige percorrer os anteriores.
-
-> Uma lista não prioriza dados antigos ou recentes por definição. Essa ordem depende de onde os elementos são inseridos, consultados e retirados.
-
-Uma lista **duplamente encadeada** também guarda o endereço do antecessor, facilitando o percurso nos dois sentidos, ao custo de mais armazenamento e atualizações.
-
-## Estruturas lineares:
-
-Essas estruturas, como **pilhas** e **filas** definem principalmente uma **regra de acesso**. Ambas podem ser implementadas com arrays ou nós encadeados.
-
-| Estrutura | Regra de retirada | Entradas: `10`, `20`, `30` | Analogia |
-|---|---|---|---|
-| Pilha | Último a entrar, primeiro a sair - *LIFO*. | Retirada: `30`, `20`, `10`. | Pilha de pratos: o último colocado fica no topo. |
-| Fila | Primeiro a entrar, primeiro a sair - *FIFO*. | Retirada: `10`, `20`, `30`. | Fila de atendimento: quem chegou antes é atendido antes. |
-
-### Pilhas:
-
-Uma **pilha** concentra inserção e retirada no topo. Essa organização facilita recuperar os dados mais recentemente adicionados.
-
-- **Vantagem:** acesso simples ao item mais recente, sem procurar por toda a coleção.
-- **Aplicações:** desfazer ações, acompanhar chamadas de funções e guardar etapas que precisam ser retomadas em ordem inversa.
-- **Limitação:** alcançar diretamente um item antigo não é a operação principal da estrutura.
-
-Em um array, o topo pode ser acompanhado por um índice ou pela quantidade de elementos. Em uma lista encadeada, o início pode representar o topo, reunindo inserção e retirada nessa posição.
-
-> A pilha como estrutura de dados e a *stack* de chamadas utilizam uma organização semelhante, mas não são a mesma região de memória. Uma pilha criada pelo programa pode, por exemplo, utilizar memória dinâmica.
-
-### Filas:
-
-Uma **fila** insere elementos no final e retira do início. Ela favorece o processamento dos dados mais antigos ainda pendentes.
-
-- **Vantagem:** preserva a ordem de chegada.
-- **Aplicações:** solicitações aguardando atendimento, mensagens recebidas e tarefas pendentes.
-- **Limitação:** selecionar um elemento intermediário ou mais recente foge da operação básica de uma fila.
-
-Uma implementação encadeada pode manter ponteiros para início e final, evitando percorrer toda a sequência a cada inserção.
-
-Com arrays, uma **fila circular** reutiliza as posições liberadas no começo. Os índices retornam ao início ao atingir o limite, como marcadores que circulam por uma pista, evitando deslocar todos os elementos após cada retirada.
-
-> A fila facilita retirar o mais antigo (ela não torna automaticamente mais rápida a busca por um dado antigo arbitrário).
-
-## Árvores:
-
-Uma **árvore** organiza nós por ramificações. O nó inicial é a **raiz**, os nós ligados abaixo de outro são seus **filhos**, e os nós sem filhos são **folhas**.
-
-Essa organização representa relações hierárquicas, como categorias e subcategorias. Em uma árvore binária, cada nó possui no máximo dois filhos.
-
-```c
-typedef struct NoArvore {
-    int valor;
-    struct NoArvore *esquerda;
-    struct NoArvore *direita;
-} NoArvore;
-```
-
-A declaração define as ligações possíveis. As regras de inserção e consulta determinam o significado dessas ramificações.
-
-### Árvores Binárias de Busca:
-
-Em uma **árvore binária de busca**, os valores menores ficam na subárvore esquerda e os maiores na direita, considerando aqui valores distintos.
-
-![Árvores](images/screenshot003.png)<br>
-*Fonte: estrategiaconcursos - Percursos em Árvores Binárias para o CNU (TI), Disponível em: [https://www.estrategiaconcursos.com.br/blog/percursos-arvores-binarias/](https://www.estrategiaconcursos.com.br/blog/percursos-arvores-binarias/). Acesso em: 26 set. 2026.*
-
-Para procurar `5`, a comparação com `7` direciona a busca à esquerda; a comparação com `4`, à direita. A organização permite descartar partes da árvore sem visitar todos os seus elementos.
-
-Quando a árvore mantém altura proporcional ao logaritmo da quantidade de nós, a busca custa `O(log n)`. Se ficar muito desbalanceada, formando uma sequência alongada, o custo pode chegar a `O(n)`.
-
-- **Vantagem:** árvores de busca equilibradas permitem localizar valores e manter uma organização ordenada com eficiência.
-- **Aplicações:** conjuntos ordenados, índices e consultas por valor.
-- **Limitação:** manter uma boa organização exige regras adicionais (uma árvore binária qualquer não garante busca logarítmica).
-
-> `O(n)` indica crescimento proporcional à quantidade de elementos - `O(log n)` cresce mais lentamente. Uma lista encadeada simples normalmente exige busca linear, mas um array ordenado também pode admitir busca binária logarítmica: essa vantagem não é exclusiva das árvores.
-
-## Escolha da Estrutura:
-
-| Necessidade principal | Opção usual |
-|---|---|
-| Acessar diretamente uma posição conhecida. | Array. |
-| Conectar ou retirar elementos sem deslocar todo o conjunto. | Lista encadeada, considerando o custo de localizar o ponto da alteração. |
-| Recuperar primeiro o que foi adicionado por último. | Pilha. |
-| Processar pendências na ordem de chegada. | Fila. |
-| Representar relações hierárquicas. | Árvore. |
-| Manter dados ordenados com buscas e alterações frequentes. | Árvore de busca equilibrada, conforme as operações necessárias. |
-
-A regra de organização e a forma de armazenamento são escolhas relacionadas, mas diferentes. Uma fila não exige encadeamento, uma lista não exige necessariamente alocação dinâmica e uma árvore não é automaticamente uma árvore de busca.
-
-Os algoritmos de inserção, remoção, percurso e balanceamento são aprofundados na apostila de Algoritmos. Aqui, essas estruturas mostram como os recursos de C podem ser combinados para atender a diferentes formas de organizar e acessar os dados.
-
----
-
-# 05. Pré-processamento, Compilação e Ligação
+# 04. Pré-processamento, Compilação e Ligação
 
 A construção de um programa transforma o código-fonte em um executável. As diretivas orientam parte dessa preparação: incluem arquivos, definem substituições e selecionam quais trechos serão compilados.
 
@@ -1651,7 +1514,7 @@ O pré-processamento pode ser comparado à preparação de um documento: reúne 
 
 | Etapa | Função |
 |---|---|
-| Pré-processamento | Processa diretivas, inclui cabeçalhos e expande macros. |
+| Pré-processamento | Processa diretivas, inclui cabeçalhos e expande *macros*. |
 | Compilação propriamente dita | Analisa o código e produz uma representação de destino, normalmente com otimizações. |
 | Montagem | Converte código de montagem em arquivos objeto. |
 | Ligação | Combina arquivos objeto e bibliotecas, resolvendo referências entre eles. |
@@ -1675,11 +1538,11 @@ As diretivas começam com `#` e normalmente terminam na quebra de linha, sem `;`
 
 Os delimitadores orientam a procura pelo cabeçalho. No uso habitual, aspas permitem procurar primeiro junto ao arquivo que realiza a inclusão, enquanto `<...>` utiliza os caminhos configurados para cabeçalhos. Os detalhes dependem da implementação.
 
-Um cabeçalho fornece informações como protótipos, tipos e macros. Incluir o cabeçalho de uma biblioteca não equivale a incorporar automaticamente toda a sua implementação ao executável.
+Um cabeçalho fornece informações como protótipos, tipos e *macros*. Incluir o cabeçalho de uma biblioteca não equivale a incorporar automaticamente toda a sua implementação ao executável.
 
-### Macros com `#define` e `#undef`:
+### *Macros* com `#define` e `#undef`:
 
-`#define` associa um nome a uma sequência de elementos que será substituída durante o pré-processamento. Uma macro pode representar um valor ou receber argumentos.
+`#define` associa um nome a uma sequência de elementos que será substituída durante o pré-processamento. Uma *macro* pode representar um valor ou receber argumentos.
 
 ```c
 #define PI 3.141592653589793
@@ -1695,7 +1558,7 @@ printf("%s: %.2f\n", NOME, area);        // Calculadora: 28.27.
 
 Os parênteses preservam o agrupamento dos argumentos e da expressão resultante. `QUADRADO(2 + 1)` se expande para `((2 + 1) * (2 + 1))`.
 
-Uma macro não é uma função: não cria parâmetros locais e pode repetir a avaliação do argumento.
+Uma *macro* não é uma função: não cria parâmetros locais e pode repetir a avaliação do argumento.
 
 ```c
 int i = 2;
@@ -1704,7 +1567,7 @@ int i = 2;
 
 > Parênteses resolvem problemas de agrupamento, mas não impedem efeitos colaterais duplicados. Para operações comuns com argumentos, funções oferecem verificação de tipos e evitam essa repetição causada pela expansão.
 
-Macros também não seguem o escopo dos blocos de C. Uma definição permanece ativa, a partir de seu processamento, até `#undef` ou o final da unidade em processamento.
+*Macros* também não seguem o escopo dos blocos de C. Uma definição permanece ativa, a partir de seu processamento, até `#undef` ou o final da unidade em processamento.
 
 ### Compilação Condicional:
 
@@ -1713,8 +1576,8 @@ As diretivas condicionais selecionam trechos durante a construção do programa.
 | Diretiva | Papel |
 |---|---|
 | `#if expressao` | Testa uma expressão inteira do pré-processador. |
-| `#ifdef NOME` | Testa se a macro está definida. |
-| `#ifndef NOME` | Testa se a macro não está definida. |
+| `#ifdef NOME` | Testa se a *macro* está definida. |
+| `#ifndef NOME` | Testa se a *macro* não está definida. |
 | `#elif expressao` | Testa outra condição. |
 | `#else` | Seleciona a alternativa restante. |
 | `#endif` | Encerra o grupo condicional. |
@@ -1744,7 +1607,7 @@ int main(void) {
 }
 ```
 
-No GCC, macros também podem ser definidas pelo comando de compilação:
+No GCC, *macros* também podem ser definidas pelo comando de compilação:
 
 ```sh
 gcc -std=c17 -DNIVEL=0 -DDEPURACAO diretivas.c -o programa
@@ -1752,13 +1615,13 @@ gcc -std=c17 -DNIVEL=0 -DDEPURACAO diretivas.c -o programa
 
 Nesse caso, a saída contém o diagnóstico e `Modo simples`. Sem essas opções, o exemplo utiliza `NIVEL` igual a um e apresenta apenas `Modo detalhado`.
 
-`#ifdef NOME` equivale a `#if defined(NOME)`. A existência da macro é diferente de seu valor: uma macro definida como zero ainda satisfaz `#ifdef`.
+`#ifdef NOME` equivale a `#if defined(NOME)`. A existência da *macro* é diferente de seu valor: uma *macro* definida como zero ainda satisfaz `#ifdef`.
 
 > O pré-processador não consulta variáveis de C nem interpreta tipos como o compilador. Uma variável `const` ou uma expressão com `sizeof` não pode ser usada diretamente como condição de `#if`. `#warning`, aceito por algumas ferramentas, não pertence ao padrão C17.
 
-### Macros Predefinidas:
+### *Macros* Predefinidas:
 
-| Macro | Informação |
+| *Macro* | Informação |
 |---|---|
 | `__FILE__` | Nome do arquivo-fonte, como *string*. |
 | `__LINE__` | Número da linha, como constante inteira. |
@@ -1815,13 +1678,13 @@ int main(void) {
 }
 ```
 
-A interface pressupõe um array acessível com `quantidade` elementos e quantidade maior que zero. O cabeçalho inclui `stddef.h` porque seu protótipo utiliza `size_t`.
+A interface pressupõe um *array* acessível com `quantidade` elementos e quantidade maior que zero. O cabeçalho inclui `stddef.h` porque seu protótipo utiliza `size_t`.
 
 A implementação também inclui seu próprio cabeçalho, permitindo ao compilador verificar a compatibilidade entre declaração e definição.
 
 ### Proteção contra Inclusões Repetidas:
 
-A combinação `#ifndef`, `#define` e `#endif` forma uma **proteção de inclusão** (*include guard*). Na primeira inclusão, a macro é definida; nas seguintes, o conteúdo protegido é ignorado.
+A combinação `#ifndef`, `#define` e `#endif` forma uma **proteção de inclusão** (*include guard*). Na primeira inclusão, a *macro* é definida; nas seguintes, o conteúdo protegido é ignorado.
 
 Isso evita processar repetidamente definições como as de estruturas quando vários cabeçalhos incluem o mesmo arquivo.
 
@@ -1829,7 +1692,7 @@ Isso evita processar repetidamente definições como as de estruturas quando vá
 
 ### Declaração e Definição:
 
-Um cabeçalho pode reunir protótipos, definições de tipos, macros e declarações `extern`. Uma variável compartilhada pode ser declarada como `extern int total;` no cabeçalho e definida como `int total = 0;` em um único `.c`.
+Um cabeçalho pode reunir protótipos, definições de tipos, *macros* e declarações `extern`. Uma variável compartilhada pode ser declarada como `extern int total;` no cabeçalho e definida como `int total = 0;` em um único `.c`.
 
 Colocar definições comuns de variáveis ou funções com ligação externa em um cabeçalho pode gerar múltiplas definições quando ele é incluído por diferentes arquivos.
 
@@ -1876,6 +1739,147 @@ No GCC, opções como `-O2` habilitam conjuntos de otimizações. Elas podem aum
 | Execução | Falha ao abrir um arquivo, falha de alocação ou acesso inválido dependente dos dados. |
 
 > Nem todo erro é diagnosticado. Comportamento indefinido pode passar despercebido e produzir resultados diferentes com otimização. O compilador pode assumir que as regras da linguagem são respeitadas ao transformar o código.
+
+---
+
+# Apêndice A. Estruturas de Dados
+
+Estruturas de dados organizam informações conforme as operações que o programa precisa realizar: percorrer registros, atender solicitações, recuperar ações recentes ou procurar valores.
+
+Em C, essas organizações podem ser construídas combinando *arrays*, `structs`, ponteiros e alocação dinâmica. A escolha depende da forma de acesso, da frequência de alterações e do espaço disponível.
+
+## Armazenamento Contíguo e Encadeado:
+
+Um *array* mantém seus elementos em posições consecutivas. Uma estrutura encadeada utiliza referências para conectar elementos que podem estar em regiões diferentes da memória.
+
+| Organização | Vantagens | Limitações |
+|---|---|---|
+| Contígua | Acesso direto por índice, poucos dados auxiliares e boa proximidade entre elementos na memória. | Inserções e remoções intermediárias podem exigir deslocamentos (crescer uma região dinâmica pode exigir realocação). |
+| Encadeada | Permite conectar e desconectar nós sem deslocar os demais elementos. | Exige espaço para os ponteiros e normalmente precisa percorrer os nós para localizar uma posição. |
+
+Um *array* se assemelha a uma sequência de compartimentos numerados. No encadeamento, cada compartimento contém uma indicação de onde está o próximo.
+
+> Encadeamento não garante maior velocidade ou segurança. A busca pela posição de alteração pode custar mais que a própria alteração, e os ponteiros precisam permanecer válidos.
+
+## Listas Encadeadas:
+
+Uma **lista simplesmente encadeada** reúne nós que armazenam um dado e um ponteiro para o próximo nó. Um ponteiro inicial permite alcançar a sequência, e `NULL` pode indicar seu final.
+
+```c
+typedef struct No {
+    int valor;
+    struct No *proximo;
+} No;
+
+// Fragmento dentro de uma função; stdio.h incluído.
+No terceiro = {30, NULL};
+No segundo = {20, &terceiro};
+No primeiro = {10, &segundo};
+No *inicio = &primeiro;
+
+for (No *atual = inicio; atual != NULL; atual = atual->proximo) {
+    printf("%d ", atual->valor);
+}
+printf("\n");  // 10 20 30.
+```
+
+O membro `proximo` aponta para outro objeto do mesmo tipo. O exemplo utiliza nós automáticos para destacar o encadeamento (uma lista que cresce durante a execução pode obter seus nós com `malloc`).
+
+Inserir entre dois nós envolve conectar o novo nó ao sucessor e atualizar o antecessor. Retirar um nó exige reconectar a sequência e, quando ele foi alocado dinamicamente e não será mais utilizado, liberar sua memória.
+
+![Adição de elemento no meio de uma lista encadeada](images/screenshot002.png)
+*Fonte: Elaborado pelo autor (2025).*
+
+- **Vantagem:** alterações locais podem preservar os demais nós e seus endereços.
+- **Aplicações:** sequências com inserções e remoções frequentes, agrupamentos de registros e implementação de pilhas ou filas.
+- **Limitação:** acessar o elemento de determinada posição normalmente exige percorrer os anteriores.
+
+> Uma lista não prioriza dados antigos ou recentes por definição. Essa ordem depende de onde os elementos são inseridos, consultados e retirados.
+
+Uma lista **duplamente encadeada** também guarda o endereço do antecessor, facilitando o percurso nos dois sentidos, ao custo de mais armazenamento e atualizações.
+
+## Estruturas Lineares:
+
+Essas estruturas, como **pilhas** e **filas**, definem principalmente uma **regra de acesso**. Ambas podem ser implementadas com *arrays* ou nós encadeados.
+
+| Estrutura | Regra de retirada | Entradas: `10`, `20`, `30` | Analogia |
+|---|---|---|---|
+| Pilha | Último a entrar, primeiro a sair - *LIFO*. | Retirada: `30`, `20`, `10`. | Pilha de pratos: o último colocado fica no topo. |
+| Fila | Primeiro a entrar, primeiro a sair - *FIFO*. | Retirada: `10`, `20`, `30`. | Fila de atendimento: quem chegou antes é atendido antes. |
+
+### Pilhas:
+
+Uma **pilha** concentra inserção e retirada no topo. Essa organização facilita recuperar os dados mais recentemente adicionados.
+
+- **Vantagem:** acesso simples ao item mais recente, sem procurar por toda a coleção.
+- **Aplicações:** desfazer ações, acompanhar chamadas de funções e guardar etapas que precisam ser retomadas em ordem inversa.
+- **Limitação:** alcançar diretamente um item antigo não é a operação principal da estrutura.
+
+Em um *array*, o topo pode ser acompanhado por um índice ou pela quantidade de elementos. Em uma lista encadeada, o início pode representar o topo, reunindo inserção e retirada nessa posição.
+
+> A pilha como estrutura de dados e a *stack* de chamadas utilizam uma organização semelhante, mas não são a mesma região de memória. Uma pilha criada pelo programa pode, por exemplo, utilizar memória dinâmica.
+
+### Filas:
+
+Uma **fila** insere elementos no final e retira do início. Ela favorece o processamento dos dados mais antigos ainda pendentes.
+
+- **Vantagem:** preserva a ordem de chegada.
+- **Aplicações:** solicitações aguardando atendimento, mensagens recebidas e tarefas pendentes.
+- **Limitação:** selecionar um elemento intermediário ou mais recente foge da operação básica de uma fila.
+
+Uma implementação encadeada pode manter ponteiros para início e final, evitando percorrer toda a sequência a cada inserção.
+
+Com *arrays*, uma **fila circular** reutiliza as posições liberadas no começo. Os índices retornam ao início ao atingir o limite, como marcadores que circulam por uma pista, evitando deslocar todos os elementos após cada retirada.
+
+> A fila facilita retirar o mais antigo (ela não torna automaticamente mais rápida a busca por um dado antigo arbitrário).
+
+## Árvores:
+
+Uma **árvore** organiza nós por ramificações. O nó inicial é a **raiz**, os nós ligados abaixo de outro são seus **filhos**, e os nós sem filhos são **folhas**.
+
+Essa organização representa relações hierárquicas, como categorias e subcategorias. Em uma árvore binária, cada nó possui no máximo dois filhos.
+
+```c
+typedef struct NoArvore {
+    int valor;
+    struct NoArvore *esquerda;
+    struct NoArvore *direita;
+} NoArvore;
+```
+
+A declaração define as ligações possíveis. As regras de inserção e consulta determinam o significado dessas ramificações.
+
+### Árvores Binárias de Busca:
+
+Em uma **árvore binária de busca**, os valores menores ficam na subárvore esquerda e os maiores na direita, considerando aqui valores distintos.
+
+![Árvores](images/screenshot003.png)
+*Fonte: estrategiaconcursos - Percursos em Árvores Binárias para o CNU (TI), Disponível em: [https://www.estrategiaconcursos.com.br/blog/percursos-arvores-binarias/](https://www.estrategiaconcursos.com.br/blog/percursos-arvores-binarias/). Acesso em: 26 set. 2026.*
+
+Para procurar `5`, a comparação com `7` direciona a busca à esquerda; a comparação com `4`, à direita. A organização permite descartar partes da árvore sem visitar todos os seus elementos.
+
+Quando a árvore mantém altura proporcional ao logaritmo da quantidade de nós, a busca custa `O(log n)`. Se ficar muito desbalanceada, formando uma sequência alongada, o custo pode chegar a `O(n)`.
+
+- **Vantagem:** árvores de busca equilibradas permitem localizar valores e manter uma organização ordenada com eficiência.
+- **Aplicações:** conjuntos ordenados, índices e consultas por valor.
+- **Limitação:** manter uma boa organização exige regras adicionais (uma árvore binária qualquer não garante busca logarítmica).
+
+> `O(n)` indica crescimento proporcional à quantidade de elementos - `O(log n)` cresce mais lentamente. Uma lista encadeada simples normalmente exige busca linear, mas um *array* ordenado também pode admitir busca binária logarítmica: essa vantagem não é exclusiva das árvores.
+
+## Escolha da Estrutura:
+
+| Necessidade principal | Opção usual |
+|---|---|
+| Acessar diretamente uma posição conhecida. | *Array*. |
+| Conectar ou retirar elementos sem deslocar todo o conjunto. | Lista encadeada, considerando o custo de localizar o ponto da alteração. |
+| Recuperar primeiro o que foi adicionado por último. | Pilha. |
+| Processar pendências na ordem de chegada. | Fila. |
+| Representar relações hierárquicas. | Árvore. |
+| Manter dados ordenados com buscas e alterações frequentes. | Árvore de busca equilibrada, conforme as operações necessárias. |
+
+A regra de organização e a forma de armazenamento são escolhas relacionadas, mas diferentes. Uma fila não exige encadeamento, uma lista não exige necessariamente alocação dinâmica e uma árvore não é automaticamente uma árvore de busca.
+
+Os algoritmos de inserção, remoção, percurso e balanceamento são aprofundados na apostila de Algoritmos. Aqui, essas estruturas mostram como os recursos de C podem ser combinados para atender a diferentes formas de organizar e acessar os dados.
 
 ---
 
