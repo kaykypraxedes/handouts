@@ -13,7 +13,7 @@
 
 $\displaystyle f\left(a\right)$ indica o valor da função $\displaystyle f\left(x\right)$ quando $\displaystyle x = a$. Já $\displaystyle \lim_{x \to a} f\left(x\right)$ vê a tendência da função quando $\displaystyle x$ se aproxima de $\displaystyle a$.
 
-![Limite de 1/|x| quando x se aproxima de zero](images/screenshot001.png)  
+![Limite de 1/|x| quando x se aproxima de zero](images/screenshot001.png)<br>
 *Fonte: Elaborado pelo autor (2025).*
 
 Para $\displaystyle f\left(x\right)=\frac{1}{\left\lvert x\right\rvert}$: $\displaystyle f\left(0\right)$ não existe; $\displaystyle \lim_{x \to 0} f\left(x\right) = \infty$ (quando $\displaystyle x$ se aproxima de $\displaystyle 0$, $\displaystyle y$ tende ao infinito).
@@ -26,7 +26,7 @@ $$
 \displaystyle \lim_{x \to a^-} f\left(x\right) = \lim_{x \to a^+} f\left(x\right) = L \Rightarrow \lim_{x \to a} f\left(x\right) = L
 $$
 
-![Limites laterais de 1/x em zero](images/screenshot002.png)  
+![Limites laterais de 1/x em zero](images/screenshot002.png)<br>  
 *Fonte: Elaborado pelo autor (2025).*
 
 $$
@@ -160,7 +160,7 @@ $$
 \displaystyle \lim_{x\to0}x^2\sin\left(\frac1x\right)=0
 $$
 
-![Teorema do confronto para x^2 sen(1/x)](images/screenshot003.png)
+![Teorema do confronto para x^2 sen(1/x)](images/screenshot003.png)<br>
 *Fonte: Elaborado pelo autor (2025).*
 
 ## Teorema do Valor Intermediário (TVI):
@@ -182,7 +182,7 @@ $$
 
 **Pode-se tornar o valor de $\displaystyle f\left(x\right)$ arbitrariamente próximo de $\displaystyle L$ aproximando $\displaystyle x$ de $\displaystyle a$, sem exigir $\displaystyle x=a$.** Para cada margem de erro $\displaystyle \varepsilon>0$ escolhida em $\displaystyle y$, existe uma distância $\displaystyle \delta>0$ em $\displaystyle x$ que garante essa proximidade.
 
-![Relação entre épsilon, delta e a proximidade do limite](images/screenshot004.png)  
+![Relação entre épsilon, delta e a proximidade do limite](images/screenshot004.png)<br>  
 *Fonte: Elaborado pelo autor (2025).*
 
 > As distâncias $\displaystyle \delta$ não tem de ser necessariamente as mesmas na porção esquerda e direta em relação ao $\displaystyle a$ (normalmente nem serão).
@@ -220,7 +220,7 @@ $$
 \displaystyle \frac{dy}{dx}\Big|_{x = 2} = \lim_{x\to2}\frac{x^3-2^3}{x-2}=\lim_{x\to2}\frac{\left(x-2\right)\left(x^2+2x+4\right)}{x-2}=\lim_{x\to2}\left[x^2+2x+4\right]=12
 $$
 
-![Retas secante e tangente ao gráfico de x³](images/screenshot005.png)  
+![Retas secante e tangente ao gráfico de x³](images/screenshot005.png)<br>  
 *Fonte: Elaborado pelo autor (2025).*
 
 ### Diferenciabilidade:
@@ -261,7 +261,7 @@ $$
 
 Para valores de $\displaystyle h$ pequenos, a variação da função é praticamente igual ao valor correspondente na reta tangente.
 
-![Aproximação linear de sen(x) em x = 1](images/screenshot006.png)  
+![Aproximação linear de sen(x) em x = 1](images/screenshot006.png)<br>  
 *Fonte: Elaborado pelo autor (2025).*
 
 A diferença dos valores é aproximadamente $\displaystyle 0{,}04$. Perto do ponto de tangência, a aproximação acompanha a função; neste exemplo, reduzir $\displaystyle h$ melhora a precisão.
@@ -384,7 +384,7 @@ $$
 \displaystyle 2x + 2y \dfrac{dy}{dx} = 0 \Rightarrow 2y \dfrac{dy}{dx} = -2x \Rightarrow \dfrac{dy}{dx} = -\dfrac{2x}{2y} = -\dfrac{x}{y},\quad y\ne0
 $$
 
-![Tangentes horizontal e vertical à circunferência x² + y² = 25](images/screenshot007.png)  
+![Tangentes horizontal e vertical à circunferência x² + y² = 25](images/screenshot007.png)<br>  
 *Fonte: Elaborado pelo autor (2025).*
 
 Em $\displaystyle \left(0,5\right)$, a inclinação é zero. Em $\displaystyle \left(5,0\right)$, a tangente é vertical e $\displaystyle \frac{dy}{dx}$ não existe como número real finito.
@@ -446,7 +446,7 @@ Isso faz sentido, já que $\displaystyle \frac{\Delta y}{\Delta x} \approx \frac
 
 Portanto, para encontrar um valor na função, ao invés de seguir o caminho por $\displaystyle f$, seguimos pela reta tangente a um ponto conhecido ($\displaystyle y + \Delta y \approx y + dy$).
 
-![Diferença entre a variação real Δy e o diferencial dy](images/screenshot008.png)  
+![Diferença entre a variação real Δy e o diferencial dy](images/screenshot008.png)<br>  
 *Fonte: Elaborado pelo autor (2025).*
 
 Dessa maneira é possível aproximar funções que seriam complicadas de calcular.
@@ -541,7 +541,7 @@ O teste não é uma condição obrigatória para existir extremo. A função $\d
 
 Para ser um **máximo ou mínimo global**, o valor deve ser o maior ou o menor em todo o domínio considerado. Se a função é contínua em um intervalo fechado $\displaystyle \left[a,b\right]$, esses extremos existem. Para encontrá-los, comparamos os valores nos candidatos interiores — onde a derivada é zero ou não existe — e nas extremidades $\displaystyle f\left(a\right)$ e $\displaystyle f\left(b\right)$.
 
-![Máximos, mínimos e ponto de inflexão](images/screenshot009.png)
+![Máximos, mínimos e ponto de inflexão](images/screenshot009.png)<br>
 *Fonte: Elaborado pelo autor (2025).*
 
 ## Assíntotas:
@@ -554,7 +554,7 @@ A reta $\displaystyle y=c$ é uma assíntota horizontal quando $\displaystyle \l
 
 $\displaystyle \lim_{x \to -\infty} 2+\frac{1}{x} = \lim_{x \to \infty} 2+\frac{1}{x} = 2$, logo, $\displaystyle f$ tem uma assíntota horizontal em $\displaystyle y=2$.
 
-![Assíntota horizontal de 2 + 1/x](images/screenshot010.png)
+![Assíntota horizontal de 2 + 1/x](images/screenshot010.png)<br>
 *Fonte: Elaborado pelo autor (2025).*
 
 ### Verticais:
@@ -563,7 +563,7 @@ A reta $\displaystyle x=c$ é uma assíntota vertical quando pelo menos um dos l
 
 $\displaystyle \lim_{x \to \left(\frac{\pi}{2}\right)^-} \tan x = \infty$ e $\displaystyle \lim_{x \to \left(\frac{\pi}{2}\right)^+} \tan x = -\infty$, logo, $\displaystyle f$ tem uma assíntota vertical em $\displaystyle x = \frac{\pi}{2}$.
 
-![Assíntota vertical da tangente em π/2](images/screenshot011.png)  
+![Assíntota vertical da tangente em π/2](images/screenshot011.png)<br>  
 *Fonte: Elaborado pelo autor (2025).*
 
 ### Oblíquas:
@@ -581,7 +581,7 @@ $$
 
 Como $\displaystyle \lim_{x\to \infty}\left[\frac{2x^2-3x-\ln{x}}{x+1}-\left(2x-5\right)\right] = 0$, então $\displaystyle 2x-5$ é uma assíntota oblíqua de $\displaystyle f$.
 
-![Assíntota oblíqua y = 2x − 5](images/screenshot012.png)  
+![Assíntota oblíqua y = 2x − 5](images/screenshot012.png)<br>  
 *Fonte: Elaborado pelo autor (2025).*
 
 ---
@@ -656,7 +656,7 @@ $$
 
 > A área geométrica total não considera parcelas negativas. Por isso, quando o gráfico cruza o eixo, a integral pode ser diferente dessa área total.
 
-![Aproximação da integral definida por retângulos](images/screenshot013.png)  
+![Aproximação da integral definida por retângulos](images/screenshot013.png)<br>  
 *Fonte: Elaborado pelo autor (2025).*
 
 ### Teorema Fundamental do Cálculo:
@@ -784,7 +784,7 @@ $$
 \displaystyle \int x^3 e^x \, dx
 $$
 
-![Integração por partes pelo método tabular para x³ eˣ](images/screenshot014.png)  
+![Integração por partes pelo método tabular para x³ eˣ](images/screenshot014.png)<br>  
 *Fonte: Elaborado pelo autor (2025).*
 
 $$
@@ -800,7 +800,7 @@ $$
 \displaystyle \int e^x \sin{x} \, dx
 $$
 
-![Integração por partes com reaparecimento da integral de eˣ sen(x)](images/screenshot015.png)  
+![Integração por partes com reaparecimento da integral de eˣ sen(x)](images/screenshot015.png)<br>  
 *Fonte: Elaborado pelo autor (2025).*
 
 
@@ -861,7 +861,7 @@ $$
 \displaystyle \int \frac{dx}{\sqrt{4 + x^2}}
 $$
 
-![Triângulo de referência para a substituição x = 2 tan(θ)](images/screenshot016.png)  
+![Triângulo de referência para a substituição x = 2 tan(θ)](images/screenshot016.png)<br>  
 *Fonte: Elaborado pelo autor (2025).*
 
 Analisando o triângulo:
@@ -1086,7 +1086,7 @@ $$
 
 Para definir esses limites, podemos usar trigonometria. Consideramos um círculo de raio 1, com um ângulo $\displaystyle \theta$ em radianos, e comparamos as áreas de um setor circular e de dois triângulos:
 
-![Círculo unitário e comparação de áreas para o limite de sen(θ)/θ](images/screenshot017.png)  
+![Círculo unitário e comparação de áreas para o limite de sen(θ)/θ](images/screenshot017.png)<br>  
 *Fonte: Elaborado pelo autor (2025).*
 
 Para $\displaystyle 0<\theta<\frac{\pi}{2}$, as áreas do triângulo menor, do setor circular e do triângulo maior são, respectivamente, $\displaystyle \frac12\cos\theta\sin\theta$, $\displaystyle \frac12\theta$ e $\displaystyle \frac12\tan\theta$. Assim:
@@ -1258,7 +1258,7 @@ $$
 
 Essa comparação considera a área com sinal: uma altura negativa representa uma contribuição negativa.
 
-![Teorema do valor médio para integrais e área com sinal](images/screenshot018.png)
+![Teorema do valor médio para integrais e área com sinal](images/screenshot018.png)<br>
 *Fonte: Elaborado pelo autor (2025).*
 
 ### Relação Entre Integrais e Primitivas:
@@ -1272,7 +1272,7 @@ G'\left(x\right)
 \frac{\int_a^{x+h}f\left(t\right)\,dt-\int_a^x f\left(t\right)\,dt}{h}.
 $$
 
-![Variação da área acumulada entre x e x + h](images/screenshot019.png)  
+![Variação da área acumulada entre x e x + h](images/screenshot019.png)<br>  
 *Fonte: Elaborado pelo autor (2025).*
 
 Como visto pela imagem, a diferença corresponde ao trecho entre $\displaystyle x$ e $\displaystyle x+h$:
