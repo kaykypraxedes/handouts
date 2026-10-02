@@ -1890,8 +1890,6 @@ Insertion, removal, traversal, and balancing algorithms are explored in the Algo
 
 - ZIVIANI, Nivio. *Projeto de algoritmos com implementações em Pascal e C*. 4th ed. São Paulo: Pioneira, 1999.
 
-- BATISTA, Natália Cosse. *Ponteiros e alocação dinâmica de memória*. 2022. 40 sheets. Slides (PDF) for the Algorithms and Data Structures course. Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG), 2025.
-
 - PEIXOTO, Daniela Cristina Cascini. *Disciplina: Lógica de programação*. Undergraduate Computer Engineering program - CEFET-MG, 2024.
 
 - CAMPOS, Luciana Maria de Assis. *Disciplina: Programação orientada a objetos*. Undergraduate Computer Engineering program - CEFET-MG, 2024.

@@ -1026,8 +1026,6 @@ Os operadores `!`, `&&` e `||` mantêm seu funcionamento habitual. A contribuiç
 
 - DEITEL, Harvey M.; DEITEL, Paul J. *Como programar em C*. 2. ed. Rio de Janeiro: LTC, 1994.
 
-- BATISTA, Natália Cosse. *Ponteiros e alocação dinâmica de memória*. 2022. 40 f. Slides em PDF da disciplina Algoritmos e Estruturas de Dados. Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG), 2025.
-
 - PEIXOTO, Daniela Cristina Cascini. *Disciplina: Lógica de programação*. Curso de graduação em Engenharia de Computação. Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG), 2024.
 
 - BATISTA, Natália Cosse. *Disciplina: Algoritmos e estruturas de dados*. Curso de graduação em Engenharia de Computação. Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG), 2025.

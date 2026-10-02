@@ -542,7 +542,7 @@ Como dito, o *shell* interpreta as expansões automaticamente e separa argumento
 
 # Fontes
 
-- ALVARES, Andrei Rimsa. Disciplina: Tópicos Especiais em Fundamentos da Computação: *Shell Scripting*. Curso de graduação em Engenharia de Computação – Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG), 2026.
+- ALVARES, Andrei Rimsa. Disciplina: Tópicos Especiais em Fundamentos da Computação: *Shell Scripting*. Curso de graduação em Engenharia de Computação - Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG), 2026.
 
 - FREE SOFTWARE FOUNDATION. *GNU Bash Reference Manual*. Edição 5.3, para Bash 5.3. [S. l.], 2025. Disponível em: [https://www.gnu.org/software/bash/manual/bash.html](https://www.gnu.org/software/bash/manual/bash.html). Acesso em: 18 ago. 2026.
 

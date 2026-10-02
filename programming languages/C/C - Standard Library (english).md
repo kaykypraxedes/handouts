@@ -1026,8 +1026,6 @@ The operators `!`, `&&`, and `||` retain their usual behavior. The header's cont
 
 - DEITEL, Harvey M.; DEITEL, Paul J. *Como programar em C*. 2nd ed. Rio de Janeiro: LTC, 1994.
 
-- BATISTA, Natália Cosse. *Ponteiros e alocação dinâmica de memória*. 2022. 40 sheets. PDF slides for the Algorithms and Data Structures course. Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG), 2025.
-
 - PEIXOTO, Daniela Cristina Cascini. *Disciplina: Lógica de programação*. Undergraduate Computer Engineering program. Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG), 2024.
 
 - BATISTA, Natália Cosse. *Disciplina: Algoritmos e estruturas de dados*. Undergraduate Computer Engineering program. Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG), 2025.

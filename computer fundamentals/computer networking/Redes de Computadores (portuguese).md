@@ -870,6 +870,6 @@ Dispositivos de **VLANs diferentes** não passam a se comunicar diretamente só 
 
 - TANENBAUM, Andrew; FEAMSTER, Nick; WEATHERALL, David. Redes de Computadores. 6. ed. São Paulo: Pearson, 2021.
 
-- NEWMAN-WOLFE, Richard E. Multiplexing. CEN 4500C: Fundamentals of Computer Communication Networks. University of Florida, 1995. Disponível em: https://www.cise.ufl.edu/~nemo/cen4500/mux.html. Acesso em: 24 set. 2026.
+- FRAGA, Marcelo Caramuru Pimentel. Disciplina: Redes de Computadores I. Curso de graduação em Engenharia de Computação - Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG), 2026.
 
-- FRAGA, Marcelo Caramuru Pimentel. Disciplina: Redes de Computadores I. Curso de graduação em Engenharia de Computação – Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG), 2026.
+- NEWMAN-WOLFE, Richard E. Multiplexing. CEN 4500C: Fundamentals of Computer Communication Networks. University of Florida, 1995. Disponível em: https://www.cise.ufl.edu/~nemo/cen4500/mux.html. Acesso em: 24 set. 2026.
