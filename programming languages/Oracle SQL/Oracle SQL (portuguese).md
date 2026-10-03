@@ -9,17 +9,17 @@
 
 # 0. Conceitos Básicos
 
-> Esta apostila aborda SQL no Oracle Database. Os exemplos administrativos utilizam `FREEPDB1` como nome de serviço (esse nome depende da instalação).
+> Esta apostila aborda SQL no *Oracle Database*. Os exemplos administrativos utilizam `FREEPDB1` como nome de serviço (esse nome depende da instalação).
 
 ## Banco de Dados e SQL:
 
-O **banco de dados** reúne informações organizadas; o **Sistema de Gerenciamento de Banco de Dados (SGBD)** armazena, consulta e controla o acesso a essas informações. O Oracle Database é um SGBD.
+O **banco de dados** reúne informações organizadas; o **Sistema de Gerenciamento de Banco de Dados (SGBD)** armazena, consulta e controla o acesso a essas informações. O *Oracle Database* é um SGBD.
 
 Em um banco relacional, **tabelas** organizam registros em **linhas**, com suas informações distribuídas em **colunas**. Uma tabela de funcionários pode ter matrícula, nome e departamento.
 
 **SQL** permite definir estruturas, consultar e modificar dados. É declarativa: informa o resultado desejado, como “funcionários do departamento 10”, sem descrever como percorrer os registros. **PL/SQL** acrescenta variáveis, condições e blocos de programação, utilizados aqui nos gatilhos (*triggers*).
 
-## Arquitetura Three-Schema:
+## Arquitetura *Three-Schema*:
 
 A arquitetura separa o que cada aplicação enxerga, a organização geral dos dados e seu armazenamento.
 
@@ -44,7 +44,7 @@ Palavras-chave são escritas em maiúsculas por convenção. Nomes sem aspas dup
 
 - `;` - Encerra comandos SQL nos clientes utilizados aqui.
 
-- `/` - Em uma linha isolada, executa o bloco PL/SQL no modo de script do SQL*Plus.
+- `/` - Em uma linha isolada, executa o bloco PL/SQL no modo de *script* do *SQL\*Plus*.
 
 ---
 
@@ -175,13 +175,13 @@ DROP TABLE Departamento_Aux;
 
 # 2. Consultas Básicas
 
-> As aplicações e exemplos de comandos SQL a partir daqui foram montados com base nas estruturas definidas no apêndice, para que eles possam ser testados de maneira interativa.
+> As aplicações e os exemplos de comandos SQL a partir daqui foram montados com base nas estruturas definidas no apêndice, permitindo testar os comandos de maneira interativa.
 
 ## Seleção e Filtros:
 
 - `SELECT {expressões} FROM {tabela}` - Consulta colunas ou expressões; `*` seleciona todas as colunas.
 
-Podem ser adicionados sufixos ao `SELECT`, para formatar os dados e como eles são enviados:
+Podem ser adicionados sufixos ao `SELECT` para formatar os dados e controlar a forma como são enviados:
 
 - `AS {apelido}` - Define o nome da coluna no resultado.
 
@@ -223,7 +223,7 @@ ORDER BY salario DESC, mat;
 -- Patricia: 5600; Rafael: 5200.50; Daniela: 4100.
 
 -- Cada combinação aparece uma única vez.
-SELECT DISTINCT sexo, dept_id FROM Funcionario ORDER BY sexo, dept_id; -- A indentação, ou o comando ser dividido em linhas não interfere no comando.
+SELECT DISTINCT sexo, dept_id FROM Funcionario ORDER BY sexo, dept_id; -- A indentação e a divisão do comando em linhas não interferem em sua execução.
 
 -- Texto e ausência de vínculo.
 SELECT 
@@ -272,7 +272,7 @@ O salário simulado aparece apenas na consulta. Para gravar o novo valor, utiliz
 
 ## Comandos DML:
 
-**DML (*Data Modification Language*)** reune comandos de modificação de dados:
+**DML (*Data Modification Language*)** reúne comandos de modificação de dados:
 
 - `INSERT INTO {tabela} ({colunas}) VALUES ({valores})` - Insere uma linha nas colunas indicadas.
 
@@ -335,7 +335,7 @@ DROP TABLE Historico;
 
 ## Formas de Remoção:
 
-| Comando | Efeito | ROLLBACK antes da confirmação |
+| Comando | Efeito | `ROLLBACK` antes da confirmação |
 |---|---|---|
 | `DELETE FROM {tabela}` | Exclui linhas; aceita `WHERE`. | Pode desfazer. |
 | `TRUNCATE TABLE {tabela}` | Esvazia uma tabela comum por DDL; não aceita filtro. | Não desfaz. |
@@ -765,7 +765,7 @@ DROP VIEW vw_Depto10;
 
 ---
 
-# 8. Triggers
+# 8. *Triggers*
 
 Um **gatilho** (*trigger*) executa automaticamente em resposta a um evento. Os exemplos utilizam operações DML para validar datas, calcular uma coluna e bloquear inserções.
 
@@ -870,7 +870,7 @@ ROLLBACK;
 
 ## Erros e Limpeza:
 
-- `SHOW ERRORS TRIGGER {nome}` - Exibe erros de compilação no SQL*Plus; comando do cliente, sem `;`.
+- `SHOW ERRORS TRIGGER {nome}` - Exibe erros de compilação no *SQL\*Plus*; comando do cliente, sem `;`.
 - `SELECT name, line, text FROM user_errors` - Consulta os erros dos objetos do próprio usuário.
 
 ```sql
@@ -896,7 +896,7 @@ O *schema* agrupa os objetos de um usuário. `usuario.Funcionario` identifica su
 
 - `sqlplus sys@//{host}:{porta}/{serviço} as sysdba` - Abre uma conexão administrativa.
 
-- `SHOW USER` / `SHOW CON_NAME` - Mostra usuário ou contêiner atual no SQL*Plus.
+- `SHOW USER` / `SHOW CON_NAME` - Mostra usuário ou contêiner atual no *SQL\*Plus*.
 
 - `SET AUTOCOMMIT OFF` - Desativa a confirmação automática do cliente, preservando os efeitos de confirmação implícita do banco.
 
@@ -1114,14 +1114,14 @@ DROP TABLE Funcionario;
 
 - BARROS, Evandrino Gomes. Disciplina: Banco de Dados I. Curso de graduação em Engenharia de Computação - Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG), 2026.
 
-- ORACLE. *SQL Language Reference*. Oracle Database 19c. [S. l.]: Oracle, 2026. Disponível em: [https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/](https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/). Acesso em: 2 out. 2026.
+- ORACLE. *SQL Language Reference*. *Oracle Database* 19c. [S. l.]: Oracle, 2026. Disponível em: [https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/](https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/). Acesso em: 2 out. 2026.
 
-- ORACLE. *PL/SQL Language Reference*. Oracle Database 19c. [S. l.]: Oracle, 2026. Disponível em: [https://docs.oracle.com/en/database/oracle/oracle-database/19/lnpls/](https://docs.oracle.com/en/database/oracle/oracle-database/19/lnpls/). Acesso em: 2 out. 2026.
+- ORACLE. *PL/SQL Language Reference*. *Oracle Database* 19c. [S. l.]: Oracle, 2026. Disponível em: [https://docs.oracle.com/en/database/oracle/oracle-database/19/lnpls/](https://docs.oracle.com/en/database/oracle/oracle-database/19/lnpls/). Acesso em: 2 out. 2026.
 
-- ORACLE. *Database Administrator’s Guide*. Oracle Database 19c. [S. l.]: Oracle, 2026. Disponível em: [https://docs.oracle.com/en/database/oracle/oracle-database/19/admin/](https://docs.oracle.com/en/database/oracle/oracle-database/19/admin/). Acesso em: 2 out. 2026.
+- ORACLE. *Database Administrator’s Guide*. *Oracle Database* 19c. [S. l.]: Oracle, 2026. Disponível em: [https://docs.oracle.com/en/database/oracle/oracle-database/19/admin/](https://docs.oracle.com/en/database/oracle/oracle-database/19/admin/). Acesso em: 2 out. 2026.
 
-- ORACLE. *Multitenant Administrator’s Guide*. Oracle Database 19c. [S. l.]: Oracle, 2025. Disponível em: [https://docs.oracle.com/en/database/oracle/oracle-database/19/multi/](https://docs.oracle.com/en/database/oracle/oracle-database/19/multi/). Acesso em: 2 out. 2026.
+- ORACLE. *Multitenant Administrator’s Guide*. *Oracle Database* 19c. [S. l.]: Oracle, 2025. Disponível em: [https://docs.oracle.com/en/database/oracle/oracle-database/19/multi/](https://docs.oracle.com/en/database/oracle/oracle-database/19/multi/). Acesso em: 2 out. 2026.
 
-- ORACLE. *SQL\*Plus User’s Guide and Reference*. Oracle Database 19c. [S. l.]: Oracle, 2025. Disponível em: [https://docs.oracle.com/en/database/oracle/oracle-database/19/sqpug/](https://docs.oracle.com/en/database/oracle/oracle-database/19/sqpug/). Acesso em: 2 out. 2026.
+- ORACLE. *SQL\*Plus User’s Guide and Reference*. *Oracle Database* 19c. [S. l.]: Oracle, 2025. Disponível em: [https://docs.oracle.com/en/database/oracle/oracle-database/19/sqpug/](https://docs.oracle.com/en/database/oracle/oracle-database/19/sqpug/). Acesso em: 2 out. 2026.
 
 - JUNIATA COLLEGE. *Three Level Database Architecture*. [S. l.]: Juniata College, [s. d.]. Disponível em: [https://jcsites.juniata.edu/faculty/rhodes/dbms/dbarch.htm](https://jcsites.juniata.edu/faculty/rhodes/dbms/dbarch.htm). Acesso em: 2 out. 2026.
