@@ -539,7 +539,7 @@ Quando $\displaystyle f'\left(a\right)=0$ e a função é duas vezes diferenciá
 
 O teste não é uma condição obrigatória para existir extremo. A função $\displaystyle x^4$, por exemplo, tem mínimo em zero, embora sua segunda derivada seja zero nesse ponto. Também podem existir extremos em pontos onde a derivada não existe.
 
-Para ser um **máximo ou mínimo global**, o valor deve ser o maior ou o menor em todo o domínio considerado. Se a função é contínua em um intervalo fechado $\displaystyle \left[a,b\right]$, esses extremos existem. Para encontrá-los, comparamos os valores nos candidatos interiores — onde a derivada é zero ou não existe — e nas extremidades $\displaystyle f\left(a\right)$ e $\displaystyle f\left(b\right)$.
+Para ser um **máximo ou mínimo global**, o valor deve ser o maior ou o menor em todo o domínio considerado. Se a função é contínua em um intervalo fechado $\displaystyle \left[a,b\right]$, esses extremos existem. Para encontrá-los, comparamos os valores nos candidatos interiores - onde a derivada é zero ou não existe - e nas extremidades $\displaystyle f\left(a\right)$ e $\displaystyle f\left(b\right)$.
 
 ![Máximos, mínimos e ponto de inflexão](images/screenshot009.png)<br>
 *Fonte: Elaborado pelo autor (2025).*
@@ -1327,15 +1327,9 @@ $$
 # Fontes:
 
 - STEWART, James. *Cálculo: volume 1*. 7. ed. São Paulo: Cengage Learning, 2013.
-
 - THOMAS, George B.; WEIR, Maurice D.; HASS, Joel. *Cálculo: volume 1*. 12. ed. São Paulo: Pearson, 2012.
-
 - THOMAS, George B.; WEIR, Maurice D.; HASS, Joel. *Cálculo: volume 2*. 12. ed. São Paulo: Pearson, 2012.
-
 - LIMA, Elon Lages. *Análise real: volume 1*. 8. ed. Rio de Janeiro: IMPA, 2006.
-
 - TAKHE. *Cálculo 1: aulas e exercícios resolvidos*. [YouTube], 2023. Disponível em: [https://www.youtube.com/playlist?list=PLmAu9dltGZtp1apl5ib_uL7UkP4fDwy4m](https://www.youtube.com/playlist?list=PLmAu9dltGZtp1apl5ib_uL7UkP4fDwy4m). Acesso em: 10 set. 2025.
-
-- BARROS, Tatiana Leal. *Disciplina: Cálculo com funções de uma variável real*. Curso de graduação em Engenharia de Computação — Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG), 2024.
-
-- CAMARGO JUNIOR, Fausto de. *Disciplina: Integração e séries*. Curso de graduação em Engenharia de Computação — CEFET-MG, 2024.
+- BARROS, Tatiana Leal. *Disciplina: Cálculo com funções de uma variável real*. Curso de graduação em Engenharia de Computação - Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG), 2024.
+- CAMARGO JUNIOR, Fausto de. *Disciplina: Integração e séries*. Curso de graduação em Engenharia de Computação - CEFET-MG, 2024.

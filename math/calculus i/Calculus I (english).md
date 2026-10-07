@@ -539,7 +539,7 @@ When $\displaystyle f'\left(a\right)=0$ and the function is twice differentiable
 
 The test is not a necessary condition for an extremum to exist. The function $\displaystyle x^4$, for example, has a minimum at zero, although its second derivative is zero at that point. Extrema may also exist at points where the derivative does not exist.
 
-To be a **global maximum or minimum**, the value must be the greatest or smallest over the entire domain considered. If the function is continuous on a closed interval $\displaystyle \left[a,b\right]$, these extrema exist. To find them, we compare the values at interior candidates — where the derivative is zero or does not exist — and at the endpoints $\displaystyle f\left(a\right)$ and $\displaystyle f\left(b\right)$.
+To be a **global maximum or minimum**, the value must be the greatest or smallest over the entire domain considered. If the function is continuous on a closed interval $\displaystyle \left[a,b\right]$, these extrema exist. To find them, we compare the values at interior candidates - where the derivative is zero or does not exist - and at the endpoints $\displaystyle f\left(a\right)$ and $\displaystyle f\left(b\right)$.
 
 ![Maxima, minima, and inflection point](images/screenshot009.png)<br>
 *Source: Created by the author (2025).*
@@ -1327,15 +1327,9 @@ $$
 # Sources:
 
 - STEWART, James. *Cálculo: volume 1*. 7th ed. São Paulo: Cengage Learning, 2013.
-
 - THOMAS, George B.; WEIR, Maurice D.; HASS, Joel. *Cálculo: volume 1*. 12th ed. São Paulo: Pearson, 2012.
-
 - THOMAS, George B.; WEIR, Maurice D.; HASS, Joel. *Cálculo: volume 2*. 12th ed. São Paulo: Pearson, 2012.
-
 - LIMA, Elon Lages. *Análise real: volume 1*. 8th ed. Rio de Janeiro: IMPA, 2006.
-
 - TAKHE. *Cálculo 1: aulas e exercícios resolvidos*. [YouTube], 2023. Available at: [https://www.youtube.com/playlist?list=PLmAu9dltGZtp1apl5ib_uL7UkP4fDwy4m](https://www.youtube.com/playlist?list=PLmAu9dltGZtp1apl5ib_uL7UkP4fDwy4m). Accessed: September 10, 2025.
-
-- BARROS, Tatiana Leal. *Course: Calculus with functions of one real variable*. Undergraduate program in Computer Engineering — Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG), 2024.
-
-- CAMARGO JUNIOR, Fausto de. *Course: Integration and series*. Undergraduate program in Computer Engineering — CEFET-MG, 2024.
+- BARROS, Tatiana Leal. *Course: Calculus with functions of one real variable*. Undergraduate program in Computer Engineering - Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG), 2024.
+- CAMARGO JUNIOR, Fausto de. *Course: Integration and series*. Undergraduate program in Computer Engineering - CEFET-MG, 2024.

@@ -1027,11 +1027,7 @@ The operators `!`, `&&`, and `||` retain their usual behavior. The header's cont
 - DEITEL, Harvey M.; DEITEL, Paul J. *Como programar em C*. 2nd ed. Rio de Janeiro: LTC, 1994.
 
 - PEIXOTO, Daniela Cristina Cascini. *Disciplina: Lógica de programação*. Undergraduate Computer Engineering program. Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG), 2024.
-
 - BATISTA, Natália Cosse. *Disciplina: Algoritmos e estruturas de dados*. Undergraduate Computer Engineering program. Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG), 2025.
-
 - CPPREFERENCE.COM. *C reference*. [No place], [no date]. Available at: [https://en.cppreference.com/w/c](https://en.cppreference.com/w/c). Accessed: 4 Aug. 2026.
-
 - FREE SOFTWARE FOUNDATION. *The GNU C Library Reference Manual*. Version 2.42. [No place]: Free Software Foundation, 2025. Available at: [https://sourceware.org/glibc/manual/2.42/html_node/index.html](https://sourceware.org/glibc/manual/2.42/html_node/index.html). Accessed: 26 Sep. 2026.
-
 - ISO/IEC JTC 1/SC 22/WG 14. *Programming languages - C*. Committee Draft N1570, 12 Apr. 2011. Available at: [https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf](https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf). Accessed: 26 Sep. 2026.

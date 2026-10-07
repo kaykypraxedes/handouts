@@ -363,17 +363,10 @@ Como os *commits* reaplicados recebem novos identificadores, o *rebase* reescrev
 # Fontes
 
 - CHACON, Scott; STRAUB, Ben. *Pro Git*. 2. ed. New York: Apress, 2014. Disponível em: [https://git-scm.com/book/en/v2](https://git-scm.com/book/en/v2). Acesso em: 15 set. 2026.
-
 - GIT PROJECT. *Git Reference Documentation*. Versão 2.55.0. [S. l.], 2026. Disponível em: [https://git-scm.com/docs](https://git-scm.com/docs). Acesso em: 15 set. 2026.
-
 - GITHUB. *About authentication to GitHub*. [S. l.], [s. d.]. Disponível em: [https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/about-authentication-to-github](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/about-authentication-to-github). Acesso em: 15 set. 2026.
-
 - GITHUB. *Caching your GitHub credentials in Git*. [S. l.], [s. d.]. Disponível em: [https://docs.github.com/en/get-started/git-basics/caching-your-github-credentials-in-git](https://docs.github.com/en/get-started/git-basics/caching-your-github-credentials-in-git). Acesso em: 15 set. 2026.
-
 - GITHUB. *Managing your personal access tokens*. [S. l.], [s. d.]. Disponível em: [https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens). Acesso em: 15 set. 2026.
-
 - GITHUB. *Generating a new SSH key and adding it to the ssh-agent*. [S. l.], [s. d.]. Disponível em: [https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent). Acesso em: 15 set. 2026.
-
 - GITHUB. *Testing your SSH connection*. [S. l.], [s. d.]. Disponível em: [https://docs.github.com/en/authentication/connecting-to-github-with-ssh/testing-your-ssh-connection](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/testing-your-ssh-connection). Acesso em: 15 set. 2026.
-
 - GITHUB. *GitHub CLI Manual: gh auth*. [S. l.], [s. d.]. Disponível em: [https://cli.github.com/manual/gh_auth](https://cli.github.com/manual/gh_auth). Acesso em: 15 set. 2026.

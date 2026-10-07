@@ -1025,13 +1025,8 @@ Os operadores `!`, `&&` e `||` mantêm seu funcionamento habitual. A contribuiç
 # Fontes:
 
 - DEITEL, Harvey M.; DEITEL, Paul J. *Como programar em C*. 2. ed. Rio de Janeiro: LTC, 1994.
-
 - PEIXOTO, Daniela Cristina Cascini. *Disciplina: Lógica de programação*. Curso de graduação em Engenharia de Computação. Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG), 2024.
-
 - BATISTA, Natália Cosse. *Disciplina: Algoritmos e estruturas de dados*. Curso de graduação em Engenharia de Computação. Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG), 2025.
-
 - CPPREFERENCE.COM. *C reference*. [S. l.], [s. d.]. Disponível em: [https://en.cppreference.com/w/c](https://en.cppreference.com/w/c). Acesso em: 4 ago. 2026.
-
 - FREE SOFTWARE FOUNDATION. *The GNU C Library Reference Manual*. Versão 2.42. [S. l.]: Free Software Foundation, 2025. Disponível em: [https://sourceware.org/glibc/manual/2.42/html_node/index.html](https://sourceware.org/glibc/manual/2.42/html_node/index.html). Acesso em: 26 set. 2026.
-
 - ISO/IEC JTC 1/SC 22/WG 14. *Programming languages - C*. Committee Draft N1570, 12 abr. 2011. Disponível em: [https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf](https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf). Acesso em: 26 set. 2026.

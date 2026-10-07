@@ -1887,23 +1887,13 @@ Os algoritmos de inserção, remoção, percurso e balanceamento são aprofundad
 # Fontes:
 
 - DEITEL, Harvey M.; DEITEL, Paul J. *Como programar em C*. 2. ed. Rio de Janeiro: LTC, 1994.
-
 - ZIVIANI, Nivio. *Projeto de algoritmos com implementações em Pascal e C*. 4. ed. São Paulo: Pioneira, 1999.
-
-- PEIXOTO, Daniela Cristina Cascini. *Disciplina: Lógica de programação*. Curso de graduação em Engenharia de Computação - CEFET-MG, 2024.
-
+- PEIXOTO, Daniela Cristina Cascini. *Disciplina: Lógica de programação*. Curso de graduação em Engenharia de Computação - Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG), 2024.
 - CAMPOS, Luciana Maria de Assis. *Disciplina: Programação orientada a objetos*. Curso de graduação em Engenharia de Computação - CEFET-MG, 2024.
-
 - BATISTA, Natália Cosse. *Disciplina: Algoritmos e estruturas de dados*. Curso de graduação em Engenharia de Computação - CEFET-MG, 2025.
-
 - CPPREFERENCE.COM. *C reference*. [S. l.], [s. d.]. Disponível em: [https://en.cppreference.com/w/c](https://en.cppreference.com/w/c). Acesso em: 4 ago. 2026.
-
 - FREE SOFTWARE FOUNDATION. *Options Controlling C Dialect*. [S. l.], [s. d.]. Disponível em: [https://gcc.gnu.org/onlinedocs/gcc/C-Dialect-Options.html](https://gcc.gnu.org/onlinedocs/gcc/C-Dialect-Options.html). Acesso em: 26 set. 2026.
-
 - FREE SOFTWARE FOUNDATION. *Options to Request or Suppress Warnings*. [S. l.], [s. d.]. Disponível em: [https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html](https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html). Acesso em: 26 set. 2026.
-
 - ISO/IEC JTC 1/SC 22/WG 14. *Programming languages — C*. [S. l.], 12 abr. 2011. Disponível em: [https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf](https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf). Acesso em: 26 set. 2026.
-
 - FREE SOFTWARE FOUNDATION. *The C Preprocessor*. [S. l.], [s. d.]. Disponível em: [https://gcc.gnu.org/onlinedocs/cpp/](https://gcc.gnu.org/onlinedocs/cpp/). Acesso em: 26 set. 2026.
-
 - FREE SOFTWARE FOUNDATION. *Using the GNU Compiler Collection (GCC)*. [S. l.], [s. d.]. Disponível em: [https://gcc.gnu.org/onlinedocs/gcc/](https://gcc.gnu.org/onlinedocs/gcc/). Acesso em: 26 set. 2026.

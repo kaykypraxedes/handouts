@@ -1121,13 +1121,8 @@ DROP TABLE Funcionario;
 - BARROS, Evandrino Gomes. Disciplina: Banco de Dados I. Curso de graduação em Engenharia de Computação - Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG), 2026.
 
 - ORACLE. *SQL Language Reference*. *Oracle Database* 19c. [S. l.]: Oracle, 2026. Disponível em: [https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/](https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/). Acesso em: 2 out. 2026.
-
 - ORACLE. *PL/SQL Language Reference*. *Oracle Database* 19c. [S. l.]: Oracle, 2026. Disponível em: [https://docs.oracle.com/en/database/oracle/oracle-database/19/lnpls/](https://docs.oracle.com/en/database/oracle/oracle-database/19/lnpls/). Acesso em: 2 out. 2026.
-
 - ORACLE. *Database Administrator’s Guide*. *Oracle Database* 19c. [S. l.]: Oracle, 2026. Disponível em: [https://docs.oracle.com/en/database/oracle/oracle-database/19/admin/](https://docs.oracle.com/en/database/oracle/oracle-database/19/admin/). Acesso em: 2 out. 2026.
-
 - ORACLE. *Multitenant Administrator’s Guide*. *Oracle Database* 19c. [S. l.]: Oracle, 2025. Disponível em: [https://docs.oracle.com/en/database/oracle/oracle-database/19/multi/](https://docs.oracle.com/en/database/oracle/oracle-database/19/multi/). Acesso em: 2 out. 2026.
-
 - ORACLE. *SQL\*Plus User’s Guide and Reference*. *Oracle Database* 19c. [S. l.]: Oracle, 2025. Disponível em: [https://docs.oracle.com/en/database/oracle/oracle-database/19/sqpug/](https://docs.oracle.com/en/database/oracle/oracle-database/19/sqpug/). Acesso em: 2 out. 2026.
-
 - JUNIATA COLLEGE. *Three Level Database Architecture*. [S. l.]: Juniata College, [s. d.]. Disponível em: [https://jcsites.juniata.edu/faculty/rhodes/dbms/dbarch.htm](https://jcsites.juniata.edu/faculty/rhodes/dbms/dbarch.htm). Acesso em: 2 out. 2026.

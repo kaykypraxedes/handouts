@@ -1890,20 +1890,12 @@ Insertion, removal, traversal, and balancing algorithms are explored in the Algo
 
 - ZIVIANI, Nivio. *Projeto de algoritmos com implementações em Pascal e C*. 4th ed. São Paulo: Pioneira, 1999.
 
-- PEIXOTO, Daniela Cristina Cascini. *Disciplina: Lógica de programação*. Undergraduate Computer Engineering program - CEFET-MG, 2024.
-
+- PEIXOTO, Daniela Cristina Cascini. *Disciplina: Lógica de programação*. Undergraduate Computer Engineering program - Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG), 2024.
 - CAMPOS, Luciana Maria de Assis. *Disciplina: Programação orientada a objetos*. Undergraduate Computer Engineering program - CEFET-MG, 2024.
-
 - BATISTA, Natália Cosse. *Disciplina: Algoritmos e estruturas de dados*. Undergraduate Computer Engineering program - CEFET-MG, 2025.
-
 - CPPREFERENCE.COM. *C reference*. [No place], [no date]. Available at: [https://en.cppreference.com/w/c](https://en.cppreference.com/w/c). Accessed: 4 Aug. 2026.
-
 - FREE SOFTWARE FOUNDATION. *Options Controlling C Dialect*. [No place], [no date]. Available at: [https://gcc.gnu.org/onlinedocs/gcc/C-Dialect-Options.html](https://gcc.gnu.org/onlinedocs/gcc/C-Dialect-Options.html). Accessed: 26 Sep. 2026.
-
 - FREE SOFTWARE FOUNDATION. *Options to Request or Suppress Warnings*. [No place], [no date]. Available at: [https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html](https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html). Accessed: 26 Sep. 2026.
-
 - ISO/IEC JTC 1/SC 22/WG 14. *Programming languages — C*. [No place], 12 Apr. 2011. Available at: [https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf](https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf). Accessed: 26 Sep. 2026.
-
 - FREE SOFTWARE FOUNDATION. *The C Preprocessor*. [No place], [no date]. Available at: [https://gcc.gnu.org/onlinedocs/cpp/](https://gcc.gnu.org/onlinedocs/cpp/). Accessed: 26 Sep. 2026.
-
 - FREE SOFTWARE FOUNDATION. *Using the GNU Compiler Collection (GCC)*. [No place], [no date]. Available at: [https://gcc.gnu.org/onlinedocs/gcc/](https://gcc.gnu.org/onlinedocs/gcc/). Accessed: 26 Sep. 2026.
