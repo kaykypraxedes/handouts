@@ -14,13 +14,18 @@
                       | |                     __/ |
                       |_|                    |___/   
 ```
+
 # 0. Conceitos Básicos
+
+> Este resumo utiliza **Bash em GNU/*Linux***. Os comandos de sistema podem variar conforme a distribuição; recursos próprios do Bash não estão necessariamente disponíveis em outras *shells* ou ao executar um arquivo com `sh`. 
+
+> Nos modelos de sintaxe, **elementos entre chaves indicam conteúdo a ser substituído** (como comandos, caminhos, valores, *flags*, etc.). As chaves devem ser retiradas no uso real, salvo quando forem explicitamente apresentadas como parte da sintaxe da *shell*.
 
 ## *Shell*:
 
 A *shell* é um programa que funciona como **interpretador de comandos** e também como uma **linguagem de programação**, permitindo controlar e combinar outros programas do sistema. O **terminal** fornece o meio de entrada e saída usado para interagir com a *shell*, enquanto o ***kernel*** é a parte do sistema operacional responsável por gerenciar recursos como processos, arquivos e dispositivos.
 
-Ao abrir um terminal em uma interface gráfica, normalmente é criado um ***pseudo-terminal*** e iniciado um *shell* (como o `bash`) conectado a ele. Os comandos digitados são então interpretados pela *shell*, que pode executá-los internamente ou iniciar outros programas.
+Ao abrir um terminal em uma interface gráfica, normalmente é criado um **pseudoterminal** e iniciada uma *shell* (como o `bash`) conectada a ele. Os comandos digitados são então interpretados pela *shell*, que pode executá-los internamente ou iniciar outros programas.
 
 ### Programas:
 
@@ -36,7 +41,7 @@ O *status* do último comando executado fica disponível em `$?`. Esse valor é 
 
 ## Manuais:
 
-Como o *Linux* recebe atualizações recorrentes, manuais impressos podem ficar desatualizados. A maior parte das informações necessárias, desde comandos de usuário até interfaces internas do *kernel* e da biblioteca *C*, pode ser consultada no próprio sistema operacional (SO).
+Como o *Linux* recebe atualizações recorrentes, manuais impressos podem ficar desatualizados. A maior parte das informações necessárias, desde comandos de usuário até interfaces internas do *kernel* e da biblioteca C, pode ser consultada no próprio sistema operacional (SO).
 
 ### Hierarquia do Sistema:
 
@@ -44,17 +49,19 @@ Por uma questão de organização, os manuais foram divididos em grupos represen
 
 1. Comandos de usuário;
 2. Interfaces de chamadas de sistema do *kernel*;
-3. Interfaces da biblioteca *C*;
+3. Interfaces da biblioteca C;
 4. Arquivos especiais (dispositivos, *drivers*, etc.);
 5. Formatos de arquivos;
 6. Jogos e divertimentos;
 7. Assuntos variados (*miscellaneous*);
 8. Comandos de administração do sistema;
 9. Comandos internos do *kernel* (pouco usado no *Linux*, que mantém essa documentação no site oficial);
-10. *New* (*buffer* para seções em elaboração, antes de serem formalmente adicionadas às respectivas seções);
+10. *New* (seção adicional para documentação nova ou em elaboração, quando utilizada).
 
-> Nos comandos a seguir, o número ao lado do nome da *palavra* retornada corresponde à seção do manual no sistema.
+> As duas últimas entradas variam conforme a distribuição e o ambiente *Linux*. A seção 9 não é padronizada; *New* pode aparecer identificada por `n`, não sendo uma seção 10 universal.
+
 - `apropos {palavra}` - Mostra um resumo de uma linha sobre a palavra pesquisada (para que serve o comando, qual é o tipo de arquivo etc.). Retorna resultados parciais encontrados no título e no resumo, inclusive quando a busca corresponde a parte de uma palavra.
+
 ```
 apropos grep
 bzegrep (1)          - search possibly bzip2 compressed files for a regular expression
@@ -68,23 +75,28 @@ HEAD (1)             - Simple command line user agent
 ```
 
 - `whatis {palavra}` - Resumo de uma linha sobre a palavra pesquisada (apenas resultado direto).
+
 ```
 whatis grep
 grep (1)             - print lines that match patterns
 
 whatis line
-line: nada apropriado.
+line: nothing appropriate.
 ```
+
+> O número ao lado do nome retornado no `apropos` e `whatis` corresponde à seção do manual no sistema.
+
+- `man {hierarquia} {palavra}` - Manual completo da palavra (apenas resultado direto do comando). A hierarquia pode ser ocultada, mas pode mostrar resultados diferentes do esperado caso a palavra apareça em múltiplas hierarquias (escolhe a primeira referenciada).
+
+- `info {palavra}` - Manual organizado em tópicos navegáveis; pode ser pensado como um `man` ampliado para programas que oferecem documentação nesse formato, sem ser necessariamente mais atualizado.
 
 - `{palavra} --help` - Manual intermediário sobre a palavra pesquisada (apenas resultado direto).
 
-- `man {hierarquia} {palavra}` - Manual completo da palavra (apenas resultado direto do comando). A hierarquia pode ser ocultada, mas pode mostrar resultados diferentes do esperado caso a palavra apareça em múltiplas hierarquias.
+- `help {comando}` - Consulta a ajuda dos comandos internos do Bash, como `cd` e `read`.
 
-- `info {palavra}` - `man` melhorado (mais atualizado).
+## Comandos Básicos:
 
-## Comandos básicos:
-
-### Informações Sobre o Sistema:
+### Informações sobre o Sistema:
 
 > Para obter informações mais aprofundadas, use as ferramentas de consulta sobre comandos.
 
@@ -100,12 +112,15 @@ line: nada apropriado.
 
 - `find {diretório inicial} {opções} {critérios}` - Procura arquivos e diretórios por nome, permissões e outros critérios.
 
-- `locate {opções} {critérios}` - `find` mais rápido (tem *buffer*). Ele não utiliza um diretório inicial.
-> Para atualizar o *buffer* é preciso executar o comando `sudo updatedb` ou reiniciar o sistema.
+- `locate {opções} {critérios}` - Busca rápida de caminhos em uma base de dados previamente construída, funcionando como uma alternativa ao `find` para procurar nomes. Não utiliza um diretório inicial.
+
+> A base pode estar desatualizada. Sua atualização é feita por `updatedb` (normalmente com `sudo`) ou por uma tarefa agendada do sistema.
 
 - `whereis {opções} {comando/arquivo}` - Mostra a localização de comandos, páginas de manual e binários.
 
-- `which {opções} {comando/arquivo}` - `whereis` apenas para binários e *scripts*.
+- `which {opções} {comando}` - Localiza executáveis nos diretórios de `$PATH`, enquanto `whereis` também procura outros arquivos relacionados, como manuais.
+
+- `type {comando}` - Mostra como o Bash interpreta um nome: comando interno, função, *alias* ou programa externo. `command -v {comando}` fornece uma identificação curta, útil em *scripts*.
 
 - `file {opções} {arquivo}` - Mostra o tipo do arquivo especificado.
 
@@ -119,17 +134,20 @@ line: nada apropriado.
 
 - `clear` - Limpa o conteúdo da tela atual.
 
-- `exit` - Sai do terminal.
+- `exit {status}` - Encerra a *shell* com o *status* informado (opcional). Em uma sessão interativa, isso normalmente também fecha o terminal associado.
 
-- `logout` - Desconecta do usuário atual.
+- `logout` - Encerra uma *shell* de *login*; não encerra todas as sessões do usuário no sistema.
 
 ## Automatização de Processos:
 
-A *shell* pode ser utilizado diretamente no terminal, um comando por vez, ou de maneira automatizada por meio de *scripts*, o que permite maior velocidade, versatilidade e tarefas mais complexas. Para criar o *script*, é necessário:
+A *shell* pode ser utilizada diretamente no terminal, um comando por vez, ou de maneira automatizada por meio de *scripts*, o que permite maior velocidade, versatilidade e tarefas mais complexas. Para criar o *script*, é necessário:
 
-1. Criar um arquivo e inserir a sequência de comandos desejada. Para que o *kernel* saiba como interpretar os comandos, é preciso adicionar o interpretador: `#! /caminho/interpretador` (o `#!` funciona quase como o `#include` de `C`, mas adiciona um interpretador em vez de uma biblioteca).
-> Para utilizar o *bash* (por exemplo): `#! /bin/bash`.
-2. Dar permissão de execução para o arquivo (`chmod +x {arquivo}`) para executá-lo diretamente.
+1. Criar um arquivo e inserir a sequência de comandos desejada. Na primeira linha, indicar o interpretador com `#!/caminho/interpretador` (por exemplo, `#!/bin/bash`).
+2. Dar permissão de execução com `chmod +x script.sh` e executá-lo por `./script.sh`. O `./` informa o caminho, pois o diretório atual normalmente não pertence a `$PATH`.
+
+> O `#!` (*shebang*) lembra o `#include` de C na ideia de indicar algo externo necessário ao código. A diferença é que ele aponta para o programa que interpretará o arquivo, sem incluir código ou bibliotecas.
+
+Também é possível executar um *script* escolhendo o interpretador diretamente no comando (como `bash script.sh`). Nesse caso a execução não exige permissão de execução nem depende do `#!` (o arquivo ainda precisa ser legível).
 
 ---
 
@@ -139,25 +157,33 @@ A *shell* pode ser utilizado diretamente no terminal, um comando por vez, ou de 
 
 > As principais diferenças estão no número de ferramentas presentes no editor e na forma como editam.
 
-- `nano {opções} {arquivo}` - Editor simples (em muitos sistemas, é também um *alias* para o editor `pico`).
+- `nano {opções} {arquivo}` - Editor simples, com os principais atalhos visíveis na tela.
 
-- `vim {opções} {arquivo}` - Editor de texto mais completo (em muitos sistemas, é também um *alias* para o editor `vi`).
+- `vim {opções} {arquivo}` - Editor mais completo, com modos separados para inserir texto e executar comandos.
 
-- `emacs {opções} {arquivo}` - Editor de texto mais robusto.
+- `emacs {opções} {arquivo}` - Editor robusto e extensível, com ferramentas integradas para edição e programação.
+
+> `nano` e `pico`, assim como `vim` e `vi`, são relacionados, mas não necessariamente o mesmo programa. Algumas distribuições usam *aliases* ou *links* para que um nome execute a implementação do outro.
 
 ## Visualização de Textos:
 
-- `cat {opções} {arquivos}` - Concatena arquivos e imprime seu conteúdo. Se usado com um único arquivo, apenas o imprime.
-> O comando `tac` concatena os arquivos em ordem reversa (inverte o conteúdo, mas mantém a ordem de arquivos).
+- `echo {argumentos}` - Imprime os argumentos como texto, normalmente seguidos por uma quebra de linha.
 
-- `zcat {opções} {arquivo}` - Lê o conteúdo de um arquivo compactado com ***gzip***. Existem variações a depender do tipo de compressão.
+- `printf {formato} {argumentos}` - Imprime conforme um formato: em `printf '%s\n' "$texto"`, `%s` recebe o texto e `\n` representa a quebra de linha (sintaxe quase idêntica à do C).
+
+- `cat {opções} {arquivos}` - Concatena arquivos e imprime seu conteúdo. Se usado com um único arquivo, apenas o imprime.
+
+> O comando `tac` inverte a ordem das linhas de cada arquivo, mantendo a ordem dos arquivos recebidos.
+
+- `zcat {opções} {arquivo}` - Lê o conteúdo de um arquivo compactado com `gzip`. Existem variações a depender do tipo de compressão.
 
 - `less {opções} {arquivo}` - Mostra a saída de um comando ou arquivo de texto e permite navegar para trás e para frente.
-> O comando `more` faz basicamente a mesma coisa, mas de maneira mais limitada (apenas avança).
 
-- `head {opções} {arquivo}` - Mostra as primeiras partes de um arquivo.
+> O comando `more` faz basicamente a mesma coisa, mas oferece navegação mais limitada, principalmente ao receber dados de outro comando.
 
-- `tail {opções} {arquivo}` - Mostra as últimas partes de um arquivo.
+- `head {opções} {arquivo}` - Mostra as primeiras linhas de um arquivo (dez por padrão; `-n` altera a quantidade).
+
+- `tail {opções} {arquivo}` - Mostra as últimas linhas de um arquivo (dez por padrão; `-n` altera a quantidade).
 
 ## Extrair Dados de Textos:
 
@@ -165,17 +191,29 @@ A *shell* pode ser utilizado diretamente no terminal, um comando por vez, ou de 
 
 - `wc {opções} {arquivo}` - Conta o número de linhas, palavras, caracteres, etc. (depende da opção escolhida) de um arquivo.
 
-- `grep {opções} {padrão} {arquivo}` - Filtra dados de um texto.
+- `grep {opções} {padrão} {arquivo}` - Filtra as linhas que correspondem a um padrão (por padrão, uma expressão regular). Pode ler arquivos ou a entrada padrão. `-i` ignora diferenças entre maiúsculas e minúsculas, `-n` mostra o número da linha, `-v` seleciona as que não correspondem e `-F` trata o padrão como texto literal.
+
+```bash
+grep -in "erro" registro.txt   # Linhas com "erro", "ERRO" etc., indicando a posição.
+grep -F "[OK]" registro.txt    # Procura o texto literal [OK].
+```
+
+- `cut {opções} {arquivo}` - Extrai partes de cada linha, como campos delimitados (`cut -d ":" -f 1 /etc/passwd` extrai os nomes dos usuários).
 
 - `diff {opções} {arquivo_1} {arquivo_2}` - Compara o conteúdo de arquivos.
 
-## Operações Sobre Textos:
+## Operações sobre Textos:
 
 - `sort {opções} {arquivo}` - Ordena o conteúdo de um fluxo de dados de entrada ou arquivo.
+
+- `uniq {opções} {arquivo}` - Remove linhas repetidas **adjacentes**. É comum usá-lo após `sort`; com `-c`, também conta as repetições.
+
+- `tr {opções} {conjunto_1} {conjunto_2}` - Substitui ou remove caracteres da entrada padrão. Por exemplo, `tr '[:lower:]' '[:upper:]' < arquivo.txt` converte letras minúsculas em maiúsculas.
 
 - `tee {opções} {arquivos}` - Mostra a saída de um comando e a escreve em um ou mais arquivos.
 
 > Os seguintes comandos possuem maior complexidade (este é apenas um uso básico):
+
 - `sed {opções} {expressão} {arquivo}` - Imprime o conteúdo de um arquivo (como o `cat`) com a opção de substituir palavras.
 
 - `awk {opções} {programa} {arquivo}` - Formata o resultado de um comando.
@@ -184,46 +222,45 @@ A *shell* pode ser utilizado diretamente no terminal, um comando por vez, ou de 
 
 Antes de qualquer coisa, é importante entender como a *shell* identifica o caminho para um arquivo (e/ou diretório):
 
-1. `/caminho/absoluto/arquivo` - Iniciar o caminho com uma barra (`/`) indica que está sendo usado o caminho absoluto, a partir da raiz do sistema.
-2. `~/caminho_de_user/arquivo` - Iniciar o caminho com `~/` indica que está sendo usado o caminho a partir do diretório pessoal do usuário atual. Para usar o diretório de outro usuário sem informar o caminho absoluto, pode-se escrever `~user_alvo/caminho/arquivo`.
-3. `caminho/relativo/arquivo` - O sistema considera o diretório atual e interpreta o caminho a partir dele, o que pode causar algumas confusões.
+- `/caminho/absoluto/arquivo` - Iniciar o caminho com uma barra (`/`) indica que está sendo usado o caminho absoluto, a partir da raiz do sistema.
+- `~/caminho_de_user/arquivo` - Iniciar o caminho com `~/` indica que está sendo usado o caminho a partir do diretório pessoal do usuário atual (**também é considerado um caminho absoluto**). Para usar o diretório de outro usuário sem informar o caminho absoluto, pode-se escrever `~user_alvo/caminho/arquivo`.
+- `caminho/relativo/arquivo` - O sistema considera o diretório atual e interpreta o caminho a partir dele.
 
-Além disso, a *shell* interpreta `.` como um *alias* para o próprio diretório e `..` como um *alias* para seu diretório pai.
-Dessa maneira, estando no diretório `C/`, cujo caminho absoluto é `/A/B/C`, os comandos `cd D` e `cd ./D` produzem o mesmo resultado para chegar a `D/`. De maneira semelhante, para chegar a `B/`, tanto `cd /A/B` quanto `cd ..` produzem o mesmo resultado.
+Além disso, `.` e `..` funcionam como atalhos para o próprio diretório e para seu diretório pai. Podem ser imaginados como *aliases*, embora sejam componentes especiais dos caminhos, e não *aliases* definidos na *shell*. Dessa maneira, estando no diretório `C/`, cujo caminho absoluto é `/A/B/C`, os comandos `cd D` e `cd ./D` produzem o mesmo resultado para chegar a `D/`. De maneira semelhante, para chegar a `B/`, tanto `cd /A/B` quanto `cd ..` produzem o mesmo resultado.
 
 Em sistemas de arquivos *Linux* comuns, nomes normalmente diferenciam letras maiúsculas e minúsculas (*case-sensitive*), portanto `Arquivo.txt` e `arquivo.txt` podem representar arquivos diferentes. Além disso, arquivos e diretórios cujo nome começa com `.` são convencionalmente tratados como **ocultos** e, por padrão, não são exibidos pelo `ls` (podem ser mostrados com `ls -a`).
 
 ## Estrutura de Pastas do *Linux*:
 
-> A estrutura e a função das pastas podem variar um pouco conforme a distribuição.
+> A estrutura e a função das pastas podem variar conforme a distribuição. Os *links* mostrados abaixo ilustram uma organização com diretórios integrados a `/usr`.
 
-```
+```text
 /                         # raiz: ancestral de todos os arquivos do sistema
 ├── bin -> usr/bin        # comandos binários essenciais p/ inicializar e executar o sistema
-├── boot                  # arquivos estáticos do boot loader, necessários pra dar boot
+├── boot                  # arquivos necessários para inicializar o sistema
 ├── dev                   # arquivos de dispositivos (discos, terminais, impressoras etc.)
 ├── etc                   # configurações locais do sistema (ex: /etc/passwd = lista de usuários)
 │   ├── opt               # configs de pacotes opcionais instalados em /opt
 │   ├── X11               # configs do sistema de janelas X
 ├── home                  # diretórios pessoais dos usuários (ex: /home/zach)
-│   └── user              # * diretório pessoal de um usuário específico (mesmo padrão do /home)
+│   └── user              # diretório pessoal de um usuário específico
 ├── lib -> usr/lib        # bibliotecas compartilhadas
 │   └── modules           # módulos do kernel carregáveis
 ├── mnt                   # pontos de montagem p/ sistemas de arquivos temporários
 ├── opt                   # pacotes de software opcionais
 ├── proc                  # sistema de arquivos virtual c/ infos do kernel e processos
-├── root                  # * home do usuário root (não é o mesmo que /)
-├── run                   # * dados voláteis de runtime (PIDs, sockets), recriados a cada boot
+├── root                  # diretório pessoal do administrador (não é o mesmo que /)
+├── run                   # dados voláteis de execução, recriados a cada inicialização
 ├── sbin -> usr/sbin      # binários essenciais de administração do sistema
 ├── sys                   # pseudo sistema de arquivos p/ dispositivos
 ├── tmp                   # arquivos temporários
-├── usr                   # 2ª maior hierarquia: dados compartilháveis, não mudam com frequência
+├── usr                   # programas e dados compartilháveis, normalmente estáticos
 │   ├── bin               # maioria dos comandos de usuário
 │   ├── games             # jogos e programas educacionais
 │   ├── include           # cabeçalhos (headers) usados por programas C
 │   ├── lib               # bibliotecas
 │   ├── local             # hierarquia local: bin, games, lib, share, src etc.
-│   ├── sbin -> bin       # binários de administração não vitais
+│   ├── sbin -> bin       # comandos de administração; pode estar integrado a bin
 │   └── share             # dados independentes de arquitetura
 │       ├── doc           # documentação
 │       ├── info          # diretório principal do sistema GNU info
@@ -237,9 +274,11 @@ Em sistemas de arquivos *Linux* comuns, nomes normalmente diferenciam letras mai
 
 O *Linux* é um sistema multiusuário no qual os direitos de acesso são definidos para:
 
-1. `u` (*user*): Dono do arquivo.
-2. `g` (*group*): agrupamento de usuários que compartilham permissões. Permite dar acesso a várias pessoas específicas a um arquivo ou diretório **sem precisar liberá-lo para o restante do sistema** (*others*).
-3. `o` (*others*): Outros usuários **além** do dono (permissões não se aplicam a ele).
+- `u` (*user*): Dono do arquivo.
+- `g` (*group*): Grupo associado ao arquivo, reunindo usuários que compartilham permissões. Permite dar acesso a várias pessoas específicas a um arquivo ou diretório **sem precisar liberá-lo para o restante do sistema** (*others*).
+- `o` (*others*): Demais usuários, que não são o dono nem pertencem ao grupo associado ao arquivo.
+
+As classes não são somadas: no controle tradicional de permissões, verifica-se primeiro se o usuário é o dono; caso contrário, se pertence ao grupo; por fim, aplicam-se as permissões de outros.
 
 Ao se pesquisar informações detalhadas acerca de um arquivo específico (seja com o `stat`, com o `ls -l`, etc.), é possível ver o dono do arquivo e o grupo.
 
@@ -253,12 +292,13 @@ Ao se pesquisar informações detalhadas acerca de um arquivo específico (seja 
 
 - `lsof {opções}` - Lista os arquivos abertos.
 
-- `fuser {opções} {arquivo}` - Mostra informações sobre os arquivos abertos.
+- `fuser {opções} {arquivo}` - Identifica os processos que utilizam um arquivo ou sistema de arquivos.
 
-## Operações Sobre Arquivos e Diretórios:
+## Operações sobre Arquivos e Diretórios:
 
-> Nos comandos a seguir, se não for passado o caminho absoluto (começando a partir de `/` ou de `~/`), é considerado o caminho relativo (a partir da pasta atual).
-- `cd {opções} {caminho/diretório}` - Entra em diretório pelo terminal.
+> Usar esses comandos com caminho absoluto (`/` e `~/` expandido pela *shell* para o diretório pessoal) e com caminhos relativos pode gerar resultados diferentes.
+
+- `cd {opções} {caminho/diretório}` - Muda o diretório de trabalho atual.
 
 - `mkdir {opções} {caminho/nome}` - Cria um diretório no caminho especificado.
 
@@ -266,16 +306,19 @@ Ao se pesquisar informações detalhadas acerca de um arquivo específico (seja 
 
 - `rm {opções} {caminho/nome}` - Apaga um arquivo ou diretório. É muito usado com a *flag* `-r` (*recursive*), com a qual apaga todos os arquivos de um diretório e o próprio diretório.
 
-- `mv {opções} {origem/nome_antigo} {destino/nome_novo}` - Move um arquivo ou diretório. Se o nome novo não for informado, o comando mantém o nome existente; se `origem/` e `destino/` forem iguais, o arquivo é apenas renomeado.
+- `mv {opções} {origem/nome_antigo} {destino/nome_novo}` - Move ou renomeia um arquivo ou diretório. Se o destino for um diretório existente, mantém o nome e move o item para dentro dele; caso contrário, o destino indica o novo caminho e nome.
 
-- `cp {opções} {origem/nome_antigo} {destino/nome_novo}` - Copia um arquivo. Infere o nome novo se ele não for informado, da mesma maneira que o `mv`. Para copiar diretórios, é necessário usá-lo com a *flag* `-r`, que copia recursivamente os arquivos e subdiretórios da pasta-alvo.
+- `cp {opções} {origem/nome_antigo} {destino/nome_novo}` - Copia um arquivo, interpretando o destino da mesma maneira que o `mv`. Para copiar diretórios, é necessário usá-lo com a *flag* `-r`, que copia recursivamente os arquivos e subdiretórios da pasta-alvo.
 
 - `ln {opções} {origem/nome_arquivo} {destino/nome_link}` - Cria *links* (caminhos alternativos para acessar um dado).
 
-    1. `ln` (*hard-link*): funciona como um novo **ponteiro independente para o dado do arquivo original** (funciona mesmo se o arquivo original for apagado). **Não funciona com diretórios**.
-    > Nas informações do arquivo (acessadas pelo `ls -l`, por exemplo), é possível ver se existem outros *hard-links* para aquele espaço no disco e quantos (por padrão, é apenas 1).
-    2. `ln -s` (*soft-link*): funciona como um **ponteiro para o arquivo ou diretório original** (é ligado ao seu nome). Dessa maneira, o *soft-link* deixa de funcionar se o arquivo original for apagado, mas volta a funcionar se um arquivo com o mesmo nome e caminho for criado no lugar. **Funciona com diretórios** (sua maior vantagem).
-    > Em suas informações, ele indica o caminho para o qual aponta (`nome_link -> /caminho/arquivo`).
+    - `ln` (*hard link*): funciona como um novo **ponteiro independente para o dado do arquivo original** (funciona mesmo se o arquivo original for apagado). **Não é usado com diretórios e exige o mesmo sistema de arquivos**.
+
+      > Nas informações do arquivo (acessadas pelo `ls -l`, por exemplo), é possível ver se existem outros *hard links* para aquele espaço no disco e quantos (por padrão, é apenas 1).
+ 
+    - `ln -s` (*link* simbólico ou *soft link*): funciona como um **ponteiro para o arquivo ou diretório original** (é ligado ao seu nome). Dessa maneira, o *link* simbólico deixa de funcionar se o arquivo original for apagado, mas volta a funcionar se um arquivo com o mesmo nome e caminho for criado no lugar. **Funciona com diretórios e pode atravessar sistemas de arquivos**.
+
+      > Em suas informações, ele indica o caminho para o qual aponta (`nome_link -> /caminho/arquivo`).
 
 - `gzip {opções} {arquivo}` - Comprime arquivos.
 
@@ -285,100 +328,115 @@ Ao se pesquisar informações detalhadas acerca de um arquivo específico (seja 
 
 - `split {opções} {arquivo}` - Separa um arquivo em pedaços menores.
 
-- `shred {opções} {arquivo}` - Apaga arquivos de forma segura (sobrescreve sua posição de memória).
+- `shred {opções} {arquivo}` - Sobrescreve os dados do arquivo para dificultar sua recuperação; `-u` também remove o arquivo. A eficácia depende do armazenamento: SSDs, cópias e sistemas que gravam dados em novos locais podem preservar versões anteriores.
 
 ## Permissões:
 
 Cada arquivo ou diretório pode ter as seguintes permissões:
 
-1. `r` (*read*): Permite que **o arquivo seja aberto e lido**. Para diretórios, que **o conteúdo seja listado**.
-2. `w` (*write*): Permite que **o arquivo seja escrito ou truncado**. Para diretórios, que **arquivos internos sejam criados, removidos e renomeados**.
-3. `x` (*execute*): Permite que **o arquivo seja tratado como um programa executável**. Para diretórios, **entrar nele** (ex: usar `cd`).
+- `r` (*read*): Permite que **o arquivo seja aberto e lido**. Para diretórios, que **o conteúdo seja listado**.
+- `w` (*write*): Permite que **o arquivo seja escrito ou truncado**. Para diretórios, permite **criar, remover e renomear entradas**, normalmente em conjunto com `x`.
+- `x` (*execute*): Permite que **o arquivo seja tratado como um programa executável**. Para diretórios, permite **acessá-los diretamente e suas sub-pastas** (como ao usar `cd` ou abrir um arquivo pelo caminho).
 
-**Formato de permissão:** `-rwxrw-r--`
+**Formato de Permissão:** `-rwxrw-r--`
 
-1. O primeiro caractere da permissão (`-` no exemplo acima) representa o tipo de arquivo:
+O primeiro caractere (`-` no exemplo acima) representa o tipo de arquivo. Os principais são:
 
-    - `-` - Arquivos comuns;
-    - `d` - Diretórios;
-    - `l` - *soft-links*;
-    - `c` (*Character Device*) - São comumente peças de *hardware* nas quais o sistema lê ou escreve "uma letra por vez" em um fluxo contínuo, sem poder avançar ou retroceder (como **dispositivos periféricos**: teclado, mouse, placa de som etc.);
-    - `b` (*Block Device*) - São comumente peças de *hardware* nas quais o sistema lê e grava dados em "pacotes" grandes (blocos); o sistema consegue ir diretamente à parte que deseja ler (como **dispositivos de armazenamento**: *HDs*, *SSDs*, pendrives etc.);
-    > De maneira simplificada, o sistema trata **dispositivos** (componentes físicos, ou *hardware*) **como se fossem arquivos**. Isso permite que programas se comuniquem com um teclado ou um pendrive usando as mesmas regras e permissões de um arquivo de texto normal.
+- `-` - Arquivos comuns;
+- `d` - Diretórios;
+- `l` - *Links* simbólicos;
+- `c` (*character device*) - Dispositivos de caractere, geralmente acessados como fluxos de dados, como terminais;
+- `b` (*block device*) - Dispositivos de bloco, como discos, que permitem acesso a regiões de armazenamento;
+- `p` e `s` - Respectivamente, *pipe* nomeado e *socket*.
 
-2. Nas demais posições, os elementos, agrupados de três em três, representam as permissões do **dono**, do **grupo** e dos **demais usuários** (`-` indica a ausência daquela permissão).
+> De maneira simplificada, o sistema representa dispositivos por arquivos especiais. Isso permite usar operações de leitura e escrita para se comunicar com eles, embora cada dispositivo tenha comportamentos próprios.
+
+Nas demais posições, os elementos, agrupados de três em três, representam as permissões do **dono**, do **grupo** e dos **demais usuários** (`-` indica a ausência daquela permissão).
 
 - `chown {opções} {dono}:{grupo} {arquivo/diretório}` - Altera o dono e/ou grupo associado a um arquivo ou diretório.
 
 - `chgrp {opções} {grupo} {arquivo/diretório}` - Altera apenas o grupo associado a um arquivo ou diretório.
 
 - `chmod {opções} {permissões} {arquivo/diretório}` - Altera as permissões de acesso.
+
 > Apenas o dono do arquivo ou o superusuário podem alterar o modo (permissão).
 
 Suporta duas formas para especificar mudanças:
 
-1. **Representação Octal:** Usa três dígitos octais para definir as permissões absolutas do dono, do grupo e dos demais usuários, respectivamente. As permissões são calculadas pela soma de `r`=4, `w`=2 e `x`=1 (`chmod 751` -> -rwxr-x--x).
-2. **Representação Simbólica:** Usa as letras `u` (dono), `g` (grupo), `o` (outros), `a` (todos) acompanhadas das operações `+` (adiciona), `-` (remove) ou `=` (define especificamente) (`chmod u+x` adiciona execução ao dono, por exemplo).
-> Caso não seja definido nenhum usuário no comando, implicitamente ele considera todos (`a`).
+- **Representação Octal:** Usa três dígitos octais para definir as permissões absolutas do dono, do grupo e dos demais usuários, respectivamente. As permissões são calculadas pela soma de `r`=4, `w`=2 e `x`=1 (`chmod 751 arquivo` resulta em `-rwxr-x--x` para um arquivo comum).
+- **Representação Simbólica:** Usa as letras `u` (dono), `g` (grupo), `o` (outros), `a` (todos) acompanhadas das operações `+` (adiciona), `-` (remove) ou `=` (define especificamente) (`chmod u+x arquivo` adiciona execução ao dono, por exemplo).
+
+> Ao omitir a classe (`u`, `g`, `o` ou `a`), o comando considera todas, mas respeita a restrição de `umask`; por isso, `chmod +x` e `chmod a+x` nem sempre são equivalentes.
 
 ### Permissões Especiais:
 
-Na representação octal, podem ser utilizadas a representação de 4 valores, com o primeiro sendo uma permissão especial:
+Na representação octal, pode ser acrescentado um quarto dígito à esquerda para definir permissões especiais:
 
-- ***SUID*** (***Set User ID***, octal `4nnn`): Quando o arquivo é executado, o processo assume o identificador do dono do arquivo (`-rw *s* rwxrwx`).
-- ***SGID*** (***Set Group ID***, octal `2nnn`): Quando executado, o processo assume o grupo do arquivo. Quando aplicado a um diretório, novos arquivos criados dentro dele recebem o grupo do diretório, e não o grupo do usuário que criou o arquivo (`-rwxrw *s* rwx`).
-- ***Sticky bit*** (octal 1000): Em diretórios, impede que um usuário remova ou renomeie um arquivo caso não seja o dono do diretório, o dono do arquivo ou o superusuário (`drwxrwxrw *t* `).
+- **SUID** (*Set User ID*, octal `4nnn`): Ao executar o arquivo, o processo assume o identificador efetivo do dono (`-rwsr-xr-x`).
+- **SGID** (*Set Group ID*, octal `2nnn`): Ao executar o arquivo, o processo assume o grupo efetivo do arquivo (`-rwxr-sr-x`). Em diretórios, novos arquivos recebem o grupo do diretório.
+- ***Sticky bit*** (octal `1nnn`): Em diretórios, restringe remoção e renomeação ao dono do arquivo, dono do diretório ou superusuário (`drwxrwxrwt`).
 
-- `umask {opções} {máscara}` - Controla as permissões padrão dadas a um arquivo no momento em que é criado (qualquer arquivo daquela sessão da *shell*). Funciona como uma máscara de *bits* (usando notação octal) que serão removidos dos atributos de modo do arquivo.
+As letras `s` e `t` ocupam a posição de uma permissão de execução. Se essa permissão não estiver habilitada, aparecem em maiúsculas (`S` e `T`). No *Linux*, SUID e SGID não produzem esse efeito de execução em *scripts* interpretados.
+
+- `umask {opções} {máscara}` - Define os *bits* removidos das permissões solicitadas ao criar arquivos e diretórios. A máscara é herdada pelos processos filhos, mas não altera arquivos existentes.
+
+Com `umask 022`, uma criação que solicita `666` resulta em `644` (`rw-r--r--`); para um diretório que solicita `777`, resulta em `755` (`rwxr-xr-x`). A máscara remove permissões, sem acrescentar execução a arquivos que não a solicitaram.
 
 ---
 
 # 3. Processos
 
-Todo programa em execução no *Linux* é tratado pelo *kernel* como um **processo**. Como os sistemas operacionais modernos são multitarefa (*multitasking*), o *kernel* cria a ilusão de fazer várias coisas ao mesmo tempo, alternando rapidamente qual processo tem acesso à *CPU*.
+Todo programa em execução no *Linux* é tratado pelo *kernel* como um **processo**. Como os sistemas operacionais modernos são multitarefa (*multitasking*), o *kernel* alterna rapidamente qual processo tem acesso à CPU (*Central Processing Unit*), criando a impressão de simultaneidade mesmo em um único núcleo. Com vários núcleos, também pode haver execução realmente paralela.
 
-O própria *shell* também é um **processo**. Em uma execução comum a partir de um *shell* interativo, quando ele inicia um programa externo, esse programa normalmente passa a executar em outro processo, relacionado à *shell* como seu processo filho. Já comandos internos (*builtins*) podem ser executados diretamente pelo próprio processo da *shell*.
+A própria *shell* também é um **processo**. Em uma execução comum a partir de uma *shell* interativa, quando ela inicia um programa externo, esse programa normalmente passa a executar em outro processo, relacionado à *shell* como seu processo filho. Já comandos internos (*builtins*) podem ser executados diretamente pelo próprio processo da *shell*.
 
 ## Como Funcionam Processos:
 
 Um programa pode lançar (executar) outros programas, formando uma relação de parentesco entre processos:
 
-```
+```text
 processo_pai
  └── processo_filho
 ```
 
 - Um **processo pai** (*parent process*) é aquele que dá origem a um **processo filho** (*child process*).
-- Cada processo recebe um ***PID*** (*process ID*), atribuído em ordem crescente, além de manter informações como memória alocada, estado de execução e dono/usuário associado (assim como arquivos).
+- Cada processo recebe um PID (*process ID*), que pode ser reutilizado depois que o processo termina, além de manter informações como memória alocada, estado de execução e dono/usuário associado (assim como arquivos).
 - Muitos serviços do sistema são executados como ***daemons***: processos em segundo plano, sem interface de usuário.
-> O próprio *kernel* é convencionalmente tratado como *PID* 0; o primeiro processo real que ele lança é o `init` (*PID* 1), responsável por inicializar os demais serviços do sistema.
+
+> Conceitualmente, o PID 0 pode ser associado ao lado do *kernel* nessa árvore: corresponde à tarefa inicial, ligada à tarefa ociosa (*swapper/idle*), e não ao *kernel* inteiro como um programa comum. Dela se origina o PID 1 (`init`, frequentemente implementado por `systemd`), responsável pela inicialização dos serviços.
 
 Os processos podem ter diferentes estados indicando como está sua execução, com os principais sendo:
 
-- `R` (*Running*) - Executando;
-- `S` (*Sleeping*) - Esperando algum evento (como uma tecla);
-- `T` (*sTopped*) - O processo foi instruído a parar;
-- `Z` (*Zombie*) - Processo filho finalizado mas não coletado pelo pai;
-> `<` (*High priority*) - Não é diretamente um estado, mas um indicador de alta prioridade. O processo recebe mais tempo de *CPU*.
+- `R` (*running/runnable*) - Executando ou pronto para executar;
+- `S` (*sleeping*) - Esperando algum evento, em uma espera interrompível;
+- `D` - Espera não interrompível, frequentemente associada a operações de entrada e saída;
+- `T` (*stopped*) - O processo foi instruído a parar;
+- `Z` (*zombie*) - Processo filho finalizado mas não coletado pelo pai;
 
-### Informações Sobre os Processos:
+> `<` (*high priority*) não é diretamente um estado, mas um indicador de prioridade elevada. Sua influência depende da política de escalonamento, não de uma quantidade fixa de tempo de CPU.
 
-O *Linux* expõe informações sobre os processos em execução por meio do sistema de arquivos virtual `/proc`. Cada processo em execução possui uma pasta própria dentro de `/proc`, identificada pelo seu ***PID*** (`/proc/{PID}`). É dentro dela que ficam, entre outras coisas, os descritores de arquivo do processo (`/proc/{PID}/fd`), consultáveis com `ls -l`.
+### Informações sobre os Processos:
+
+O *Linux* expõe informações sobre os processos em execução por meio do sistema de arquivos virtual `/proc`. Cada processo em execução possui uma pasta própria dentro de `/proc`, identificada pelo seu PID (`/proc/{PID}`). É dentro dela que ficam, entre outras coisas, os descritores de arquivo do processo (`/proc/{PID}/fd`), consultáveis com `ls -l`.
 
 ## Listagem:
 
 - `ps {opções}` - Mostra uma foto **instantânea** dos processos.
 
     - O comando `ps x` exibe todos os processos do usuário, adicionando a coluna `STAT` (estado do processo).
-    - Já o `ps aux` exibe os processos de **todos os usuários**, com colunas extras de uso de *CPU* e memória.
-    > Opções sem traço (`x`, `aux`) invocam o `ps` no estilo *BSD*, que o *Linux* consegue emular.
+    - Já o `ps aux` exibe os processos de **todos os usuários**, com colunas extras de uso de CPU e memória.
+
+    > Opções sem traço (`x`, `aux`) invocam o `ps` no estilo BSD, que o *Linux* consegue emular.
 
 - `pstree {opções}` - Mostra os processos em formato de árvore, evidenciando a relação de pai/filho.
 
-- `top {opções}` - Visão **dinâmica** e continuamente atualizada dos processos, ordenados por atividade.
+- `top {opções}` - Visão **dinâmica** e continuamente atualizada dos processos, ordenados por atividade. Também permite navegação e filtragem de informações em tempo de execução.
 
-- `jobs {opções}` - Mostra trabalhos (processos que **aquele terminal** lançou) ativos.
-> **Um trabalho pode ser composto por mais de um processo**. Ao executar `sort arquivo.txt | uniq &`, isso é um trabalho (aparece como `[1]` no `jobs`), mas são dois processos (`sort` e `uniq`, cada um com seu próprio *PID*).
+> O `btop` é uma alternativa ao `top` com interface mais visual: reúne gráficos de CPU, memória, discos e rede, além de oferecer suporte ao mouse, visualização de processos em árvore e filtros interativos.
+
+- `jobs {opções}` - Mostra os trabalhos ativos que **aquela *shell* lançou**.
+
+> **Um *job* pode ser composto por mais de um processo**. Ao executar `sort arquivo.txt | uniq &`, isso é um *job* (aparece como `[1]` no `jobs`), mas são dois processos (`sort` e `uniq`, cada um com seu próprio PID).
 
 - `vmstat {opções} {atraso}` - Mostra a utilização instantânea do sistema (memória, *swap*, disco); com um tempo em segundos, atualiza continuamente.
 
@@ -388,30 +446,37 @@ O *Linux* expõe informações sobre os processos em execução por meio do sist
 
 ## Controlando Processos:
 
-O terminal executa programas em dois modos: **primeiro plano** (*foreground*, controlando o terminal) ou **segundo plano** (*background*, liberando o *prompt*). Para já iniciar em plano de fundo, basta seguir o comando com `&`:
+Na sessão interativa, os programas podem executar em dois modos: **primeiro plano** (*foreground*, controlando o terminal) ou **segundo plano** (*background*, liberando o *prompt*). Para já iniciar em plano de fundo, basta seguir o comando com `&`:
 
-```
+```console
 $ xlogo &
 [1] 3486
 ```
 
-- `fg {job}` - Traz um *job* ao primeiro plano (*foreground*), identificado pelo número do *job*, `%N` (opcional se houver apenas um).
+- `fg {%N}` - Traz um *job* ao primeiro plano (*foreground*), identificado pelo número do *job*, `%N` (opcional se houver apenas um).
 
-- `bg {job}` - Retoma um *job* parado em segundo plano (*background*).
+- `bg {%N}` - Retoma um *job* parado em segundo plano (*background*).
+
 > Esse comando só funciona no terminal de origem do *job*, exigindo que ele esteja parado antes (o processo é retomado, e vai para o plano de fundo).
 
 ### Sinais:
 
-- `kill {opções} {-sinal} {PID ou %job}` - Envia um sinal a um processo (identificado por seu *PID* ou pelo número do *job* `%N`). Sem sinal especificado, envia `TERM` por padrão, pedindo para o programa terminar.
+- `kill {opções} {-sinal} {PID ou %job}` - Envia um sinal a um processo (identificado por seu PID ou pelo número do *job* `%N`). Sem sinal especificado, envia `TERM` por padrão, pedindo para o programa terminar.
 
-    - O `kill` não "mata" processos diretamente; ele envia **sinais** (a forma como o sistema operacional se comunica com programas em execução). A lista completa de sinais suportados pode ser vista com `kill -l`, e o que cada sinal faz pode ser consultado, em algumas distribuições, no manual `man 7 signal`.
-    > Dois atalhos de teclado permitem alternar entre esses estados enviando sinais ao processo em primeiro plano (um processo em plano de fundo é imune a entradas de teclado): `CTRL-C` o interrompe, `CTRL-Z` o suspende (marcado como *stopped* em `jobs`).
-    - Vale lembrar que nem todo programa reage aos sinais da maneira convencional (o programa pode ser implementado para interpretar esses sinais de outra maneira, criar seus "próprios sinais", ou mesmo ignorar qualquer sinal).
-    > Os únicos sinais que não podem ser ignorados são o `SIGKILL` (comumente `kill -9`), que encerra o processo imediatamente, e o `SIGSTOP` (comumente `kill -19`), que apenas interrompe o processo.
+O `kill` não "mata" processos diretamente; ele envia **sinais**, notificações que o sistema e outros processos podem entregar a um programa. A lista pode ser consultada com `kill -l`, e seus significados, em `man 7 signal`.
+
+- `Ctrl+C` envia `SIGINT` ao grupo de processos em primeiro plano, normalmente interrompendo sua execução.
+- `Ctrl+Z` envia `SIGTSTP`, normalmente suspendendo esse grupo (marcado como *stopped* em `jobs`).
+
+Um programa pode tratar ou ignorar vários sinais, mas não `SIGKILL` (`kill -KILL PID`), que força o encerramento, nem `SIGSTOP` (`kill -STOP PID`), que força a suspensão. Encerramento e suspensão são ações diferentes.
+
+> Um programa também pode implementar seus próprios comandos de teclado: `q`, por exemplo, pode simular uma ação de saída. Nesse caso, ele interpreta uma entrada; não cria um novo sinal do sistema.
 
 - `killall {opções} {-sinal} {nome}` - Mesma ideia, mas envia o sinal a todos os processos que correspondam a um **nome** de programa.
 
-- `nohup {comando}` - Torna um processo imune ao sinal `HUP` (que fecharia junto com o terminal).
+- `nohup {comando}` - Executa um comando ignorando `SIGHUP`, ajudando a mantê-lo após o fechamento do terminal. Não o coloca em segundo plano sozinho; para isso, usa-se `nohup comando &`.
+
+- `wait {PID ou %job}` - Aguarda o término de um processo filho ou trabalho e retorna seu *status*. Sem argumento, aguarda todos os trabalhos em segundo plano da *shell*.
 
 ---
 
@@ -419,319 +484,409 @@ $ xlogo &
 
 ## Entrada e Saída Padrão:
 
-Todo programa em execução possui estruturas definidas para lidar com dados, sendo elas a **entrada** (*input*), a **saída** (*output*) e a **saída de erro** (*error output*). Por padrão, essas estruturas são direcionadas da seguinte forma:
+Os programas normalmente utilizam três canais para lidar com dados: **entrada padrão** (*stdin*, descritor **0**), **saída padrão** (*stdout*, descritor **1**) e **saída de erro padrão** (*stderr*, descritor **2**). Em uma sessão interativa, eles costumam estar ligados ao terminal: a entrada recebe o que é digitado, enquanto as duas saídas mostram texto na tela.
 
-- **Entrada padrão** (*stdin*): O teclado (descritor de arquivo - **0**).
-- **Saída padrão** (*stdout*): A tela (descritor de arquivo - **1**).
-- **Saída de erro** (*stderr*): Também a tela (descritor de arquivo - **2**).
+Esses destinos podem ser alterados individualmente. Por exemplo, um programa pode ler de um arquivo, escrever o resultado em outro e continuar mostrando os erros no terminal.
 
-### *TTY* (Terminal):
+### TTY (Terminal):
 
-***TTY*** (*teletype*) é o nome dado ao dispositivo que representa um terminal no sistema. Historicamente se referia a terminais físicos, mas ao abrir um terminal dentro de uma interface gráfica, o sistema cria um ***pseudo-terminal*** (*pts* - *pseudo terminal slave*), que se comporta da mesma forma para fins de entrada e saída.
+**TTY** (*teletype*) é o nome dado ao dispositivo que representa um terminal no sistema. Historicamente se referia a terminais físicos; ao abrir um terminal em uma interface gráfica, normalmente é criado um **pseudoterminal**, cujo lado conectado à *shell* aparece em `/dev/pts/{N}` no *Linux*.
 
-- Por padrão, a **entrada padrão**, **saída padrão** e **saída de erro padrão** de um processo são apenas **apontadores** (*links*) para esse dispositivo de terminal (`/dev/pts/{N}` no *Linux*), sendo `N` um número que pode variar de acordo com o terminal aberto e o sistema operacional usado.
-- A quantidade de descritores de um processo também pode variar além dos três padrões (`0`, `1`, `2`), a depender de como o programa foi construído (uso de *pipes*, arquivos abertos, etc.).
-> Cada um desses apontadores é individual por processo. Alterá-lo em um processo não interfere em outro, mesmo que ambos apontem para o mesmo dispositivo. Ao final da execução do processo, esses apontadores deixam de existir.
+Os descritores podem ser imaginados como **apontadores** para os destinos de entrada e saída, mas não são *links* do sistema de arquivos. Cada processo possui sua própria tabela de descritores, que pode conter outros além de `0`, `1` e `2` (arquivos abertos, *pipes*, etc.). Redirecionar um deles não redireciona automaticamente os de outro processo.
 
-## Ferramentas de Redirecionamento:
+## Redirecionamento para Arquivos:
 
-- `{comando} {num_entrada}< {arquivo}` - `num_entrada` implícito é 0 (**entrada padrão**). **Define a entrada padrão** para aquela operação como sendo `arquivo`.
+Nos operadores abaixo, o número do descritor deve ficar junto do operador. Se omitido, utiliza-se `0` para entrada e `1` para saída.
 
-- `{comando} {num_saída}> {arquivo}` - `num_saída` implícito é 1 (**saída padrão**). **Define a saída padrão** para aquela operação como sendo `arquivo`.
-> Se o arquivo não existir, ele o cria, e, se existir e possuir conteúdo, o conteúdo é sobrescrito.
+- `{comando} {n}< {arquivo}` - Faz o descritor `n` ler do arquivo. Por exemplo, `sort < nomes.txt` recebe o conteúdo de `nomes.txt` pela entrada padrão.
+- `{comando} {n}> {arquivo}` - Direciona o descritor `n` para o arquivo, criando-o ou truncando seu conteúdo anterior. Por exemplo, `comando 2> erros.txt` salva apenas os erros.
+- `{comando} {n}>> {arquivo}` - Acrescenta a saída ao final do arquivo, criando-o se necessário.
+- `{comando} &> {arquivo}` - Direciona tanto a saída padrão quanto a saída de erro para o mesmo arquivo.
 
-> Se o arquivo estiver com bloqueio de sobrescrita (`set -o noclobber`, que funciona para a sessão atual da *shell* e pode ser desativado com `set +o noclobber`), pode-se usar o operador `>|` para fazer uma sobrescrita forçada.
+O redirecionamento é preparado **antes da execução do comando**. Assim, `cat arquivo > arquivo` esvazia o arquivo antes que `cat` possa lê-lo.
 
-   - É possível redirecionar tanto a saída padrão quanto a saída de erro padrão ao mesmo tempo com `&>`.
-   - `{comando} {num_saida}>&{num_alvo}` - Duplica o descritor `num_saida` (implícito: saída padrão), fazendo-o apontar para o mesmo destino do descritor `num_alvo`, em vez de um arquivo.
-   > A ordem dos redirecionamentos importa, já que são processados da esquerda para a direita. Supondo que o arquivo `y` exista e o `x` não:
+> `set -o noclobber` ativa a proteção contra sobrescrita com `>` na *shell* atual; `set +o noclobber` a desativa. O operador `>|` permite forçar a sobrescrita mesmo com essa proteção.
 
-   ```bash
-   $ cat x y 1>output 2>&1  # Saída padrão (1 - tela) passa a ser "output". Saída de erro padrão (2 - tela) passa a ser a mesma de 1 (output).
-   $ cat x y 2>&1 1>output  # Saída de erro padrão (2 - tela) passa a ser a mesma de 1 (tela). Saída padrão (1 - tela) passa a ser "output" (2 continua sendo a tela).
-   ```
+> `/dev/null` descarta os dados escritos nele. Por exemplo, `comando > /dev/null` descarta a saída padrão, enquanto `comando 2> /dev/null` descarta os erros.
 
-- `{comando} {num_saída}>> {arquivo}` - Concatena a saída de um comando ao final de um arquivo. Da mesma maneira que o operador `>`, se o arquivo não existir, o cria.
+## Duplicação de Descritores:
 
-- `{comando_1} | {comando_2}` - Redireciona a saída do `comando_1` como entrada do `comando_2`. Com ele, evita-se a necessidade de criação de arquivos intermediários para relacionar suas saídas e entradas, como por exemplo:
+- `{comando} {n}>&{alvo}` - Faz o descritor `n` (por padrão, `1`) usar o mesmo destino que `alvo` possui naquele momento. `2>&1`, por exemplo, direciona os erros para o destino atual da saída padrão.
+
+A ordem dos redirecionamentos importa, pois são processados da esquerda para a direita. Supondo que o arquivo `y` exista e o `x` não:
 
 ```bash
-$ comando_a [argumentos] > temp
-$ comando_b [argumentos] < temp
-$ rm temp
+cat x y > output.txt 2>&1  # 1 passa a ser output.txt; 2 recebe o mesmo destino de 1 (output.txt).
+cat x y 2>&1 > output.txt  # 2 recebe o destino atual de 1 (terminal); depois, só 1 vai para output.txt.
 ```
 
-> Por padrão, o *pipe* conecta apenas a saída padrão (`stdout` - `1`) do comando à esquerda à entrada padrão (`stdin` - `0`) do comando à direita. A saída de erro (`stderr` - `2`) mantém seu destino original, a menos que seja explicitamente redirecionada.
+## Comunicação e Entrada em Bloco:
 
-- `{comando} << {pattern}` - Envia o conteúdo digitado (texto) nas linhas seguintes como entrada para o comando, até encontrar uma linha contendo apenas o `pattern` definido (pode ser qualquer palavra, sendo comumente usados `EOF`, `END` etc.). É útil em *scripts*, pois dispensa o `CTRL-D` usado para encerrar uma entrada indefinida de forma interativa.
-> Por padrão, o texto passa pela expansão de variáveis e símbolos especiais da *shell* (ex: `$VARIAVEL`). Para usá-lo de forma crua (sem expansão), basta envolver o `PATTERN` (ou parte dele) em aspas simples.
+- `{comando_1} | {comando_2}` - ***Pipes***. Conecta a saída padrão do primeiro comando à entrada padrão do segundo (evitando a obrigatoriedade de criação de arquivos intermediários). `sort nomes.txt | uniq`, por exemplo, ordena as linhas e remove repetições adjacentes. A saída de erro mantém seu destino original, a menos que seja redirecionada.
 
-   - O operador `<<-` realiza a mesma função, mas remove tabulações (apenas `TAB` - não funciona com espaços simples) do início de cada linha do bloco.
+> Por padrão, o *status* dessa sequência (*pipeline*) é o do último comando. Com `set -o pipefail`, passa a ser o do comando mais à direita que falhou, ou `0` se todos tiveram sucesso; `set +o pipefail` restaura o comportamento padrão.
+
+- `{comando} << {delimitador}` - Envia as linhas seguintes como entrada até encontrar uma linha contendo apenas o delimitador (normalmente `EOF` ou `END`). Esse bloco é chamado de *here-document* e dispensa uma entrada interativa encerrada com `Ctrl+D`.
+
+```bash
+cat << EOF
+> Diretório pessoal: $HOME
+> Resultado: $((2 + 3))
+> EOF
+```
+
+Sem proteção no delimitador, o bloco permite expansão de parâmetros, substituição de comandos e expansão aritmética. Com o delimitador protegido, como em `<< 'EOF'`, o conteúdo é literal; a linha final continua sendo apenas `EOF`, sem aspas. Não ocorre expansão de nomes de arquivos nesse texto.
+
+> `<<-` realiza a mesma função, mas remove tabulações do início das linhas do bloco e do delimitador final (não remove espaços comuns).
+
+---
 
 # 5. Expansões
 
-Antes de executar o comando, a *shell* analisa a linha em busca de **metacaracteres** (caracteres especiais) e os substitui automaticamente por dados reais (**expansão**). Somente depois ele entrega a instrução completa (já "mastigada") para o programa executar.
+Antes de executar um comando, a *shell* reconhece a estrutura da linha e realiza **expansões**, substituindo certas expressões por valores, resultados ou nomes de arquivos. Só depois entrega os argumentos já “mastigados” ao programa.
 
-## Tipos de expansão:
+As expansões seguem uma ordem: 
+
+1. **Chaves;** 
+2. **Til;**
+3. **Parâmetros;**
+4. **Aritmética e Comandos;** 
+5. **Separação de Palavras;**
+6. **Nomes de Arquivos;** 
+ 
+Ao final, as aspas usadas para proteger a sintaxe são removidas. 
+
+> Nem todo contexto aplica todas essas etapas (aspas e atribuições, por exemplo, alteram esse comportamento).
+
+## Tipos de Expansão:
 
 ### Expansão de Arquivos:
 
-Nomes de arquivos podem ser abreviados utilizando **caracteres coringa**. a *shell* busca arquivos reais (existentes no sistema) que correspondam ao padrão e substitui esse padrão pelos nomes encontrados antes da execução. Os caracteres coringa são:
+Nomes de arquivos podem ser representados por **caracteres curinga**. A *shell* procura nomes existentes que correspondam ao padrão e o substitui pelos resultados antes da execução do comando.
 
-- `?`: Arquivo possui um caractere único e obrigatório no lugar do curinga. Por exemplo, `ls doc?.txt` lista arquivos como "doc1.txt" ou "docA.txt", mas ignora "doc12.txt". Já um `cat ?` tentaria ler o conteúdo de todos os arquivos do diretório cujo nome tenha apenas um único caractere.
-- `*`: O arquivo possui qualquer sequência de caracteres (ou nenhum caractere). Por exemplo, `rm *.tmp` apaga todos os arquivos que terminam com ".tmp". Um `cat memo*` mostra o conteúdo de todos os arquivos que começam com "memo" (independentemente de como terminem), enquanto `ls *20*` lista arquivos que possuem "20" em qualquer parte do nome.
-> Tanto o `?` quanto o `*` ignoram arquivos ocultos (que começam com um ponto `.`) por padrão. Para listá-los, é preciso colocar o ponto de forma explícita, como em `ls .*`.
-- `[caracteres]`: Substitui um único caractere que faça parte do conjunto delimitado nos colchetes. Pode-se usar hifens para definir faixas, como `[0-9]` ou `[a-z]`, ou indicar apenas caracteres específicos, como `[159]`. Por exemplo, `less relatorio_[123].pdf` abre para leitura apenas os relatórios 1, 2 ou 3. Já `ls img_[a-d].png` lista imagens de "img_a.png" até "img_d.png".
-> `[!caracteres]` ou `[^caracteres]`: Atua como uma negação do conjunto. Substitui um caractere único que **não** esteja listado nos colchetes. Por exemplo, `rm arquivo_v[^3].doc` apaga "arquivo_v1.doc", "arquivo_v2.doc", "arquivo_v4.doc", "arquivo_vl.doc", "arquivo_v$.doc", mas ignora o "arquivo_v3.doc".
-- `[[:class:]]`: Substitui um único caractere que seja membro de uma classe pré-definida pelo sistema. Para usar, ele precisa estar dentro de um conjunto próprio de colchetes, resultando em algo como `ls doc_[[:digit:]].txt` (que lista "doc_1.txt", mas não "doc_A.txt"). As principais classes suportadas são:
-  - ***alnum:*** Caracteres alfanuméricos (letras e dígitos).
-  - ***alpha:*** Apenas letras do alfabeto.
-  - ***blank:*** Caracteres em branco (espaços e tabulações).
-  - ***cntrl:*** Caracteres de controle do terminal.
-  - ***digit:*** Apenas números (dígitos).
-  - ***graph:*** Caracteres gráficos (alfanuméricos e pontuações).
-  - ***lower:*** Apenas letras minúsculas.
-  - ***print:*** Caracteres imprimíveis (visíveis).
-  - ***space:*** Caracteres de espaçamento (espaço, tabulação, quebra de linha, etc.).
-  - ***upper:*** Apenas letras maiúsculas.
-  - ***xdigit:*** Dígitos hexadecimais (0 a 9, A a F).
+- `?` - Representa um único caractere obrigatório. `ls doc?.txt` encontra nomes como `doc1.txt` e `docA.txt`, mas não `doc12.txt`.
+- `*` - Representa qualquer sequência de caracteres, inclusive vazia. `rm *.tmp` apaga arquivos terminados em `.tmp`; `cat memo*` lê nomes iniciados por `memo`; `echo *__*` lista todos os arquivos que possuem os caracteres `__` em alguma parte do seu nome (inicio, meio e/ou fim).
+- `[caracteres]` - Representa **um caractere do conjunto**. `ls relatorio_[123].txt` encontra os relatórios 1, 2 e 3; `[a-d]` indica uma faixa.
+- `[!caracteres]` ou `[^caracteres]` - Representa um caractere que não pertence ao conjunto. `ls arquivo_v[^3].txt` ignora `arquivo_v3.txt`, mas pode encontrar `arquivo_v1.txt` e `arquivo_vA.txt`.
+- `[[:classe:]]` - Representa um caractere de uma classe predefinida. `ls doc_[[:digit:]].txt` encontra `doc_1.txt`, mas não `doc_A.txt`.
 
-### Expansão Til (~):
+| Classe | Caracteres Correspondentes |
+| --- | --- |
+| `alnum` / `alpha` | Letras e dígitos / apenas letras. |
+| `digit` / `xdigit` | Dígitos decimais / hexadecimais (`0`–`9`, `A`–`F`, `a`–`f`). |
+| `lower` / `upper` | Letras minúsculas / maiúsculas. |
+| `blank` / `space` | Espaço e tabulação / caracteres de espaçamento, incluindo quebra de linha. |
+| `cntrl` | Caracteres de controle. |
+| `graph` / `print` | Caracteres visíveis, sem espaço / imprimíveis, incluindo espaço. |
+| `punct` | Caracteres de pontuação. |
 
-O caractere til (`~`) atua como um atalho direto para os diretórios pessoais (`home`) dos usuários do sistema. Como comentado anteriormente, o til sozinho expande para o diretório pessoal do usuário atual (independentemente de quão fundo ele esteja no sistema), enquanto o til acompanhado do nome de um usuário existente (`~{usuario}`) expande para o diretório pessoal do usuário especificado.
+Por padrão, os curingas não incluem o ponto inicial de nomes ocultos: ele precisa aparecer explicitamente, como em `.*`. Se nenhum nome corresponder, o padrão permanece literal e é passado assim ao comando. Classes e faixas de letras podem depender da configuração de idioma e região.
+
+> Esses padrões (*globs*) não são expressões regulares. Em um padrão de arquivo, `*` representa qualquer sequência; em uma expressão regular, como as usadas por `grep`, ele repete o elemento anterior.
+
+### Expansão de Til (`~`):
+
+O til funciona como um atalho para diretórios pessoais: `~` expande para o diretório do usuário atual, enquanto `~usuario` indica o de outro usuário existente. Ele deve aparecer em uma posição reconhecida pela *shell*, normalmente no início da palavra: `~/Documentos`. Entre aspas (`"~/Documentos"`), permanece literal.
 
 ### Expansão Aritmética:
 
-Executa contas matemáticas (**exclusivamente com números inteiros**), retornando apenas o resultado final antes da execução do comando. A sintaxe consiste em colocar a operação dentro de dois parênteses precedidos por um cifrão, no formato `$(({expressão}))`.
+Executa contas com **números inteiros** e insere o resultado no comando, usando `$((expressão))`. São suportadas adição (`+`), subtração (`-`), multiplicação (`*`), divisão (`/`), resto (`%`) e exponenciação (`**`), além de operadores de comparação e lógicos.
 
-As operações básicas suportadas são: Adição (`+`), Subtração (`-`), Multiplicação (`*`), Divisão (`/`), Módulo/Resto de divisão (`%`) e Exponenciação (`**`).
-> Os espaços em branco dentro da expressão são ignorados e você pode usar parênteses simples internamente para organizar a ordem das operações (`$(((5**2)  *3))` vira 75).
+> Espaços internos são ignorados, e parênteses podem organizar as operações: `$(((5 ** 2)   * 3))` resulta em `75`. A divisão inteira descarta a parte fracionária: `$((5 / 2))` resulta em `2`.
 
 ### Expansão de Chaves:
 
-Gera múltiplas *strings* (textos) a partir de um padrão definido entre chaves `{}`. Diferentemente dos caracteres coringa (que procuram arquivos que *já existem*), as chaves geram palavras do zero.
+Gera múltiplas palavras a partir de um padrão entre chaves. Diferentemente dos curingas, **não exige arquivos existentes**.
 
-- **Valores específicos:** Você define exatamente os itens que deseja gerar. `mkdir pasta_{txt,pdf,img}` cria três pastas distintas chamadas "pasta_txt", "pasta_pdf" e "pasta_img".
-> O padrão dentro das chaves **não pode conter espaços em branco** (`{A, B, C}` está errado).
-- **Faixa de valores:** Diferentemente da expansão de arquivos (que usa o hífen), aqui são usados dois pontos finais (`..`) para criar sequências automáticas de números ou letras. `touch teste_v{1..5}` cria cinco arquivos de uma vez (de "teste_v1" até "teste_v5").
+- **Valores específicos:** `mkdir pasta_{txt,pdf,img}` cria três pastas: `pasta_txt`, `pasta_pdf` e `pasta_img`.
+- **Faixa de valores:** `touch teste_v{1..5}` gera nomes de `teste_v1` a `teste_v5`. São usados dois pontos finais (`..`), não um hífen.
 
-É possível **aninhar expansões** colocando chaves dentro de outras chaves para criar combinações complexas.
+É possível aninhar chaves para combinar padrões. Espaços dentro dos elementos precisam ser protegidos: `{"A A",B}` gera duas palavras, enquanto `{A, B}` não forma a expansão pretendida.
+
+> Como as chaves são expandidas antes das variáveis, `{1..$n}` não gera uma sequência usando o valor de `n`.
 
 ### Expansão de Parâmetros:
 
-A *shell* é capaz de armazenar e operar **variáveis** (as do sistema convencionalmente são maiúsculas) que podem ser expandidas com o símbolo de cifrão (`$`) imediatamente antes do nome da variável. O `$USER` expande o nome do usuário atual, `$BASH` retorna o caminho do interpretador em uso, `$PWD` retorna o diretório atual, etc.
-> Para ver uma lista completa das variáveis disponíveis na *shell*, basta executar os comandos `printenv` ou `set`.
+Permite recuperar valores armazenados na *shell*. A forma `${variavel}` delimita explicitamente o nome; `$variavel` é sua forma simplificada, suficiente quando o nome pode ser identificado sem ambiguidade. `${USER}`, por exemplo, recupera o nome de usuário registrado nessa variável.
 
-## Substituição de Comandos:
+As chaves permitem separar o nome de textos adjacentes e aplicar operações adicionais, apresentadas no capítulo de variáveis. Elas **não substituem as aspas** para preservar espaços: `${variavel}` e `"${variavel}"` podem produzir argumentos diferentes.
 
-A substituição de comandos permite capturar a saída (o resultado) de um comando inteiro e utilizá-la como texto diretamente na linha de comando de outra instrução (como parâmetros ou argumentos), envolvendo-o no formato `$({comando})`. Ao executar `ls -l $(which cp)`, a *shell* resolve primeiro o que está entre parênteses (o caminho do programa `cp`), captura esse resultado (`/bin/cp`), substitui-o na linha original e só então executa o comando externo (que se torna `ls -l /bin/cp`).
+> `printenv` lista variáveis de ambiente. No Bash, `set` sem argumentos também mostra variáveis da própria *shell* e definições de funções; portanto, as duas consultas não são equivalentes.
 
-## *Escapes*:
+### Substituição de Comandos:
 
-Como dito, a *shell* interpreta as expansões automaticamente e separa argumentos (espaços extras são ignorados e cada palavra é um argumento). Para que a *shell* ignore essas regras e leia o texto exatamente como foi digitado (como um nome de arquivo que possui espaços ou um texto que contenha um cifrão literal), são utilizados os ***escapes***.
+A forma `$(comando)` captura a **saída padrão** de um comando e a utiliza como texto. As quebras de linha finais são removidas; mensagens enviadas à saída de erro não são capturadas, salvo se forem redirecionadas.
 
-- **Aspas Duplas (`" "`):** Desativam a maioria das expansões (como as de arquivos, chaves e til) e impedem que os espaços separem as palavras, tratando tudo dentro delas como um bloco único. Porém, elas **ainda permitem** a expansão do cifrão (`$`), da crase (`` ` ``) e da barra invertida (`\`). Em `echo "O usuário $USER acessou o arquivo"`, os espaços extras são mantidos intactos, e a variável `$USER` ainda é traduzida para o nome do usuário.
-- **Aspas Simples (`' '`):** É o bloqueio total. Desativam **todas** as expansões e substituições (tudo vira texto puro). `echo 'O usuário $USER'` vai imprimir "O usuário $USER".
-> **Barra Invertida (`\`):** Não é propriamente um *escape*, mas um operador que isola **um único caractere** imediatamente posterior e indica que ele deve ser impresso na íntegra. `echo "O saldo é \$5.00"` informa à *shell* que o cifrão é apenas texto normal.
+Por exemplo, `printf 'Data: %s\n' "$(date +%F)"` executa `date`, captura uma data como `2026-10-13` e a entrega como argumento a `printf`. As aspas preservam o resultado como um único argumento.
 
-> A barra invertida também é usada com letras específicas para representar formatações de texto (como o `\n`, inspirado no `C`), mas, para sua interpretação correta, é necessário sinalizar com uma *flag* no comando (`echo -e`, por exemplo; o `echo` normal não interpreta).
+## Separação de Palavras:
 
-> REVISADO ATÉ AQUI!
-
-# 6. Variáveis
-
-Como visto nas expansões, a *shell* permite armazenar valores em palavras e recuperar esse conteúdo através da expansão de parâmetros (usando o símbolo `$`). Esse mecanismo é a base para o uso de **variáveis**, que podem ser tanto criadas pelo usuário quanto nativas do próprio sistema.
-
-> A expansão de variáveis pode também ser feita por `${variavel_entre_chaves}`, com essa sintaxe trazendo algumas vantagens, como a possibilidade de concatenar *strings*.
+Quando expansões de parâmetros ou comandos aparecem sem aspas, seus resultados podem ser separados em palavras (*word splitting*) pelos caracteres de `IFS` (por padrão, espaço, tabulação e quebra de linha). Depois disso, os padrões de arquivos também podem ser expandidos.
 
 ```bash
-$ first=primeira
-$ second=${first}palavra
-$ echo $second           #primeirapalavra
+texto="duas palavras"
+printf '<%s>\n' $texto    # Imprime <duas> e <palavras>, em linhas separadas.
+printf '<%s>\n' "$texto"  # Imprime <duas palavras>, em uma única linha.
 ```
 
-## Variáveis do Usuário:
+Em argumentos de comandos, `"$variavel"` preserva o valor como um argumento, inclusive quando está vazio. Sem aspas, um valor vazio pode desaparecer da lista de argumentos. Nas atribuições simples (`copia=$texto`), não ocorre essa separação nem expansão de arquivos.
 
-Para declarar uma variável, assim como na maioria das linguagens de programação, o nome nunca pode começar com um número (permitido começar com *under-line*). Após o primeiro caractere, o nome pode conter letras, sublinhados e números (demais caracteres como barras (`/`) ou traços (`-`), asteriscos (*), etc. não são permitidos).
+## Aspas e *Escapes*:
 
-### Atribuição e Valores:
+Aspas e *escapes* controlam quais caracteres conservam seu significado especial e quais devem ser tratados literalmente.
 
-- `{variavel}={valor}` - Atribui `valor` à variável. Na atribuição, **não pode haver espaços** antes ou depois do sinal de igual (`X = 1` daria erro). Para armazenar *strings* com espaços, é necessário envolvê-la em aspas ou então utilizar o escape de espaço (`\ `).
+- **Aspas Duplas (`"..."`):** Preservam espaços e impedem a separação de palavras e a expansão de arquivos. Continuam permitindo expansões como `$variavel`, `$(comando)` e `$((expressão))`. `echo "O usuário $USER acessou o arquivo"` mantém o texto unido e substitui a variável.
+- **Aspas Simples (`'...'`):** Preservam literalmente tudo entre elas. `echo 'O usuário $USER'` imprime o próprio texto `$USER`; uma aspa simples não pode ser inserida diretamente dentro desse mesmo par de aspas.
+- **Barra Invertida (`\`):** Protege o próximo caractere fora de aspas simples. Dentro de aspas duplas, atua apenas em casos específicos, como `\$`, `\"`, `\\`, crase e quebra de linha. `echo "O saldo é \$5.00"` imprime o cifrão literalmente.
 
-- `{variavel}=` - Limpa o valor da variável (ela passa a armazenar um texto vazio, mas continua existindo).
+> Uma barra invertida imediatamente antes de uma quebra de linha permite continuar o comando na linha seguinte, fora de aspas simples. Já sequências como `\n` dependem de quem as interpreta: `printf 'Linha 1\nLinha 2\n'` produz duas linhas. No Bash, `echo -e` também interpreta essas sequências, mas o comportamento de `echo` varia com opções e implementação.
 
-- `unset {variavel}` - Remove a variável completamente da memória da *shell*.
+---
 
-> Na *shell*, **tudo é armazenado como *string*** (recursos internos permitem interpretar esses valores e realizar operações aritméticas, por exemplo, mas é tudo texto). Por conta disso, declarar uma variável como `X=1`, `X="1"` ou `X='1'` não faz diferença. Devido à interpretação da *shell* antes de executar o comando, caracteres especiais armazenados sofrem expansão e comandos armazenados podem ser acessados diretamente por variáveis.
+# 6. Variáveis e Parâmetros
+
+Variáveis associam um nome a um valor, que pode ser recuperado com `${nome}` ou `$nome`. As chaves delimitam onde o nome termina: `${nome}_copia` utiliza a variável `nome`, enquanto `$nome_copia` procura uma variável chamada `nome_copia`.
 
 ```bash
-$ var_1=script.*
-$ echo $var_1   # script.c script.cpp script.py ...
-$ echo "$var_1" # script.*
-$ var_2=ls
-$ $var2         # a.txt script.c script.cpp ...
+primeira="a vida"
+segunda="${primeira}eh bela"
+printf '%s\n' "$segunda"  # "a vidaeh bela"
 ```
 
-### Escopo de Execução:
+## Nomes, Atribuição e Valores:
 
-É possível definir uma variável que existirá apenas durante a execução de um comando ou *script* específico, sem criá-la ou alterá-la no *shell* atual. Para isso, basta declarar a atribuição seguida de um espaço e do comando.
+O nome começa com uma letra ou sublinhado (`_`) e pode continuar com letras, números e sublinhados. Caracteres como `/`, `-` e `*` não são permitidos. Convencionalmente, nomes próprios dos *scripts* usam minúsculas, evitando conflitos com variáveis conhecidas do ambiente.
 
-- `{variavel}={valor} {comando}` - Passa a variável apenas para o ambiente do comando executado.
+- `{variavel}={valor}` - Atribui um valor, **sem espaços ao redor de `=`**. Para escrever um texto com espaços diretamente, usam-se aspas ou escapes: `nome="Ana Silva"`.
+- `{variavel}=` - Define um texto vazio; a variável continua definida.
+- `unset {variavel}` - Remove a variável, salvo se ela estiver protegida contra isso.
+
+Variáveis comuns armazenam texto; contextos aritméticos e atributos específicos permitem interpretá-lo como números. Por isso, `x=1`, `x="1"` e `x='1'` produzem o mesmo valor para uma variável comum.
 
 ```bash
-$ VAR="teste" ./meu_script.sh  # VAR só existe durante a execução do script
-$ echo $VAR                    # Retorna vazio na shell atual
+var_1='script.*'
+printf '%s\n' $var_1    # Pode expandir para script.c, script.cpp etc., se existirem.
+printf '%s\n' "$var_1"  # Imprime literalmente script.*.
+var_2=ls
+"$var_2"                # Executa ls, pois a expansão ocupa o lugar do nome do comando. Também funcionaria sem as aspas duplas
 ```
 
-## Variáveis da Shell:
+> O conteúdo de uma variável não é reinterpretado como uma linha completa de código: `|`, `>` e aspas armazenadas não se tornam automaticamente operadores ou delimitadores. O exemplo anterior funciona por conter apenas o nome do comando.
 
-A *shell* possui diversas variáveis pré-definidas pelo sistema. Convencionalmente, elas são escritas com letras maiúsculas. 
+## Ambiente, Exportação e Herança:
 
-Essas variáveis costumam atuar de forma global (também chamadas de variáveis de ambiente). Para que uma variável criada pelo usuário tenha esse mesmo comportamento (tornando-se visível para outros programas e *subshells* executados a partir dali) utiliza-se o comando `export`:
+Uma variável criada na *shell* não é automaticamente enviada aos programas executados por ela. **Exportar** significa incluir seu nome e valor no ambiente desses programas, e não compartilhar uma variável única entre processos.
 
-- `export {variavel}={valor}` - Cria (ou atualiza) uma variável, definindo-a como global. Para simplesmente fazer uma concatenação: `export variavel=${variavel_entre_chaves}valor_concatenado`
+- `export {variavel}={valor}` - Cria ou atualiza uma variável e a marca para exportação. `export variavel` exporta uma variável já existente.
+- `{variavel}={valor} {comando}` - Fornece uma variável ao ambiente daquele comando, sem alterar seu valor na *shell* que o chamou: `VAR="teste" ./meu_script.sh`.
 
-**Principais Variáveis Padrão:**
+### Isolamento e Contexto de Execução:
+
+| Forma | Comportamento das Variáveis |
+| --- | --- |
+| `bash script.sh` ou `./script.sh` | Inicia outro interpretador; recebe pelo ambiente as variáveis exportadas. Alterações não voltam à *shell* original. |
+| `( comandos )` | Cria uma *subshell*, copiando o contexto, inclusive variáveis não exportadas e atributos. Alterações ficam isoladas. |
+| `source arquivo.sh` ou `. arquivo.sh` | Executa no contexto atual. As alterações podem permanecer depois que o arquivo termina. |
+
+Quando uma variável é passada pelo **ambiente** a um novo programa, transfere-se seu nome e valor, não atributos de controle como somente leitura. Isso difere da cópia do contexto em uma *subshell*. Em ambos os casos isolados, alterar a cópia não modifica o valor no processo original.
+
+## Variáveis da *Shell*:
+
+A *shell* mantém diversas variáveis com funções específicas, convencionalmente em maiúsculas. Algumas fazem parte do ambiente, mas outras, como as de configuração dos *prompts*, podem existir apenas na própria *shell*.
 
 | Variável | Descrição |
-| :--- | :--- |
-| `$HOME` | Caminho do diretório pessoal do usuário atual (equivalente ao uso do `~`). |
-| `$PATH` | Lista de diretórios (separados por `:`) onde a *shell* procura os programas executáveis. Ao digitar um comando como `ls`, ela verifica pasta por pasta até encontrá-lo (como em `/usr/bin`). |
-| `$PS1` | Define o texto e a aparência do *prompt* principal do terminal (o que aparece antes de você digitar). |
-| `$PS2` | Define o *prompt* secundário (normalmente um `>`, exibido quando a *shell* aguarda que você termine de digitar um comando na linha de baixo). |
-| `$IFS` | Separador Interno de Campos (*Internal Field Separator*). Define os caracteres que a *shell* usa para separar palavras e itens (por padrão: espaço, tabulação e quebra de linha). |
-| `$PWD` | Armazena o caminho absoluto do diretório de trabalho atual. |
+| --- | --- |
+| `$HOME` | Caminho do diretório pessoal do usuário atual, normalmente usado na expansão de `~`. |
+| `$PATH` | Diretórios, separados por `:`, nos quais são procurados programas executáveis. |
+| `$PS1` / `$PS2` | *Prompt* principal / secundário, usado quando a *shell* espera a continuação de um comando. |
+| `$IFS` | Separador interno de campos (*Internal Field Separator*), usado na separação de resultados de expansões e pelo comando `read`. |
+| `$PWD` | Caminho do diretório de trabalho atual, mantido pela *shell*. |
 
-> Se o valor de `$PWD` for manualmente alterado, a pasta de trabalho não mudará. Além disso, ao executar o comando `pwd`, o sistema consultará sua localização real e retornará o diretório correto, ignorando a alteração feita na variável (essa parte não é definida pela variável).
+> Alterar manualmente `$PWD` não muda o diretório de trabalho do processo (como a *shell* identifica o caminho não tem relação com essa variável).
 
-## Atributos de Variáveis:
+## Atributos e Escopo:
 
-- `declare -{atributo} {variavel}={valor}` - Atribui o valor com a propriedade especificada.
+- `declare -{atributo} {variavel}={valor}` - Atribui valor e propriedades à variável.
 
-- `declare +{atributo} {variavel}` - Remove o atributo da variável (mantendo seu valor armazenado).
+- `declare +{atributo} {variavel}` - Remove um atributo quando isso é permitido.
 
-Existem vários atributos, mas as mais utilizadas são:
-- **`-x` (Global):** Análogo ao uso do comando `export {variavel}`.
-- **`-r` (Somente Leitura):** Protege a variável, impedindo mudanças nela após a declaração. Análogo ao uso do comando `readonly {variavel}`.
+Alguns atributos importantes são:
 
-> O `-r` é irreversível durante a execução (uma vez aplicada, não é possível alterá-la, retirar o atributo com `+r` e nem apagar a variável com `unset`). Ela só deixará de existir quando a sessão atual da *shell* for encerrada.
+| Atributo | Função                                                                                                           |
+| -------- | ---------------------------------------------------------------------------------------------------------------- |
+| `-x`     | Marca para exportação, como `export`.                                                                            |
+| `-r`     | Torna somente leitura, como `readonly`: impede atribuição e remoção com `unset`. Não pode ser desfeito com `+r`. |
+| `-i`     | Avalia atribuições como expressões inteiras: `declare -i total=2+3` armazena `5`.                                |
 
-Esses atributos não são exclusivos (um atributo pode ser global e *read only* ao mesmo tempo, por exemplo). 
+> Os atributos podem ser combinados: uma variável pode ser exportada e somente leitura ao mesmo tempo. No Bash, o comando `typeset` é equivalente a `declare` (*alias*).
 
-> Os comando `declare` e `typeset` são equivalentes - permitem definir propriedades específicas para as variáveis.
+### Localidade em Funções:
 
-### Isolamento e Herança de Variáveis:
+Por padrão, funções usam as variáveis da *shell* em que executam. Uma variável global nesse contexto é visível às funções, mas **não precisa ser exportada**; exportação e escopo são propriedades diferentes.
 
-Cada *shell* em execução atua como um processo independente na memória do sistema. Por isso, alterar ou criar uma variável em um terminal não afeta nem gera conflitos com outras *shells* abertas simultaneamente. 
+- `local {variavel}={valor}` - Dentro de uma função, cria uma variável local que oculta outra de mesmo nome enquanto a função executa. Ao retornar, a variável externa volta a ficar visível.
 
-Além disso, quando uma variável global é passada para uma nova *shell*, o sistema transfere apenas o seu nome e o seu valor. **Atributos de controle**, como o somente Leitura (`-r`), **pertencem apenas à *shell* onde foram criados e não são herdados**. Assim, a nova *shell* apenas recebe uma cópia da variável (modificá-la não altera a restrição ou o valor na *shell* original).
-
-## Escopo e Localidade:
-
-No entanto, as funções na *shell* não possuem isolamento padrão: elas compartilham as mesmas variáveis do restante do código. Isso significa que modificar uma variável dentro de uma função alterará seu valor globalmente, o que pode sobrescrever dados e causar conflitos indesejados.
-
-Para restringir o escopo exclusivamente ao ambiente interno de uma função, utiliza-se o comando `local` (ou seu equivalente `typeset`) no momento da declaração. 
-
-- `local {variavel}={valor}` - Cria uma variável que existirá apenas durante a execução da função atual. Isso protege as variáveis externas, garantindo que alterações internas não afetem o resto do *script*.
+O escopo é dinâmico: outras funções chamadas por essa função também podem enxergar a variável local. Dentro de funções, `declare` também cria variáveis locais por padrão; fora delas, não substitui `local`. A sintaxe de funções fica reservada para seu próprio capítulo.
 
 ## *Arrays*:
 
-- `{array}=(valor1 valor2 valor3)` - Cria um vetor unidimensional com índices iniciados em zero. O acesso aos índices é feito com uso de chaves junto ao expansor de parâmetro (`$`) (`${array[0]}`, por exemplo).
+- `{array}=(valor1 valor2 valor3)` - Cria um vetor indexado. Quando os índices não são especificados, os elementos recebem posições consecutivas a partir de zero.
+- `{array}[{indice}]={valor}` - Atribui ou altera um elemento. O acesso utiliza `${array[indice]}`.
+- `${#array[@]}` - Retorna a quantidade de elementos; `${!array[@]}` permite obter seus índices.
 
-Para recuperar todos os itens de uma vez, utilizam-se os símbolos `@` ou `*`. Eles só apresentam diferença de comportamento quando envoltos em aspas duplas: `"${array[@]}"` expande cada elemento como uma palavra (argumento) independente, enquanto `"${array[*]}"` expande todos agrupados em uma única *string*, separados pelo primeiro caractere definido em `$IFS` (por padrão, o espaço). 
+```bash
+arquivos=("relatorio final.txt" "dados.csv")
+arquivos[1]="dados novos.csv"
+printf '%s\n' "${arquivos[0]}"  # relatorio final.txt
+printf '%s\n' "${arquivos[@]}"  # Um elemento por linha, preservando seus espaços.
+printf '%s\n' "${#arquivos[@]}" # 2
+```
 
-> Se utilizados sem aspas duplas (`${vetor[@]}` ou `${vetor[*]}`), possuem exatamente o mesmo efeito (elementos separados).
+`"${array[@]}"` preserva **cada elemento como um argumento independente**; `"${array[*]}"` reúne todos em um único argumento, separados pelo primeiro caractere de `IFS` (espaço por padrão). Sem aspas, podem ocorrer separação de palavras e expansão de arquivos, perdendo os limites originais dos elementos.
 
-## Variáveis Especiais:
+> Os índices não precisam ser contínuos. Por isso, a quantidade de elementos não é necessariamente o maior índice mais um.
 
-Informações dinâmicas sobre a execução dos comandos e do próprio terminal.
+## Variáveis e Parâmetros Especiais:
 
-| Variável | Descrição |
-| :--- | :--- |
-|`$RANDOM` | Gera um número inteiro aleatório entre 0 e 32767 (15 *bits*). |
-| `$$` | Retorna o *PID* (identificador) do processo atual. É útil para identificar exatamente qual *shell* ou *script* está rodando no momento. |
-| `$!` | Retorna o *PID* do último processo colocado em plano de fundo (*background*). |
-| `$?` | Armazena o *status* de saída (*exit status*) do último comando executado. |
+Fornecem informações sobre a execução. Parâmetros especiais, como `$?` e `$$`, não são nomes comuns aos quais se atribui um valor com `=`.
 
-> O valor de `$?` é atualizado após **cada** comando executado. Se um programa falhar e você rodar `echo $?` para verificar o erro, ele mostrará o código da falha. Porém, se você rodar `echo $?` uma segunda vez logo em seguida, o valor retornado será `0`, pois agora ele estará mostrando o *status* de sucesso do próprio comando `echo` anterior.
+| Forma     | Descrição                                                                                                                                                          |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `$RANDOM` | Produz um inteiro pseudoaleatório de `0` a `32767` (15 *bits*).                                                                                                    |
+| `$$`      | PID da *shell* original; mantém esse valor em contextos de *subshell*, como `( ... )`. `$BASHPID` identifica o processo Bash que está executando naquele contexto. |
+| `$!`      | PID associado ao comando ou trabalho mais recente iniciado em segundo plano.                                                                                       |
+| `$?`      | *Status* de saída do último comando ou *pipeline*, conforme as regras de redirecionamento e execução.                                                              |
 
-## Parâmetros:
+> `$?` é atualizado após cada comando. Depois de `echo $?`, passa a indicar o resultado desse próprio `echo`; para guardar um resultado, a atribuição `resultado=$?` deve vir imediatamente após o comando de interesse.
 
-### *Input*:
+## Leitura de Entrada:
 
-- `read {opções} {variaveis}` - Lê a entrada e atribui as palavras digitadas às variáveis informadas em sequência.
+- `read {opções} {variaveis}` - Lê uma linha da entrada padrão e distribui seus campos entre as variáveis. A última recebe o restante dos campos e seus separadores internos; com uma variável, recebe o texto todo após o tratamento de `IFS`.
 
->  Por padrão, o *shell* usa os espaços em branco para separar a entrada. O `read` mais **uma variável** armazena a linha inteira (mesmo com os espaços). Com **múltiplas variáveis**, cada variável recebe uma palavra (se houver mais palavras do que variáveis, a **última variável da lista** armazenará todo o restante do texto, incluindo os espaços finais). Com **nenhuma variável**, toda a entrada do usuário será salva automaticamente na variável padrão `$REPLY`.
+Por padrão, espaços, tabulações e quebras de linha funcionam como separadores, e os espaços nas extremidades são removidos. A opção `-r` impede que barras invertidas sejam interpretadas como escapes. Para preservar também os espaços, usa-se `IFS= read -r linha`.
 
-### Parâmetros Posicionais:
+```bash
+printf 'Nome completo: '
+IFS= read -r nome
+printf 'Nome recebido: <%s>\n' "$nome"
+```
 
-Parâmetros posicionais permitem referenciar os argumentos passados para um *script* ou função no momento de sua execução (comportamento análogo ao `argc` e `argv` da linguagem C).
+> Se não forem passadas variáveis para `read`, ele armazena a linha em na variável `REPLY` (implicitamente), sem separá-la em campos. Seu *status* indica sucesso ou uma condição como fim da entrada, o que permite usá-lo em testes e, posteriormente, em repetições.
 
-| Variável | Descrição |
-| :--- | :--- |
-| `$#` | Retorna o número total de parâmetros passados na chamada do programa. |
-| `$0` | Retorna o nome do programa ou *script* em execução. |
-| `$1` a `${n}` | Retornam os argumentos específicos correspondentes à sua posição (primeiro argumento, segundo argumento, etc.). **A partir do décimo parâmetro, é obrigatório o uso de chaves para a expansão** (`${10}`, `${11}`, etc.). |
-| `$@` e `$*` | Representam todos os argumentos de uma só vez. Seguem a mesma regra de expansão dos arranjos: entre aspas duplas, `"$@"` trata cada argumento de forma independente, enquanto `"$*"` os une em uma única *string*. |
+## Parâmetros Posicionais:
 
-### Manipulação de Parâmetros:
-- `shift {n}` - Descarta os `n` primeiros parâmetros e desloca os restantes para a esquerda. Ao utilizar apenas `shift` (equivalente a `shift 1`), o antigo `$2` passa a ser o `$1`, o `$3` passa a ser o `$2`, e assim por diante. Pode ser chamado sucessivamente.
-- `set {valores}` - Inicializa ou redefine os parâmetros posicionais de dentro do próprio *script*. É útil para atribuir valores padrão de forma automática caso o usuário não tenha passado nenhum argumento na execução, permitindo que o resto do código utilize as variáveis posicionais normalmente.
+Representam os argumentos passados a um *script* ou função, de maneira semelhante a `argc` e `argv` de C. Eles são diferentes dos dados lidos da entrada padrão por `read`.
 
-### Expansão de Variáveis:
+| Forma | Descrição |
+| --- | --- |
+| `$#` | Quantidade de argumentos posicionais; não inclui `$0`. |
+| `$0` | Nome usado para chamar a *shell* ou o *script*. Não passa a ser o nome de uma função quando ela é chamada. |
+| `$1` a `${n}` | Argumentos pela posição. A partir do décimo, as chaves são obrigatórias: `${10}`, `${11}` etc. |
+| `"$@"` | Todos os argumentos, cada um preservado separadamente, como em `"${array[@]}"`. |
+| `"$*"` | Todos reunidos em um argumento, separados pelo primeiro caractere de `IFS`. |
 
-O *shell* permite modificar o resultado de uma variável no próprio momento em que ela é chamada, aplicando valores padrão, testes condicionais e formatações diretamente no texto.
+- `shift {n}` - Descarta os primeiros `n` argumentos e desloca os restantes: com `shift` (equivalente a `shift 1`), `$2` vira `$1`, `$3` vira `$2`, etc. Não altera `$0`.
+- `set -- {valores}` - Redefine os parâmetros posicionais; `--` encerra as opções de `set`. Sem valores depois de `--`, remove todos os argumentos posicionais.
 
-**Valores Padrão e Condicionais:**
-Servem para precaver erros caso uma variável não tenha sido inicializada pelo usuário ou pelo sistema.
-- `${variavel:-padrao}` - Retorna o `padrao` caso a variável esteja nula ou não definida. O valor da variável não é alterado.
-- `${variavel:=padrao}` - Retorna e **atribui** o `padrao` à variável caso ela esteja nula ou vazia.
-> **Comando Nulo (`:`):** Ao usar `:=`, a *shell* tentará executar o resultado como um comando. Para fazer uma atribuição silenciosa e evitar erros, utiliza-se o comando nulo `:` (que não faz nada e retorna sucesso) antes da expansão: `: ${variavel:=/tmp/padrao}`.
-- `${variavel:?mensagem}` - Imprime a `mensagem` de erro na *shell* e encerra a execução (retornando *status* 1) caso a variável esteja nula.
-- `${variavel:+padrao}` - Retorna o `padrao` **apenas se** a variável estiver definida e possuir algum valor. Muito usado para adicionar *flags* ou prefixos condicionais apenas quando o dado existe.
+```bash
+set -- "Ana Silva" "relatorio final.txt"
+printf '%s\n' "$#"  # 2
+printf '<%s>\n' "$@" # Dois argumentos completos, um por linha.
+shift
+printf '%s\n' "$1"  # relatorio final.txt
+```
 
-**Manipulação de Texto:**
-Permite fatiar, substituir e medir *strings* sem a necessidade de recorrer a programas externos complexos.
-- `${#variavel}` - Retorna o tamanho (número de caracteres) da *string* armazenada. Se usada com um arranjo (`${#vetor[@]}`), retorna o número de elementos contidos nele.
-- `${!variavel}` - Expansão indireta. Trata o valor armazenado na primeira variável como se fosse o nome de outra variável, retornando o conteúdo desta última (funciona como uma desreferenciação de ponteiro).
-- `${variavel:offset:tamanho}` - Retorna um pedaço do texto (fatiamento). Começa a leitura a partir da posição `offset` (iniciada em zero) e captura a quantidade de caracteres definida em `tamanho` (se o tamanho for omitido, vai até o final da *string*).
-- `${variavel/antigo/novo}` - Substitui a primeira ocorrência do texto `antigo` pelo texto `novo`. (Para substituir todas as ocorrências de uma vez, utiliza-se duas barras: `${variavel//antigo/novo}`).
-- `${variavel#prefixo}` - Remove o padrão especificado (`prefixo`) do **início** do texto.
-- `${variavel%sufixo}` - Remove o padrão especificado (`sufixo`) do **final** do texto (muito útil para remover extensões de arquivos, como em `${arquivo%.txt}`).
+## Expansão e Manipulação de Valores:
 
-# 7. Estruturas de Fluxo Condicional
+As formas `${...}` permitem aplicar valores padrão, testes e operações sobre o texto durante a expansão. Em geral, modificam **o resultado expandido**, sem alterar a variável original; a atribuição com `:=` é uma exceção.
 
-Na *shell*, as estruturas condicionais avaliam o ***status* de saída** (*exit status*) dos comandos executados. Como convenção (semelhante à linguagem C), o valor `0` indica sucesso, enquanto qualquer valor de `1` a `255` representa uma falha ou condição falsa.
+### Valores Padrão e Condicionais:
 
-> A *shell* possui dois comandos nativos criados exclusivamente para gerar esses retornos: o `true` (que sempre retorna o *status* `0`) e o `false` (que sempre retorna `1`).
+Uma variável **não definida** não possui valor atribuído; uma variável **vazia** está definida, mas contém zero caracteres. Nos operadores abaixo, `:` faz a verificação incluir as duas situações. Sem ele, testa-se apenas se a variável não está definida.
 
-## Testadores de expressões:
+- `${variavel:-padrao}` - Retorna `padrao` se a variável não estiver definida ou estiver vazia; caso contrário, retorna seu valor.
+- `${variavel:=padrao}` - Além de retornar, atribui `padrao` se a variável não estiver definida ou estiver vazia.
+- `${variavel:?mensagem}` - Escreve um erro na saída de erro padrão se a variável não estiver definida ou estiver vazia. Nesse caso, uma *shell* não interativa encerra a execução com *status* de erro. Se a variável estiver definida e não vazia, a expansão retorna seu valor.
+- `${variavel:+alternativa}` - Retorna `alternativa` apenas se a variável estiver definida e não vazia; caso contrário, produz texto vazio.
 
-- `test {expressão}` - Avalia expressões lógicas e gera um *status* de saída correspondente. Esses comandos suportam diversos operadores (facilmente consultáveis nos manuais da *shell*) para realizar três categorias principais de testes:
+```bash
+nome=
+printf '<%s>\n' "${nome-padrao}"  # <>: definida, embora vazia.
+printf '<%s>\n' "${nome:-padrao}" # <padrao>: o teste também considera vazio.
+: "${nome:=padrao}"               # Atribui o padrão sem tentar executá-lo.
+```
 
-  - **Arquivos e Diretórios:** Verifica a existência e o tipo do arquivo (diretório, bloco, caractere, *pipe* nomeado), a presença de atributos especiais (como o *sticky bit*), ou compara dois arquivos (qual é mais novo, ou se apontam para o mesmo *inode*).
-  - **Textos (*Strings*):** Verifica se uma variável está nula/vazia, se duas *strings* são exatamente iguais, ou compara textos caractere a caractere (para saber qual é maior ou menor na ordem alfabética).
-  - **Números Inteiros:** Realiza comparações matemáticas tradicionais (igualdade, maior, menor, etc.).
+> **Comando nulo (`:`):** Não realiza uma ação e retorna sucesso. Na última linha, ele recebe o resultado da expansão como argumento; se `${nome:=padrao}` fosse escrito sozinho na posição de comando, a *shell* tentaria executar o valor resultante.
 
-- `[ {expressão} ]` - Funcionamento idêntico ao `test`.
+### Manipulação de Texto:
 
-> O colchete de abertura (`[`) não é apenas um delimitador sintático, mas sim **um programa real** do sistema. Por ser um comando, ele exige que a expressão e o argumento final (o colchete de fechamento `]`) sejam passados separadamente. Portanto, é obrigatório haver espaços ao redor da expressão. Escrever `[{expressão}]` colado causará um erro de comando não encontrado.
+- `${#variavel}` - Quantidade de caracteres do texto. Para vetores, `${#vetor[@]}` conta elementos.
+- `${!variavel}` - Expansão indireta: usa o valor de uma variável como nome de outra e recupera seu conteúdo, lembrando uma desreferenciação de ponteiro.
+- `${variavel:inicio:tamanho}` - Extrai uma parte do texto, a partir do índice `inicio` (começando em zero). Sem `tamanho`, segue até o final.
+- `${variavel/padrao/novo}` - Substitui a primeira correspondência de um padrão; `${variavel//padrao/novo}` substitui todas.
+- `${variavel#padrao}` / `${variavel##padrao}` - Remove a menor / maior correspondência do padrão no início do texto.
+- `${variavel%padrao}` / `${variavel%%padrao}` - Remove a menor / maior correspondência do padrão no final do texto.
 
-- `[[ {expressão} ]]` - Atua de forma análoga ao colchete simples (sendo retrocompatível com ele), mas é uma palavra reservada da própria *shell* que adiciona recursos poderosos e simplifica a sintaxe, como por exemplo, o uso do operador `==` para casamento de padrões (utilizando as mesmas regras de expansão de arquivos da *shell*) e o uso de expressões regulares diretas na *string* com `=~`, comparações numéricas utilizando operadores como `>`, `>=`, etc.
+Os padrões seguem as regras de casamento da *shell*, não de expressões regulares. As formas duplicadas fazem diferença quando um curinga permite mais de uma correspondência:
 
-> Por convenção e compatibilidade, ele exige o mesmo padrão de espaçamento interno do colchete simples.
+```bash
+arquivo="relatorio.final.txt"
+printf '%s\n' "${arquivo%.*}"  # relatorio.final
+printf '%s\n' "${arquivo%%.*}" # relatorio
+printf '%s\n' "${arquivo#*.}"  # final.txt
+printf '%s\n' "${arquivo##*.}" # txt
+```
 
-- `(( {expressão_com_números_inteiros} ))` - Utilizado exclusivamente para avaliações e testes matemáticos com números inteiros. Ele resolve o problema do teste de textos (onde a *string* "10" seria considerada menor que "9" em uma verificação caractere a caractere). Além disso, suporta a sintaxe tradicional de operadores lógicos de linguagens como C e C++: `&&` (AND), `||` (OR) e `!` (NOT).
+---
 
-> Não exige espaços internos obrigatórios (diferente dos colchetes).
+# 7. Estruturas Condicionais
 
-## Operadores Condicionais:
+Na *shell*, condições avaliam o ***status* de saída** de comandos: `0` significa sucesso e permite executar o ramo verdadeiro; valores diferentes de zero indicam uma condição falsa ou erro. Isso lembra o retorno de sucesso de um programa C, mas difere de uma expressão lógica em C, na qual zero é falso.
+
+> Os comandos internos `true` e `false` produzem diretamente os *status* `0` e `1`, respectivamente. Não é necessário usar um testador para todo comando: `if grep -q 'erro' registro.txt; then ...` já pode decidir pelo resultado de `grep`.
+
+## Testes de Expressões:
+
+- `test {expressão}` ou `[ {expressão} ]` - Testa arquivos, textos e inteiros, produzindo um *status*. 
+
+> `[` é um comando interno do Bash (também existem versões externas), e `]` é seu argumento final; por isso, **os espaços são obrigatórios**.
+
+- `[[ {expressão} ]]` - Construção do Bash que acrescenta testes de padrões e expressões regulares. Não realiza separação de palavras nem expansão de arquivos nos valores; sua sintaxe e alguns operadores diferem de `[ ... ]`.
+
+- `(( expressão ))` - Avalia uma expressão inteira. Se o resultado numérico for diferente de zero, retorna *status* `0`; se for zero, retorna *status* `1`. Permite operadores como `>`, `>=`, `&&`, `||` e `!`, sem exigir espaços junto dos parênteses.
+
+**Testes Mais Usados:**
+
+| Finalidade | Expressão com `test` ou `[` |
+| --- | --- |
+| Caminho existente | `[ -e "$caminho" ]` |
+| Arquivo comum / diretório | `[ -f "$caminho" ]` / `[ -d "$caminho" ]` |
+| Leitura / escrita / execução permitida | `[ -r "$caminho" ]` / `[ -w "$caminho" ]` / `[ -x "$caminho" ]` |
+| Texto vazio / não vazio | `[ -z "$texto" ]` / `[ -n "$texto" ]` |
+| Textos iguais / diferentes | `[ "$a" = "$b" ]` / `[ "$a" != "$b" ]` |
+| Inteiros iguais / diferentes | `[ "$a" -eq "$b" ]` / `[ "$a" -ne "$b" ]` |
+| Inteiro menor / menor ou igual | `[ "$a" -lt "$b" ]` / `[ "$a" -le "$b" ]` |
+| Inteiro maior / maior ou igual | `[ "$a" -gt "$b" ]` / `[ "$a" -ge "$b" ]` |
+
+Esses testes também podem ser utilizados em `[[ ... ]]`. Em `[ ... ]`, as aspas são importantes para manter valores vazios ou com espaços como argumentos completos. Um teste falso normalmente retorna `1`; uma expressão inválida pode retornar outro *status* de erro.
+
+### Texto, Padrões e Aritmética:
+
+Em `[[ ... ]]`, `<` e `>` comparam **textos**, conforme a ordenação do idioma e região; para inteiros, utilizam-se `-lt`, `-gt` etc. ou `(( ... ))`. Não existem operadores `<=` e `>=` para comparação textual nessa construção.
+
+Com `==` e `!=`, o lado direito pode ser um padrão da *shell*: `[[ $arquivo == *.txt ]]` testa a terminação `.txt`, enquanto `[[ $arquivo == "*.txt" ]]` compara com o texto literal `*.txt`. O operador `=~` permite testar uma expressão regular, como em `[[ $numero =~ ^[0-9]+$ ]]`.
+
+> `$((expressão))` **expande um valor**, enquanto `((expressão))` **executa uma avaliação e fornece um *status***. Por exemplo, `$((2 > 1))` produz `1`, mas `((2 > 1))` termina com *status* `0`, indicando que a condição é verdadeira.
+
+## Estruturas de Decisão:
+
+> Para fechar uma estrutura de decisão (delimitação), utiliza-se o nome da estrutura ao contário. `if` usa `fi`, e `case` usa `esac`.  
 
 ### `if`, `elif` e `else`:
 
-Avalia o *status* de saída de um comando principal para decidir qual bloco de código será executado.
+Executa o primeiro bloco cuja condição termine com sucesso. `elif` permite testar outra condição; `else` cobre o caso em que nenhuma teve sucesso. Ambos são opcionais.
 
-```bash
+```text
 if {comando_testado}; then
     {comandos_caso_sucesso}
 elif {outro_comando}; then
@@ -741,37 +896,66 @@ else
 fi
 ```
 
+```bash
+#!/bin/bash
+
+arquivo="relatorio.txt"
+
+if [ ! -e "$arquivo" ]; then                    # Testa se o arquivo não existe.
+    printf 'Arquivo inexistente.\n'
+elif [[ -f "$arquivo" && -r "$arquivo" ]]; then # Testa se é um arquivo comum e se tem permissão de leitura.
+    if test ! -s "$arquivo"; then               # Testa se o arquivo está vazio
+        printf 'O arquivo está vazio.\n'
+    else
+        cat "$arquivo"
+    fi
+else
+    printf 'O caminho não é um arquivo comum legível.\n' >&2
+fi
+```
+
+O `!` nega o resultado do teste, e `&&` exige sucesso dos dois comandos. O ponto e vírgula antes de `then` separa comandos na mesma linha; ele pode ser substituído por uma quebra de linha.
+
 ### `case`:
 
-Testa uma *string* comparando-a com uma série de padrões até encontrar uma correspondência exata. Por suportar o casamento de padrões, é possível usar a barra vertical (`|`) para definir alternativas, o ponto de interrogação (`?`) para identificar um caractere único qualquer ou até mesmo colchetes (`[ ]`) para classes de caracteres.
+Compara um texto com padrões, de cima para baixo, executando o primeiro que corresponder. Os padrões seguem as regras da *shell*, permitindo `*`, `?` e conjuntos entre colchetes; `|` separa alternativas para o mesmo bloco.
 
 ```bash
-case {string} in
-    padrao_1 | padrao_2)
-        {comandos}
+arquivo="relatorio.txt"
+case "$arquivo" in
+    *.txt | *.md)
+        printf 'Arquivo de texto.\n'
         ;;
-    padrao_3)
-        {comandos}
+    *.csv)
+        printf 'Tabela de dados.\n'
         ;;
-    *)  # Caso default - Representa qualquer sequência de caracteres, por isso funciona como default.
-        {comandos_padrao}
+    *)
+        printf 'Tipo não identificado.\n'
         ;;
 esac
 ```
 
-O `case` não suporta cascata (como é possível fazer em C), onde, se dois casos geram o mesmo resultado, eles tem que ser definidos com os casamentos de padrões expecificados.
+`;;` encerra a seleção depois do bloco correspondente. O padrão `*` aceita qualquer texto e funciona como alternativa padrão quando colocado por último; no início, capturaria todos os casos.
 
-> A avaliação ocorre sempre de cima para baixo. O asterisco (`*`), se colocado como a primeira opção no topo do `case`, a *shell* sempre entrará nele e nunca testará as alternativas abaixo.
+> O Bash também oferece `;&`, que continua no bloco seguinte sem testar seu padrão, e `;;&`, que continua testando os padrões seguintes. Portanto, há formas de cascata, embora `;;` seja suficiente para o uso básico.
 
 ## Operadores de Curto-Circuito:
 
-Atuam como controladores de fluxo diretos para encadear comandos, baseando-se no fato de que a *shell* não faz avaliações desnecessárias.
+Encadeiam comandos a partir de seus resultados, evitando execuções desnecessárias:
 
-- `{comando_1} && {comando_2}` - Lógica *AND*. O `comando_2` só é executado se o `comando_1` terminar com sucesso (status 0). Se o primeiro falhar, a lógica *AND* inteira já é considerada falsa, e o segundo comando é ignorado.
+- `{comando_1} && {comando_2}` - Lógica *AND*: executa o segundo apenas se o primeiro terminar com sucesso.
+- `{comando_1} || {comando_2}` - Lógica *OR*: executa o segundo apenas se o primeiro falhar.
+- `! {comando}` - Inverte o resultado lógico: sucesso passa a falha e falha passa a sucesso.
 
-- `{comando_1} || {comando_2}` - Lógica *OR*. O `comando_2` só é executado se o `comando_1` falhar (status diferente de 0). Se o primeiro der sucesso, a lógica *OR* já está satisfeita na primeira tentativa, encerrando a execução ali mesmo.
+O *status* de uma lista com `&&` ou `||` é o do último comando efetivamente executado. Esses operadores têm a mesma precedência entre si e são avaliados da esquerda para a direita.
+
+> `a && b || c` não equivale a um `if/else` geral: `c` também executa quando `a` tem sucesso, mas `b` falha. Quando a intenção é escolher entre dois ramos, `if/else` torna essa decisão explícita.
 
 ---
+
+> REVISADO ATÉ AQUI!
+
+# 8. Estruturas de Repetição
 
 # Fontes
 
