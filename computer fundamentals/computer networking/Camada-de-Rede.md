@@ -78,6 +78,8 @@ Estabelece um caminho lógico antes do envio dos dados. Os pacotes seguem esse c
 
 Permite identificar as interfaces de rede e orientar o encaminhamento até o destino. No modelo Internet, utiliza-se um identificador lógico chamado **endereço IP** (*Internet Protocol*). Um dispositivo com várias interfaces pode ter endereços distintos associados a elas.
 
+O cabeçalho do pacote IP contém os **endereços de origem e destino**. O destino orienta o encaminhamento do pacote pela rede; a origem informa de onde ele partiu e pode ser utilizada pelo destinatário para enviar uma resposta.
+
 Nem todo endereço é globalmente único: endereços privados podem ser reutilizados em redes diferentes. A identificação precisa ser válida no contexto em que o endereço é utilizado.
 
 - **IPv4:** Possui **32 *bits***, permitindo $2^{32}$ combinações. Sua representação decimal utiliza quatro blocos de 8 *bits*, separados por pontos, com valores entre 0 e 255, como `192.168.0.1`.
@@ -131,6 +133,10 @@ Pode-se dividir um bloco de endereços em redes menores. Para isso, parte dos *b
 - **Organização:** Permite distribuir os endereços por áreas físicas ou funcionais, como Administração, TI e Engenharia.
 - **Separação do tráfego:** Quando as sub-redes correspondem a segmentos de enlace separados, como VLANs diferentes, o *broadcast* local de um setor não se espalha pelo enlace dos demais. Apenas atribuir faixas IP diferentes no mesmo enlace não cria essa separação.
 - **Hierarquia:** Permite representar um conjunto de sub-redes por um bloco maior e detalhar internamente os caminhos para cada uma. A divisão da instituição não precisa aparecer integralmente nas tabelas externas.
+
+Por exemplo, uma rede IPv4 com 24 *bits* para rede e 8 para *hosts* pode emprestar **2 bits da parte de host** para identificar sub-redes. Isso permite formar $\displaystyle 2^2 = 4$ sub-redes de mesmo tamanho, cada uma com 26 *bits* para rede e 6 para *hosts*.
+
+Cada sub-rede terá $\displaystyle 2^6 = 64$ endereços. Descontando o endereço da própria sub-rede e o de *broadcast*, restam **62 endereços para interfaces**. Quanto mais *bits* forem utilizados para criar sub-redes, menos endereços estarão disponíveis dentro de cada uma.
 
 ### Máscara de Rede e Operação AND:
 
