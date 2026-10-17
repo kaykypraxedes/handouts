@@ -7,6 +7,7 @@
 \     ‾‾‾‾‾|
  `.______.´
 ```
+**Author: Kayky Moreira Praxedes**
 
 # 0. Introduction
 

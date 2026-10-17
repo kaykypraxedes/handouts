@@ -13,6 +13,8 @@
 \____/  \_/\_\\_____/
 ```
 
+**Autor: Kayky Moreira Praxedes**
+
 # 0. Conceitos Básicos
 
 > Esta apostila aborda SQL no *Oracle Database*. Os exemplos administrativos utilizam `FREEPDB1` como nome de serviço (esse nome depende da instalação).

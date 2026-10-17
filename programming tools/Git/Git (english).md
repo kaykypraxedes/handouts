@@ -7,6 +7,8 @@
  \____/|_| \__|
 ```
 
+**Author: Kayky Moreira Praxedes**
+
 # 0. Basic Concepts
 
 ## Git and GitHub:

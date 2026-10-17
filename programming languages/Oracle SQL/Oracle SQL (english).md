@@ -13,6 +13,8 @@
 \____/  \_/\_\\_____/
 ```
 
+**Author: Kayky Moreira Praxedes**
+
 # 0. Basic Concepts
 
 > This handout covers SQL in Oracle Database. The administrative examples use `FREEPDB1` as the service name (this name depends on the installation).

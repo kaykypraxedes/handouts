@@ -8,6 +8,8 @@
  `.______.´
 ```
 
+**Autor: Kayky Moreira Praxedes**
+
 # 0. Características Básicas da Linguagem
 
 > Esta apostila utiliza o **C17** como referência.
@@ -299,13 +301,13 @@ int atual = ++contador;     // atual = 7; contador = 7.
 
 Comparações produzem `1` para verdadeiro e `0` para falso. Em condições numéricas, zero é falso e qualquer outro valor é verdadeiro.
 
-| Operadores | Relação ou operação |
-|---|---|
-| `==`, `!=` | Igualdade e diferença. |
-| `<`, `<=`, `>`, `>=` | Menor, menor ou igual, maior, maior ou igual. |
-| `&&` | Verdadeiro quando ambas as condições são verdadeiras. |
-| `\|\|` | Verdadeiro quando pelo menos uma condição é verdadeira. |
-| `!` | Inverte o resultado lógico. |
+| Operadores           | Relação ou operação                                     |
+| -------------------- | ------------------------------------------------------- |
+| `==`, `!=`           | Igualdade e diferença.                                  |
+| `<`, `<=`, `>`, `>=` | Menor, menor ou igual, maior, maior ou igual.           |
+| `&&`                 | Verdadeiro quando ambas as condições são verdadeiras.   |
+| <code>\|\|</code>    | Verdadeiro quando pelo menos uma condição é verdadeira. |
+| `!`                  | Inverte o resultado lógico.                             |
 
 ```c
 int idade = 20, possui_documento = 1;
@@ -325,13 +327,13 @@ int resultado = divisor != 0 && 20 / divisor > 2;  // Não executa a divisão.
 
 Cada bit pode ser visualizado como um interruptor. Os operadores atuam sobre as posições da representação de valores inteiros.
 
-| Operador | Operação |
-|---|---|
-| `&` | AND: bits presentes em ambos. |
-| `\|` | OR: bits presentes em pelo menos um. |
-| `^` | XOR: bits diferentes. |
-| `~` | Inversão de todos os bits do tipo utilizado. |
-| `<<`, `>>` | Deslocamento para esquerda e direita. |
+| Operador        | Operação                                     |
+| --------------- | -------------------------------------------- |
+| `&`             | AND: bits presentes em ambos.                |
+| <code>\|</code> | OR: bits presentes em pelo menos um.         |
+| `^`             | XOR: bits diferentes.                        |
+| `~`             | Inversão de todos os bits do tipo utilizado. |
+| `<<`, `>>`      | Deslocamento para esquerda e direita.        |
 
 ```c
 unsigned int a = 6, b = 3;  // Bits finais: 0110 e 0011.
@@ -357,24 +359,24 @@ int maior = a > b ? a : b;  // 20.
 
 A precedência determina o agrupamento: `2 + 3 * 4` resulta em `14`; `(2 + 3) * 4`, em `20`. A tabela segue da maior para a menor precedência; alguns operadores serão aprofundados adiante.
 
-| Grupo | Operadores |
-|---|---|
-| Pós-fixados | Chamada `()`, índice `[]`, membros `.` e `->`, `x++`, `x--`. |
-| Unários | `++x`, `--x`, `+`, `-`, `!`, `~`, `&`, `*`, `sizeof`, `_Alignof`. |
-| Conversão explícita | `(tipo)`. |
-| Multiplicativos | `*`, `/`, `%`. |
-| Aditivos | `+`, `-`. |
-| Deslocamentos | `<<`, `>>`. |
-| Relacionais | `<`, `<=`, `>`, `>=`. |
-| Igualdade | `==`, `!=`. |
-| AND bit a bit | `&`. |
-| XOR bit a bit | `^`. |
-| OR bit a bit | `\|`. |
-| AND lógico | `&&`. |
-| OR lógico | `\|\|`. |
-| Condicional | `?:`. |
-| Atribuição | `=`, `+=`, `-=`, `*=`, `/=`, `%=`, `&=`, `^=`, `\|=`, `<<=`, `>>=`. |
-| Vírgula | `,`. |
+| Grupo               | Operadores                                                                     |
+| ------------------- | ------------------------------------------------------------------------------ |
+| Pós-fixados         | Chamada `()`, índice `[]`, membros `.` e `->`, `x++`, `x--`.                   |
+| Unários             | `++x`, `--x`, `+`, `-`, `!`, `~`, `&`, `*`, `sizeof`, `_Alignof`.              |
+| Conversão explícita | `(tipo)`.                                                                      |
+| Multiplicativos     | `*`, `/`, `%`.                                                                 |
+| Aditivos            | `+`, `-`.                                                                      |
+| Deslocamentos       | `<<`, `>>`.                                                                    |
+| Relacionais         | `<`, `<=`, `>`, `>=`.                                                          |
+| Igualdade           | `==`, `!=`.                                                                    |
+| AND bit a bit       | `&`.                                                                           |
+| XOR bit a bit       | `^`.                                                                           |
+| OR bit a bit        | <code>\|</code> .                                                              |
+| AND lógico          | `&&`.                                                                          |
+| OR lógico           | <code>\|\|</code>.                                                             |
+| Condicional         | `?:`.                                                                          |
+| Atribuição          | `=`, `+=`, `-=`, `*=`, `/=`, `%=`, `&=`, `^=`, <code>\|=</code>, `<<=`, `>>=`. |
+| Vírgula             | `,`.                                                                           |
 
 A associatividade resolve operadores de mesma precedência: `a - b - c` corresponde a `(a - b) - c`; `a = b = 0`, a `a = (b = 0)`.
 

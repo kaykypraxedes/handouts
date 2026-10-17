@@ -15,6 +15,8 @@
                       |_|                    |___/   
 ```
 
+**Autor: Kayky Moreira Praxedes**
+
 # 0. Conceitos Básicos
 
 > Este resumo utiliza **Bash em GNU/*Linux***. Os comandos de sistema podem variar conforme a distribuição; recursos próprios do Bash não estão necessariamente disponíveis em outras *shells* ou ao executar um arquivo com `sh`. 

@@ -7,6 +7,8 @@
  \____/ \__,_||_| \___| \__,_||_| \___/  |_____| 
 ```
 
+**Autor: Kayky Moreira Praxedes**
+
 # 1. Limites e Continuidade
 
 ## Limite em um Ponto:
@@ -100,8 +102,11 @@ Para resolver essas indeterminações existem algumas ferramentas, envolvendo ta
 Principalmente em polinômios tendendo ao infinito, o crescimento é mais acelerado nos polinômios de maior grau, sendo eles dominantes:
 
 $$
-\displaystyle
-\lim_{x\to\infty}\frac{3x^2-1}{x^2+4}=\lim_{x\to\infty}\frac{x^2\left(3-\frac{1}{x^2}\right)}{x^2\left(1+\frac{4}{x^2}\right)}=\lim_{x\to\infty}\frac{3-\frac{1}{x^2}}{1+\frac{4}{x^2}}=\frac31=3
+\displaystyle \begin{aligned}
+\lim_{x\to\infty}\frac{3x^2-1}{x^2+4}=\lim_{x\to\infty}\frac{x^2\left(3-1/x^2\right)}{x^2\left(1+4/x^2\right)}&=\lim_{x\to\infty}\frac{3-1/x^2}{1+4/x^2}\\
+&=\frac31\\
+&=3
+\end{aligned}
 $$
 
 ### Fatoração:
@@ -169,14 +174,15 @@ Se $\displaystyle f$ for uma função contínua em um intervalo $\displaystyle \
 
 $$
 \displaystyle \min\left\{f\left(a\right),f\left(b\right)\right\}\le d\le\max\left\{f\left(a\right),f\left(b\right)\right\}
-\quad\Rightarrow\quad
+\quad\Rightarrow\ \\
 \exists c\in\left[a,b\right]:\ f\left(c\right)=d
 $$
+> Útil especialmente se uma função é muito difícil de calcular um valor, como o valor de $x$ onde $e^x = \pi$. Definir o valor exato é difícil, mas como a função é contínua, certamente existe um valor para tornar essa igualdade verdadeira.
 
 ## Formalizando o Conceito de Limite:
 
 $$
-\displaystyle \forall \varepsilon > 0\ \exists \delta > 0 \text{ tal que, }\forall x \in D_f \text{: }
+\displaystyle \forall \varepsilon > 0\ \exists \delta > 0 \text{ tal que, }\forall x \in D_f \text{: }\\
 0 < \left|x-a\right| < \delta \Rightarrow \left|f\left(x\right) - L\right| < \varepsilon
 $$
 
@@ -217,7 +223,11 @@ $$
 $$
 
 $$
-\displaystyle \frac{dy}{dx}\Big|_{x = 2} = \lim_{x\to2}\frac{x^3-2^3}{x-2}=\lim_{x\to2}\frac{\left(x-2\right)\left(x^2+2x+4\right)}{x-2}=\lim_{x\to2}\left[x^2+2x+4\right]=12
+\displaystyle \begin{aligned}
+\frac{dy}{dx}\Big|_{x = 2} = \lim_{x\to2}\frac{x^3-2^3}{x-2}&=\lim_{x\to2}\frac{\left(x-2\right)\left(x^2+2x+4\right)}{x-2}\\
+&=\lim_{x\to2}\left[x^2+2x+4\right]\\
+&=12
+\end{aligned}
 $$
 
 ![Retas secante e tangente ao gráfico de x³](images/screenshot005.png)<br>
@@ -240,7 +250,11 @@ Ao invés de considerar a derivada de uma função em um ponto específico é co
 Para $\displaystyle f\left(x\right)=x^2$:
 
 $$
-\displaystyle f'\left(a\right)=\lim_{x\to a}\frac{x^2-a^2}{x-a}=\lim_{x\to a}\frac{\left(x+a\right)\left(x-a\right)}{x-a}=\lim_{x\to a}\left(x+a\right)=2a
+\displaystyle \begin{aligned}
+f'\left(a\right)=\lim_{x\to a}\frac{x^2-a^2}{x-a}&=\lim_{x\to a}\frac{\left(x+a\right)\left(x-a\right)}{x-a}\\
+&=\lim_{x\to a}\left(x+a\right)\\
+&=2a
+\end{aligned}
 $$
 
 Como $\displaystyle a$ é um ponto qualquer, escrevemos $\displaystyle f'\left(x\right)=2x$, para todo $\displaystyle x\in\mathbb R$.
@@ -254,8 +268,9 @@ $$
 Para $\displaystyle h$ pequeno e diferente de zero:
 
 $$
-\displaystyle f'\left(x\right)\approx\frac{f\left(x+h\right)-f\left(x\right)}h
-\quad\Rightarrow\quad
+\displaystyle 
+f'\left(x\right)\approx\frac{f\left(x+h\right)-f\left(x\right)}h
+\quad\Rightarrow \\
 f\left(x+h\right)\approx f\left(x\right)+hf'\left(x\right)
 $$
 
@@ -357,7 +372,11 @@ $$
 
 $$
 \displaystyle
-\frac{d^3}{dx^3}\sin x=\frac{d}{dx}\left[\frac{d}{dx}\left(\frac{d}{dx}\sin x\right)\right]=\frac{d}{dx}\left(\frac{d}{dx}\cos x\right)=\frac{d}{dx}\left(-\sin x\right)=-\cos x
+\begin{aligned}
+\frac{d^3}{dx^3}\sin x=\frac{d}{dx}\left[\frac{d}{dx}\left(\frac{d}{dx}\sin x\right)\right]&=\frac{d}{dx}\left(\frac{d}{dx}\cos x\right)\\
+&=\frac{d}{dx}\left(-\sin x\right)\\
+&=-\cos x
+\end{aligned}
 $$
 
 ## Derivada de uma Função Implícita:
@@ -374,14 +393,15 @@ $$
 
 $$
 \displaystyle \frac{d}{dx}x^2+\frac{d}{dx}y^2-\frac{d}{dx}25=0
-\quad\Rightarrow\quad
+\quad\Rightarrow \\
 2x+\frac{d}{dx}y^2=0
 $$
 
 Como $\displaystyle y$ depende de $\displaystyle x$, aplicamos a regra da cadeia: $\displaystyle \frac{d}{dx}\left[y\left(x\right)^2\right]=2y\frac{dy}{dx}$. Assim:
 
 $$
-\displaystyle 2x + 2y \dfrac{dy}{dx} = 0 \Rightarrow 2y \dfrac{dy}{dx} = -2x \Rightarrow \dfrac{dy}{dx} = -\dfrac{2x}{2y} = -\dfrac{x}{y},\quad y\ne0
+\displaystyle 2x + 2y \dfrac{dy}{dx} = 0 \Rightarrow 2y \dfrac{dy}{dx} = -2x \quad \Rightarrow 
+\\\dfrac{dy}{dx} = -\dfrac{2x}{2y} = -\dfrac{x}{y},\quad y\ne0
 $$
 
 ![Tangentes horizontal e vertical à circunferência x² + y² = 25](images/screenshot007.png)<br>
@@ -403,7 +423,7 @@ $$
 
 $$
 \displaystyle \begin{aligned}
-\ln y =\ln\left(\frac{x^3\sqrt{x^2+1}}{\left(3x+2\right)^5}\right)
+\ln y &=\ln\left(\frac{x^3\sqrt{x^2+1}}{\left(3x+2\right)^5}\right)\\
 &=\ln\left(x^3\right)+\ln\sqrt{x^2+1}-\ln\left(\left(3x+2\right)^5\right)\\
 &=3\ln x+\frac12\ln\left(x^2+1\right)-5\ln\left(3x+2\right)
 \end{aligned}
@@ -575,8 +595,13 @@ Para encontrá-la, podemos escrever $\displaystyle f\left(x\right)=m\left(x\righ
 Sendo $\displaystyle f\left(x\right) = \frac{2x^2-3x-\ln{x}}{x+1}$, para valores $\displaystyle x$ muito grandes:
 
 $$
-\displaystyle \frac{2x^2-3x-\ln{x}}{x+1} =
-\frac{2x^2-3x}{x+1} - \frac{\ln{x}}{x+1} \approx \frac{2x^2-3x}{x+1}=2x-5+\frac{5}{x+1}\approx2x-5
+\displaystyle \begin{aligned}
+\frac{2x^2-3x-\ln{x}}{x+1} &=
+\frac{2x^2-3x}{x+1} - \frac{\ln{x}}{x+1} \\
+&\approx \frac{2x^2-3x}{x+1}\\
+&=2x-5+\frac{5}{x+1} \\
+&\approx2x-5
+\end{aligned}
 $$
 
 Como $\displaystyle \lim_{x\to \infty}\left[\frac{2x^2-3x-\ln{x}}{x+1}-\left(2x-5\right)\right] = 0$, então $\displaystyle 2x-5$ é uma assíntota oblíqua de $\displaystyle f$.
@@ -716,7 +741,7 @@ A substituição utiliza a regra da cadeia no sentido inverso:
 
 $$
 \displaystyle \frac{d}{dx}f\left(g\left(x\right)\right)=f'\left(g\left(x\right)\right)g'\left(x\right)
-\quad\Rightarrow\quad
+\quad\Rightarrow \\
 \int f'\left(g\left(x\right)\right)g'\left(x\right)\,dx=f\left(g\left(x\right)\right)+c
 $$
 
@@ -733,12 +758,10 @@ $$
 ### Integral por Partes:
 
 $$
-\displaystyle \begin{aligned}
-\frac{d}{dx} \left[f\left(x\right)\,g\left(x\right)\right] &= f'\left(x\right)\,g\left(x\right) + f\left(x\right)\,g'\left(x\right) \\
-&\Rightarrow
-\int\frac{d}{dx} \left[f\left(x\right)\,g\left(x\right)\right] \, dx= \int f'\left(x\right)\,g\left(x\right)\, dx + \int f\left(x\right)\,g'\left(x\right) \, dx\\
-& \Rightarrow f\left(x\right)\,g\left(x\right) = \int f'\left(x\right)\,g\left(x\right)\, dx + \int f\left(x\right)\,g'\left(x\right) \, dx
-\end{aligned}
+\displaystyle 
+\frac{d}{dx} \left[f\left(x\right)\,g\left(x\right)\right] = f'\left(x\right)\,g\left(x\right) + f\left(x\right)\,g'\left(x\right) \quad \Rightarrow \\
+\int\frac{d}{dx} \left[f\left(x\right)\,g\left(x\right)\right] \, dx= \int f'\left(x\right)\,g\left(x\right)\, dx + \int f\left(x\right)\,g'\left(x\right) \, dx  \quad \Rightarrow \\
+f\left(x\right)\,g\left(x\right) = \int f'\left(x\right)\,g\left(x\right)\, dx + \int f\left(x\right)\,g'\left(x\right) \, dx
 $$
 
 Assim:
@@ -805,10 +828,10 @@ $$
 
 
 $$
-\displaystyle \begin{aligned}
-\int e^x \sin{x} \, dx=e^x\sin{x}-e^x\cos{x}-\int e^x\sin{x} \,dx &\Rightarrow 2\int e^x \sin{x} \, dx=e^x\sin{x}-e^x\cos{x} + c\\
-&\Rightarrow \int e^x \sin{x} \, dx=\frac{e^x\left(\sin{x}-\cos{x}\right)}{2} + c
-\end{aligned}
+\displaystyle
+\int e^x \sin{x} \, dx=e^x\sin{x}-e^x\cos{x}-\int e^x\sin{x} \,dx \quad \Rightarrow \\ 2\int e^x \sin{x} \, dx=e^x\sin{x}-e^x\cos{x} + c \quad
+\Rightarrow \\
+\int e^x \sin{x} \, dx=\frac{e^x\left(\sin{x}-\cos{x}\right)}{2} + c
 $$
 
 ### Integrais Trigonométricas:
@@ -929,11 +952,15 @@ $$
 Trata-se de separar uma fração com denominador polinomial em uma soma de frações mais simples.
 
 $$
-\displaystyle \int\frac{5x - 3}{x^2 - 2x - 3}\,dx= \int \frac{5x - 3}{\left(x+1\right)\left(x-3\right)}\,dx = \int\left(\frac{A}{x+1} + \frac{B}{x-3}\right)\,dx
+\displaystyle \begin{aligned}
+\int\frac{5x - 3}{x^2 - 2x - 3}\,dx &= \int \frac{5x - 3}{\left(x+1\right)\left(x-3\right)}\,dx \\&
+= \int\left(\frac{A}{x+1} + \frac{B}{x-3}\right)\,dx
+\end{aligned}
 $$
 
 $$
-\displaystyle 5x - 3= A\left(x-3\right) + B\left(x+1\right) \Rightarrow \left(A + B - 5\right)x +\left(-3A + B +3\right) = 0
+\displaystyle 5x - 3= A\left(x-3\right) + B\left(x+1\right) \quad \Rightarrow \\
+\left(A + B - 5\right)x +\left(-3A + B +3\right) = 0
 $$
 
 $$
@@ -966,7 +993,7 @@ $$
 Caso exista um fator quadrático irredutível nos reais, seu numerador é da forma $\displaystyle Bx+C$. Por exemplo:
 
 $$
-\displaystyle \frac{7x+2}{\left(x+2\right)\left(x^2+5\right)}\text{, tem-se que: } \frac{7x+2}{\left(x+2\right)\left(x^2+5\right)}= \frac{A}{x+2}+\frac{Bx+C}{x^2+5}
+\displaystyle \frac{7x+2}{\left(x+2\right)\left(x^2+5\right)}\text{, tem-se que: } \\\frac{7x+2}{\left(x+2\right)\left(x^2+5\right)}= \frac{A}{x+2}+\frac{Bx+C}{x^2+5}
 $$
 
 ---
@@ -1014,14 +1041,14 @@ $$
 &=\lim_{h\to0}\left[
 \frac{f\left(x+h\right)-f\left(x\right)}h g\left(x+h\right)
 +f\left(x\right)\frac{g\left(x+h\right)-g\left(x\right)}h
-\right].
+\right]
 \end{aligned}
 $$
 
 Como $\displaystyle g$ é diferenciável, também é contínua: $\displaystyle g\left(x+h\right)\to g\left(x\right)$. Assim:
 
 $$
-\displaystyle \frac{d}{dx}\left[f\left(x\right)g\left(x\right)\right]=f'\left(x\right)g\left(x\right)+f\left(x\right)g'\left(x\right).
+\displaystyle \frac{d}{dx}\left[f\left(x\right)g\left(x\right)\right]=f'\left(x\right)g\left(x\right)+f\left(x\right)g'\left(x\right)
 $$
 
 ### Regra do Quociente:
@@ -1036,7 +1063,7 @@ $$
 &=\lim_{h\to0}
 \frac{g\left(x\right)\frac{f\left(x+h\right)-f\left(x\right)}h-f\left(x\right)\frac{g\left(x+h\right)-g\left(x\right)}h}
 {g\left(x+h\right)g\left(x\right)}\\
-&=\frac{f'\left(x\right)g\left(x\right)-f\left(x\right)g'\left(x\right)}{g^2\left(x\right)}.
+&=\frac{f'\left(x\right)g\left(x\right)-f\left(x\right)g'\left(x\right)}{g^2\left(x\right)}
 \end{aligned}
 $$
 
@@ -1045,17 +1072,17 @@ $$
 Na composição $\displaystyle f\left(g\left(x\right)\right)$, uma pequena mudança em $\displaystyle x$ altera primeiro $\displaystyle g$ e, em seguida, $\displaystyle f$. Pela aproximação linear:
 
 $$
-\displaystyle \Delta g=g\left(x+h\right)-g\left(x\right)\approx g'\left(x\right)h,
+\displaystyle \Delta g=g\left(x+h\right)-g\left(x\right)\approx g'\left(x\right)h  \quad \Rightarrow
 $$
 
 $$
-\displaystyle f\left(g\left(x+h\right)\right)-f\left(g\left(x\right)\right)\approx f'\left(g\left(x\right)\right)\Delta g.
+\displaystyle f\left(g\left(x+h\right)\right)-f\left(g\left(x\right)\right)\approx f'\left(g\left(x\right)\right)\Delta g
 $$
 
 Juntando as duas relações, a variação da composição é aproximada por $\displaystyle f'\left(g\left(x\right)\right)g'\left(x\right)h$. Dividindo por $\displaystyle h$, obtemos a intuição para a regra:
 
 $$
-\displaystyle \frac{d}{dx}f\left(g\left(x\right)\right)=f'\left(g\left(x\right)\right)g'\left(x\right).
+\displaystyle \frac{d}{dx}f\left(g\left(x\right)\right)=f'\left(g\left(x\right)\right)g'\left(x\right)
 $$
 
 > Essa explicação usa aproximações para mostrar a ideia da regra. Quando $\displaystyle f$ e $\displaystyle g$ são diferenciáveis nos pontos envolvidos, os erros dessas aproximações, divididos por $\displaystyle h$, tendem a zero; por isso o limite fornece a igualdade indicada.
@@ -1067,7 +1094,7 @@ $$
 Para qualquer constante real $\displaystyle c$:
 
 $$
-\displaystyle \frac{d}{dx}c=\lim_{h\to0}\frac{c-c}h=\lim_{h\to0}\frac0h=0.
+\displaystyle \frac{d}{dx}c=\lim_{h\to0}\frac{c-c}h=\lim_{h\to0}\frac0h=0
 $$
 
 ### Seno:
@@ -1080,7 +1107,7 @@ $$
 &=\lim_{h\to0}\frac{\sin\left(x+h\right)-\sin x}h\\
 &=\lim_{h\to0}\frac{\sin x\cos h+\cos x\sin h-\sin x}h\\
 &=\sin x\lim_{h\to0}\frac{\cos h-1}h
-+\cos x\lim_{h\to0}\frac{\sin h}h.
++\cos x\lim_{h\to0}\frac{\sin h}h
 \end{aligned}
 $$
 
@@ -1100,7 +1127,7 @@ Dividindo e invertendo as razões positivas:
 $$
 \displaystyle \cos\theta\le\frac{\theta}{\sin\theta}\le\frac1{\cos\theta}
 \quad\Rightarrow\quad
-\cos\theta\le\frac{\sin\theta}{\theta}\le\frac1{\cos\theta}.
+\cos\theta\le\frac{\sin\theta}{\theta}\le\frac1{\cos\theta}
 $$
 
 As duas funções externas tendem a 1. Pelo teorema do confronto, o limite pela direita é 1; como $\displaystyle \frac{\sin\left(-\theta\right)}{-\theta}=\frac{\sin\theta}{\theta}$, o limite pela esquerda é o mesmo:
@@ -1144,7 +1171,7 @@ $$
 &=\lim_{h\to0}\frac{\cos x\cos h-\sin x\sin h-\cos x}h\\
 &=\cos x\lim_{h\to0}\frac{\cos h-1}h
 -\sin x\lim_{h\to0}\frac{\sin h}h\\
-&=\cos x\cdot0-\sin x\cdot1=-\sin x.
+&=\cos x\cdot0-\sin x\cdot1=-\sin x
 \end{aligned}
 $$
 
@@ -1155,7 +1182,7 @@ Para $\displaystyle a>0$, colocamos $\displaystyle a^x$ em evidência:
 $$
 \displaystyle \frac{d}{dx}a^x
 =\lim_{h\to0}\frac{a^{x+h}-a^x}h
-=a^x\lim_{h\to0}\frac{a^h-1}h.
+=a^x\lim_{h\to0}\frac{a^h-1}h
 $$
 
 Usamos aqui o limite fundamental da exponencial $\displaystyle \lim_{u\to0}\frac{e^u-1}{u}=1$. Tomando esse limite como conhecido, escrevemos $\displaystyle a^h=e^{h\ln a}$. Para $\displaystyle a\ne1$, com $\displaystyle u=h\ln a$:
@@ -1171,7 +1198,7 @@ $$
 Portanto:
 
 $$
-\displaystyle \frac{d}{dx}a^x=a^x\ln a.
+\displaystyle \frac{d}{dx}a^x=a^x\ln a
 $$
 
 Se $\displaystyle a=1$, a função é constante e a fórmula também fornece zero.
@@ -1186,7 +1213,7 @@ $$
 \displaystyle \frac{d}{dx}\log_a x
 =\frac1{f'\left(f^{-1}\left(x\right)\right)}
 =\frac1{a^{\log_a x}\ln a}
-=\frac1{x\ln a}.
+=\frac1{x\ln a}
 $$
 
 **Muito usada:** $\displaystyle \frac{d}{dx}\ln x=\frac{1}{x}$.
@@ -1196,7 +1223,7 @@ $$
 A dedução pelo binômio de Newton abaixo considera $\displaystyle n$ inteiro positivo. Começamos com:
 
 $$
-\displaystyle \frac{d}{dx}x^n=\lim_{h\to0}\frac{\left(x+h\right)^n-x^n}h.
+\displaystyle \frac{d}{dx}x^n=\lim_{h\to0}\frac{\left(x+h\right)^n-x^n}h
 $$
 
 O binômio de Newton permite expandir:
@@ -1204,7 +1231,7 @@ O binômio de Newton permite expandir:
 $$
 \displaystyle \left(x+h\right)^n=\sum_{k=0}^{n}\binom nk x^{n-k}h^k,
 \qquad
-\binom nk=\frac{n!}{k!\left(n-k\right)!}.
+\binom nk=\frac{n!}{k!\left(n-k\right)!}
 $$
 
 Os coeficientes são:
@@ -1224,7 +1251,7 @@ $$
 \binom n{n-2}=\frac{n\left(n-1\right)}2, \qquad
 \displaystyle \binom n{n-1}=n,
 \qquad
-\binom nn=1.
+\binom nn=1
 $$
 
 Os termos com índice 2 pressupõem $\displaystyle n\ge2$. Aplicando a expansão à derivada:
@@ -1236,14 +1263,14 @@ $$
 \frac{x^n+nx^{n-1}h+\binom n2x^{n-2}h^2+\cdots+h^n-x^n}h\\
 &=\lim_{h\to0}
 \left[nx^{n-1}+\binom n2x^{n-2}h+\cdots+h^{n-1}\right]\\
-&=nx^{n-1}.
+&=nx^{n-1}
 \end{aligned}
 $$
 
 Para $\displaystyle n=1$, a conta é diretamente $\displaystyle \lim_{h\to0}\frac{h}{h}=1$. Para expoentes reais em $\displaystyle x>0$, podemos usar $\displaystyle x^n=e^{n\ln x}$ e as regras já apresentadas:
 
 $$
-\displaystyle \frac{d}{dx}x^n=e^{n\ln x}\frac nx=nx^{n-1}.
+\displaystyle \frac{d}{dx}x^n=e^{n\ln x}\frac nx=nx^{n-1}
 $$
 
 ## Teorema Fundamental do Cálculo:
@@ -1253,7 +1280,7 @@ $$
 Dada uma função $\displaystyle f$ contínua em $\displaystyle \left[a,b\right]$, com $\displaystyle a<b$, sua integral pode ser igualada à contribuição de um retângulo de base $\displaystyle b-a$ e altura $\displaystyle f\left(c\right)$, para algum $\displaystyle c\in\left[a,b\right]$:
 
 $$
-\displaystyle \int_a^b f\left(x\right)\,dx=f\left(c\right)\left(b-a\right).
+\displaystyle \int_a^b f\left(x\right)\,dx=f\left(c\right)\left(b-a\right)
 $$
 
 Essa comparação considera a área com sinal: uma altura negativa representa uma contribuição negativa.
@@ -1269,7 +1296,7 @@ $$
 \displaystyle 
 G'\left(x\right)
 =\lim_{h\to0}\frac{G\left(x+h\right)-G\left(x\right)}h=\lim_{h\to0}
-\frac{\int_a^{x+h}f\left(t\right)\,dt-\int_a^x f\left(t\right)\,dt}{h}.
+\frac{\int_a^{x+h}f\left(t\right)\,dt-\int_a^x f\left(t\right)\,dt}{h}
 $$
 
 ![Variação da área acumulada entre x e x + h](images/screenshot019.png)<br>
@@ -1279,19 +1306,19 @@ Como visto pela imagem, a diferença corresponde ao trecho entre $\displaystyle 
 
 $$
 \displaystyle \int_a^{x+h}f\left(t\right)\,dt-\int_a^x f\left(t\right)\,dt
-=\int_x^{x+h}f\left(t\right)\,dt.
+=\int_x^{x+h}f\left(t\right)\,dt
 $$
 
 De acordo com o teorema do valor médio para integrais, existe um ponto $\displaystyle c_h$ entre $\displaystyle x$ e $\displaystyle x+h$ tal que:
 
 $$
-\displaystyle \int_x^{x+h}f\left(t\right)\,dt=f\left(c_h\right)h.
+\displaystyle \int_x^{x+h}f\left(t\right)\,dt=f\left(c_h\right)h
 $$
 
 Assim:
 
 $$
-\displaystyle G'\left(x\right)=\lim_{h\to0}\frac{f\left(c_h\right)h}h=\lim_{h\to0}f\left(c_h\right).
+\displaystyle G'\left(x\right)=\lim_{h\to0}\frac{f\left(c_h\right)h}h=\lim_{h\to0}f\left(c_h\right)
 $$
 
 Quando $\displaystyle h\to0$, o intervalo em que $\displaystyle c_h$ está contido encolhe e $\displaystyle c_h\to x$, tanto para $\displaystyle h>0$ quanto para $\displaystyle h<0$. Pela continuidade de $\displaystyle f$, concluímos que $\displaystyle G'\left(x\right)=f\left(x\right)$.
@@ -1299,7 +1326,7 @@ Quando $\displaystyle h\to0$, o intervalo em que $\displaystyle c_h$ está conti
 Sendo $\displaystyle F$ uma primitiva de $\displaystyle f$, tem-se:
 
 $$
-\displaystyle \frac{d}{dx}\left[F\left(x\right)-G\left(x\right)\right]=f\left(x\right)-f\left(x\right)=0.
+\displaystyle \frac{d}{dx}\left[F\left(x\right)-G\left(x\right)\right]=f\left(x\right)-f\left(x\right)=0
 $$
 
 Logo, $\displaystyle F\left(x\right)-G\left(x\right)$ é constante no intervalo. Chamando essa constante de $\displaystyle C$:
@@ -1307,19 +1334,19 @@ Logo, $\displaystyle F\left(x\right)-G\left(x\right)$ é constante no intervalo.
 $$
 \displaystyle F\left(x\right)-G\left(x\right)=C
 \quad\Rightarrow\quad
-G\left(x\right)=F\left(x\right)-C.
+G\left(x\right)=F\left(x\right)-C
 $$
 
 Como $\displaystyle G\left(a\right)=\int_a^a f\left(t\right)\,dt=0$, temos $\displaystyle C=F\left(a\right)$. Portanto:
 
 $$
-\displaystyle G\left(x\right)=F\left(x\right)-F\left(a\right).
+\displaystyle G\left(x\right)=F\left(x\right)-F\left(a\right)
 $$
 
 Definindo uma extremidade $\displaystyle b\ge a$, obtemos:
 
 $$
-\displaystyle \int_a^b f\left(x\right)\,dx=F\left(b\right)-F\left(a\right).
+\displaystyle \int_a^b f\left(x\right)\,dx=F\left(b\right)-F\left(a\right)
 $$
 
 ---

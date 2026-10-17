@@ -15,6 +15,8 @@
        |_|                                                             
 ```
 
+**Autor: Kayky Moreira Praxedes**
+
 # 0. Conceitos Básicos
 
 ## O que é um Sistema Operacional:

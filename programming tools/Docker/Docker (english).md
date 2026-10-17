@@ -7,6 +7,8 @@ ______               _
 |___/   \___/  \___||_|\_\ \___||_|   
 ```
 
+**Author: Kayky Moreira Praxedes**
+
 # 0. Basic Concepts
 
 **Docker** is a platform for building, distributing, and running applications in isolated environments (**containers**). The application is packaged with its dependencies and basic configurations, reducing differences between development, testing, and runtime environments.

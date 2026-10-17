@@ -8,6 +8,8 @@
  `.______.´
 ```
 
+**Author: Kayky Moreira Praxedes**
+
 # 0. Basic Characteristics of the Language
 
 > This handout uses **C17** as its reference.
@@ -299,13 +301,13 @@ int atual = ++contador;     // atual = 7; contador = 7.
 
 Comparisons produce `1` for true and `0` for false. In numeric conditions, zero is false and any other value is true.
 
-| Operators | Relation or operation |
-|---|---|
-| `==`, `!=` | Equality and inequality. |
+| Operators            | Relation or operation                                                     |
+| -------------------- | ------------------------------------------------------------------------- |
+| `==`, `!=`           | Equality and inequality.                                                  |
 | `<`, `<=`, `>`, `>=` | Less than, less than or equal to, greater than, greater than or equal to. |
-| `&&` | True when both conditions are true. |
-| `\|\|` | True when at least one condition is true. |
-| `!` | Reverses the logical result. |
+| `&&`                 | True when both conditions are true.                                       |
+| <code>\|\|</code>    | True when at least one condition is true.                                 |
+| `!`                  | Reverses the logical result.                                              |
 
 ```c
 int idade = 20, possui_documento = 1;
@@ -325,13 +327,13 @@ int resultado = divisor != 0 && 20 / divisor > 2;  // Does not execute the divis
 
 Each bit can be visualized as a switch. The operators act on positions in the representation of integer values.
 
-| Operator | Operation |
-|---|---|
-| `&` | AND: bits present in both. |
-| `\|` | OR: bits present in at least one. |
-| `^` | XOR: differing bits. |
-| `~` | Inversion of all bits of the type used. |
-| `<<`, `>>` | Left and right shifts. |
+| Operator        | Operation                               |
+| --------------- | --------------------------------------- |
+| `&`             | AND: bits present in both.              |
+| <code>\|</code> | OR: bits present in at least one.       |
+| `^`             | XOR: differing bits.                    |
+| `~`             | Inversion of all bits of the type used. |
+| `<<`, `>>`      | Left and right shifts.                  |
 
 ```c
 unsigned int a = 6, b = 3;  // Final bits: 0110 and 0011.
@@ -357,24 +359,24 @@ int maior = a > b ? a : b;  // 20.
 
 Precedence determines grouping: `2 + 3 * 4` produces `14`; `(2 + 3) * 4` produces `20`. The table runs from highest to lowest precedence; some operators will be explored later.
 
-| Group | Operators |
-|---|---|
-| Postfix | Call `()`, index `[]`, members `.` and `->`, `x++`, `x--`. |
-| Unary | `++x`, `--x`, `+`, `-`, `!`, `~`, `&`, `*`, `sizeof`, `_Alignof`. |
-| Explicit conversion | `(tipo)`. |
-| Multiplicative | `*`, `/`, `%`. |
-| Additive | `+`, `-`. |
-| Shifts | `<<`, `>>`. |
-| Relational | `<`, `<=`, `>`, `>=`. |
-| Equality | `==`, `!=`. |
-| Bitwise AND | `&`. |
-| Bitwise XOR | `^`. |
-| Bitwise OR | `\|`. |
-| Logical AND | `&&`. |
-| Logical OR | `\|\|`. |
-| Conditional | `?:`. |
-| Assignment | `=`, `+=`, `-=`, `*=`, `/=`, `%=`, `&=`, `^=`, `\|=`, `<<=`, `>>=`. |
-| Comma | `,`. |
+| Group               | Operators                                                                      |
+| ------------------- | ------------------------------------------------------------------------------ |
+| Postfix             | Call `()`, index `[]`, members `.` and `->`, `x++`, `x--`.                     |
+| Unary               | `++x`, `--x`, `+`, `-`, `!`, `~`, `&`, `*`, `sizeof`, `_Alignof`.              |
+| Explicit conversion | `(tipo)`.                                                                      |
+| Multiplicative      | `*`, `/`, `%`.                                                                 |
+| Additive            | `+`, `-`.                                                                      |
+| Shifts              | `<<`, `>>`.                                                                    |
+| Relational          | `<`, `<=`, `>`, `>=`.                                                          |
+| Equality            | `==`, `!=`.                                                                    |
+| Bitwise AND         | `&`.                                                                           |
+| Bitwise XOR         | `^`.                                                                           |
+| Bitwise OR          | <code>\|</code>.                                                               |
+| Logical AND         | `&&`.                                                                          |
+| Logical OR          | <code>\|\|</code>.                                                             |
+| Conditional         | `?:`.                                                                          |
+| Assignment          | `=`, `+=`, `-=`, `*=`, `/=`, `%=`, `&=`, `^=`, <code>\|=</code>, `<<=`, `>>=`. |
+| Comma               | `,`.                                                                           |
 
 Associativity resolves operators with the same precedence: `a - b - c` corresponds to `(a - b) - c`; `a = b = 0` corresponds to `a = (b = 0)`.
 

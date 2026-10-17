@@ -7,6 +7,8 @@ ______               _
 |___/   \___/  \___||_|\_\ \___||_|   
 ```
 
+**Autor: Kayky Moreira Praxedes**
+
 # 0. Conceitos Básicos
 
 O ***Docker*** é uma plataforma para construir, distribuir e executar aplicações em ambientes isolados (***containers***). A aplicação é empacotada com suas dependências e configurações básicas, reduzindo diferenças entre os ambientes de desenvolvimento, teste e execução.

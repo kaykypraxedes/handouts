@@ -15,6 +15,8 @@ ______            _                   _
                          |_|                                                      
 ```
 
+**Autor: Kayky Moreira Praxedes**
+
 # 0. Conceitos Básicos
 
 ## Redes de Computadores:
