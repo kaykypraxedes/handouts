@@ -254,3 +254,5 @@ As divisões internas podem permanecer representadas externamente por um prefixo
 O endereçamento dinâmico facilita a administração e a mobilidade: ao conectar-se a outra rede, o dispositivo pode receber uma configuração compatível com ela, sem intervenção manual. Endereços cuja concessão termina podem ser reutilizados pelo servidor.
 
 > Servidores, impressoras, câmeras e roteadores podem precisar de um endereço estável para facilitar seu acesso. Além da configuração estática, quando aplicável, uma **reserva no DHCP** permite entregar sempre o mesmo endereço a um cliente identificado.
+
+> Ao executar `ip a` no terminal Linux (no Windows, `ipconfig /all`), é possível consultar os endereços IPv4 e IPv6 e suas informações de máscara ou prefixo. No Linux, `ip -4 route` e `ip -6 route` mostram as rotas IPv4 e IPv6: quais redes são alcançadas por cada interface e próximo salto. A entrada `default` é utilizada quando não existe uma rota mais específica para o destino.

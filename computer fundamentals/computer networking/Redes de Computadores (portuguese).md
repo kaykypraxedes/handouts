@@ -409,6 +409,7 @@ O padrão de uma *flag* pode aparecer nos dados. O ***stuffing*** introduz eleme
 
 Na camada de enlace, os endereços identificam interfaces na comunicação local. Em *Ethernet*, os endereços **MAC** têm **6 *bytes*** (48 *bits*). Endereços globalmente administrados incluem uma identificação atribuída à organização responsável; também existem endereços locais, como os configurados por software.
 
+> Ao executar `ip a` no terminal Linux (no Windows, `ipconfig /all`), são exibidas as interfaces de rede e seus endereços MAC. No Linux, o MAC aparece em `link/ether`; no Windows, em “Endereço Físico”. As informações adicionais desse comando (como endereçamento IP) serão explicadas na Camada de Rede.
 ### Alvos do Endereçamento:
 
 - ***Unicast*:** A mensagem é enviada para apenas um dispositivo específico (comunicação um-para-um).
