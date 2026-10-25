@@ -749,35 +749,51 @@ O **IGMP** (*Internet Group Management Protocol*) informa aos roteadores locais 
 - **Grupos permanentes:** Têm endereço atribuído permanentemente, mesmo sem membros ou transmissão ativa.
 - **Grupos temporários:** Duram enquanto houver participantes. O IGMP informa a participação, mas não distribui endereços globalmente.
 
-> Comum em IPTV e redes administradas, o *multicast* exige suporte e políticas compatíveis entre redes; o endereço de grupo não garante alcance pela Internet.
+> O *multicast* é mais comum na distribuição de canais de IPTV em redes administradas. Já as plataformas de *streaming* (que em senso comum seriam suas principais utilizadoras) geralmente recorrem a *unicast*, pois o *multicast* exige suporte e configuração ao longo do caminho até os receptores (o endereço de grupo não garante alcance pela Internet).
 
 ### Roteamento por Caminho Reverso (RPM):
 
-O **RPM** (*Reverse Path Multicasting*) utiliza das tabelas de roteamento para identificar a origem da mensagem e descobrir se ela é repetida (para então poda-la), ou não (para reencaminhá-la). Sabendo a origem e o destino da mensagem, o roteador analisa a tabela de roteamento para saber se faz sentido a interface pela qual ela chegou:
+O **RPM** (*Reverse Path Multicasting*) utiliza as tabelas de roteamento para decidir se um pacote deve ser reencaminhado. O roteador consulta qual interface utilizaria para alcançar a **origem** e compara com aquela pela qual o pacote chegou:
 
-- **Caminho ótimo:** Isso indica que a mensagem não podia ter chegado antes (*shortest path*), ou seja, a mensagem não é repetida. Dessa maneira, é realizado o encaminhamento adiante por todas as suas interfaces (menos a de entrada da informação).
-- **Caminho não ótimo:** Como a informação veio de uma interface diferente da ótima (veio de um caminho paralelo ou é um possível *loop*) a mensagem já chegou àquele roteador antes. Como se trata de uma mensagem repetida, ela não é reencaminhada (é podada).
+- **Interface correspondente:** O pacote é aceito e, inicialmente, encaminhado pelas demais interfaces participantes.
+- **Interface diferente:** O pacote é descartado, impedindo que continue circulando por caminhos paralelos ou em *loops*.
 
-Ao final do processo, é possível obter criar a **árvore de cobertura de menor custo**, evitando *loops* na transmissão e garantindo o melhor caminho para alcançar os membros do *multicast* a partir do transmissor.
+> Esse teste utiliza o caminho de menor custo conhecido até a origem. Não verifica se o pacote já chegou antes nem garante que ele seja o primeiro a chegar.
 
-![RPM](images/screenshot054.png)<br>
+![Topologia da rede e árvore antes da poda no RPM](images/screenshot054.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 322.*
 
-Uma grande crítica desse modelo é que ele envia a informação para todos os roteadores (já que o único filtro é não ser uma informação repetida), causando desperdício de banda e podendo ocasionar na sobrecarga da rede.
+Na figura, **a)** apresenta as conexões da rede; **b)** mostra a árvore resultante do teste de caminho reverso. Ainda são alcançados roteadores que não levam a receptores interessados, como **H** e o ramo **D–I**.
 
-> O teste segue as rotas conhecidas, sem garantir o menor percurso físico.
+A **poda** (*pruning*) elimina esses envios desnecessários: um roteador informa ao anterior que seu ramo não possui receptores interessados, e este deixa de encaminhar os próximos pacotes por aquela saída. O processo pode avançar em direção à origem, retirando todo um ramo sem receptores.
+
+![Árvore de distribuição do RPM após a poda](images/screenshot055.png)<br>
+*Fonte: **Adaptado** de MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 322.*
+
+Após a poda, são retirados da distribuição os ramos **B–H** e **A–D–I**. Já C permanece, mesmo sem receptor local, pois leva até F. As conexões continuam fisicamente disponíveis; apenas deixam de transportar aquele tráfego.
+
+- **Vantagem:** Utiliza as rotas conhecidas até a origem e, após a poda, mantém a distribuição nos ramos necessários aos receptores.
+- **Limitações:** A distribuição inicial desperdiça banda ao alcançar ramos sem interessados, e a poda exige mensagens e processamento. Manter informações específicas para cada grupo e transmissor também aumenta o consumo de recursos em redes grandes.
+
+> Um novo participante pode exigir a reativação de um ramo podado, sem necessariamente recalcular todas as rotas ou reconstruir toda a árvore.
 
 ### Árvores Compartilhadas Baseadas em Núcleo (CBT):
 
-No **CBT** (*Core Based Trees*), roteadores com receptores interessados solicitam associação em direção a um **núcleo** (arbitrário - não precisa ser o núcleo físico nem mesmo ser um integrante do *multicast*, mas sua escolha impacta na performance da rede), formando uma árvore única compartilhada pelo grupo. Os dados entram nessa árvore e seguem pelos ramos até os receptores. Sua estrutura é atualizada conforme os participantes entram ou saem.
+No **CBT** (*Core Based Trees*), roteadores com receptores interessados solicitam associação em direção a um **núcleo**, formando uma árvore única compartilhada pelo grupo. Os dados entram nessa árvore e seguem pelos ramos até os receptores. Sua estrutura é atualizada conforme os participantes entram ou saem.
 
-![RPM](images/screenshot055.png)<br>
+**O núcleo não precisa estar no centro físico da rede nem possuir um receptor do grupo**, mas sua escolha influencia os caminhos e o desempenho da distribuição.
+
+![Árvore compartilhada baseada em núcleo](images/screenshot056.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 322.*
 
 - **Vantagem:** Evita a inundação inicial do domínio e compartilha a estrutura de distribuição entre emissores.
 - **Limitações:** Pode produzir caminhos mais longos; a disponibilidade do núcleo e a concentração de tráfego precisam ser consideradas.
 
 > Outros protocolos usam um ponto de encontro (*Rendezvous Point*, RP). A chegada dos dados à árvore e uma eventual mudança para caminhos por origem dependem do protocolo.
+
+## Fragmentação:
+
+> REVISADO ATÉ AQUI!
 
 ## Fontes:
 
