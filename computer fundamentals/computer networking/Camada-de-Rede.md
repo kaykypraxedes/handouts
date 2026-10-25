@@ -301,83 +301,77 @@ As **portas**, apresentadas no modelo de camadas, distinguem comunicações entr
 
 ## Roteamento:
 
-O encaminhamento utiliza as rotas disponíveis para enviar cada pacote; o **roteamento** organiza e mantém essas informações. As rotas indicam como alcançar os destinos e podem mudar quando surgem novos caminhos ou quando um enlace deixa de funcionar.
+O **roteamento** organiza e atualiza as rotas; o **encaminhamento** consulta essas informações para enviar cada pacote ao próximo salto.
 
 ### Funções e Tipos de Roteadores:
 
-O roteador interliga redes e consulta as rotas para encaminhar pacotes entre elas. Também pode oferecer NAT, DHCP e ***firewall*** (regras para permitir ou bloquear tráfego), sem que esses serviços sejam obrigatórios.
+O roteador interliga redes e encaminha pacotes entre elas. Pode ser implementado em equipamentos de dois tipos:
 
-> Roteadores separam domínios de *broadcast* de enlace: um quadro de difusão recebido não é simplesmente repetido nas outras redes. O *broadcast* IPv4 direcionado será distinguido adiante.
+- **Especializados:** Projetados para redes, podem acelerar o encaminhamento com chips dedicados; o cálculo das rotas pode continuar em *software*.
+- **De uso geral:** Computadores configurados como roteadores, por exemplo, com Linux. Suas interfaces podem ser físicas ou lógicas.
 
-- **Roteadores especializados:** Projetados para redes, podem acelerar o encaminhamento com chips dedicados. O cálculo das rotas e outras funções de controle podem continuar em *software*.
-- **Roteadores de uso geral:** Computadores configurados para encaminhar pacotes, utilizando sistemas como Linux. Suas interfaces não precisam corresponder a duas placas físicas distintas.
-
-> Equipamentos especializados são comuns em provedores; computadores de uso geral também atendem laboratórios e pequenas redes. O desempenho depende dos recursos e das funções executadas.
+> Roteadores separam domínios de *broadcast* de enlace. Também podem oferecer NAT, DHCP e *firewall*, mas esses serviços são opcionais. O desempenho depende dos recursos e das funções executadas.
 
 ### Tabela de Rotas e Prefixo Mais Longo:
 
-As rotas disponíveis são organizadas em uma **tabela de rotas**. Cada entrada associa um **prefixo de destino** a uma interface de saída e, quando necessário, a um próximo roteador. Se várias entradas corresponderem ao destino, utiliza-se a de **prefixo mais longo**, pois ela representa o grupo mais específico.
+Cada entrada da **tabela de rotas** associa um prefixo de destino à interface de saída e, quando necessário, ao próximo roteador. Entre entradas compatíveis, utiliza-se a de **prefixo mais longo**, por ser a mais específica.
 
 ![Tabela de Endereços Completa](images/screenshot045.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 291.*
 
-Uma rota `/26` é mais específica que uma `/24` que a contém. Dessa maneira, para o destino `146.164.2.70`, uma entrada para `146.164.2.64/26` tem precedência sobre uma para `146.164.2.0/24`, se ambas estiverem disponíveis para o encaminhamento.
+Para `146.164.2.70`, a rota `146.164.2.64/26` tem precedência sobre `146.164.2.0/24`, pois representa um grupo menor de endereços que contém o destino.
 
-> Essa seleção usa os prefixos das entradas da tabela, não uma máscara enviada pela máquina de origem. O cálculo das melhores rotas alimenta a tabela; a consulta por pacote utiliza o resultado desse trabalho.
+> A seleção utiliza os prefixos da tabela, não uma máscara enviada pela máquina de origem.
 
 ### Rota Padrão e Gateway Padrão:
 
-A **rota padrão** (*default route*) é utilizada quando não existe uma rota mais específica para o destino. No IPv4, é representada por **`0.0.0.0/0`**: como seu prefixo tem comprimento zero, corresponde a qualquer endereço, mas tem a menor especificidade possível.
-
-Os números são rótulos; em uma tabela IPv4 real, utilizam-se prefixos. O ***gateway* padrão** é o próximo roteador associado à rota padrão, quando necessário. Essa configuração evita listar todos os destinos que utilizam a mesma saída, sem exigir que o próximo equipamento seja “maior”.
+A **rota padrão** (*default route*) atende aos destinos sem rota mais específica. No IPv4, `0.0.0.0/0` corresponde a qualquer endereço, com a menor especificidade possível. O ***gateway* padrão** é o próximo roteador indicado por essa rota, quando necessário.
 
 ![Tabela de Endereços com *gateway*](images/screenshot046.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 292.*
 
-Nem todo roteador possui rota padrão. **Sem uma rota aplicável, o pacote é descartado.**
+Na figura, os números identificam redes; tabelas IPv4 reais utilizam prefixos. Nem todo roteador possui rota padrão: **sem rota aplicável, o pacote é descartado**.
 
-> No Linux, `ip -4 route` e `ip -6 route` mostram as rotas IPv4 e IPv6: quais redes são alcançadas por cada interface e próximo salto. A entrada `default` identifica a rota padrão; quando presentes, `via` indica o próximo roteador e `dev`, a interface de saída.
+> No Linux, `ip -4 route` e `ip -6 route` mostram as rotas IPv4 e IPv6. `default` identifica a rota padrão; `via`, o próximo roteador; e `dev`, a interface de saída.
 
 ### Origem e Atualização das Rotas:
 
-Para consultar uma rota, o equipamento precisa primeiro conhecê-la. As informações podem ter diferentes origens:
+As rotas podem ter três origens:
 
-- **Redes diretamente conectadas:** Identificadas a partir da configuração das interfaces, permitem alcançar destinos no próprio enlace.
-- **Rotas estáticas:** Configuradas pelo administrador, indicam como alcançar outros destinos, inclusive por uma rota padrão.
-- **Rotas dinâmicas:** Aprendidas e atualizadas por protocolos de roteamento, conforme as informações trocadas entre equipamentos e as mudanças detectadas.
+- **Redes diretamente conectadas:** Identificadas pela configuração das interfaces e alcançadas pelo próprio enlace.
+- **Rotas estáticas:** Configuradas pelo administrador, incluindo uma rota padrão quando necessária.
+- **Rotas dinâmicas:** Aprendidas e atualizadas por protocolos de roteamento.
 
-Essas origens podem coexistir. No roteamento dinâmico, as atualizações podem ser periódicas ou motivadas por mudanças. Além de conhecer os destinos, é necessário avaliar os caminhos disponíveis para escolher as rotas utilizadas.
+Essas origens podem coexistir. As atualizações dinâmicas podem ser periódicas ou provocadas por mudanças na rede.
 
-> Endereçamento estático/dinâmico descreve a configuração dos endereços; roteamento estático/dinâmico descreve a origem e a atualização das rotas.
+> Endereçamento estático/dinâmico trata da configuração dos endereços; roteamento estático/dinâmico, da origem e atualização das rotas.
 
 ### Algoritmos, Protocolos e Métricas:
 
-O **protocolo de roteamento** estabelece a troca de informações entre equipamentos; o **algoritmo de roteamento** define como avaliar caminhos a partir dessas informações. O resultado desse trabalho alimenta as rotas utilizadas no encaminhamento.
+O **protocolo** estabelece a troca de informações; o **algoritmo** avalia os caminhos e permite selecionar as rotas. As **métricas** medem características usadas nessa comparação:
 
-“Melhor caminho” significa o mais adequado aos critérios adotados, como custo ou políticas administrativas, não necessariamente o menor percurso físico. As **métricas** são medidas utilizadas nessa comparação. Um algoritmo utiliza as métricas previstas em seu funcionamento; não precisa avaliar todas, nem medir continuamente as condições reais do tráfego.
+- **Número de saltos (*Hop Count*):** Quantidade de saltos até o destino. Menos saltos não significa necessariamente menor atraso.
+- **Taxa de transmissão e carga:** Capacidade do enlace e sua utilização, respectivamente; um enlace rápido também pode estar congestionado.
+- **Atraso (latência):** Tempo associado à passagem dos dados pelo enlace ou caminho.
+- **Taxa de erro:** Ocorrência de erros na transmissão.
+- **Disponibilidade:** Continuidade de funcionamento, considerando as interrupções.
+- **Custo:** Valor configurado ou calculado a partir de uma ou mais características; não precisa representar dinheiro.
 
-- **Número de saltos (*Hop Count*):** Quantidade de saltos ao longo do caminho. Quando esse é o único critério, prefere-se o menor número, mesmo que outro caminho tenha enlaces mais rápidos.
-- **Taxa de transmissão e carga:** A taxa indica a capacidade do enlace; a carga representa sua utilização. São fatores diferentes: um enlace de grande capacidade também pode estar congestionado.
-- **Atraso (latência):** Tempo associado à passagem dos dados por um enlace ou caminho, conforme a medida utilizada.
-- **Taxa de erro:** Indica a ocorrência de erros na transmissão e pode ser considerada na avaliação da qualidade de um enlace.
-- **Disponibilidade:** Indica a continuidade de funcionamento de um enlace ou caminho, considerando suas interrupções.
-- **Custo:** Valor atribuído ao enlace ou à rota para permitir comparação. Pode ser configurado, derivado de uma característica ou calculado pela combinação de fatores; não precisa representar dinheiro nem reunir todas as métricas anteriores.
-
-A maior capacidade ou menor taxa de erro só influencia a escolha se participar do critério utilizado.
+O melhor caminho depende das métricas e políticas adotadas. Cada algoritmo utiliza critérios específicos, sem necessariamente medir todas as condições do tráfego.
 
 ### Características Desejáveis dos Algoritmos:
 
-Além de selecionar caminhos, é necessário acompanhar mudanças na rede. Um algoritmo precisa equilibrar a qualidade das rotas com o trabalho para mantê-las:
+Um algoritmo deve equilibrar a qualidade das rotas e o trabalho para mantê-las:
 
-- **Seleção de caminhos:** Escolher rotas adequadas às métricas e às políticas utilizadas.
-- **Convergência:** Alcançar informações consistentes após mudanças, como a queda de um enlace, reduzindo o período de adaptação.
-- **Robustez:** Lidar com falhas e informações temporariamente desatualizadas, evitando instabilidade persistente.
-- **Escalabilidade:** Continuar viável conforme aumenta o número de redes e equipamentos.
-- **Consumo de recursos:** Limitar o processamento, a memória e o tráfego de controle necessários à manutenção das rotas.
+- **Seleção de caminhos:** Escolher rotas adequadas às métricas e políticas.
+- **Convergência:** Estabilizar as informações rapidamente após mudanças.
+- **Robustez:** Lidar com falhas e informações desatualizadas sem instabilidade persistente.
+- **Escalabilidade:** Continuar viável com o crescimento da rede.
+- **Consumo de recursos:** Limitar processamento, memória e tráfego de controle.
 
 ### Classificações dos Algoritmos:
 
-A obtenção das informações, o cálculo e a atualização das rotas podem ser organizados de diferentes maneiras. As classificações descrevem aspectos distintos e podem ser combinadas. Um algoritmo distribuído, por exemplo, pode trabalhar com informações globais sobre a topologia do domínio em que opera.
+Os critérios podem ser combinados: um cálculo distribuído, por exemplo, pode utilizar um mapa global da topologia.
 
 | Critério | Alternativas |
 | --- | --- |
@@ -386,25 +380,27 @@ A obtenção das informações, o cálculo e a atualização das rotas podem ser
 | **Informação disponível** | **Local ou parcial:** utiliza informações recebidas dos vizinhos, sem precisar conhecer toda a topologia. **Global:** utiliza um mapa da topologia do domínio considerado. |
 | **Local do cálculo** | **Centralizado:** uma entidade concentra o cálculo das rotas. **Distribuído:** os roteadores participam desse cálculo e trocam informações entre si. |
 
-A centralização também permite atualizar rotas; não exige uma rede imutável.
+> A centralização também permite atualizar rotas; não exige uma rede imutável.
 
-Quanto ao **tipo de entrega**, distinguem-se *unicast* (um destinatário), *broadcast* (todos dentro de um âmbito definido) e *multicast* (um grupo).
+Quanto à entrega, distinguem-se *unicast* (um destinatário), *broadcast* (todos em um âmbito definido) e *multicast* (um grupo).
 
 ### Roteamento por Vetor de Distância:
 
-O **vetor de distância** exemplifica o cálculo distribuído com informações recebidas dos vizinhos. Cada roteador informa aos vizinhos os destinos conhecidos e seus custos. Sem precisar do mapa completo, combina a distância anunciada pelo vizinho com o custo para alcançá-lo. O **RIP** (*Routing Information Protocol*) é um protocolo dessa família.
+Cada roteador divulga aos vizinhos os destinos conhecidos e seus custos. O **vetor de distância** dispensa um mapa completo: calcula o custo de uma rota somando o custo até o vizinho ao valor anunciado por ele.
 
 > É como consultar vizinhos sobre destinos e distâncias, sem receber a descrição de todo o percurso.
 
-1. **Conhecimento inicial:** O roteador identifica suas redes diretamente conectadas e as rotas já configuradas. Em uma representação abstrata do algoritmo, a distância de um nó até ele mesmo é zero.
-2. **Troca de informações:** Recebe dos vizinhos anúncios de destinos e custos, e divulga suas próprias informações. A periodicidade e a existência de atualizações parciais dependem do protocolo.
-3. **Cálculo:** Soma o custo de alcançar o vizinho ao custo que ele anunciou. Se cada salto tiver custo `1`, alcançar um destino pelo vizinho acrescenta `+1` à distância informada por ele.
-4. **Atualização:** Inclui novos destinos alcançáveis e adota alternativas de menor custo. Se a informação vier do vizinho utilizado pela rota atual, também considera pioras, inclusive a indicação de que o destino ficou inalcançável.
+1. **Conhecimento inicial:** Identifica redes diretamente conectadas e rotas configuradas.
+2. **Troca:** Envia e recebe anúncios dos vizinhos, conforme o protocolo.
+3. **Cálculo:** Soma o custo até o vizinho ao custo anunciado; com custo unitário, acrescenta `1`.
+4. **Atualização:** Inclui destinos e adota alternativas melhores. Anúncios do vizinho usado pela rota atual também podem indicar pioras ou perda de acesso.
+
+Nos exemplos, **Caminho** indica o enlace de saída e **Custo**, o custo total até o destino. Cada enlace tem custo `1`.
 
 ![Rede de Interconexão](images/screenshot047.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 301.*
 
-**T0 - Inicialização:** Inicialmente, cada roteador conhece apenas a si mesmo, com custo zero.
+**T0 - Inicialização:** Cada roteador conhece apenas a si mesmo, com custo zero.
 
 | Roteador | Destino | Caminho | Custo |
 |---|---|---|---|
@@ -414,7 +410,7 @@ O **vetor de distância** exemplifica o cálculo distribuído com informações 
 | **D** | D | - | 0 |
 | **E** | E | - | 0 |
 
-**T1 - Identificação dos Vizinhos:** Cada roteador identifica os destinos diretamente conectados, considerando custo unitário para todos os enlaces.
+**T1 - Identificação dos Vizinhos:** São incluídos os vizinhos diretamente conectados, com custo 1.
 
 | Roteador | Destino | Caminho | Custo |
 |---|---|---|---|
@@ -436,7 +432,7 @@ O **vetor de distância** exemplifica o cálculo distribuído com informações 
 | | C | C5 | 1 |
 | | D | C6 | 1 |
 
-**T2 - Primeira Troca de Vetores:** Cada roteador compartilha seu vetor de distâncias com os vizinhos, permitindo identificar destinos indiretos. O caminho representa o enlace de saída, enquanto o custo indica a distância total até o destino.
+**T2 - Primeira Troca de Vetores:** Os anúncios dos vizinhos permitem descobrir destinos indiretos.
 
 | Roteador | Destino | Caminho | Custo |
 |---|---|---|---|
@@ -466,18 +462,16 @@ O **vetor de distância** exemplifica o cálculo distribuído com informações 
 | | D | C6 | 1 |
 | | A | C4 | 2 |
 
-**T3 - Convergência:** Todos os roteadores já conhecem os menores custos até os destinos. Novas trocas de vetores não alteram as tabelas, indicando a convergência da rede. Caso a tabela não estivesse completa, ela continuaria sendo trocada e incrementada.
+**T3 - Convergência:** Os menores custos foram encontrados; novas trocas não alteram as tabelas.
 
-> **Observação:** podem existir caminhos alternativos de mesmo custo. Por exemplo, A alcança E por C1 (A - B - E) ou C3 (A - D - E), ambos com custo 2. A escolha depende do critério de desempate utilizado.
+> A pode alcançar E por C1 (A - B - E) ou C3 (A - D - E), ambos com custo 2. A escolha depende do desempate adotado.
 
-Ao detectar a perda de um caminho, **o roteador invalida a rota correspondente**. A falha pode ser percebida diretamente ou pela ausência de atualizações durante um período. O protocolo pode anunciar um custo chamado **infinito** (destino inalcançável).
-
-Os vizinhos atualizam as rotas que dependiam daquele caminho e podem adotar alternativas, se existirem. Não há garantia de uma segunda rota já disponível.
+Ao detectar uma falha, diretamente ou por ausência de atualizações, o roteador **invalida as rotas afetadas** e pode anunciá-las com custo **infinito** (inalcançável). Os vizinhos atualizam suas rotas e procuram alternativas, quando disponíveis.
 
 ![Rede de Interconexão com Falha](images/screenshot048.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 305.*
 
-**T0 - Detecção da Falha:** A conexão C1 é interrompida. Inicialmente, apenas A e B identificam a falha, atribuindo custo $\infty$ às rotas que utilizavam esse enlace. Os demais roteadores ainda não receberam a informação.
+**T0 - Detecção da Falha:** Apenas A e B detectam a falha em C1 e invalidam as rotas dependentes desse enlace.
 
 | Roteador | Destino | Caminho | Custo |
 |---|---|---|---|
@@ -507,7 +501,7 @@ Os vizinhos atualizam as rotas que dependiam daquele caminho e podem adotar alte
 | | D | C6 | 1 |
 | | A | C4 | 2 |
 
-**T1 - Propagação da Falha:** A e B compartilham suas novas informações com os vizinhos. C, D e E identificam as rotas comprometidas e atualizam seus custos, mas ainda não conhecem todos os caminhos alternativos.
+**T1 - Propagação da Falha:** A informação chega aos demais roteadores, que invalidam as rotas afetadas.
 
 | Roteador | Destino | Caminho | Custo |
 |---|---|---|---|
@@ -537,7 +531,7 @@ Os vizinhos atualizam as rotas que dependiam daquele caminho e podem adotar alte
 | | D | C6 | 1 |
 | | A | C4 | $\infty$ |
 
-**T2 - Descoberta de Caminhos Alternativos:** Os roteadores continuam trocando vetores. A identifica caminhos para C e E através de D; B identifica D através de E; D identifica B através de E; e E identifica A através de D. Entretanto, algumas rotas ainda permanecem com custo $\infty$.
+**T2 - Descoberta de Caminhos Alternativos:** Novas trocas revelam alternativas, mas ainda restam destinos considerados inalcançáveis.
 
 | Roteador | Destino | Caminho | Custo |
 |---|---|---|---|
@@ -567,7 +561,7 @@ Os vizinhos atualizam as rotas que dependiam daquele caminho e podem adotar alte
 | | D | C6 | 1 |
 | | A | C6 | 2 |
 
-**T3 - Convergência:** Com uma nova troca de vetores, A descobre B através de D, B descobre A através de E e C descobre A através de E. Todos os roteadores passam a conhecer os menores custos sem utilizar C1. Novas trocas não alteram as tabelas, indicando a convergência da rede.
+**T3 - Convergência:** Todos os roteadores encontram os menores custos disponíveis sem utilizar C1.
 
 | Roteador | Destino | Caminho | Custo |
 |---|---|---|---|
@@ -597,27 +591,25 @@ Os vizinhos atualizam as rotas que dependiam daquele caminho e podem adotar alte
 | | D | C6 | 1 |
 | | A | C6 | 2 |
 
-> Em redes reais, os roteadores trocam informações de maneira assíncrona, podendo receber dados desatualizados e criar rotas temporariamente incorretas. Assim, a sequência de atualizações e o tempo de convergência podem variar, dependendo também dos mecanismos de prevenção de ciclos utilizados.
+> As etapas são didáticas. Na prática, as atualizações são assíncronas, e sua sequência depende dos anúncios recebidos e dos mecanismos de prevenção de ciclos.
 
-A grande vantagem desse método é a simplicidade do cálculo. A convergência pode ser lenta: informações antigas levam vizinhos a anunciar caminhos que já não funcionam, inclusive formando *loops* temporários.
+O cálculo é simples, mas informações antigas podem causar convergência lenta e *loops* temporários.
 
 ### Roteamento por Estado do Enlace:
 
-No vetor de distância, cada roteador conhece os destinos pelos custos anunciados por seus vizinhos, sem possuir um mapa completo da rede (apenas origem e destino). Informações desatualizadas podem atrasar a percepção de falhas e provocar *loops* temporários.
+No **estado do enlace**, cada roteador conhece a topologia do domínio considerado, enquanto o vetor de distância trabalha com destinos e custos anunciados pelos vizinhos. O funcionamento envolve:
 
-No **estado do enlace**, os roteadores divulgam suas conexões e respectivos custos. Com essas informações, cada um mantém uma cópia do mapa da topologia do domínio considerado e calcula seus próprios caminhos.
+1. **Conhecimento local:** Identifica vizinhos e custos dos enlaces.
+2. **Divulgação:** Propaga anúncios pelo domínio; identificadores e números de sequência permitem reconhecer repetições e informações antigas.
+3. **Construção do mapa:** Reúne os anúncios em uma base local, sincronizada com as dos participantes da mesma área.
+4. **Cálculo:** Determina os caminhos de menor custo a partir de si mesmo, por exemplo, com **Dijkstra**, e registra os próximos saltos.
 
-O funcionamento ocorre em quatro etapas:
-
-1. **Conhecimento local:** Cada roteador identifica seus vizinhos e os custos dos enlaces.
-2. **Divulgação:** Anúncios sobre essas conexões são propagados entre os roteadores. Identificadores e números de sequência permitem reconhecer anúncios repetidos ou antigos.
-3. **Construção do mapa:** Cada roteador reúne os anúncios em uma base de informações sobre a topologia. Após a sincronização, os participantes de uma mesma área possuem uma visão comum.
-4. **Cálculo das rotas:** **Cada roteador calcula os caminhos de menor custo a partir de si mesmo** e determina os próximos saltos (um método comum é utilizando o algoritmo de Dijkstra).
+> O mapa é comum, mas cada roteador mantém sua cópia e calcula suas rotas. Não existe uma tabela central consultada por todos.
 
 ![Rede de Interconexão do Enlace](images/screenshot049.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 308.*
 
-**T0 - Identificação dos Enlaces:** Inicialmente, cada roteador identifica seus vizinhos diretamente conectados e os respectivos custos, construindo sua própria tabela de estado de enlace.
+**T0 - Identificação dos Enlaces:** Cada roteador registra seus vizinhos e os custos dos enlaces.
 
 | Roteador | Vizinho | Custo |
 |---|---|---|
@@ -644,7 +636,7 @@ O funcionamento ocorre em quatro etapas:
 | | F | 2 |
 | | G | 4 |
 
-**T1 - Construção da Tabela Global:** Cada roteador divulga suas informações de enlace para toda a rede (*flooding*). Após receber os anúncios, todos constroem uma base de dados equivalente, contendo a topologia completa e os respectivos custos.
+**T1 - Topologia Compartilhada:** Os anúncios permitem que cada roteador monte sua própria cópia da topologia apresentada.
 
 | De | Para | Custo |
 |---|---|---|
@@ -671,26 +663,20 @@ O funcionamento ocorre em quatro etapas:
 | H | F | 2 |
 | H | G | 4 |
 
-> Existe uma visão comum da topologia, mas cada roteador armazena sua própria base e calcula sua própria tabela de rotas. **Não há uma única tabela central consultada por todos**.
-
-O cálculo pode ser representado por uma **árvore de caminhos mínimos**, com o próprio roteador na raiz. Essa árvore é lógica - não remove conexões físicas nem bloqueia globalmente os enlaces que ficaram fora dela (outros roteadores ainda podem utilizá-los). O grafo de interconexão de A, por exemplo, ficaria:
+A **árvore de caminhos mínimos** tem o próprio roteador na raiz. É uma seleção lógica: os enlaces fora dela permanecem disponíveis para outros caminhos. Para A, o resultado é:
 
 ![Rede de Interconexão do Enlace em A](images/screenshot050.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 310.*
 
-Quando uma mudança é detectada, novas informações são divulgadas e **as rotas afetadas são recalculadas**. Caminhos alternativos podem ser aproveitados; não é obrigatório reconstruir tudo do zero em qualquer alteração.
-
-A abordagem favorece a adaptação às mudanças, mas exige memória para armazenar a topologia e processamento para calcular os caminhos. Durante a atualização, diferenças temporárias entre as informações dos roteadores ainda podem causar *loops*.
+Mudanças são divulgadas e provocam o recálculo das rotas afetadas, sem exigir sempre uma reconstrução completa. Manter o mapa e calcular caminhos consome memória e processamento; durante a convergência, ainda podem ocorrer *loops* temporários.
 
 ### Roteamento Hierárquico e Sistemas Autônomos:
 
-Com o crescimento da rede, também é necessário controlar a quantidade de informações trocadas. Além da agregação de destinos apresentada no CIDR, o **roteamento hierárquico** organiza a troca de informações em domínios, limitando o detalhamento necessário em cada parte.
+O **roteamento hierárquico** limita o detalhamento das informações ao organizar a rede em domínios. Um **Sistema Autônomo (AS)** reúne redes e roteadores sob uma administração com política de roteamento definida.
 
-Um **Sistema Autônomo (AS)** reúne redes e roteadores sob uma administração com política de roteamento definida. Não equivale a qualquer sub-rede e pode ter divisões internas.
-
-- **Roteamento interno:** Estabelece caminhos dentro de um AS. O conhecimento da topologia depende do protocolo e de sua organização em áreas; nem todo roteador precisa conhecer todos os detalhes internos.
-- **Roteamento externo:** Permite trocar informações de alcance entre sistemas autônomos, considerando também suas políticas de interconexão.
-- **Roteadores de borda:** Interligam o AS a outros sistemas autônomos. Rotas externas, ou uma rota padrão quando suficiente, permitem orientar o tráfego interno até uma saída adequada.
+- **Roteamento interno:** Estabelece caminhos dentro do AS, com detalhamento conforme o protocolo e suas áreas.
+- **Roteamento externo:** Troca informações de alcance entre AS, considerando políticas de interconexão.
+- **Roteadores de borda:** Interligam o AS a outros. Rotas externas ou uma rota padrão orientam o tráfego até a saída.
 
 ![Roteamento Hierárquico](images/screenshot051.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 317.*
@@ -706,104 +692,92 @@ Um **Sistema Autônomo (AS)** reúne redes e roteadores sob uma administração 
 | R3 | C1 | 2 |
 | R4 | C1 | 3 |
 
-Essa organização controla o alcance das informações divulgadas. **Um AS não corresponde necessariamente a uma única rota**, e seus roteadores internos podem conhecer rotas externas.
+> Um AS não equivale a qualquer sub-rede nem a uma única rota. Pode ter divisões internas, e seus roteadores podem conhecer rotas externas.
 
-## Distribuição por *Broadcast*:
+## *Broadcast*:
 
-Uma transmissão em *broadcast* destina a mesma informação a todos os participantes de um âmbito definido (economizando banda, ao evitar o envio individual de cada pacote). A difusão IPv4 em uma sub-rede deve ser distinguida da distribuição por uma topologia de roteadores.
+Envia a mesma informação a todos os participantes de um âmbito definido, evitando transmissões individuais para cada destinatário (economia massiva de banda, já que os pacotes não são copiados e enviados como mensagens separadas).
 
 ![Comparação entre roteamento *unicast* e *broadcast*](images/screenshot052.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 318.*
 
+> A difusão em uma sub-rede IPv4 e a distribuição por uma topologia de roteadores têm funcionamentos distintos.
 ### *Broadcast* Limitado e Direcionado:
 
-- **Limitado (`255.255.255.255`):** Destina-se à rede local. Em *Ethernet*, o emissor utiliza um quadro de difusão, que pode ser distribuído pelos *switches* daquele domínio. O roteador não encaminha esse pacote para outras redes.
-- **Direcionado:** Utiliza o endereço de *broadcast* de uma sub-rede, obtido com os *bits* de *host* em um. Por exemplo, `192.168.10.255` é o *broadcast* de `192.168.10.0/24`. Quando recebido de outra rede e explicitamente permitido, pode ser encaminhado até a sub-rede e então transmitido por difusão no enlace final.
+- **Limitado (`255.255.255.255`):** Alcança a rede local, por difusão no enlace. Os roteadores não o encaminham para outras redes.
+- **Direcionado:** Utiliza o endereço de *broadcast* da sub-rede, como `192.168.10.255` para `192.168.10.0/24` (*bits* de *host* em um). Se permitido, pode chegar de outra rede e ser difundido no enlace final.
 
-O recebimento e o encaminhamento de *broadcast* direcionado devem estar **bloqueados por padrão nos roteadores**, devido à possibilidade de abuso. Portanto, essa entrega remota não deve ser presumida como disponível pela Internet.
-
-Para distribuir informação por uma topologia, existem modelos como inundação e árvores de cobertura. Eles não representam o funcionamento automático de um *broadcast* IPv4 pela Internet.
+> O *broadcast* direcionado recebido de outra rede é bloqueado por padrão nos roteadores, devido ao risco de abuso. Os modelos de distribuição seguintes não representam um serviço automático de *broadcast* pela Internet.
 
 ### Inundação (*Flooding*):
 
-Cada roteador que recebe a mensagem a replica pelas saídas participantes da distribuição, com exceção da interface de chegada.
+Cada roteador replica a mensagem pelas saídas participantes, exceto pela interface de chegada.
 
 ![*Broadcast* por inundação iniciado em A](images/screenshot053.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 318.*
 
-Isso permite alcançar os nós conectados, mas pode produzir várias cópias e *loops*: um pacote pode retornar por outro caminho mesmo sem ser devolvido diretamente ao vizinho que o enviou.
+Esse método alcança os nós conectados, mas permite cópias repetidas e *loops* por outros caminhos. Dois mecanismos complementares limitam essa circulação:
 
-Para limitar essa circulação, podem ser empregados mecanismos complementares:
+- **Identificação e *cache*:** Registra mensagens recentes e descarta duplicatas, identificadas, por exemplo, pela origem e pelo número de sequência.
+- **Limite de saltos:** Impede circulação indefinida. No IPv4, os roteadores reduzem o **TTL** (*Time to Live*) e descartam o pacote quando ele se esgota.
 
-- **Identificação e *cache*:** O equipamento registra as mensagens processadas recentemente e descarta cópias repetidas. A identificação precisa distinguir as mensagens dentro do mecanismo utilizado, por exemplo, associando origem e número de sequência.
-- **Limite de saltos:** Restringe a distância que uma cópia pode percorrer. No encaminhamento IPv4, o **TTL** (*Time to Live*) é reduzido pelos roteadores; quando se esgota, o pacote é descartado.
+Ainda há gasto de banda com cópias descartadas adiante.
 
-O *cache* reduz repetições; o limite de saltos impede circulação indefinida, inclusive após a remoção de registros antigos. Ainda pode haver desperdício com cópias descartadas nos equipamentos seguintes.
-
-> O identificador usado no controle de duplicatas depende do algoritmo ou protocolo. Ele não deve ser confundido automaticamente com o campo de identificação do cabeçalho IPv4.
+> O identificador de duplicatas depende do protocolo; não é necessariamente o campo de identificação do cabeçalho IPv4.
 
 ### Árvore de Cobertura (*Spanning Tree*):
 
-Seleciona um conjunto de ligações que conecta todos os nós participantes **sem formar ciclos**. Nessa árvore, existe um único caminho entre cada par de nós. Uma mensagem pode ser replicada nas bifurcações para alcançar os diferentes ramos, evitando a circulação repetida da inundação sem controle.
+Seleciona ligações que conectam todos os participantes **sem ciclos**, com um único caminho entre cada par de nós. A mensagem se divide nas bifurcações. Os enlaces excluídos continuam fisicamente disponíveis para outras comunicações.
 
-Os enlaces excluídos da árvore continuam existindo fisicamente e podem ser utilizados por outras distribuições ou comunicações. Essa seleção não significa concentrar todo o tráfego da rede em um único trajeto.
+- **Vantagem:** Reduz cópias redundantes.
+- **Limitações:** Pode concentrar tráfego e produzir caminhos menos eficientes para alguns emissores. Uma falha na árvore pode exigir ajustes e interromper parte da distribuição, sem necessariamente recalcular tudo.
 
-- **Vantagem:** Reduz cópias redundantes ao organizar o percurso da distribuição.
-- **Limitações:** Os caminhos escolhidos podem não ser os melhores para todos os emissores e podem concentrar tráfego em determinados enlaces. Uma falha pode exigir atualização da árvore, interrompendo temporariamente parte da distribuição; não é obrigatório recalcular tudo do zero.
-
-> A ideia de uma estrutura sem ciclos também aparece no STP, apresentado no apêndice de redes locais. Aqui, porém, trata-se da seleção de caminhos para distribuir pacotes, não necessariamente do bloqueio de portas de *switches*.
+> Aqui, a árvore orienta a distribuição de pacotes. O STP, apresentado no apêndice de redes locais, aplica a ideia de ausência de ciclos ao encaminhamento por *switches*.
 
 ## *Multicast*:
 
-Envia a mesma informação para um **grupo de destinatários**. Os roteadores replicam o pacote onde os caminhos se separam, evitando cópias independentes desde a origem e entrega indiscriminada a todos.
+Envia a mesma informação a um **grupo de destinatários**, replicando os pacotes onde os caminhos se separam. As árvores de distribuição podem ser específicas por origem ou compartilhadas entre emissores. Elas alcançam os receptores interessados e podem atravessar roteadores sem membros locais do grupo.
 
 ### Endereçamento de Grupo e IGMP:
 
-No IPv4, o *multicast* utiliza a faixa `224.0.0.0/4`, de `224.0.0.0` a `239.255.255.255`, historicamente chamada classe D. O endereço identifica um **grupo**, não substitui o endereço individual da interface que participa dele.
+No IPv4, utiliza `224.0.0.0/4` (`224.0.0.0` a `239.255.255.255`), a antiga classe D. O endereço identifica o **grupo**; cada interface conserva seu endereço individual.
 
-> É como uma frequência de rádio: o emissor transmite para um endereço de grupo, como `224.1.1.1`, e os receptores interessados “sintonizam” essa transmissão. O endereço individual continua existindo para as demais comunicações.
+> É como uma frequência de rádio: o emissor transmite para um grupo, como `224.1.1.1`, e os receptores interessados “sintonizam” a transmissão.
 
-O **IGMP** (*Internet Group Management Protocol*) informa aos roteadores locais o interesse dos dispositivos em grupos IPv4. Já o roteamento *multicast* organiza os caminhos entre roteadores até as redes com receptores.
+O **IGMP** (*Internet Group Management Protocol*) informa aos roteadores locais o interesse dos dispositivos nos grupos. O roteamento *multicast* organiza os caminhos entre essas redes.
 
-- **Grupos permanentes:** Possuem endereços atribuídos de forma permanente. Podem ter qualquer quantidade de membros, inclusive nenhum; o que permanece é a atribuição do endereço, não uma transmissão contínua.
-- **Grupos temporários:** Existem enquanto houver participantes e utilizam endereços atribuídos para esse uso. O IGMP comunica a participação, mas não funciona como um serviço global que distribui e libera esses endereços.
+- **Grupos permanentes:** Têm endereço atribuído permanentemente, mesmo sem membros ou transmissão ativa.
+- **Grupos temporários:** Duram enquanto houver participantes. O IGMP informa a participação, mas não distribui endereços globalmente.
 
-> O *multicast* é útil em redes administradas, como IPTV e sistemas internos de informação. A comunicação entre redes exige suporte e políticas compatíveis; escolher um endereço de grupo não garante alcance pela Internet.
-
-### Árvores de Distribuição:
-
-A árvore precisa alcançar **os receptores interessados**, não todos os nós da rede. Roteadores sem receptores locais podem participar do caminho até receptores mais adiante. Há árvores por origem e árvores compartilhadas por vários emissores; sua construção depende do protocolo.
+> Comum em IPTV e redes administradas, o *multicast* exige suporte e políticas compatíveis entre redes; o endereço de grupo não garante alcance pela Internet.
 
 ### Roteamento por Caminho Reverso (RPM):
 
-O **RPM** (*Reverse Path Multicasting*) testa a interface de chegada. Na árvore baseada na origem:
+O **RPM** (*Reverse Path Multicasting*) utiliza das tabelas de roteamento para identificar a origem da mensagem e descobrir se ela é repetida (para então poda-la), ou não (para reencaminhá-la). Sabendo a origem e o destino da mensagem, o roteador analisa a tabela de roteamento para saber se faz sentido a interface pela qual ela chegou:
 
-1. **Identificação:** O roteador verifica a origem do pacote e a interface pela qual ele chegou.
-2. **Consulta:** Determina qual interface utilizaria para alcançar essa origem, a partir das informações de roteamento usadas pelo mecanismo, normalmente derivadas das rotas *unicast*.
-3. **Decisão:** Se as interfaces coincidirem, o pacote passa no teste e pode ser replicado pelas saídas previstas para a distribuição. Caso contrário, é descartado nesse modelo de encaminhamento.
+- **Caminho ótimo:** Isso indica que a mensagem não podia ter chegado antes (*shortest path*), ou seja, a mensagem não é repetida. Dessa maneira, é realizado o encaminhamento adiante por todas as suas interfaces (menos a de entrada da informação).
+- **Caminho não ótimo:** Como a informação veio de uma interface diferente da ótima (veio de um caminho paralelo ou é um possível *loop*) a mensagem já chegou àquele roteador antes. Como se trata de uma mensagem repetida, ela não é reencaminhada (é podada).
 
-É a pergunta: “Para voltar até esse transmissor, eu usaria a interface por onde o pacote chegou?”. Passar no teste indica conformidade com as rotas utilizadas, não o menor percurso físico. O protocolo ainda precisa determinar as saídas participantes da distribuição.
+Ao final do processo, é possível obter criar a **árvore de cobertura de menor custo**, evitando *loops* na transmissão e garantindo o melhor caminho para alcançar os membros do *multicast* a partir do transmissor.
 
 ![RPM](images/screenshot054.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 322.*
 
-> Em árvores compartilhadas, o teste pode usar como referência o ponto central da distribuição, em vez do transmissor original.
+Uma grande crítica desse modelo é que ele envia a informação para todos os roteadores (já que o único filtro é não ser uma informação repetida), causando desperdício de banda e podendo ocasionar na sobrecarga da rede.
+
+> O teste segue as rotas conhecidas, sem garantir o menor percurso físico.
 
 ### Árvores Compartilhadas Baseadas em Núcleo (CBT):
 
-No CBT (*Core Base Tree*), um roteador atua como **núcleo** da árvore compartilhada pelo grupo. Conforme o protocolo, existe um ponto de encontro (*Rendezvous Point*, RP) com função correspondente na organização inicial da distribuição.
-
-Os roteadores com receptores interessados enviam solicitações de associação em direção a esse ponto. A árvore cresce conforme há demanda, em vez de começar inundando todo o domínio para depois procurar os interessados.
-
-Na distribuição pela árvore compartilhada, os dados alcançam essa estrutura e seguem por seus ramos até os receptores. A forma de levar o tráfego do emissor até a árvore depende do protocolo; não exige que todo emissor envie diretamente um pacote *unicast* ao núcleo.
+No **CBT** (*Core Based Trees*), roteadores com receptores interessados solicitam associação em direção a um **núcleo** (arbitrário - não precisa ser o núcleo físico nem mesmo ser um integrante do *multicast*, mas sua escolha impacta na performance da rede), formando uma árvore única compartilhada pelo grupo. Os dados entram nessa árvore e seguem pelos ramos até os receptores. Sua estrutura é atualizada conforme os participantes entram ou saem.
 
 ![RPM](images/screenshot055.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 322.*
 
-- **Vantagem:** Evita a inundação inicial de todo o domínio e permite compartilhar parte das informações de distribuição entre diferentes emissores.
-- **Limitações:** Os caminhos pela árvore compartilhada podem ser mais longos que os caminhos diretos entre uma origem e seus receptores. O núcleo também exige atenção quanto à disponibilidade e à concentração de tráfego.
+- **Vantagem:** Evita a inundação inicial do domínio e compartilha a estrutura de distribuição entre emissores.
+- **Limitações:** Pode produzir caminhos mais longos; a disponibilidade do núcleo e a concentração de tráfego precisam ser consideradas.
 
-A árvore precisa ser atualizada quando participantes entram ou saem. Conforme o protocolo, também pode haver mudança para caminhos baseados na origem.
+> Outros protocolos usam um ponto de encontro (*Rendezvous Point*, RP). A chegada dos dados à árvore e uma eventual mudança para caminhos por origem dependem do protocolo.
 
 ## Fontes:
 
