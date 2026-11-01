@@ -1237,7 +1237,576 @@ As aspas na atribuição preservam a regex como texto. No teste, **`$padrao` fic
 
 # 10. `sed`
 
-> REVISADO ATÉ AQUI!
+O `sed` (*Stream Editor*) é um editor de texto não interativo: aplica instruções de edição a dados de arquivos ou da entrada padrão, como em um *pipe*, e envia o resultado para a saída padrão. Sua leitura percorre a entrada sequencialmente, processando uma linha por vez no funcionamento básico.
+
+## Sintaxe:
+
+- `sed {opções} '{comandos}' {arquivos_de_input}` - Realiza a edição sobre os arquivos informados; sem arquivos, lê a entrada padrão.
+
+- `sed {opções} -f {arquivo.sed} {arquivos_de_input}` - Lê os comandos de um arquivo (bom para programas maiores). A extensão `.sed` é uma convenção (assim como `.sh` em *scripts* de *shell*).
+
+Algumas opções importantes são:
+
+| Opção | Descrição |
+| --- | ---- |
+| `-i{sufixo}` | Edita o arquivo no disco. Com um sufixo, como `-i.backup`, guarda uma cópia do original; sem `-i`, o resultado vai para a saída padrão. |
+| `-n` | Desativa a impressão automática; comandos como `p` permitem escolher o que imprimir. |
+
+## Estrutura
+
+Um programa consiste em **instruções**: o endereço seleciona onde executar, o comando define a operação e os argumentos fornecem os dados necessários:
+
+```
+{endereço}comando{argumentos}
+```
+
+As chaves indicam partes opcionais no modelo (**não são digitados**). Cada parte funciona assim:
+
+- **Endereço:** Pode ser omitido para aplicar o comando a todas as linhas, indicar uma seleção ou delimitar um intervalo com dois endereços.
+- **Comando:** É obrigatório e determina a operação, como imprimir (`p`), remover (`d`) ou substituir (`s`).
+- **Argumentos:** Dependem do comando. `p` e `d` não exigem argumentos; `s` recebe um padrão e o texto de substituição, podendo incluir opções.
+
+Por exemplo:
+
+```
+2s/linha/frase/g
+```
+
+| Parte | Função |
+| --- | --- |
+| `2` | Seleciona a segunda linha. |
+| `s` | Executa uma substituição. |
+| `/linha/frase/` | Define o padrão procurado e o texto substituto. |
+|` g` | Substitui todas as ocorrências encontradas, em vez de apenas a primeira. |
+
+As instruções são separadas por quebras de linha ou, quando a sintaxe permitir, por `;`. Para cada linha, são percorridas **na ordem escrita**; alterações feitas por uma instrução ficam disponíveis às seguintes.
+
+### Funcionamento:
+
+O texto em processamento fica em um espaço de trabalho chamado _**pattern space**_. O ciclo básico funciona assim:
+
+1. **Leitura:** Coloca a próxima linha da entrada no _pattern space_.
+2. **Execução:** Percorre as instruções, executando aquelas cujos endereços selecionam a linha ou o conteúdo atual.
+3. **Impressão:** Imprime o conteúdo resultante, salvo quando a impressão automática está desativada, como com `-n`.
+4. **Repetição:** Recomeça pela leitura da próxima linha, até o fim da entrada.
+
+> Algumas instruções alteram esse fluxo: podem antecipar a leitura de outra linha, iniciar um novo ciclo ou encerrar o programa.
+
+## Endereços:
+
+Selecionam onde aplicar uma instrução: podem ser **números de linha**, **`$`** (última linha) ou **expressões regulares entre barras**, como `/erro/`.
+
+- **Sem endereço:** Aplica a instrução a todas as linhas.
+- **Um endereço:** Aplica somente às linhas selecionadas.
+- **Dois endereços:** Separados por vírgula, selecionam um intervalo incluindo as extremidades. `1,10` seleciona da primeira à décima linha; `5,$`, da quinta até a última.
+
+> Os endereços não são reordenados: `10,1` seleciona somente a décima linha, pois o segundo endereço numérico já foi ultrapassado quando o intervalo começa. A quantidade aceita depende do comando; `q` permite apenas um ou nenhum.
+
+## Instruções:
+
+Os exemplos utilizam o mesmo arquivo `linhas.txt`:
+
+```text
+Primeira linha.
+Segunda linha.
+Terceira linha.
+Quarta linha.
+```
+
+### Inserção de Texto:
+
+- **`a` (*append*):** Acrescenta texto depois da linha selecionada.
+- **`i` (*insert*):** Insere texto antes da linha selecionada.
+
+O texto inserido por ambos é enviado à saída mesmo com `-n`. No arquivo `acrescentar.sed`:
+
+```sed
+2a\
+Texto acrescentado.
+```
+
+```bash
+sed -f acrescentar.sed linhas.txt
+```
+
+```text
+Primeira linha.
+Segunda linha.
+Texto acrescentado.
+Terceira linha.
+Quarta linha.
+```
+
+### Remoção e Troca de Linhas:
+
+- **`d` (*delete*):** Descarta o conteúdo em processamento e inicia o próximo ciclo, ignorando as instruções restantes e a impressão automática do ciclo atual.
+- **`c` (*change*):** Substitui a linha selecionada pelo texto informado; em um intervalo, troca o bloco por uma única ocorrência desse texto.
+
+```bash
+sed '2d' linhas.txt
+```
+
+```text
+Primeira linha.
+Terceira linha.
+Quarta linha.
+```
+
+Para trocar um intervalo, o arquivo `trocar.sed` contém:
+
+```sed
+2,3c\
+Texto substituto.
+```
+
+```bash
+sed -f trocar.sed linhas.txt
+```
+
+```text
+Primeira linha.
+Texto substituto.
+Quarta linha.
+```
+
+### Impressão e Encerramento:
+
+- **`p` (*print*):** Imprime imediatamente o conteúdo em processamento. Com `-n`, permite mostrar somente as linhas desejadas.
+- **`q` (*quit*):** Encerra o processamento sem ler mais linhas. Antes de sair, imprime o conteúdo atual se a impressão automática estiver ativa.
+
+```bash
+sed -n '2,3p' linhas.txt
+```
+
+```text
+Segunda linha.
+Terceira linha.
+```
+
+```bash
+sed '2q' linhas.txt
+```
+
+```text
+Primeira linha.
+Segunda linha.
+```
+
+Sem `-n`, as linhas selecionadas por `p` seriam impressas duas vezes: pelo comando e pela impressão automática.
+
+### Substituição de Trechos:
+
+- **`s` (*substitute*):** Troca o trecho correspondente ao padrão, preservando o restante do texto (`c` substitui a linha inteira).
+
+```bash
+sed 's/linha/frase/' linhas.txt
+```
+
+```text
+Primeira frase.
+Segunda frase.
+Terceira frase.
+Quarta frase.
+```
+
+Um endereço antes de `s` seleciona **as linhas em que a substituição será tentada**.
+
+Por padrão, substitui somente a primeira ocorrência de cada linha; `s/linha/frase/g` substitui todas.
+
+> O reaproveitamento com `&`, `\1`, `\2` etc. foi apresentado no capítulo de expressões regulares.
+
+### Leitura e Escrita de Arquivos:
+
+- **`r` (*read*):** Acrescenta o conteúdo de outro arquivo depois da linha selecionada.
+- **`w` (*write*):** Escreve o conteúdo em processamento no arquivo indicado.
+
+Ambos funcionam mesmo com `-n`: o texto lido por `r` é enviado à saída, e `w` escreve no arquivo de destino.
+
+```bash
+sed '2r extra.txt' linhas.txt
+# Insere o conteúdo de extra.txt entre a segunda e a terceira linhas.
+
+sed -n '2,3w selecionadas.txt' linhas.txt
+# Grava a segunda e a terceira linhas em selecionadas.txt; não imprime no terminal.
+```
+
+### Avanço da Leitura:
+
+- **`n` (*next*):** Imprime o conteúdo atual se a impressão automática estiver ativa, substitui esse conteúdo pela próxima linha e continua pela instrução seguinte do programa.
+
+```bash
+sed -n 'n;p' linhas.txt
+```
+
+```text
+Segunda linha.
+Quarta linha.
+```
+
+O ciclo lê a primeira linha; `n` a substitui pela segunda, que `p` imprime. O próximo ciclo faz o mesmo com a terceira e a quarta. Com `-n`, as linhas substituídas por `n` não são impressas.
+
+- **`N`:** Acrescenta a próxima linha ao conteúdo atual, mantendo uma quebra de linha entre os dois textos. Depois, continua pela instrução seguinte.
+
+```bash
+sed 'N;s/\n/ /' linhas.txt
+```
+
+```text
+Primeira linha. Segunda linha.
+Terceira linha. Quarta linha.
+```
+
+`N` reúne duas linhas no *pattern space*; `s` troca a quebra interna (`\n`) por um espaço. Cada ciclo processa um par de linhas.
+
+## *Hold Space*:
+
+O ***hold space*** é uma reserva auxiliar que começa vazia e permite **guardar texto para recuperar depois**. Seu conteúdo permanece entre os ciclos até que uma instrução o altere.
+
+### Guardar e Recuperar:
+
+- **`h`:** Copia o *pattern space* para o *hold space*, substituindo o conteúdo guardado.
+- **`g`:** Copia o *hold space* para o *pattern space*, substituindo o conteúdo em processamento.
+
+As cópias preservam o conteúdo da origem. No arquivo `guardar.sed`:
+
+```sed
+h
+s/linha/frase/
+p
+g
+p
+```
+
+```bash
+sed -n -f guardar.sed linhas.txt
+```
+
+```text
+Primeira frase.
+Primeira linha.
+Segunda frase.
+Segunda linha.
+Terceira frase.
+Terceira linha.
+Quarta frase.
+Quarta linha.
+```
+
+`h` guarda o original; o primeiro `p` imprime a versão modificada. Depois, `g` recupera a cópia para o segundo `p`. A reserva também permanece entre ciclos: `sed '1h;3g' linhas.txt` guarda a primeira linha e a utiliza no lugar da terceira.
+
+> O comando `g` recupera texto; a opção `g` em `s/padrão/substituição/g` torna a substituição global. São usos diferentes da mesma letra.
+
+### Acumular e Acrescentar:
+
+As formas maiúsculas preservam o conteúdo do destino e acrescentam **uma quebra de linha seguida do texto copiado**, sem alterar a origem:
+
+- **`H`:** Acrescenta o *pattern space* ao final do *hold space*.
+- **`G`:** Acrescenta o *hold space* ao final do *pattern space*.
+
+```bash
+sed -n '1h;2H;2g;2p' linhas.txt
+```
+
+```text
+Primeira linha.
+Segunda linha.
+```
+
+`1h` guarda a primeira linha; `2H` acrescenta a segunda à reserva. Em seguida, `g` recupera as duas juntas e `p` as imprime.
+
+`H` acrescenta a quebra mesmo quando a reserva está vazia; começar com `h` evita uma linha vazia inicial.
+
+> Da mesma forma, `sed 'G' linhas.txt` insere uma linha vazia após cada linha da entrada, pois acrescenta a quebra seguida do conteúdo vazio da reserva.
+
+### Troca dos Conteúdos:
+
+- **`x`:** Troca os conteúdos dos dois espaços: o texto em edição passa para a reserva, e o reservado passa para a edição. 
+
+No arquivo `trocar_pares.sed`:
+
+```sed
+h
+n
+p
+x
+p
+```
+
+```bash
+sed -n -f trocar_pares.sed linhas.txt
+```
+
+```text
+Segunda linha.
+Primeira linha.
+Quarta linha.
+Terceira linha.
+```
+
+`h` guarda a primeira linha do par; `n` lê a segunda, impressa por `p`. Depois, `x` traz a primeira de volta ao *pattern space* para o último `p`. O próximo ciclo repete a operação com o par seguinte.
+
+---
+
+# 11. AWK
+
+> Este capítulo utiliza o **GNU AWK (`gawk`)**. Outras implementações, como as utilizadas em sistemas BSD, podem apresentar diferenças de recursos. Em sistemas nos quais `awk` chama o `gawk`, ele funciona, na prática, como um *alias* desse programa.
+
+AWK é uma **linguagem de processamento de texto orientada a dados**: percorre a entrada e executa ações quando as condições definidas são atendidas. Por padrão, trabalha linha por linha; cada condição funciona como um **gatilho** para imprimir, modificar o texto, incrementar um contador etc.
+
+## Sintaxe:
+
+- `awk {opções} '{comandos}' {arquivos_de_input}` - Executa os comandos sobre os arquivos informados; sem arquivos, lê a entrada padrão.
+
+- `awk -f {arquivo.awk} {arquivos_de_input}` - Lê o programa de um arquivo (bom para programas maiores). A extensão `.awk` é uma convenção (assim como `.sh` em *scripts* de *shell*).
+
+O caractere **`#`** inicia um comentário até o fim da linha, preservando o código anterior:
+
+```awk
+# Comentário ocupando uma linha inteira.
+total += 1  # Comentário depois de uma instrução.
+```
+
+Dentro de textos entre aspas ou expressões regulares entre barras, `#` representa o próprio caractere.
+
+## Organização do Programa e Padrões:
+
+Um programa consiste em **regras**: o padrão seleciona quando executar, e a ação reúne as instruções entre chaves. Aqui, as chaves fazem parte da sintaxe real:
+
+```awk
+padrão { ação }
+```
+
+Para cada linha, as regras são avaliadas **na ordem escrita**. Uma linha pode atender a vários padrões; se uma ação modificar seu texto, os padrões seguintes considerarão o conteúdo modificado. Dentro das ações, as instruções também seguem a ordem escrita, separadas por quebras de linha ou `;`.
+
+- **Sem padrão:** Executa a ação para todas as linhas.
+- **Sem ação:** Executa implicitamente `print`, imprimindo a linha selecionada.
+
+### Padrões Simples:
+
+Podem utilizar **expressões regulares** ou **comparações numéricas e textuais**. Uma regex sozinha, como `/erro/`, procura uma correspondência na linha inteira; para testar um texto específico:
+
+- `texto ~ /expressão/` - Verifica se o texto corresponde à regex.
+- `texto !~ /expressão/` - Verifica se o texto não corresponde à regex.
+
+Usar apenas `"erro"` como padrão não procura esse trecho: o texto não vazio é considerado verdadeiro. Para buscar na linha inteira, utiliza-se `/erro/`.
+
+> À direita de `~` e `!~`, a regex também pode vir de um texto entre aspas ou de uma variável: `texto ~ "erro"` e `texto ~ padrao` fazem a mesma busca quando `padrao` contém `erro`.
+
+| Operadores | Comparação |
+| --- | --- |
+| `<` / `<=` | Menor / menor ou igual. |
+| `==` / `!=` | Igual / diferente. |
+| `>` / `>=` | Maior / maior ou igual. |
+
+As condições podem ser combinadas com **`&&` (E)**, que exige ambas verdadeiras, e **`||` (OU)**, que exige pelo menos uma verdadeira.
+
+### Padrões Especiais:
+
+**`BEGIN`** e **`END`**, em maiúsculas, determinam quando executar a ação, sem selecionar linhas:
+
+- `BEGIN { ação }` - Antes de ler os dados de entrada.
+- `END { ação }` - Após terminar o processamento da entrada.
+
+### Intervalos de Registros:
+
+Dois padrões separados por vírgula selecionam um intervalo, incluindo as extremidades:
+
+```awk
+padrão_inicial, padrão_final { ação }
+```
+
+A seleção começa quando o primeiro padrão é atendido e continua até o segundo ser atendido; se isso não ocorrer, segue até o fim da entrada. Depois de encerrar, procura um novo início na linha seguinte. 
+
+> Cada regra mantém seu próprio intervalo: enquanto ele estiver ativo, novos inícios não abrem seleções sobrepostas.
+
+## Variáveis, Registros e Campos:
+
+Variáveis armazenam **números ou textos (*strings*)**, sem exigir declaração de tipo ou atribuição prévia, e podem receber ambos ao longo do programa. Antes de receber um valor, representam **`0` em operações numéricas** ou **texto vazio `""` em operações textuais**.
+
+O AWK mantém informações sobre a entrada e permite configurar sua divisão e a saída:
+
+| Elemento | Significado |
+| --- | --- |
+| `$0` | Registro atual completo; por padrão, a linha inteira. |
+| `$1`, `$2` etc. | Campos do registro atual, numerados a partir de 1. |
+| `FILENAME` | Nome do arquivo de entrada atual. |
+| `FS` | Separador de campos da entrada; o padrão `" "` trata sequências de espaços e tabulações como separadores. |
+| `RS` | Separador de registros da entrada; por padrão, nova linha (`"\n"`). |
+| `NF` | Número de campos do registro atual. |
+| `NR` | Total de registros lidos, mantendo a contagem entre arquivos. |
+| `OFS` | Separador dos itens de `print` separados por vírgulas; por padrão, um espaço (`" "`). |
+| `ORS` | Separador acrescentado ao final de cada saída de `print`; por padrão, nova linha (`"\n"`). |
+
+**`FS` e `RS` controlam a entrada; `OFS` e `ORS`, a saída.** Assim, a apresentação pode utilizar separações diferentes das encontradas na leitura.
+
+> Com `FS = " "`, espaços e tabulações nas extremidades da linha são desconsiderados na divisão dos campos.
+
+## Operadores:
+
+Os operadores aritméticos e de atribuição têm funcionamento semelhante aos de C:
+
+| Operadores | Operação |
+| --- | --- |
+| `^` / `**` | Potenciação. |
+| `*` / `/` / `%` | Multiplicação / divisão / resto da divisão. |
+| `+` / `-` | Adição / subtração. |
+| `=` | Atribuição. |
+| `++` / `--` | Incremento / decremento de uma unidade. |
+| `+=` / `-=` | Adição / subtração seguida de atribuição. |
+| `*=` / `/=` / `%=` | Multiplicação / divisão / resto seguido de atribuição. |
+
+## Arranjos Associativos:
+
+Armazenam dados associando **uma chave a um valor**, como em um mapa. A chave identifica o elemento para consulta ou modificação:
+
+```awk
+arranjo[chave] = valor
+```
+
+Aceitam textos ou números como índices. Os numéricos são convertidos para texto: `dados[1]` e `dados["1"]` acessam o mesmo elemento.
+
+### Percorrendo os Elementos:
+
+Em `for (chave in arranjo)`, a variável recebe **cada chave existente**; `arranjo[chave]` acessa seu valor:
+
+```awk
+BEGIN {
+    precos["arroz"] = 25
+    precos["feijao"] = 8
+
+    for (produto in precos)
+        print produto, precos[produto]
+}
+```
+
+**Uma saída possível:**
+
+```text
+arroz 25
+feijao 8
+```
+
+> A ordem não é garantida: pode diferir da ordem de inserção, alfabética ou numérica, mesmo com índices numéricos.
+
+## Funções *built-ins*:
+
+| Função | Funcionamento |
+| --- | --- |
+| `length(str)` | Retorna a quantidade de caracteres; sem argumento, `length()` considera `$0`.  |
+| `int(num)` | Descarta a parte fracionária, truncando em direção a zero.  |
+| `index(str, trecho)` | Retorna a posição da primeira ocorrência de `trecho`, ou `0` se não encontrar. |
+| `split(str, arranjo, delimitador)` | Divide o texto, armazena as partes em `arranjo[1]`, `arranjo[2]` etc. e retorna sua quantidade. |
+| `substr(str, pos, len)` | Retorna até `len` caracteres a partir de `pos`, sem ultrapassar o final do texto. |
+| `tolower(str)` / `toupper(str)`    | Retornam uma cópia com letras minúsculas / maiúsculas. |
+
+> As posições de `index()` e `substr()` começam em **1**. `index("banana", "ana")` retorna `2`.
+
+## Saída e Formatação:
+
+**`print`** imprime os valores informados, usando `OFS` entre itens separados por vírgulas e acrescentando `ORS` ao final. Alterar `OFS` não reformata automaticamente `print $0`; ele atua, por exemplo, entre os campos em `print $1, $2`.
+
+**`printf`** controla a apresentação com sintaxe semelhante à de C. Cada especificador começa com `%` e termina com a letra da conversão, podendo incluir:
+
+- **`-`:** Alinhamento à esquerda; o padrão é à direita.
+- **Largura:** Quantidade mínima de caracteres, preenchida com espaços quando necessário; não corta conteúdos maiores.
+- **`.precisão`:** Casas após o separador decimal em `%f` e `%e`; algarismos significativos em `%g`; máximo de caracteres em `%s`.
+
+| Formato | Apresentação |
+| --- | --- |
+| `%d` | Número inteiro decimal. |
+| `%f` | Notação decimal, como `12.50`. |
+| `%e` | Notação exponencial, como `1.25e+01`. |
+| `%g` | Alterna entre decimal e exponencial conforme a magnitude e a precisão, normalmente removendo zeros finais desnecessários. |
+| `%o` / `%x` | Número inteiro sem sinal em octal / hexadecimal. |
+| `%s` | Texto (*string*). |
+
+```awk
+BEGIN {
+    printf "|%-10s|%8.2f|\n", "Arroz", 25.5
+}
+```
+
+```text
+|Arroz     |   25.50|
+```
+
+`%-10s` reserva pelo menos 10 caracteres para o texto, alinhado à esquerda; `%8.2f`, pelo menos 8 para o número, com duas casas decimais e alinhamento à direita.
+
+`printf` não acrescenta `OFS` nem `ORS` automaticamente: os espaços e a quebra de linha (`\n`) devem constar no formato.
+
+### Exemplo de Processamento:
+
+O arquivo `produtos.txt` contém um produto e seu valor em cada linha, separados por ponto e vírgula:
+
+```text
+Arroz;25
+Feijão;8
+Café;15
+```
+
+O programa `selecionar.awk` seleciona os produtos com valor maior ou igual a 10, imprime seus campos e soma os valores selecionados:
+
+```awk
+BEGIN {
+    FS = ";"
+    OFS = " | "
+    print "Produto", "Valor"
+}
+
+$2 >= 10 {
+    print $1, $2
+    total += $2
+}
+
+END {
+    print "Total", total
+}
+```
+
+```bash
+awk -f selecionar.awk produtos.txt
+```
+
+```text
+Produto | Valor
+Arroz | 25
+Café | 15
+Total | 40
+```
+
+`BEGIN` define os separadores e imprime o cabeçalho antes da leitura. Em cada linha, `$1` contém o produto e `$2`, seu valor; somente as que atendem a `$2 >= 10` executam a ação. `total` acumula esses valores entre os registros, e `END` imprime a soma após o fim da entrada. As vírgulas de `print` inserem `OFS` entre os itens, produzindo uma saída com separação diferente da entrada.
+
+## Estruturas de Controle:
+
+AWK utiliza **`if/else` para decisões** e **`while` e `for` para repetições**, com sintaxe semelhante à de C. As condições ficam entre parênteses; as chaves agrupam instruções e podem ser omitidas quando o corpo contém apenas uma. Os modelos abaixo ilustram a sintaxe:
+
+### `if` e `else`:
+
+```text
+if (condição) {
+    instruções
+} else {
+    instruções
+}
+```
+
+### `while` e `for`:
+
+```text
+while (condição) {
+    instruções
+}
+
+for (inicialização; condição; atualização) {
+    instruções
+}
+```
+
+A forma `for (chave in arranjo)`, apresentada anteriormente, percorre arranjos associativos.
+
+> Como em C, `break` encerra o laço atual e `continue` ignora o restante da repetição, avançando para a próxima iteração.
+
+---
 
 # Fontes
 
