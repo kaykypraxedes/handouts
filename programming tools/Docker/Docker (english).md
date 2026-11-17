@@ -11,265 +11,292 @@ ______               _
 
 # 0. Basic Concepts
 
-**Docker** is a platform for building, distributing, and running applications in isolated environments (**containers**). The application is packaged with its dependencies and basic configurations, reducing differences between development, testing, and runtime environments.
+## Docker:
 
-## Containers:
+**Docker** allows you to prepare and run applications with the programs and libraries they need, in isolated environments called ***containers***. This reduces differences between computers: instead of installing and configuring each dependency directly on the system, an environment prepared for the application is used.
 
-A container is not a complete virtual machine. On Linux, container processes share the host kernel, but have an isolated view of resources such as processes, networks, the file system, and users. This separation uses kernel mechanisms, mainly namespaces and cgroups, which generally makes containers lighter than traditional virtual machines.
+The computer that runs this environment is called the *host*. In the examples in this handbook, it is the same computer on which the commands are typed.
 
-Isolation is not absolute. Containers still use the host kernel, and options such as `--privileged`, mounting sensitive directories, and access to the Docker socket can grant extensive control over the system.
+## Images and *Containers*:
 
-## Architecture:
+An **image** contains the files and configurations used as a basis for running an application. A ***container*** is the environment created from that image, with its own processes, configurations, and file changes.
 
-Docker Engine uses a client-server architecture. The **client** `docker` interprets commands and sends requests through the Docker API. The **daemon** `dockerd` receives these requests and manages objects such as images, containers, networks, and volumes. The client and daemon can be on the same machine or on different machines.
+One image can give rise to several *containers*. Changing the files in one of them does not modify the original image or the files of the others, except when they use shared storage.
 
-In a traditional Linux installation, the client and daemon normally communicate through the Unix socket `/var/run/docker.sock`. Therefore, running `docker container run` does not mean the CLI itself created the container: it requested the operation from the daemon.
+> For those familiar with object orientation, a possible comparison is to think of the image as a class and the *container* as an object created from it.
 
-A **registry** stores and distributes images. Docker Hub is the registry used by default when the image reference does not specify another server, but private registries or registries from other providers can also be used.
+A *container* remains running while its **main process** is active. If that program ends, the *container* stops. Stopping does not mean removing: its files remain available for a new start. When the *container* is removed, data written only in it is deleted; to keep it regardless of the *container*, volumes or mounted directories are used (chapter 5).
 
-## Images:
+Linux *containers* share the kernel of the Linux environment in which they run, instead of each one starting a complete operating system. In Docker Engine installed directly on Linux, that kernel is the host's; in Docker Desktop, Linux *containers* are normally inside a virtual machine managed by the tool.
 
-An **image** is an immutable template, normally made up of layers, that contains the file system and configurations required to start an application. The same image can produce several independent containers.
+## *Registries* and Image Names:
 
-A **container** is a runnable instance of an image. When it is created, Docker adds a writable layer and associates configurations such as the main command, environment variables, volumes, networks, and ports. Changing or removing a container does not modify the image from which it was created.
+A ***registry*** is a service that stores and distributes images. **Docker Hub** is used by default, but private servers and servers from other providers also exist.
 
-> An interesting analogy is to think of the **image as a class** and the **container as an object instantiated from that class**.
+The reference `nginx:alpine` identifies the `nginx` image and the ***tag*** `alpine`, which selects a version or variant. A reference such as `registry.example.com/equipe/app:1.0` also informs the server and the repository organization.
 
-The container remains running while its main process is active. This process has PID 1 inside the container and receives stop signals sent by Docker. When it exits, the container changes to the stopped state, even though its writable layer continues to exist.
+If the *tag* is omitted, Docker uses `latest`. This name is a convention: it does not guarantee that it is the most recent version. *Tags* can start pointing to other content when an image is updated.
 
-By default, data written only to the container layer belongs to its lifecycle. Removing the container also removes this layer. Data that needs to survive container replacement must be stored in volumes or in mounted host directories.
+## Command Structure:
 
-### Image references:
+The form most used in this handbook is `docker {object} {command} {options} {arguments}`. The object indicates the resource, such as `image`, `container`, or `volume`; the command indicates the operation, such as `ls`, `run`, or `rm`.
 
-An image can be identified approximately by `{registry}/{namespace}/{repository}:{tag}` or by a digest. Omitted parts receive default values. For example, `ubuntu:24.04` uses Docker Hub, while `registry.example.com/team/app:1.0` explicitly specifies the server.
+> Elements between `{braces}` must be replaced, without keeping the braces. `{options}` represents optional modifiers; the main description presents the behavior without them, considering the indicated arguments. When an argument can be omitted, this will be explained in the text. Arguments in the plural, such as `{containers}`, accept one or more names or identifiers separated by spaces.
 
-When the tag is omitted, Docker uses `latest`. This name is only a conventional, mutable tag; it does not guarantee that the image is the most recent version chronologically.
-
-A digest, such as `image@sha256:{value}`, identifies specific content.
-
-## Command structure:
-
-The canonical CLI form generally follows the pattern `docker {object} {command} {options} {arguments}`.
-> Some commands also have shorter historical aliases. For example, `docker image ls` can be written as `docker images`, `docker container ls` as `docker ps`, `docker image rm` as `docker rmi`, and `docker container rm` as `docker rm`.
+Some commands have short forms: `docker container run` is equivalent to `docker run`, `docker container ls` to `docker ps`, `docker image ls` to `docker images`, and `docker image rm` to `docker rmi`. Here, the extended form is kept to make explicit the resource used.
 
 ## Manuals:
 
 - `docker --help` - Shows the main commands and global options.
 
-- `docker {object} --help` - Shows the operations available for an object, such as `docker image --help`.
+- `docker {object} --help` - Shows the operations available for a resource, such as `docker image --help`.
 
-- `docker {object} {command} --help` - Shows the syntax, options, and examples for an operation, such as `docker container run --help`.
+- `docker {object} {command} --help` - Shows the help for an operation, such as `docker container run --help`.
 
-- `docker compose --help` - Shows Docker Compose commands and global options.
-
-- `docker compose {command} --help` - Shows the documentation for a specific Compose operation.
-
-- `docker version {options}` - Shows client and server versions and information.
-
-- `docker info {options}` - Shows the Docker Engine configuration and general state.
-
-You can also consult the [Docker CLI Reference](https://docs.docker.com/reference/cli/docker/), [Dockerfile Reference](https://docs.docker.com/reference/dockerfile/), [Docker Compose CLI Reference](https://docs.docker.com/reference/cli/docker/compose/), and [Compose File Reference](https://docs.docker.com/reference/compose-file/).
+- `docker compose {command} --help` - Shows the help for a Compose operation (chapter 7). Without the command, `docker compose --help` shows the general help.
 
 ---
 
 # 1. Configuration and Permissions
 
-## Docker service:
+## Installation and Verification:
 
-On distributions that use `systemd`, Docker Engine runs as a service. Depending on the distribution and installation method, it may need to be started or enabled during system startup.
+The `docker` command uses a service, called **Docker Engine**, to manage images, *containers*, networks, and volumes. Having the command installed does not mean that this service is running.
 
-- `systemctl {action} docker.service` - Manages the Docker service.
+Consult the official instructions to install [Docker Engine](https://docs.docker.com/engine/install/) or [Docker Desktop](https://docs.docker.com/desktop/). Desktop brings together the runtime environment, a graphical interface, and Compose; on Linux, Engine can also be installed directly, without Desktop.
 
-- `journalctl {options} -u docker.service` - Queries the service logs. `-f` follows new messages, `-b` limits output to the current boot, and `--since` defines the period.
+- `docker version {options}` - Shows the client and server versions. If the client responds but the server part shows an error, check whether the service is available and whether your user can access it.
 
-Service management remains an administrative operation and normally requires `sudo`, even after the user is granted access to the Docker CLI.
+- `docker info {options}` - Shows information about the running environment, including the number of images and *containers*.
+
+## Service on Linux:
+
+The commands below apply to **Docker Engine installed as a system service on distributions with `systemd`**. In Docker Desktop, the environment is started by the application itself.
+
+- `sudo systemctl start docker` - Starts the service now.
+
+- `sudo systemctl enable docker` - Configures the service to start automatically with the system.
+
+- `systemctl status docker` - Checks the service state.
+
+- `sudo journalctl -u docker.service` - Checks the service logs. `-f` follows new messages and `-b` limits to the current boot.
 
 ## Running without `sudo`:
 
-The need for `sudo` comes from permission on the Docker daemon (accessible by `root` and the `docker` group), not from permission on `/var/lib/docker/` (where containers and images are stored). To allow the current user to access the daemon without `sudo`:
+In the traditional Engine installation on Linux, access depends on permission to communicate with the service. To allow access by the `docker` group:
 
 ```bash
-$ sudo groupadd docker  # required only if the group does not exist yet (you can check with "cat /etc/group | grep docker")
-$ sudo usermod -aG docker "$USER" # adds the current user to the docker group (execution permission)
+# Execute apenas se o grupo ainda não existir.
+sudo groupadd docker
+
+# Adicione seu usuário ao grupo.
+sudo usermod -aG docker "$USER"
 ```
 
-> The `docker` group grants privileges equivalent to those of `root`; only trusted users should belong to this group.
+After that, just refresh the terminal.
 
-### Rootless Mode:
+> This does not exempt `sudo` for administrative operations such as starting the service.
 
-In **Rootless Mode**, both the daemon and containers run as a user without administrative privileges inside a user namespace. This model reduces the impact of vulnerabilities in the daemon or runtime and avoids granting access equivalent to `root` through the `docker` group.
+**Joining the `docker` group grants access equivalent to that of an administrator on the computer.** This configuration should be limited to trusted users.
 
-Rootless mode has its own installation, socket, context, and data directory, as well as UID and GID mapping requirements. Therefore, it should be treated as a complete alternative configuration and not casually combined with the traditional daemon.
+> *Rootless* mode is an alternative in which the service and *containers* run without administrative privileges. It has its own installation and configuration; consult the [official guide](https://docs.docker.com/engine/security/rootless/).
 
 ---
 
-# 2. Images and Registries
+# 2. Images and *Registries*
 
-## Information:
+## Consulting and Downloading Images:
 
-- `docker image ls {options} [{repository}[:{tag}]]` - Lists images stored locally. `-a` includes intermediate images, `-q` shows only identifiers, `--filter` filters, and `--format` customizes the output.
+- `docker image ls {options}` - Lists the images stored locally. `-q` shows only the identifiers.
 
-- `docker image inspect {options} {images}` - Shows detailed information in JSON, such as identifiers, tags, layers, architecture, and configuration. `--format` extracts specific fields.
+- `docker image inspect {options} {images}` - Shows detailed information in JSON, such as configuration, architecture, and identifiers. `--format` allows selecting fields.
 
-- `docker image history {options} {image}` - Shows the layers and commands that formed an image.
-
-## Transfer:
-
-- `docker image pull {options} {name}[:{tag}|@{digest}]` - Downloads an image from a registry. `-a` downloads all tags, and `--platform` selects the platform.
-
-- `docker image tag {source_image} {target_image}` - Creates another reference to the same image, normally before pushing it to a registry.
-
-- `docker image push {options} {name}[:{tag}]` - Pushes an image to the registry indicated by its name. `-a` pushes all tags, and `--platform` selects a specific platform.
-
-- `docker login {options} [{registry}]` - Authenticates the client with a registry. `-u` specifies the user, and `--password-stdin` receives the credential through standard input without placing it directly in the shell history.
-
-- `docker logout [{registry}]` - Removes the authentication stored by the client for the specified registry.
-
-The user must have permission in the target namespace before running `push`. Client credentials are normally associated with the configuration in `~/.docker/config.json`; when possible, a system credential store should be used instead of keeping credentials encoded directly in this file.
-
-## Image files:
-
-- `docker image save {options} {images}` - Saves one or more images, including layers and references, to a TAR file. `-o {file}` defines the output file.
-
-- `docker image load {options}` - Loads images and tags from a TAR file created by `save`. `-i {file}` defines the input file; without it, the command reads standard input.
+- `docker image pull {options} {image}` - Downloads an image from the indicated *registry* or, by default, from Docker Hub.
 
 ```bash
-$ docker image save -o image.tar application:1.0
-$ docker image load -i image.tar
+docker image pull nginx:alpine
+docker image ls
 ```
 
-`save` and `load` operate on images. In contrast, `docker container export` and `docker image import` transfer only a representation of the container's file system, without preserving the history, layers, and complete image configuration in the same way.
+Downloading an image does not start the application. It becomes available to create *containers*.
 
-## Removal:
+## Identifying and Publishing Images:
 
-- `docker image rm {options} {images}` - Removes local image references. `-f` forces the operation, and `--no-prune` prevents the removal of untagged parent layers.
+- `docker image tag {source} {destination}` - Creates another name or *tag* for the same local image, without duplicating its content.
 
-An image can have multiple tags or share layers with other images. Therefore, removing a reference does not guarantee that all corresponding layers are immediately freed. Existing containers can also prevent or change the effect of the removal.
+- `docker login {options} {registry}` - Authenticates to the indicated server. Without the server, it uses Docker Hub. The authentication flow depends on the service.
+
+    - `docker login -u {user} --password-stdin {registry}` - Receives the password or token through standard input, avoiding placing it directly in the command.
+
+- `docker image push {options} {image}` - Sends the image to the *registry* and repository indicated in its name. You must have publishing permission on the destination.
+
+- `docker logout {registry}` - Removes the local authentication for the indicated server; if omitted, it uses Docker Hub.
+
+Assuming that `minha_aplicacao:1.0` already exists locally, publishing to Docker Hub can be done as follows, replacing `seu_usuario` with the authorized account:
+
+```bash
+docker image tag minha_aplicacao:1.0 seu_usuario/minha_aplicacao:1.0
+docker login
+docker image push seu_usuario/minha_aplicacao:1.0
+```
+
+Credentials are associated with the client configuration. Prefer integration with the system's credential vault; credentials merely encoded in `~/.docker/config.json` are not encrypted.
+
+## Removing Images:
+
+- `docker image rm {options} {images}` - Removes the indicated local references. Images used by *containers* may prevent the operation.
+
+    - `docker image rm -f {images}` - Forces removal in the situations allowed by Docker; it does not replace the management of the *containers* that use the image.
+
+An image can have several names and share parts of its content with other images. Therefore, removing a reference does not always free all the space shown for it.
+
+## Transferring Images by File:
+
+- `docker image save {options} {images}` - Generates a TAR file with the images, sending the content to standard output when no destination file is chosen.
+
+    - `docker image save -o {file} {images}` - Writes the TAR to the indicated file.
+
+- `docker image load {options}` - Loads images from a TAR received through standard input.
+
+    - `docker image load -i {file}` - Reads the TAR from the indicated file.
+
+```bash
+docker image save -o nginx.tar nginx:alpine
+docker image load -i nginx.tar
+```
+
+These commands transfer images. Data stored in *containers* and volumes are not included automatically.
 
 ---
 
-# 3. Containers
+# 3. *Containers*
 
-## Creation and execution:
+## Creating and Running:
 
-- `docker container create {options} {image} [{command} {arguments}]` - Creates a container without starting it.
+- `docker container create {options} {image}` - Creates a *container* without starting it.
 
-- `docker container run {options} {image} [{command} {arguments}]` - Downloads the image if necessary, creates a new container, and starts its main process.
+- `docker container run {options} {image} {command} {arguments}` - Creates a new *container* and starts its main process. Downloads the image if it is not available locally. The command and its arguments can be omitted to use the default defined by the image.
 
-Some of the most important `run` options are:
+    - `docker container run --name {name} {image}` - Assigns a name to make the next commands easier.
+    - `docker container run -d {image}` - Runs in the background and releases the terminal.
+    - `docker container run -it {image} {command}` - Keeps input open (`-i`) and provides a terminal (`-t`), allowing interaction with the program.
+    - `docker container run --rm {image}` - Automatically removes the *container* when it ends.
 
-- `-d` or `--detach` - Runs in the background.
-- `-i` or `--interactive` - Keeps standard input open.
-- `-t` or `--tty` - Creates a pseudo-terminal; it is often combined with `-i` as `-it`.
-- `--name {name}` - Assigns a name to the container.
-- `--rm` - Automatically removes the container when it exits.
-- `-p {host}:{container}` - Publishes a container port on the host.
-- `-e {key}={value}` - Defines an environment variable.
-- `--env-file {file}` - Loads environment variables from a file.
-- `--mount {configuration}` - Attaches a volume, bind mount, or `tmpfs`.
-- `--network {network}` - Connects the container to a network.
-- `--restart {policy}` - Defines a restart policy, such as `no`, `on-failure`, `always`, or `unless-stopped`.
-- `--memory {limit}` and `--cpus {limit}` - Limit memory and CPU.
-- `-u {user}[:{group}]` - Defines the user for the main process.
-- `--pull={policy}` - Controls image retrieval: `missing`, `always`, or `never`.
-
-Example:
+Options can be combined:
 
 ```bash
-$ docker container run -d \
-    --name server \
-    -p 127.0.0.1:8080:80 \
-    --restart unless-stopped \
-    nginx:alpine
+docker container run --name servidor -d nginx:alpine
+docker container run --rm -it alpine:3.22 sh
 ```
 
-Running `run` again creates another container, even when the same image is used. To restart a stopped container while preserving its configuration and writable layer, use `start`.
+The first command keeps the server in the background, still without publishing a port for browser access. The second opens an `sh` terminal in another *container*; when you run `exit`, its main process ends and it is removed.
 
-## Listing and information:
+**Each `run` creates a new container.** To start a stopped one again, use `start`. Repeating `run` with the same `--name` causes a conflict as long as the previous *container* exists, even stopped.
 
-- `docker container ls {options}` - Lists containers. With no options, it shows only running containers. `-a` includes stopped containers, and `-q` shows only identifiers.
+## Checking State and Resources:
 
-- `docker container inspect {options} {containers}` - Shows the configuration and state of one or more containers in JSON. `--format` selects fields.
+- `docker container ls {options}` - Lists the *containers* running. `-q` shows only the identifiers.
 
-- `docker container stats {options} [containers]` - Shows CPU, memory, network, and I/O usage. `--no-stream` produces only one reading.
+    - `docker container ls -a` - Includes stopped *containers*.
 
-- `docker container top {container} {ps_options}` - Shows the container's processes.
+- `docker container inspect {options} {containers}` - Shows the configuration and state in JSON. `--format` allows selecting fields.
 
-- `docker container port {container} [{port}]` - Shows published ports.
+- `docker container stats {options} {containers}` - Monitors CPU, memory, network, and read/write usage. Without names, it monitors the running *containers*; `--no-stream` shows only one reading.
 
-## Lifecycle:
+- `docker container top {container}` - Shows the processes of the *container*.
 
-- `docker container start {options} {containers}` - Starts stopped containers. `-a` attaches output, and `-i` attaches input.
+## Stopping, Resuming, and Removing:
 
-- `docker container stop {options} {containers}` - Requests a graceful shutdown and forces termination after the timeout. `-s` selects the initial signal, and `-t` defines the waiting time.
+- `docker container stop {options} {containers}` - Requests termination of the process and forces completion if it does not stop within the time limit. `-t {seconds}` adjusts this wait.
 
-- `docker container kill {options} {containers}` - Immediately sends a signal; the default is `SIGKILL`. `-s` selects another signal.
+- `docker container start {options} {containers}` - Starts existing *containers* that are stopped, preserving their configuration.
 
-- `docker container restart {options} {containers}` - Stops and starts the containers again. `-s` and `-t` control the stop.
+    - `docker container start -ai {container}` - Starts and connects the terminal to the *container*'s input and output.
 
-- `docker container rm {options} {containers}` - Removes containers. `-f` forces removal of a running container, and `-v` removes associated anonymous volumes.
+- `docker container restart {options} {containers}` - Stops and starts again. `-t {seconds}` adjusts the wait during stopping.
 
-Stopping a container does not remove it. Its configuration and writable layer remain available to `start`. Removal deletes this layer, but does not automatically delete the image or named volumes.
+- `docker container kill {options} {containers}` - Forces immediate termination with `SIGKILL`. The `-s {signal}` option allows sending another signal.
 
-## Logs and command execution:
+- `docker container rm {options} {containers}` - Removes stopped *containers* and data written only in them.
 
-- `docker container logs {options} {container}` - Shows the captured output of the container process according to the logging driver. `-f` follows new messages, `--tail` limits the last lines, `--since` and `--until` define the period, and `-t` shows timestamps.
-
-- `docker container exec {options} {container} {command} {arguments}` - Starts a new process inside a running container. `-it` creates an interactive session, `-u` defines the user, `-e` adds variables, and `-w` defines the working directory.
-
-An interactive session can be started with:
+    - `docker container rm -f {containers}` - Forces termination and removal of running *containers*.
+    - `docker container rm -v {containers}` - Also removes associated anonymous volumes; it does not remove named volumes.
 
 ```bash
-$ docker container exec -it my_container sh
+docker container stop servidor
+docker container start servidor
+docker container stop servidor
+docker container rm servidor
 ```
 
-`bash` can be used when it is installed in the image. The command does not literally “enter” the container: it creates a new process while the container's main process remains active. Running `exit` ends only this shell started by `exec` and normally does not stop the container.
+The sequence stops, resumes, and finally removes the server from the previous example. The image remains available. Stopping preserves the *container*'s files; removing eliminates its writable layer.
 
-- `docker container cp {source} {destination}` - Copies files between the host and a container, using `{container}:{path}` on one side.
+## Checking *Logs* and Running Commands:
+
+- `docker container logs {options} {container}` - Shows the application's recorded output. `--tail {quantity}` limits to the last lines and `-t` adds timestamps. Availability depends on the application's and Docker's logging configuration.
+
+    - `docker container logs -f {container}` - Follows new messages. `Ctrl+C` ends following, without stopping the *container*.
+
+- `docker container exec {options} {container} {command} {arguments}` - Runs another process in a *container* that is already running. The arguments depend on the program and can be omitted.
+
+    - `docker container exec -it {container} sh` - Opens an interactive `sh` session, if that program exists in the *container*.
+
+It is possible to use `bash` instead of `sh` when it is installed. In that case, `exit` ends the session created by `exec`, while the main process continues running.
+
+- `docker container cp {source} {destination}` - Copies files between the computer and a *container*. Use `{container}:{path}` to indicate the *container* side.
+
+```bash
+docker container cp pagina.html servidor:/usr/share/nginx/html/index.html
+docker container cp servidor:/etc/nginx/nginx.conf ./nginx.conf
+```
+
+The examples assume an Nginx *container* named `servidor`; the first line also requires the local file `pagina.html`.
+
+## Configuring the Application:
+
+- `docker container run -e {key}={value} {image}` - Defines an environment variable for the application.
+
+- `docker container run --env-file {file} {image}` - Loads variables from a file with lines in the `KEY=value` format.
+
+- `docker container run --restart {policy} {image}` - Defines when to automatically restart the *container*. `no` disables the policy; `on-failure` reacts to termination with an error; `unless-stopped` allows automatic resumptions, preserving the decision of a manual stop.
+
+These settings are defined when the *container* is created. A `start` reuses the existing ones. Variables only have an effect if the application recognizes them, and they should not be treated as a vault of credentials.
+
+> For specific needs, `--memory` and `--cpus` limit resources; `-u` chooses the process user; `--pull` controls when to obtain the image. Consult `docker container run --help` for the syntax and accepted values. Ports, networks, and storage are detailed in chapters 5 and 6.
 
 ---
 
-# 4. Dockerfile and Image Building
+# 4. *Dockerfile* and Image Building
 
-## Dockerfile:
+## *Dockerfile*:
 
-A **Dockerfile** is a text file that reproducibly describes how to build an image (in practice, **an instruction manual for creating an image**). Its instructions are processed in order and generally produce reusable layers.
+A ***Dockerfile*** is a text file with the instructions to build an image. It records how to prepare the files and the environment, allowing the build to be repeated without depending on manual changes in a *container*.
 
-The main instructions are:
+- `FROM {image}` - Chooses the base image.
 
-- `FROM {image}` - Defines the base image and starts a build stage.
-- `WORKDIR {path}` - Defines the directory used by the following instructions and the default process.
-- `COPY {source} {destination}` - Copies files from the build context into the image.
-- `RUN {command}` - Executes an operation during the image build.
-- `ENV {key}={value}` - Defines a persistent variable in the image configuration.
-- `USER {user}` - Defines the user for the following instructions and the default process.
-- `EXPOSE {port}` - Documents the port expected by the application; it does not publish it on the host.
-- `ENTRYPOINT [...]` - Defines the main executable.
-- `CMD [...]` - Defines the default command or arguments, which can be overridden at runtime.
+- `WORKDIR {path}` - Defines the directory used by the following instructions and by the program run when starting the *container*.
 
-Example:
+- `COPY {source} {destination}` - Copies files from the build context to the image.
 
-```dockerfile
-FROM python:3.13-slim
+- `RUN {command}` - Runs an operation during the build, such as installing dependencies.
 
-WORKDIR /app
+- `ENV {key}={value}` - Defines a variable in the image environment.
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+- `USER {user}` - Defines the user for the next `RUN` instructions and for running the *container*.
 
-COPY . .
+- `EXPOSE {port}` - Documents the port used by the application. It does not publish the port on the computer.
 
-EXPOSE 8000
-CMD ["python", "app.py"]
-```
+- `ENTRYPOINT ["{program}", "{argument}"]` - Defines the main program. The list can have only the program or include several arguments.
 
-The JSON form of `CMD` and `ENTRYPOINT`, such as `CMD ["program", "argument"]`, executes the program directly and makes it easier for the main process to handle signals correctly.
+- `CMD ["{program}", "{argument}"]` - Defines the default command. When an `ENTRYPOINT` exists, the content of `CMD` normally provides its default arguments.
+
+**`RUN` happens during the build; `CMD` and `ENTRYPOINT` define the container's execution.** When providing another command in `docker container run`, it replaces `CMD`; with an `ENTRYPOINT` in list form, that content is passed as an argument to the main program.
 
 ## Context and `.dockerignore`:
 
-The **build context** is the set of files made available to the builder. In `docker image build .`, the dot indicates the current directory as the context. The Dockerfile cannot arbitrarily copy files located outside it.
+The **build context** gathers the files available to create the image. In `docker image build .`, the dot indicates the current folder. The source paths of `COPY` are relative to this context, not to any folder on the computer.
 
-The `.dockerignore` file excludes items from the context, reducing transfers, cache invalidations, and the risk of adding unwanted data to the image:
+The `.dockerignore` file, placed at the root of the context, excludes files that do not need to be sent to the build:
 
 ```gitignore
 .git/
@@ -279,296 +306,336 @@ build/
 *.log
 ```
 
-Secrets should not be written to `ENV`, `ARG`, `COPY`, or intermediate layers, because they can remain in the image or its history. Builds that need to access a credential should use the BuildKit secrets mechanism.
+This reduces the transferred content and avoids including unnecessary local files. Credentials should not be copied into the image or written in its instructions; when the build needs them, use [build secrets](https://docs.docker.com/build/building/secrets/).
 
-## Building:
+## Building an Image:
 
-- `docker image build {options} {context}` - Builds an image from a Dockerfile. `-t {name}:{tag}` assigns a reference, `-f {file}` selects another Dockerfile, `--no-cache` ignores the cache, `--pull` attempts to update the base image, and `--build-arg` provides build arguments.
+- `docker image build {options} {context}` - Builds an image using, by default, the `Dockerfile` at the root of the context.
 
-Example:
+    - `docker image build -t {name}:{tag} {context}` - Assigns a name and a *tag* to the result.
+    - `docker image build -f {file} {context}` - Chooses another Dockerfile.
+    - `docker image build --no-cache {context}` - Redoes the steps without reusing the stored results of previous builds.
+    - `docker image build --pull {context}` - Tries to obtain an updated version of the base image.
 
-```bash
-$ docker image build -t my_application:1.0 .
+For a complete example, create a `site` folder, place in it an `index.html` file with the desired content, and save the following `Dockerfile` next to that folder:
+
+```dockerfile
+FROM python:3.13-slim
+WORKDIR /app
+COPY site/ .
+EXPOSE 8000
+CMD ["python", "-m", "http.server", "8000", "--bind", "0.0.0.0"]
 ```
 
-## Capturing a container:
+This example uses the HTTP server included in Python to serve the files from `/app`. In the folder containing the Dockerfile, build and run:
 
-- `docker container commit {options} {container} [{repository}[:{tag}]]` - Creates an image from the changes in a container's writable layer.
+```bash
+docker image build -t meu_site:1.0 .
+docker container run --rm -d --name meu-site \
+    -p 127.0.0.1:8000:8000 meu_site:1.0
+```
 
-`commit` can be useful for investigation or a one-time capture, but it does not replace a Dockerfile: the sequence that produced the state is not documented and cannot be reproduced safely. Changes stored in mounted volumes are not included in the created image.
+Access `http://localhost:8000`. The `-p` option, detailed in chapter 6, allows access from the computer. If you change the local files, build the image again and replace the *container*: the files were copied during the build, not linked to the original folder. In this example, `docker container stop meu-site` also removes it because of `--rm`.
+
+> `docker container commit {container} {image}` can capture changes made to a *container*'s files, but it does not document the steps that produced that state nor include volume data. To keep the build reproducible, prefer the Dockerfile.
 
 ---
 
 # 5. Storage
 
-## Storage types:
+## Choosing Where to Store Data:
 
-Docker provides three main ways to make additional storage available to a container:
+Data written only in the *container* survives a stop, but is lost when it is removed. To separate the data from the *container*'s life, use a mount: a path inside it starts to access storage external to its writable layer.
 
-- **Volume:** a persistent area managed by Docker and independent of the container lifecycle. It is normally the preferred option for databases and application data.
-- **Bind mount:** an existing file or directory on the host mounted directly in the container. It is useful for source code and configurations, but couples the container to the host structure.
-- **`tmpfs`:** temporary storage kept in the host memory and removed when the container stops.
+| Type | When to Use |
+| --- | --- |
+| **Volume** | For persistent data managed by Docker, such as database files. |
+| ***Bind mount*** | To share a specific file or directory from the computer, such as source code or configurations. |
 
-## Volumes:
+> `tmpfs` offers temporary storage in memory, discarded when the *container* stops. It is an alternative for data that does not need to be persisted.
 
-- `docker volume create {options} [{volume}]` - Creates a volume.
+## Managing Volumes:
 
-- `docker volume ls {options}` - Lists volumes.
+- `docker volume create {options} {volume}` - Creates a volume. If the name is omitted, Docker generates an identifier.
 
-- `docker volume inspect {options} {volumes}` - Shows volume details.
+- `docker volume ls {options}` - Lists the existing volumes.
 
-- `docker volume rm {options} {volumes}` - Removes unused volumes. `-f` forces the request, but volumes in use by containers cannot be removed.
+- `docker volume inspect {options} {volumes}` - Shows detailed information about the volumes.
 
-- `docker volume prune {options}` - By default, removes unused local anonymous volumes. `-a` includes unused named volumes, `--filter` limits the scope, and `-f` skips confirmation.
+- `docker volume rm {options} {volumes}` - Removes volumes that are not associated with *containers*, deleting their data.
 
-A volume can be attached when creating the container with:
+Volumes with a chosen name, such as `dados`, are called **named**. Those created without a chosen name are called **anonymous**. This difference affects some removal operations, such as `container rm -v`.
 
-```bash
-$ docker container run --mount \
-    type=volume,src=data,dst=/var/lib/application \
-    image:tag
-```
+## Associating a Volume:
 
-## Bind mounts:
+- `docker container run --mount type=volume,src={volume},dst={destination} {image}` - Makes a volume available at the indicated path inside the *container*.
 
-A bind mount can be created with:
+The example below writes a file to the volume and reads it using another *container*:
 
 ```bash
-$ docker container run --mount \
-    type=bind,src="$PWD/config",dst=/app/config,readonly \
-    image:tag
+docker volume create dados
+docker container run --rm --mount type=volume,src=dados,dst=/dados \
+    alpine:3.22 sh -c 'echo "Teste de persistência" > /dados/teste.txt'
+docker container run --rm --mount type=volume,src=dados,dst=/dados \
+    alpine:3.22 cat /dados/teste.txt
 ```
 
-Read-only mode reduces the risk of the container changing the host. Even so, processes with access to the mount can read the files it contains; directories containing keys, credentials, or personal data should not be mounted unless necessary.
+Both *containers* are removed when they end, but the file remains in the `dados` volume. To remove it permanently, use `docker volume rm dados` when you no longer need its content.
 
-The short option `-v` or `--volume` accepts the format `{source}:{destination}:{options}`. On systems with SELinux, such as Fedora, `:Z` creates a private label for one container, and `:z` creates a label that can be shared among containers:
+## Mounting a Computer Directory:
+
+- `docker container run --mount type=bind,src={source},dst={destination} {image}` - Associates a computer path with a path inside the *container*. In the form presented, the source must exist.
+
+In Bash, while in the folder containing the `site` directory from the previous chapter:
 
 ```bash
-$ docker container run -v "$PWD/data:/app/data:Z" image:tag
+docker container run --rm -d --name site-local \
+    -p 127.0.0.1:8080:80 \
+    --mount type=bind,src="$PWD/site",dst=/usr/share/nginx/html,readonly \
+    nginx:alpine
 ```
 
-Relabeling changes the SELinux labels of the host files and should be applied only to the required directory.
+Access `http://localhost:8080`. `$PWD` represents the current folder; `readonly` allows the *container* to read the files, without changing them through this mount. Edits made on the computer become available to the server without rebuilding the image.
+
+The short form `-v {source}:{destination}` also accepts volumes and directories. A name such as `dados` indicates a volume; an absolute path indicates a computer directory. Adding `:ro` makes the mount read-only.
+
+> On systems with SELinux, `:Z` and `:z` in the `-v` option adjust access labels for private use or sharing between *containers*. These adjustments modify the host files and should be limited to the necessary folder. Consult the [bind mounts documentation](https://docs.docker.com/engine/storage/bind-mounts/).
 
 ---
 
 # 6. Networks and Ports
 
-## Networks:
+## Accessing the Application from the Computer:
 
-By default, containers receive a virtual interface and connect to a network. The default `bridge` network provides basic connectivity, but user-created bridge networks provide better isolation and name resolution between containers.
+The application can be running inside the *container* without being available in the computer's browser. To allow this access, publish its port when creating the *container*.
 
-Containers connected to the same custom network can normally use their names as hostnames, avoiding reliance on IP addresses that can change.
+- `docker container run -p {host_port}:{container_port} {image}` - Forwards the computer port to the port used by the application in the *container*. Without an explicit IP, it normally publishes on all host interfaces.
 
-- `docker network create {options} {network}` - Creates a network. `-d` selects the driver, `--subnet` defines the subnet, and `--internal` restricts external access.
+- `docker container run -p 127.0.0.1:{host_port}:{container_port} {image}` - Limits publication to the computer itself.
 
-- `docker network ls {options}` - Lists networks.
+- `docker container port {container}` - Shows the published ports of a *container*.
 
-- `docker network inspect {options} {networks}` - Shows the configuration and connected containers.
+In `-p 127.0.0.1:8080:80`, the browser accesses port **8080 of the computer**, while the server uses port **80 in the container**. Another application cannot simultaneously occupy the same address and port on the computer.
 
-- `docker network connect {options} {network} {container}` - Connects an existing container to a network.
+TCP is the default protocol. For UDP, add `/udp`, as in `-p 5353:53/udp`. The `EXPOSE` instruction in the Dockerfile only documents the port; it does not replace `-p`.
 
-- `docker network disconnect {options} {network} {container}` - Disconnects a container.
+## Communication between *Containers*:
 
-- `docker network rm {networks}` - Removes networks that are not in use.
+A user-created *bridge* network allows connected *containers* to find each other by name. This avoids depending on IP addresses that can change.
 
-## Publishing ports:
+- `docker network create {options} {network}` - Creates a network; the default type is *bridge*.
 
-Publishing a port creates forwarding from the host to the container. The general form is `{host_IP}:{host_port}:{container_port}/{protocol}`.
+- `docker network ls {options}` - Lists the networks.
 
-- `-p 8080:80` - Publishes container TCP port 80 on port 8080 of the host interfaces.
-- `-p 127.0.0.1:8080:80` - Limits access to the local machine.
-- `-p 5353:53/udp` - Publishes a port using UDP.
+- `docker network inspect {options} {networks}` - Shows the configuration and the connected *containers*.
 
-If the host address is omitted, the port is normally bound to all interfaces and may be accessible from other machines. For services intended only for local development, explicitly specify `127.0.0.1`.
+- `docker network connect {options} {network} {container}` - Connects an existing *container* to the network.
 
-`EXPOSE` in the Dockerfile documents the port used by the application, but does not create this publication. The `-p` option or an equivalent Compose declaration is required to access it through the host.
+- `docker network disconnect {options} {network} {container}` - Disconnects a *container* from the network.
+
+- `docker network rm {options} {networks}` - Removes networks that are not in use.
+
+- `docker container run --network {network} {image}` - Connects the new *container* to the indicated network.
+
+```bash
+docker network create minha-rede
+docker container run -d --name web --network minha-rede nginx:alpine
+docker container run --rm --network minha-rede alpine:3.22 \
+    wget -qO- http://web:80
+```
+
+The last command queries the server by the name `web`. It is not necessary to publish the port with `-p` for this internal communication. Inside a *container*, `localhost` points to itself, not to another *container* or to the computer.
 
 ---
 
-# 7. Docker Compose
+# 7. *Docker Compose*
 
-## Compose:
+## Purpose and Syntax:
 
-**Docker Compose** is a declarative tool for defining and running applications made up of one or more containers. Instead of maintaining several `docker container run`, `docker network create`, and `docker volume create` commands, the application configuration is recorded in a `YAML` file and applied as a set.
+**Docker Compose** allows you to save an application's configuration in a file, instead of repeating long creation commands. It uses Docker Engine to create and manage the *containers*, networks, and volumes declared.
 
-Compose does not replace Docker Engine. It works as another API client and asks the same daemon to create images, containers, networks, and volumes. Nor is it, by itself, a cluster orchestrator equivalent to Kubernetes or Docker Swarm; its primary focus is managing an application on one Docker Engine or context.
-
-The responsibilities can be summarized as follows:
-
-| Element | Responsibility |
+| Element | Function |
 | --- | --- |
-| Dockerfile | Describe how to build an image. |
-| `docker container run` | Imperatively create and configure a container. |
-| `compose.yaml` | Declare an application's services, networks, and volumes. |
-| Docker Engine | Actually build and run the requested objects. |
+| Dockerfile | Describes how to build an image. |
+| `docker container run` | Creates a *container* with the configuration informed in the terminal. |
+| `compose.yaml` | Gathers the configuration of the services and resources of an application. |
 
-## Installation and syntax:
+- `docker compose version {options}` - Checks the Compose installation. It comes with Docker Desktop; in Engine installed directly on Linux, it may be necessary to install the [Compose plugin](https://docs.docker.com/compose/install/linux/).
 
-Current installations use the plugin accessed through `docker compose`.
+The general syntax is `docker compose {global_options} {command} {options} {arguments}`. Global options appear before the operation; specific ones, after:
 
-- `docker compose version {options}` - Shows the installed Compose version.
+- `docker compose -f {file} {command}` - Chooses another Compose file.
 
-On Linux, the plugin is normally provided by the `docker-compose-plugin` package from Docker's official repositories. Docker Desktop already includes Compose.
+- `docker compose -p {project} {command}` - Defines the project name, which groups the application's resources.
 
-## Compose file:
+- `docker compose --env-file {file} {command}` - Chooses the variables file used to fill values in the Compose model.
 
-The preferred name is `compose.yaml` or `compose.yml`.
+In `docker compose -f compose.dev.yaml up -d`, `-f` is global and `-d` belongs to `up`.
 
-A **Compose project** groups an application's resources. Its name can be defined by `name`, by the global `-p` option, or derived from the directory, and is used as a prefix and label for the containers, networks, and volumes created.
+## First Compose File:
 
-The main file elements are:
-
-- `services` - Defines the application's executable components.
-- `image` - Selects an existing image.
-- `build` - Defines the context and options for building an image.
-- `command` and `entrypoint` - Override the image command or entry point.
-- `ports` - Publishes ports on the host.
-- `volumes` - Attaches volumes or bind mounts.
-- `environment` - Defines variables in the container environment.
-- `env_file` - Loads variables that will be passed to the container.
-- `depends_on` - Declares dependencies and controls startup order.
-- `healthcheck` - Defines how to check the service's health or readiness.
-- `networks` - Connects services to specific networks.
-- `restart` - Defines the restart policy.
-
-Example:
+Save the following content as `compose.yaml`, in a project folder:
 
 ```yaml
-name: example
-
 services:
-  application:
-    build: .
+  web:
+    image: nginx:alpine
     ports:
-      - "127.0.0.1:${APP_PORT:-8000}:8000"
-    environment:
-      REDIS_HOST: cache
-    depends_on:
-      cache:
-        condition: service_healthy
-    restart: unless-stopped
+      - "127.0.0.1:8081:80"
+```
 
+`services` gathers the application's components. `web` is the name chosen for this service, `image` selects the image, and `ports` publishes the port. YAML indentation uses spaces and determines the relationship between the elements.
+
+In the same folder, run:
+
+```bash
+docker compose up -d
+docker compose ps
+```
+
+The default Nginx page will be available at `http://localhost:8081`. Compose creates a network for the project, and services on that network can communicate by their names. Compose commands receive **service** names, such as `web`, even when the generated name for the *container* is different.
+
+## Building, Creating, and Updating:
+
+In the commands below that accept `{services}`, omitting them selects all services applicable to the operation.
+
+- `docker compose up {options} {services}` - Obtains or builds the images according to the configuration, creates or updates the *containers*, and starts them. Without options, it follows the output in the terminal; `Ctrl+C` interrupts execution and stops the started services.
+
+    - `docker compose up -d {services}` - Starts in the background.
+    - `docker compose up --build {services}` - Builds the images of the services with `build` before starting. Can be combined with `-d`.
+
+- `docker compose create {options} {services}` - Creates the *containers* without starting them.
+
+- `docker compose build {options} {services}` - Builds the images of the services that use `build`, without starting the *containers*.
+
+- `docker compose pull {options} {services}` - Downloads the declared images, without replacing the running *containers* by itself.
+
+To use a Dockerfile from the current folder, the service can declare `build: .` instead of `image`. Port publication must match the application: in the Python example from chapter 4, the internal port is 8000, not 80.
+
+After modifying the code of a custom image, use `docker compose up -d --build`. To update a ready-made image, use `docker compose pull` and then `docker compose up -d`. Recreation preserves mounted volumes but discards data that existed only in the replaced *container*.
+
+## Consulting and Running Commands:
+
+- `docker compose config {options}` - Validates and shows the resulting configuration, including variable substitution.
+
+- `docker compose ps {options} {services}` - Lists the project's active *containers*.
+
+    - `docker compose ps -a {services}` - Includes stopped ones.
+
+- `docker compose logs {options} {services}` - Shows the services' recorded output. `--tail {quantity}` limits to the last lines.
+
+    - `docker compose logs -f {services}` - Follows new messages.
+
+- `docker compose exec {options} {service} {command} {arguments}` - Runs a process in an active *container* of the service. The arguments can be omitted; the session is already interactive by default when run in a terminal.
+
+- `docker compose run {options} {service} {command} {arguments}` - Creates a separate *container* for a one-off task. The command and its arguments can be omitted to use the service default.
+
+    - `docker compose run --rm {service} {command} {arguments}` - Removes that task's *container* when it ends.
+
+```bash
+docker compose exec web sh
+docker compose run --rm web nginx -t
+```
+
+The first line opens a terminal in the already active service. The second creates another *container* to check the Nginx configuration. `run` does not publish the service's declared ports by default; `--service-ports` enables this publication when necessary.
+
+## Volumes, Variables, and Dependencies:
+
+Other fields can be added to the service as the application needs:
+
+| Field | Purpose |
+| --- | --- |
+| `volumes` | Associates volumes or computer directories. |
+| `environment` | Defines variables delivered to the application. |
+| `env_file` | Loads these variables from a file. |
+| `command` and `entrypoint` | Replace the image's execution defaults. |
+| `restart` | Defines the restart policy. |
+| `depends_on` | Declares dependencies between services. |
+| `healthcheck` | Defines a command to check whether the service is healthy. |
+| `networks` | Selects specific networks instead of only the default network. |
+
+As another example, save this `compose.yaml` in a separate project folder. It defines a Redis with a named volume and persistence enabled:
+
+```yaml
+services:
   cache:
     image: redis:alpine
+    command: ["redis-server", "--appendonly", "yes"]
     volumes:
-      - cache_data:/data
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 5s
-      timeout: 3s
-      retries: 5
+      - dados_cache:/data
 
 volumes:
-  cache_data:
+  dados_cache:
 ```
 
-Compose creates a default network for the project. In the example, `application` can access the `cache` service using `cache` as its hostname. The `cache_data` volume is declared at the top level and remains available when the containers are replaced.
+The volume is declared at the top level and associated with the service at `/data`. It can be reused when the *container* is recreated. The application also needs to be configured to write to this path.
 
-In its simple form, `depends_on` controls startup order, but does not guarantee that the dependent program is ready to accept connections. Combining `healthcheck` with `condition: service_healthy` allows Compose to wait for the declared healthy state.
-
-## Variables:
-
-Compose can replace expressions such as `${VARIABLE}` with values from the shell environment or a `.env` file. Forms such as `${VARIABLE:-default}` and `${VARIABLE:?message}` are also accepted; they respectively define a default and require a value.
-
-The `.env` file is used mainly to **interpolate the Compose model**. Its variables are not automatically passed to all containers: for that, they must be declared in `environment` or loaded through `env_file`.
+In the first example, it is possible to replace the fixed publication with `"127.0.0.1:${APP_PORT:-8081}:80"`. The value of `APP_PORT` will be obtained from the terminal environment or from a `.env` file; if it is not defined or is empty, 8081 will be used.
 
 ```dotenv
-APP_PORT=8000
+APP_PORT=8082
 ```
 
-`.env` and `env_file` files are text files, not secret vaults. They should have appropriate permissions and should not be versioned when they contain credentials. Substitution can be checked with `docker compose config`.
+**The `.env` fills values in the Compose file; it does not automatically deliver all variables to the containers.** To deliver them, use `environment` or `env_file`. Files with credentials should not be versioned.
 
-## Global options:
+> `depends_on` alone controls the start order, but does not guarantee that the dependent application is ready. When this wait is necessary, combine `healthcheck` in the depended-upon service with `condition: service_healthy` in its dependency. Consult the [startup order control](https://docs.docker.com/compose/how-tos/startup-order/).
 
-The general form is `docker compose {options} {command} {arguments}`. Some important global options are:
+## Stopping, Resuming, and Removing:
 
-- `-f {file}` - Selects a Compose file; it can be repeated to combine files.
-- `-p {project}` - Defines the project name.
-- `--env-file {file}` - Selects the file used for interpolation.
-- `--profile {profile}` - Enables an optional profile.
+- `docker compose stop {options} {services}` - Stops the *containers* without removing them. `-t {seconds}` adjusts the wait.
 
-Global options must appear before the subcommand, as in `docker compose -f compose.dev.yaml up`.
+- `docker compose start {options} {services}` - Resumes existing *containers* that are stopped; it does not create the missing ones.
 
-## Creation and updates:
+- `docker compose restart {options} {services}` - Restarts the *containers*. It does not apply changes made to the Compose file; for that, use `up`.
 
-- `docker compose up {options} [services]` - Builds when necessary, creates or recreates, and starts the services. Without `-d`, it aggregates the logs and keeps the terminal attached.
+- `docker compose down {options}` - Stops and removes the project's *containers* and networks, preserving named volumes by default.
 
-- `docker compose create {options} [services]` - Creates the containers without starting them.
+    - `docker compose down -v` - Also removes declared named volumes and associated anonymous volumes. Resources declared as external are not removed.
 
-- `docker compose build {options} [services]` - Builds the images for services that use `build`.
-
-- `docker compose pull {options} [services]` - Downloads the declared images.
-
-When a service's configuration or image changes, `up` can replace its container while preserving mounted volumes. Changes made only in the old container's writable layer may be lost; the application must be rebuildable from the declared images, configurations, and volumes.
-
-## Information and commands:
-
-- `docker compose config {options} [services]` - Validates, combines, and shows the resolved model.
-
-- `docker compose ps {options} [services]` - Lists the project's containers.
-
-- `docker compose logs {options} [services]` - Shows service logs.
-
-- `docker compose exec {options} {service} {command} {arguments}` - Runs a process in an active service container.
-
-- `docker compose run {options} {service} {command} {arguments}` - Creates a separate container for a one-time task based on the service.
-
-`exec` uses a container that is already running. In contrast, `run` creates a temporary container based on the service configuration, which is useful for tests, migrations, and administrative tasks.
-
-## Stopping and removal:
-
-- `docker compose stop {options} [services]` - Stops containers without removing them. The `-t` option defines the waiting time.
-
-- `docker compose start [services]` - Starts existing containers; it does not create those that do not exist yet.
-
-- `docker compose restart {options} [services]` - Restarts containers. The `-t` option defines the waiting time.
-
-- `docker compose down {options} [services]` - Stops and removes containers and networks created for the project. `-v` removes declared named volumes and associated anonymous volumes, `--rmi` removes images, and `--remove-orphans` removes containers for services that are no longer in the file.
-
-By default, `down` does not remove named volumes or resources declared as external. `docker compose down -v` removes the project volumes and can permanently delete databases and other persistent data.
+**`down -v` can delete the application's persistent data.** To just interrupt the work and resume it later, use `stop` and `start`.
 
 ---
 
 # 8. Maintenance and Security
 
-## Space usage:
+## Checking and Freeing Space:
 
-- `docker system df {options}` - Shows the space used by images, containers, local volumes, and the build cache. `-v` shows details.
+- `docker system df {options}` - Shows the space used by images, *containers*, volumes, and build results stored in *cache*. `-v` presents details.
 
-- `docker system prune {options}` - Removes unused resources, such as stopped containers, unused networks, dangling images, and the build cache. `-a` extends removal to images not used by containers, `--volumes` includes anonymous volumes, `--filter` restricts the scope, and `-f` skips confirmation.
+- `docker system prune {options}` - Removes stopped *containers*, unused networks, images without references (*dangling*), and unused build *cache*. Requests confirmation.
 
-`prune` commands determine their scope based on currently referenced resources, not on the importance of their data. Review the displayed list and options before confirmation, especially when including volumes.
+    - `docker system prune -a` - Extends image cleanup to all those not associated with *containers*.
+    - `docker system prune --volumes` - Includes unused anonymous volumes in the cleanup.
 
-## Events:
+- `docker volume prune {options}` - Removes unused local anonymous volumes not used by any *container*. Requests confirmation.
 
-- `docker system events {options}` - Follows events produced by the daemon, such as container creation, start, stop, and removal.
+    - `docker volume prune -a` - Also includes unused named volumes.
 
-This command differs from `docker container logs`: `events` shows daemon events, while `logs` retrieves the output of the process running in the container.
+**"Unused" does not mean "unimportant."** A volume can contain necessary data even without being associated with a *container*. Check the scope before confirming; the `-f` option, available in these commands, eliminates confirmation.
 
-## Security precautions:
+## Checking Events:
 
-- `--privileged` grants the container very broad access to host devices and resources and should not be used as a general solution for permission errors.
+- `docker system events {options}` - Follows events such as creation, start, stop, and removal of *containers*.
 
-- Mounting `/var/run/docker.sock` inside a container gives it control over the daemon and, in the traditional configuration, privileges equivalent to `root` on the host.
+Use `logs` to check the application's output and `events` to investigate operations performed in the Docker environment. For problems starting the service itself, consult the `journalctl` presented in chapter 1.
 
-- Bind mounts allow the container to read or modify real host paths; they should be limited to what is necessary and, when possible, mounted as read-only.
+## Access Precautions:
 
-- Third-party images, Dockerfiles, and Compose files should be examined before execution, because they can request dangerous mounts, devices, networks, and privileges.
+A *container*'s isolation depends on the permissions granted to it. `--privileged` and mounting `/var/run/docker.sock` can allow broad control over the computer; they should not be used as a generic solution for permission errors.
 
-- Image tags are mutable. For environments that require strict repeatability, versions should be pinned and, when necessary, validated by digest.
+Mount only the necessary directories and use read-only when the application does not need to write. Before running third-party configurations, check mainly the mounts and privileges requested.
+
+> When it is necessary to pin exactly the content of an image, use a *digest*, in the format `image@sha256:{value}`. Unlike a *tag*, it identifies a specific content.
 
 ---
 
 # Sources
 
-- DOCKER INC. *Docker Docs: Docker overview*. [N.p.], [n.d.]. Available at: [https://docs.docker.com/get-started/docker-overview/>](https://docs.docker.com/get-started/docker-overview/>). Accessed on: Sep. 15, 2026.
-- DOCKER INC. *Docker Engine: Linux post-installation steps*. [N.p.]., [n.d.]. Available at: [https://docs.docker.com/engine/install/linux-postinstall/](https://docs.docker.com/engine/install/linux-postinstall/). Accessed on: Sep. 15, 2026.
-- DOCKER INC. *Docker Engine security: Rootless mode*. [N.p.], [n.d.]. Available at: [https://docs.docker.com/engine/security/rootless/](https://docs.docker.com/engine/security/rootless/). Accessed on: Sep. 15, 2026.
-- DOCKER INC. *Docker CLI reference*. [N.p.], [n.d.]. Available at: [https://docs.docker.com/reference/cli/docker/](https://docs.docker.com/reference/cli/docker/). Accessed on: Sep. 15, 2026.
-- DOCKER INC. *Dockerfile reference*. [N.p.], [n.d.]. Available at: [https://docs.docker.com/reference/dockerfile/](https://docs.docker.com/reference/dockerfile/). Accessed on: Sep. 15, 2026.
-- DOCKER INC. *Storage*. [N.p.], [n.d.]. Available at: [https://docs.docker.com/engine/storage/](https://docs.docker.com/engine/storage/). Accessed on: Sep. 15, 2026.
-- DOCKER INC. *Networking overview*. [N.p.], [n.d.]. Available at: [https://docs.docker.com/engine/network/](https://docs.docker.com/engine/network/). Accessed on: Sep. 15, 2026.
-- DOCKER INC. *Docker Compose*. [N.p.], [n.d.]. Available at: [https://docs.docker.com/compose/](https://docs.docker.com/compose/). Accessed on: Sep. 15, 2026.
-- DOCKER INC. *How Compose works*. [N.p.], [n.d.]. Available at: [https://docs.docker.com/compose/intro/compose-application-model/](https://docs.docker.com/compose/intro/compose-application-model/). Accessed on: Sep. 15, 2026.
-- DOCKER INC. *Compose file reference*. [N.p.], [n.d.]. Available at: [https://docs.docker.com/reference/compose-file/](https://docs.docker.com/reference/compose-file/). Accessed on: Sep. 15, 2026.
-- DOCKER INC. *Set, use, and manage variables in a Compose file with interpolation*. [N.p.], [n.d.]. Available at: [https://docs.docker.com/compose/how-tos/environment-variables/variable-interpolation/](https://docs.docker.com/compose/how-tos/environment-variables/variable-interpolation/). Accessed on: Sep. 15, 2026.
+- DOCKER INC. *Docker Docs: Docker overview*. [S. l.], [s. d.]. Available at: [https://docs.docker.com/get-started/docker-overview/](https://docs.docker.com/get-started/docker-overview/). Accessed on: Sep. 15, 2026.
+- DOCKER INC. *Docker Engine security: Rootless mode*. [S. l.], [s. d.]. Available at: [https://docs.docker.com/engine/security/rootless/](https://docs.docker.com/engine/security/rootless/). Accessed on: Sep. 15, 2026.
+- DOCKER INC. *Docker CLI reference*. [S. l.], [s. d.]. Available at: [https://docs.docker.com/reference/cli/docker/](https://docs.docker.com/reference/cli/docker/). Accessed on: Sep. 15, 2026.
+- DOCKER INC. *Dockerfile reference*. [S. l.], [s. d.]. Available at: [https://docs.docker.com/reference/dockerfile/](https://docs.docker.com/reference/dockerfile/). Accessed on: Sep. 15, 2026.
+- DOCKER INC. *Storage*. [S. l.], [s. d.]. Available at: [https://docs.docker.com/engine/storage/](https://docs.docker.com/engine/storage/). Accessed on: Sep. 15, 2026.
+- DOCKER INC. *Networking overview*. [S. l.], [s. d.]. Available at: [https://docs.docker.com/engine/network/](https://docs.docker.com/engine/network/). Accessed on: Sep. 15, 2026.
+- DOCKER INC. *Docker Compose*. [S. l.], [s. d.]. Available at: [https://docs.docker.com/compose/](https://docs.docker.com/compose/). Accessed on: Sep. 15, 2026.
+- DOCKER INC. *Set, use, and manage variables in a Compose file with interpolation*. [S. l.], [s. d.]. Available at: [https://docs.docker.com/compose/how-tos/environment-variables/variable-interpolation/](https://docs.docker.com/compose/how-tos/environment-variables/variable-interpolation/). Accessed on: Sep. 15, 2026.

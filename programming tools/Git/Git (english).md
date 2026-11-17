@@ -11,364 +11,523 @@
 
 # 0. Basic Concepts
 
-## Git and GitHub:
+## Git and Version Control:
 
-**Git** is a version control system that lets you compare changes, recover previous states, and develop features along independent lines. Each regular copy of a repository contains its own history and is maintained locally.
+**Git** is a version control system: it records states of a project over time, allowing you to consult what changed, compare versions, and recover previous content. It also allows you to develop changes on independent lines and bring them together later.
 
-**GitHub** is a service that hosts Git repositories and adds collaboration features such as issues, pull requests, and access control. Git and GitHub are not the same tool: you can use Git without GitHub and host Git repositories on other services such as GitLab and Bitbucket.
+The history stays on the computer itself. It is not necessary to have an account on a service or an internet connection to record changes locally.
 
-## Repository:
+**GitHub**, **GitLab**, and **Bitbucket** are services that host Git repositories and offer collaboration features. They use Git, but they are not Git; the use of remote repositories is explained in chapter 3.
 
-A **repository** is the collection formed by the project and the data Git uses to maintain its history. This data is stored in the hidden `.git` directory, which contains objects, references, and local settings. Deleting `.git` does not delete the project files, but it removes the Git history and configuration.
+## Repository and *Commits*:
 
-Git records each version as a **snapshot** (a logical picture of the project's staged state). A **commit** references one of these snapshots and contains metadata such as the author, date, message, and previous commit. Its identifier is calculated from the stored content and metadata.
-> Changing a commit produces a different identifier.
+A **repository** gathers the project files and the data Git uses to track its history. In a common local repository, this data stays in the hidden `.git` folder. Deleting it removes the history and the local Git configurations, even if the project files remain.
 
-## File States:
+A ***commit*** is a record of a version of the project. It associates a logical snapshot of the files with information such as author, date, message, and previous versions. The message describes what was done; the identifier, also called a *hash*, allows locating that record.
 
-A file can be in the following main states:
+The identifier can appear abbreviated, such as `a1b2c3d`. Changing the content or the message of a *commit* produces another *commit*, with another identifier.
 
-- **Untracked** (untracked): it exists in the working directory but is not yet part of Git's history.
-- **Unmodified** (unmodified): it is tracked and matches the recorded version.
-- **Modified** (modified): it is tracked, but its content in the working directory differs from the staged or recorded state.
-- **Staged** (staged): its current state has been copied to the staging area and will be included in the next commit.
-- **Committed** (committed): its state is stored in a commit in the local repository.
+## Working Directory, Staging, and History:
 
-## References and `HEAD`:
+Git separates the files being edited from the content that will be recorded:
 
-A **branch** is a movable reference to a commit. Normally, `HEAD` points to the currently selected branch, and that branch points to its latest commit. As new commits are created, the branch reference moves forward.
+| Location | Function |
+| --- | --- |
+| **Working directory** | Project files that you open and modify. |
+| **Staging area** (*staging area* or *index*) | State selected to form the next *commit*. |
+| **History** | Versions already recorded through the *commits*. |
 
-`HEAD~1` represents the first parent of the commit indicated by `HEAD`; `HEAD~2` represents the first parent of that parent, and so on. In histories with merges, this notation repeatedly follows the first parent, which is not necessarily the second most recent commit by date.
+The common flow consists of editing the files, selecting the changes with `git add`, and recording them with `git commit`. Staging allows you to choose what goes into each record, without needing to include all changes at once.
 
-When `HEAD` points directly to a commit instead of a branch, the repository is in a **`detached HEAD`** state. You can inspect and even create commits in this state, but you should create a branch to preserve this new line of development easily.
+A new file is **untracked** (*untracked*) until it is added to Git. After that, its changes can be **modified** (*modified*, not yet staged) or **staged** (*staged*, selected for the next record). When the file matches the recorded state, it is **unmodified** (*unmodified*).
+
+The same file can have staged changes and other unstaged changes. For example, if you run `git add` and then edit the file again, the next *commit* will include the version staged before that last edit. Another `git add` is needed to update the staging.
+
+## *Branches* and `HEAD`:
+
+A ***branch*** represents a line of development. It points to a *commit* and advances when new records are made on that line. It is possible to create another *branch* to work on a change without immediately altering the main line.
+
+Normally, **`HEAD`** indicates the selected *branch*; when used as a reference to a version, it represents the current *commit* of that *branch*. `HEAD~1` indicates its predecessor and `HEAD~2`, two steps back. In a merge, this count follows the line of the first parent, not the order of the *commits*' dates.
+
+In the examples, `main` is the name of the main *branch*. This name is a convention and can be different in other projects.
+
+## Installation:
+
+For installation information, consult the [official page](https://git-scm.com/install/).
+
+After installation, open a terminal and run `git --version` to check whether the command is available.
+
+## Initial Configuration:
+
+Git needs a name and an email to identify the authorship of the *commits*. This identification **does not perform a login** on any remote service.
+
+```bash
+git config --global user.name "Seu Nome"
+git config --global user.email "email@exemplo.com"
+git config --global init.defaultBranch main
+```
+
+The `--global` option applies the configuration to the current user. To use another identity only in a project, run the command inside its repository with `--local` instead of `--global`. The local configuration prevails over the global one in that project.
+
+`init.defaultBranch` defines the initial name for new repositories; it does not rename the *branches* of existing projects.
+
+- `git config --get {key}` - Queries a configuration, such as `user.email`.
+
+- `git config --list` - Lists the applicable configurations. `--show-origin` also shows which file each one came from.
+
+---
+
+# 1. Basic Commands
 
 ## Command Structure:
 
-The general form of the interface is `git {global_options} {command} {options} {arguments}` (the notation is instructional and simplified; it is not fully standardized).
+The basic form is `git {command} {options} {arguments}`. The command chooses the operation; the options, also called *flags*, adjust its behavior; the arguments indicate what it acts on.
 
-Git also allows you to create custom aliases with `git config set --global alias.{name} "{expansion}"`. The expansion is written without the initial `git`.
-> These aliases are only user-configured abbreviations and should not be confused with separate commands that have partially similar features.
+> In the syntax models, elements between `{braces}` represent content to be replaced, without keeping the braces. `{options}` indicates optional modifiers; the main description presents the behavior without them, considering the indicated arguments. When an argument can also be omitted, this will be explained in the text. The concrete examples already present the form used in the terminal.
+
+> Usage variations that significantly change the operation appear in subordinate lists, with the complete command. Simple adjustments are explained in the main description. Specific forms can also appear separately in the section corresponding to their purpose.
+
+In `git commit -m "Corrige a leitura do botão"`, `commit` is the operation, `-m` indicates that the message will be provided in the command, and the text in quotes is that message.
 
 ## Manuals:
 
-- `git --help` - Shows the most common commands and global options.
+- `git --help` - Shows the most common commands and the global options.
 
-- `git {command} -h` - Shows a short summary of the command's syntax and options.
+- `git {command} -h` - Shows a summary of the syntax and the options, such as `git restore -h`.
 
-- `git help {command}` - Opens the complete manual for the command. `git {command} --help` is an equivalent form.
+- `git help {options} {command}` - Opens the complete manual. The documentation is also available on the [Git site](https://git-scm.com/docs).
+  
+    - `git help --all` - Lists all available commands.
+    - `git help --guides` - Lists the installed conceptual guides.
 
-- `git help --all` - Lists all available commands.
+## Starting a Repository:
 
-- `git help --guides` - Lists the installed conceptual guides.
+- `git init {options} {directory}` - Starts a repository. Without the directory, it uses the current folder.
 
-You can also consult the [Git Reference Documentation](https://git-scm.com/docs) and the book [Pro Git](https://git-scm.com/book/en/v2).
+> The command prepares the repository, but does not yet record the files: this is done with `add` and `commit`.
 
----
+## Staging and Recording Changes:
 
-# 1. Configuration and Identity
+- `git add {options} {paths}` - Stages the current state of the indicated files or directories.
 
-## Configuration Scopes:
+    - `git add .` - Selects the current folder (includes changes from it onward).
+    - `git add -A` - Includes changes from the entire repository, including deletions.
 
-Git settings can be applied at different scopes. A more specific setting normally overrides an equivalent setting from a broader scope.
+- `git commit {options}` - Records the staged content and opens the configured editor to write the message.
 
-- **System** (`--system`): applies to the users of that system installation.
-- **Global** (`--global`): applies to the current user and is normally stored in `~/.gitconfig` or `~/.config/git/config`.
-- **Local** (`--local`): applies only to the current repository and is stored in `.git/config`; this is the default scope when none is specified inside a repository.
+    - `git commit -m "{message}"` - Records the staged content, providing the message directly, without opening the editor.
+    - `git commit -a -m "{message}"` - Automatically stages modifications and deletions of files already tracked before recording, without adding new untracked files.
 
-- `git config set {scope} {name} {value}` - Defines a setting. Some of the most important keys are:
+    > A new file becomes tracked when it is added with `git add`, even before its first *commit*. Unlike `commit -a`, `git add -A` also stages new untracked files.
 
-  - `user.name` - Name normally recorded in the user's commits.
-  - `user.email` - Email address normally recorded in the user's commits.
-  - `init.defaultBranch` - Initial branch name for new repositories, such as `main`.
+```bash
+git add arquivo_1.txt diretorio_1/arquivo_2.md diretorio_2/
+git commit -m "Atualiza a documentação."
+```
 
-- `git config get {options} {name}` - Shows the effective value of a specific setting (settings such as `user.name` defined by `set`).
+If other files are already staged (besides this last `add`), they will also enter the *commit*.
 
-- `git config list {options}` - Lists the settings that apply to the current context. The `--show-origin` option also shows the files from which they were read.
+## Ignoring Files:
 
-`user.name` and `user.email` define the **identity recorded in the commit**; they do not authenticate the user on GitHub. The account used to send the commit to a server may differ from the name and email address recorded in it.
-
----
-
-# 2. Versioning and Files
-
-## Initialization:
-
-- `git init {options} [{directory}]` - Initializes a new Git repository. When a directory is omitted, the repository is initialized in the current directory.
-
-- `git -C {directory} {command}` - Runs a command as if Git had been started in that directory.
-
-Most commands search for `.git` in the current directory and its parent directories. Therefore, they can usually be run from a project subdirectory without the terminal being exactly at the repository root.
-
-## Inspecting the State:
-
-- `git status {options}` - Summarizes the differences between `HEAD`, the Index, and the working directory, and also indicates untracked files and the current branch. The `--short` option shows the state in a compact format.
-
-- `git diff {options} [{references}] [--] [{paths}]` - Shows differences between project states. With no references, it compares the working directory with the Index; `--staged` compares the Index with `HEAD`; one reference compares the working directory with it; and two references compare the indicated states. `--` can separate references from paths.
-
-## Staging and Recording:
-
-- `git add {options} {paths}` - Stages the current state of the selected paths in the Index. `.` selects changes from the current directory.
-
-- `git commit {options}` - Creates a commit with the state currently in the Index. `-m "{message}"` supplies the message on the command line, while `-a` automatically stages modifications and deletions of files that are already tracked, but does not include new files.
-
-- `git log {options} [{references}] [--] [{paths}]` - Shows the history. The `--oneline`, `--graph`, `--decorate`, and `--all` options produce a compact view of the relationships among branches and other references.
-
-A commit includes only the staged state. Untracked files or changes made after the last `git add` are not included automatically in the commit.
-
-## Excluding Files:
-
-The `.gitignore` file contains patterns for **untracked** files that Git should ignore, such as downloaded dependencies, build files, and local credentials. Examples:
+The **`.gitignore`** file, normally placed at the root of the project, defines patterns of files that should not be included in versioning. It is useful for build files, downloaded dependencies, and local configurations.
 
 ```gitignore
-# Directory at any level
-node_modules/
+# Diretório de compilação
+build/
 
-# Files with this extension
+# Arquivos com extensão .o
 *.o
 
-# Local environment files
-*.env
-
-# Exception to a previous pattern
-!config.example.env
+# Configuração local
+.env
 ```
 
-`.gitignore` does not stop tracking a file that has already been included in commits. To keep it in the working directory but remove it from the Index, you can use `git rm --cached {file}` and then record that removal in a commit.
-> Secrets that have already been published remain in the history and must be revoked, even after the file is removed.
+The `.gitignore` does not interrupt the tracking of files already added. To stop tracking one of them while keeping the local copy:
 
-## Restoration:
+- `git rm --cached {file}` - Stages the removal of the file from versioning, without deleting the local copy. `-r` allows applying the operation to a directory.
 
-- `git restore {options} {paths}` - Restores the selected paths. By default, it updates the working directory from the Index, discarding changes that have not yet been staged.
+Then, include the path in `.gitignore` and record both changes in a *commit*. This does not remove the file from previous *commits*. If a credential has already been published, removing it from the project is not enough: it must be revoked on the corresponding service.
 
-  - `--staged` - Updates the Index from `HEAD`, removing the changes from the staging area without discarding them from the working directory.
-  - `--source={commit}` - Selects another reference as the restoration source.
+## Restoring Files and Removing from Staging:
 
-Because the Index usually matches `HEAD` before `git add`, `git restore {file}` often appears to restore the last commit. However, the default source is the Index.
+- `git restore {options} {file}` - Replaces the file content with the version from the staging area, discarding its changes not yet staged.
 
----
-
-# 3. History and Recovery
-
-## Changing the Last Commit:
-
-The `--amend` option of `git commit` replaces the last commit using the currently staged content. It does not edit the existing commit: it creates another commit (it still needs `-m "{message}"` to provide a new message) and moves the branch to it.
-> If the Index contains changes, they will also be incorporated.
-
-## `reset`:
-
-- `git reset {options} {commit}` - Moves `HEAD` and, normally, the current branch to another commit. The selected mode determines what also happens to the Index and the working directory:
-
-  - `--soft` - Moves the branch but keeps the content of the undone commits in the Index and working directory.
-  - `--mixed` - Moves the branch and resets the Index, but keeps the changes in the working directory. This is the default mode.
-  - `--hard` - Moves the branch and makes the Index and tracked files in the working directory match the indicated commit, discarding the affected tracked changes.
-  > `reset --hard` does not normally remove untracked files that do not interfere with the restoration, but it may delete untracked files or directories that are in the path of tracked files that must be written.
-
-## Reverting:
-
-- `git revert {options} {commits}` - Creates new commits that apply the inverse of the changes introduced by the indicated commits.
-> The `--no-commit` option applies the reversions to the Index and the working directory without recording them immediately.
-
-`revert` preserves the existing history and is therefore usually the safest option for undoing changes that have already been published. The result may cause conflicts if the project has changed since the reverted commit.
-
-## Recovery with `reflog`:
-
-- `git reflog [{subcommand}] {options} [{reference}]` - Queries or manages local records of reference movements. With no subcommand, it shows the history of `HEAD`; `show` queries a specific reference.
-
-- `git branch {new_branch} {commit}` - Creates a branch that points to a commit recovered through the `reflog`.
-
-The `reflog` can help locate commits that became unreachable after a `reset`, `rebase`, or branch deletion. It is local and its entries expire, so it should not be treated as a permanent backup.
-
----
-
-# 4. Branches and Integration
-
-## Branches:
-
-When initializing a repository, Git defines the name of an initial branch with no commits yet, called an **unborn branch**. The branch begins pointing to a commit when the first one is created; before then, many commands that need a commit as a reference cannot operate normally.
-
-- `git branch {options} [{name} [{start_point}]]` - Lists, creates, renames, or deletes branches, depending on the arguments and options. With no arguments, it lists local branches and uses `*` to indicate the current one. Some of the most important options are:
-
-  - `-a` - Includes remote branch references in the list.
-  - `-vv` - Also shows the latest commit and the upstream of each branch, when configured.
-  - `-m [{old_name}] {new_name}` - Renames the current branch or the specified branch.
-  - `-d {branches}` - Deletes branches that have already been integrated into their upstream, or, if none exists, into the history reachable from `HEAD`.
-  - `-D {branches}` - Forces deletion of the references, even without integration.
-
-- `git switch {options} {branch}` - Switches to the indicated branch and updates the working directory. The `-c {new_branch}` option creates a branch from the current position and immediately switches to it.
-
-Deleting a branch removes its reference, but not necessarily its commits immediately. Even so, work that has not been integrated may become difficult to locate.
-
-## Merge:
-
-- `git merge {options} {commits}` - Integrates into the current branch the histories reachable from the indicated commits or branches. `--ff-only` accepts only a fast-forward, while `--no-ff` forces the creation of a merge commit when integration is possible.
-
-When the current branch can simply move forward to the same point as the other branch, a **fast-forward** occurs. When the lines of development have diverged, Git normally creates a merge commit with more than one parent, provided that it can combine the changes.
-
-## Conflicts:
-
-A **conflict** occurs when Git cannot automatically decide how to combine changes. It marks the conflicting sections in the files and pauses the integration so the user can resolve the content.
-
-The basic workflow for completing a merge with conflicts is:
-
-1. Run `git status` to identify the conflicting files.
-2. Edit the files and remove the conflict markers, keeping the correct content.
-3. Run `git add {file}` to mark each conflict as resolved.
-4. Run `git commit` to complete the merge when Git does not complete it automatically.
-
-The `--abort` option of `git merge` attempts to return to the state before the integration began.
-
----
-
-# 5. Remote Repositories
-
-## Concepts:
-
-A **remote** is a repository accessible through a URL and registered locally with a short name. `origin` is only the conventional name assigned to the remote created by `git clone`; it is not a required word and does not necessarily represent the project's original repository.
-
-A reference such as `origin/main` is a **remote-tracking branch**: a local record of the observed position of the `main` branch on the `origin` remote during the last communication. It is not the same reference as the local `main` branch.
-
-A local branch can have an **upstream branch** configured, for example, `main` tracking `origin/main`. This relationship allows commands such as `git pull` and `git push` to determine their default targets and allows `git status` to compare the two branches.
-
-## Remote Configuration:
-
-- `git remote [{subcommand}] {options} {arguments}` - Queries and manages the configured remotes. With no subcommand, it lists their names. The main operations are:
-
-  - `-v` - Includes fetch and push URLs in the list.
-  - `add {name} {URL}` - Registers a remote repository with the chosen name.
-  - `set-url {name} {new_URL}` - Changes a remote's URL.
-  - `rename {old_name} {new_name}` - Renames a remote.
-  - `remove {name}` - Removes its local configuration and associated tracking references; it does not delete the hosted repository.
-
-The `--set-upstream-to={remote}/{remote_branch}` option of `git branch` explicitly defines the upstream of the current branch or of a local branch supplied as an argument. The `-vv` option presented earlier lets you check this association.
-
-## Transfer and Integration:
-
-- `git clone {options} {URL} [{directory}]` - Creates a local copy of the repository, including its history, configures a remote normally called `origin`, and checks out a working version. Important options: `--branch {branch}` selects the initial branch, `--depth {n}` limits the depth of the retrieved history, and `--recurse-submodules` initializes the configured submodules.
-
-- `git fetch {options} [{remote} [{refspecs}]]` - Downloads objects and updates references without automatically integrating the changes into the local branch. `--all` queries all remotes, `--prune` removes tracking references that no longer exist on the remote, and `--tags` fetches all tags.
-
-- `git pull {options} [{remote} [{refspecs}]]` - First runs a `fetch` and then integrates the retrieved content into the current branch. `--rebase` uses rebase, `--no-rebase` uses merge, and `--ff-only` accepts only a fast-forward.
-`fetch` allows you to inspect the changes before integration, for example, with `git log HEAD..origin/main` and `git diff HEAD..origin/main`. It does not ask for confirmation to merge because it does not perform the merge. In contrast, `pull` can immediately change the branch and working directory.
-
-- `git push {options} [{remote} [{refspecs}]]` - Attempts to update references on the remote with local content. `-u` or `--set-upstream` also configures the upstream, `--tags` sends all tags, and `--force-with-lease` makes a forced update conditional on the expected remote state.
-> It may be rejected when the remote contains commits that the local update would discard. In that case, you normally need to retrieve and integrate the remote work before trying again. A forced push rewrites the remote history and should not be used as an automatic solution. `--force-with-lease` adds a safety check, but still requires care and coordination.
-
----
-
-# 6. Authentication and Credentials
-
-## Identity and Authentication:
-
-There are two independent mechanisms:
-
-- **Commit identity**: `user.name` and `user.email` are metadata recorded in the history.
-- **Remote authentication**: proves to GitHub or another server which account is performing an operation and which resources it can access.
-
-Purely local operations such as `add`, `commit`, `branch`, and `log` do not require signing in to GitHub. Reading public repositories may also require no authentication, but pushing changes and accessing private repositories normally require an authorized credential. The method used depends on the remote URL protocol, mainly **HTTPS** or **SSH**.
-
-## HTTPS and Token:
-
-For Git operations over HTTPS, GitHub does not accept the regular account password as a credential. When authentication is entered manually, you use the username and a **Personal Access Token (PAT)** in the password field. The token is the part that actually authenticates the operation.
-
-A PAT authorizes actions on behalf of the user, limited both by the access the account already has and by the permissions granted to the token. GitHub recommends **fine-grained** tokens when they meet the use case because they can be limited to an owner, specific repositories, specific permissions, and an expiration date. Treat the token like a password: do not put it in the repository, in the remote URL, in commands that remain in the shell history, or in messages.
-
-When using a PAT manually:
-
-1. Create the token in the GitHub account's developer settings.
-2. Select only the necessary repositories and permissions, and set an appropriate expiration date.
-3. Run the Git operation using an HTTPS URL.
-4. Enter the username when prompted and insert the PAT in the password field.
-
-You do not need to generate a token for every `push`. A **credential helper** can retrieve a previously authorized credential. The general configuration is `git config set --global credential.helper {helper}`. Basic helpers include:
-
-- `cache` - Keeps the credential temporarily in memory; it is requested again after expiration or after the cache service stops.
-- `store` - Saves the credential persistently in a file **without encryption**, normally in `~/.git-credentials`. It prevents new prompts, but is not recommended for important tokens or shared computers.
-
-For persistent storage, prefer GitHub CLI, Git Credential Manager, or a helper integrated with the system credential vault, such as GNOME Keyring or KDE Wallet when integration is available. Secure storage depends on the installed tools and the system session.
-
-## GitHub CLI:
-
-GitHub CLI provides a practical browser-based authentication flow and can configure Git to reuse the credential:
-
-- `gh auth login` - Authenticates GitHub CLI. In the interactive flow, you can choose `HTTPS`, browser authentication, and allow the tool to configure credentials for Git.
-
-- `gh auth status` - Shows the authentication state and active account.
-
-- `gh auth setup-git` - Configures GitHub CLI as a credential helper for the hosts on which it is authenticated.
-
-- `gh auth logout` - Removes the locally stored authentication for the chosen account from GitHub CLI; it does not necessarily revoke the token on the server.
-
-When secure storage is available, GitHub CLI can store the token obtained through the web flow in it. If it is not available, the tool itself warns that it may resort to less secure storage; therefore, read the warnings displayed during sign-in.
-
-## SSH:
-
-With the SSH protocol, authentication uses a key pair. The **public key** is registered on GitHub, while the **private key** remains on the computer and must never be sent to third parties. The server verifies that the client holds the corresponding private key without needing to receive it.
-
-A common workflow is:
+    - `git restore --staged {file}` - Removes the changes from staging, keeping the file content in the working directory. It is the common way to undo an `add` after the repository already has a *commit*.
+    - `git restore --source={version} {file}` - Recovers into the working directory the content the file had in the indicated version. It does not remove *commits* nor change the position of the *branch*.
 
 ```bash
-$ ssh-keygen -t ed25519 -C "email@example.com"
-$ eval "$(ssh-agent -s)"
-$ ssh-add ~/.ssh/id_ed25519
+git restore --staged main.cpp          # Desfaz a preparação, preservando a edição.
+git restore --source=HEAD~1 main.cpp   # Recupera o arquivo da versão anterior.
 ```
 
-Then, the content of `~/.ssh/id_ed25519.pub` must be registered in the account's SSH key settings. You can test the connection with:
+The two lines show independent operations. After recovering an old version, use `add` and `commit` if you want to record that content as a new change.
+
+**Restoring the content discards the replaced edit.** The default source of `restore` is staging; with `--staged`, it is `HEAD`. Therefore, a common `restore` does not necessarily recover the last *commit*: it may recover an edit you had already staged.
+
+## Fixing the Last *Commit*:
+
+- `git commit --amend {options}` - Replaces the last *commit* with another, incorporating the staged state and allowing the message to be edited.
+
+    - `git commit --amend --no-edit` - Keeps the previous message.
+    - `git commit --amend -m "{message}"` - Provides a new message directly.
+
+To include a forgotten correction in the last record:
 
 ```bash
-$ ssh -T git@github.com
+git add main.cpp
+git commit --amend --no-edit
 ```
 
-To use SSH for a remote that is already configured with HTTPS:
+To change only the message, use `git commit --amend -m "Nova mensagem"` without other staged changes. If they exist, they will also be included.
+
+The *commit* identifier changes. Use this correction preferably before publishing the record; replacing *commits* that other people already use requires coordination.
+
+## Undoing *Commits*:
+
+There are two distinct situations: moving the *branch* back to a previous version or creating a new record that undoes a change while keeping the existing history.
+
+### Moving the *Branch* Back with `reset`:
+
+- `git reset {options} {version}` - Moves the current *branch* to the indicated version. Without a mode option, it uses `--mixed`: it resets staging to that version, preserving the working directory files. Later *commits* stop being part of the history of that *branch*. If the version is omitted, it uses `HEAD`.
+
+| Option | Staging Area | Working Directory |
+| --- | --- | --- |
+| `--soft` | Keeps the staged state. | Keeps the files and their edits. |
+| `--mixed` | Returns to the state of the indicated version. | Keeps the files and their edits. |
+| `--hard` | Returns to the state of the indicated version. | Restores the tracked files to that version, discarding the affected changes. |
+
+To undo the last *commit* while keeping its content staged for a new record:
 
 ```bash
-$ git remote set-url origin git@github.com:user/repository.git
+git reset --soft HEAD~1
 ```
 
-A passphrase protects the private key if the file is copied. `ssh-agent` keeps the key unlocked during a session, and integration between the graphical environment and the system vault can securely persist this unlocked state across sessions, depending on the system configuration.
+If you prefer to choose again what will be staged, use `git reset --mixed HEAD~1`. These commands require a previous *commit* to exist; they do not serve to remove the first record of the repository.
+
+**`--hard` can eliminate work not yet recorded**, including changes prior to the attempt to undo the *commit*. It can also remove untracked files that are in the restoration path. It is not an alternative for those who only want to reorganize the records.
+
+### Undoing a Change with `revert`:
+
+- `git revert {options} {commit}` - Creates a new *commit* that undoes the changes introduced by the indicated record, preserving the existing history. `git revert HEAD` reverts the last common record, without merge.
+
+It is the usual option for undoing changes already shared. Reverting an old *commit* does not necessarily restore the entire project to that time: it undoes the changes of that record, possibly generating conflicts with later changes.
+
+If there are conflicts, edit the files, stage the resolution with `git add`, and proceed with `git revert --continue`. To cancel the revert still in progress, use `git revert --abort`.
+
+> `reset` and `--amend` reorganize the local history; they do not automatically update the server. The `revert` examples deal with common *commits*: reverting a merge *commit* requires choosing the reference line and is not part of this basic flow.
+
+## Recovering a Lost *Commit*:
+
+- `git reflog {options}` - Lists recent movements of `HEAD`, such as *branch* switches and `reset` operations. It helps to locate a *commit* that stopped appearing in the current history.
+
+- `git branch {name} {commit}` - Creates a *branch* pointing to the found record. The operation preserves that point without replacing the current files; the operations with *branches* are detailed in the next chapter.
+
+Look in the `reflog` for the identifier of the desired state and use it in the second command. The entries are local and expire: the `reflog` is not a permanent backup nor does it generally recover edits that were never recorded.
+
+## Consulting Changes and History:
+
+- `git status {options}` - Shows the current *branch*, new files, and staged or not yet staged changes. `--short` presents a compact output.
+
+- `git diff {options}` - Shows the changes of tracked files that have not yet been staged.
+
+    - `git diff --staged` - Shows what was staged in relation to the last *commit*.
+    - `git diff {version_1} {version_2}` - Compares the files between two versions. To limit the comparison to a file, add `-- {file}`.
+
+- `git log {options}` - Shows the *commits* of the current *branch*'s history, including identifier, authorship, and message. `--oneline` summarizes each record in one line; `--graph` draws the relationships between the *commits*.
+
+    - `git log --all` - Includes the histories of the other *branches* and other references of the repository, instead of starting only from the current *branch*.
+
+```bash
+git diff --staged                  # Confere o conteúdo preparado.
+git diff HEAD~1 HEAD -- main.cpp   # Compara o arquivo entre as duas versões.
+git log --oneline --graph --all    # Visualiza o histórico das branches.
+```
+
+`status` informs **which files** changed; `diff` shows **what changed**; `log` shows **what has already been recorded**. New untracked files appear in `status`, but their content does not appear in the common `git diff`.
+
+> If the output opens in a page viewer, such as `less`, press `q` to exit.
 
 ---
 
-# 7. Additional Tools
+# 2. *Branches* and Merging
 
-## `stash`:
+## How *Branches* Work:
 
-The **stash** temporarily stores changes that have not yet been recorded in a commit and restores a cleaner working directory, which is useful for switching contexts without creating a temporary commit.
+Creating a *branch* does not create another project folder: it creates a reference to a point in the history. Initially, two *branches* can point to the same *commit*. As each one receives new records, their lines of development separate.
 
-- `git stash push {options}` - Temporarily stores tracked changes. `-m "{description}"` assigns a message and `-u` also includes untracked files.
+When switching *branch*, Git updates the working directory files to the selected version. Changes not yet recorded do not automatically belong to a *branch*: they can accompany the switch when compatible, or prevent the operation when they would be overwritten.
 
-- `git stash list` - Lists the existing stashes.
+## Managing *Branches*:
 
-- `git stash apply {stash}` - Reapplies a stash without removing it from the list.
+- `git branch {options}` - Lists the local *branches* and marks the current one with `*`.
 
-- `git stash pop` - Reapplies the most recent stash and attempts to remove it from the list.
+    - `git branch -a` - Includes the references of remote *branches* (chapter 3).
+    - `git branch -vv` - Shows the last *commit* and the remote association of each *branch*, when it exists.
+    - `git branch {name} {version}` - Creates a *branch* from the indicated version. If no version is passed, it creates from `HEAD`. It does not switch to it (stays on the current one).
+    - `git branch -m {old_name} {new_name}` - Renames a *branch*. If no specific *branch* is passed (without `old_name`), it renames the current *branch*.
+    - `git branch -d {branch}` - Deletes a *branch* after checking whether its *commits* are integrated into the line it follows or, without this association, into the current line.
+    - `git branch -D {branch}` - Forces deletion even without this integration.
 
-- `git stash drop {stash}` - Removes a specific entry.
+- `git switch {options} {branch}` - Switches to an existing *branch*.
 
-## Tags:
+    - `git switch -c {name}` - Creates a *branch* at the current point and already switches to it.
 
-A **tag** assigns a stable name to a point in the history and is often used to mark versions such as `v1.0.0`. Unlike a branch, it does not move forward automatically with new commits.
+Switch to another *branch* before deleting the current one. Deletion removes the name that pointed to the history; it does not undo changes already merged into another *branch*. With `-D`, work not integrated can become difficult to locate.
 
-- `git tag {options} [{name} [{commit}]]` - Lists or creates tags. With no arguments, it lists local tags; `-a` creates an annotated tag and `-m "{message}"` records its message. When the commit is omitted, the tag points to `HEAD`.
+> In older tutorials, `checkout` appears both for switching *branch* and for restoring files. Here, `switch` and `restore` are used, which separate these purposes.
 
-Tags are not necessarily sent by a regular `push`. A specific tag can be sent as a refspec, for example, `git push {remote} {tag}`; the `--tags` option sends all local tags.
+## Temporarily Saving Changes:
 
-## Rebase:
+- `git stash {options}` - Saves changes not yet recorded to allow a pause in work, such as switching *branch* to solve another problem, without creating a provisional *commit*. Without a subcommand, it performs the `stash push` operation.
 
-**Rebase** reapplies a sequence of commits onto a new base. For example, while on a feature branch, `git rebase main` reapplies that branch's unique commits onto the current position of `main`, producing a linear history.
+    - `git stash push {options}` - Saves the changes of tracked files and removes those edits from the working directory and staging. `-m "{description}"` identifies the saved content.
+    - `git stash push -u` - Also includes untracked files, besides the tracked changes.
+    - `git stash list` - Lists the available entries.
+    - `git stash apply` - Reapplies the most recent entry without removing it from the list.
+    - `git stash pop` - Reapplies the most recent entry and removes it if the application ends without conflicts.
+    - `git stash drop` - Deletes the most recent entry without reapplying it.
 
-Because the reapplied commits receive new identifiers, rebase rewrites that part of the history. It is useful for organizing local work, but it should not be applied without coordination to published commits that other people already use.
+`apply`, `pop`, and `drop` accept a specific entry, such as `git stash apply 'stash@{1}'`. In that case, the braces are part of the identifier shown by `stash list`.
 
-- `git rebase {options} [{new_base}]` - Reapplies the commits from the current branch onto the indicated base. During an interruption caused by conflicts, `--continue` proceeds after the files have been resolved and staged, while `--abort` cancels the process and attempts to restore the previous state.
+```bash
+git stash push -u -m "Leitura do botão em andamento"
+git switch main
+# Depois de terminar o outro trabalho, volte à branch original.
+git switch leitura-botao
+git stash pop
+```
+
+The example assumes that the original *branch* is called `leitura-botao`. Reapplying can generate conflicts if the files have changed; in that case, the entry is kept. Files ignored by `.gitignore` are not included by `-u`.
+
+## Merging *Branches*:
+
+**Merging** (*merge*) integrates the work of another *branch* into the current *branch*. Before starting it, record or save pending changes to facilitate checking and a possible cancellation.
+
+- `git merge {options} {branch}` - Integrates the indicated *branch* into the current one.
+
+    - `git merge --ff-only {branch}` - Accepts only a direct advance; refuses the integration if the histories have diverged.
+    - `git merge --no-ff {branch}` - Creates a merge *commit* even when a direct advance would be possible, as long as there is something to integrate.
+
+```bash
+git switch main
+git merge leitura-botao
+```
+
+In this example, `main` receives the work of `leitura-botao`. The command does not switch to the indicated *branch* nor delete it.
+
+If `main` did not receive its own *commits* after the separation, it can simply advance to the point of `leitura-botao`: it is the ***fast-forward***. If both received records, Git normally creates a merge *commit* to unite the two histories.
+
+**Divergent histories do not necessarily mean conflict.** Git can combine the changes automatically when they are compatible.
+
+## Resolving Conflicts:
+
+A **conflict** occurs when Git cannot combine the changes alone, such as when two *branches* modify the same excerpt in different ways. The merge remains pending until the final content is defined.
+
+### Choosing the Content and Concluding:
+
+In a textual conflict, the file may present something like this:
+
+```text
+<<<<<<< HEAD
+intervalo = 500;
+=======
+intervalo = 1000;
+>>>>>>> leitura-botao
+```
+
+In this *merge*, the part above `=======` came from the current *branch*; the one below, from the *branch* being incorporated. The markers delimit the conflict and must be removed along with the content that will not be kept.
+
+1. Run `git status` to locate the conflicting files.
+2. Edit each file, choosing one of the contents or combining the changes. In the example, if the desired interval is 1000, leave only `intervalo = 1000;` in that excerpt.
+3. Save and check the result. Run `git add {file}` to mark the resolution.
+4. After resolving all conflicts, run `git commit` to conclude the merge.
+
+The `add` informs that you finished the resolution; it does not check whether the file's logic is correct.
+
+### Keeping One of the Sides of a File:
+
+During a *merge* with a content conflict, it is also possible to choose the entire version of a file:
+
+- `git restore --ours {file}` - Keeps the version from the current *branch*.
+
+- `git restore --theirs {file}` - Keeps the version from the *branch* being incorporated.
+
+They are alternatives: choose only one for the file, check, and run `git add {file}`. They select the entire file from that side, not just a conflicting excerpt, and do not discard the entire other *branch*.
+
+### Canceling the Merge:
+
+- `git merge --abort` - Cancels a merge still in progress and tries to restore the previous state. It does not serve to undo an already concluded merge.
+
+Cancellation may not reconstruct edits that were already pending before the start; therefore, the staging prior to the *merge* is important.
+
+---
+
+# 3. Remote Repositories
+
+## Local and Remote Repository:
+
+A **remote repository** is another copy of the repository with which Git can exchange history, normally hosted on a server. The local repository remains independent: recording a *commit* does not automatically send it to the remote.
+
+GitHub, GitLab, and Bitbucket use the same Git commands for this exchange. The address, permissions, and authentication methods offered by each service change.
+
+A remote is identified locally by a short name and a URL. **`origin`** is the conventional name used in cloning, but it could be another.
+
+## Cloning a Repository:
+
+- `git clone {options} {URL} {directory}` - Creates a local copy of an existing repository, bringing its history and the files of an initial *branch*. It also configures the `origin` remote. If the directory is omitted, it creates a subfolder in the current directory, normally with the repository name.
+
+```bash
+git clone https://github.com/usuario/projeto.git
+cd projeto
+```
+
+> After cloning, it is not necessary to run `git init` or register the same remote again.
+
+## Connecting and Managing Remotes:
+
+If the project started locally, create a repository on the chosen service and register its URL. To publish an existing local history, an initially empty remote avoids creating two independent histories; do not add a README through the service at this stage.
+
+- `git remote {options}` - Lists the names of the configured remotes. `-v` also shows their addresses.
+
+    - `git remote add {name} {URL}` - Registers a remote; it does not send the files yet.
+    - `git remote set-url {name} {new_URL}` - Changes the address of an existing remote.
+    - `git remote remove {name}` - Removes the local configuration of the remote; it does not delete the hosted repository.
+
+```bash
+git remote add origin https://github.com/usuario/projeto.git
+```
+
+## Authentication and Credentials:
+
+The name and email configured in `user.name` and `user.email` identify the authorship of the *commits*. **Authentication** determines which account accesses the server and which operations it can perform. Changing the local email does not switch the authenticated account.
+
+Public repositories normally allow reading without authentication. Sending changes and accessing private projects require credentials and permission. The chosen URL determines the method used, mainly HTTPS or SSH.
+
+### HTTPS and Credential Storage:
+
+An HTTPS URL has the form `https://server/user/project.git`. The service can authenticate through the browser or request a credential, such as a **token**: a code that authorizes operations within the granted permissions.
+
+On GitHub, the account's common password does not authenticate Git operations over HTTPS. When entering credentials manually, inform the user and use a *Personal Access Token* in the password field. Other services have their own procedures.
+
+A ***credential helper*** stores or retrieves credentials to avoid typing them on each operation. The mechanisms below are alternatives, not steps to run in sequence.
+
+| Mechanism | Purpose and Basic Use |
+| --- | --- |
+| `cache` | Stores temporarily in memory, on supported systems, such as Linux. Configure with `git config --global credential.helper 'cache --timeout=3600'` to keep for up to one hour. |
+| `store` | Writes to a file without encryption. It is enabled with `git config --global credential.helper store`, but exposes the token to anyone who can read the file; prefer a credential vault. |
+| Git Credential Manager | Manages HTTPS authentication and integration with credential storage. Once installed, `git credential-manager configure` configures its use by Git. |
+| GitHub CLI | Offers authentication through the browser and can provide the credential to Git. It is specific to GitHub, including its enterprise installations. |
+
+In Git Credential Manager, Windows and macOS have default vaults; on Linux it is necessary to select and configure compatible storage. Consult the official instructions for [installation](https://github.com/git-ecosystem/git-credential-manager#download-and-install), [usage](https://github.com/git-ecosystem/git-credential-manager/blob/main/docs/usage.md), and [storage](https://github.com/git-ecosystem/git-credential-manager/blob/main/docs/credstores.md).
+
+With [GitHub CLI](https://cli.github.com/) installed:
+
+- `gh auth login` - Starts authentication; choose HTTPS and the browser flow for this use.
+
+- `gh auth setup-git` - Configures Git to take advantage of GitHub CLI authentication.
+
+- `gh auth status` - Checks the account and authentication used by the tool.
+
+GitHub CLI tries to use the system vault, but may resort to a file without encryption if it is not available. Check the authentication warnings. Tokens should not be included in the project nor in the remote URL.
+
+### SSH:
+
+In SSH, authentication uses a key pair: the **public** one is registered on the service; the **private** one stays on the computer. A protection password (*passphrase*) can protect the private key file.
+
+To create and load a key, in Bash or Git Bash:
+
+```bash
+ssh-keygen -t ed25519 -C "email@exemplo.com"
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+```
+
+The last two commands assume that you accepted the default path on creation. If a key already exists at that path, do not overwrite it without checking its use. Register on the service the content of `~/.ssh/id_ed25519.pub`; never send the file without `.pub`.
+
+Copy the SSH URL provided by the service and use it in cloning or in the remote configuration. For example, on GitHub:
+
+```bash
+ssh -T git@github.com
+git remote set-url origin git@github.com:usuario/projeto.git
+```
+
+On the first connection, check the server identification with the official documentation before accepting it. The first command tests authentication; the second changes an already existing remote. The `ssh-agent` allows reusing the loaded key during the session.
+
+## Sending and Receiving Changes:
+
+- `git push {options} {remote} {branch}` - Sends the *commits* and tries to update the corresponding *branch* on the remote.
+
+    - `git push -u {remote} {branch}` - Sends the *commits* and configures the tracking of the remote *branch* (*upstream*), normally allowing the names to be omitted in the next `push` and `pull` of that *branch*.
+
+```bash
+git push -u origin main
+# Depois de criar novos commits, permanecendo na branch main:
+git push # No fluxo deste exemplo, equivale a "git push origin main".
+```
+
+This first send assumes that there is at least one *commit* and a local *branch* called `main`. It does not include files or edits that have not yet been recorded.
+
+**`main` and `origin/main` are not the same reference.** `main` tracks the local work; `origin/main` records the known position of the *branch* on the server. This local information needs to be updated through communication with the remote.
+
+- `git fetch {options} {remote}` - Obtains the novelties and updates the local remote references, without automatically merging into the working *branch*. If the remote is omitted, it uses the one associated with the current *branch* or, in the absence of that association, `origin`.
+
+    - `git fetch --prune {remote}` - Also cleans references of *branches* that have already been deleted on the server; it does not delete the local working *branches*.
+
+- `git pull {options} {remote} {branch}` - Obtains the novelties and tries to integrate them into the current *branch*. Without integration options, it follows the behavior configured in the environment. With remote tracking configured, the names can be omitted.
+
+    - `git pull --ff-only {remote} {branch}` - Accepts only direct advance; refuses the integration if the histories have diverged.
+    - `git pull --no-rebase {remote} {branch}` - Selects merging, as in chapter 2.
+
+To check the novelties before incorporating them, while on `main`:
+
+```bash
+git fetch origin
+git log --oneline HEAD..origin/main
+git diff HEAD origin/main
+git merge origin/main
+```
+
+In this use of `log`, `HEAD..origin/main` shows the *commits* known on the remote that are not yet part of the current line. The `diff` compares the contents. Integration happens only in the last command.
+
+If you want to obtain and integrate in a single operation, use `git pull --no-rebase origin main`, also while on the *branch* that should receive these changes. The explicit option avoids depending on the integration configuration of that environment.
+
+## Synchronization Problems:
+
+### Send Refused or Divergent Histories:
+
+A send refused with an indication of *non-fast-forward* or need to fetch changes usually means that the server has *commits* that your local line does not yet incorporate. Do not resolve automatically with forced send, as it can discard shared work.
+
+While on the *branch* that should be synchronized, with pending changes recorded or saved, obtain and integrate the remote history:
+
+```bash
+git pull --no-rebase origin main
+# Se houver conflitos, resolva-os e conclua o commit de mesclagem.
+git push origin main
+```
+
+Replace `main` with the corresponding *branch*. If Git informs that it needs a strategy to reconcile divergent lines, `--no-rebase` chooses merging. If the previous attempt used `--ff-only`, the refusal indicates that the direct advance is not sufficient.
+
+In case of conflict, follow [Resolving Conflicts](#resolving-conflicts). A refusal caused by lack of permission or *branch* protection requires correcting access or following the project's collaboration flow; a `pull` does not resolve these restrictions.
+
+### Incorrect Remote, *Branch*, or Authentication:
+
+| Situation | What to Check |
+| --- | --- |
+| `remote origin already exists` | Use `git remote -v`. To correct the address, use `remote set-url`, instead of registering the same name again. |
+| Absence of *upstream* | Check the *branch* and, on the first send, use `git push -u origin {branch}`. |
+| `src refspec main does not match any` | Check whether a *commit* exists and whether the *branch* is really called `main`. |
+| Authentication failure or `Permission denied (publickey)` | Check the URL, the access method, and the credential or key registered on the authorized account. |
+| Local changes would be overwritten | Use `git status` and record or save the work with `stash` before updating. |
 
 ---
 
 # Sources
 
-- CHACON, Scott; STRAUB, Ben. *Pro Git*. 2nd ed. New York: Apress, 2014. Available at: [https://git-scm.com/book/en/v2](https://git-scm.com/book/en/v2). Accessed on: Sep. 15, 2026.
-- GIT PROJECT. *Git Reference Documentation*. Version 2.55.0. [N.p.], 2026. Available at: [https://git-scm.com/docs](https://git-scm.com/docs). Accessed on: Sep. 15, 2026.
-- GITHUB. *About authentication to GitHub*. [N.p.], [n.d.]. Available at: [https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/about-authentication-to-github](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/about-authentication-to-github). Accessed on: Sep. 15, 2026.
-- GITHUB. *Caching your GitHub credentials in Git*. [N.p.], [n.d.]. Available at: [https://docs.github.com/en/get-started/git-basics/caching-your-github-credentials-in-git](https://docs.github.com/en/get-started/git-basics/caching-your-github-credentials-in-git). Accessed on: Sep. 15, 2026.
-- GITHUB. *Managing your personal access tokens*. [N.p.], [n.d.]. Available at: [https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens). Accessed on: Sep. 15, 2026.
-- GITHUB. *Generating a new SSH key and adding it to the ssh-agent*. [N.p.], [n.d.]. Available at: [https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent). Accessed on: Sep. 15, 2026.
-- GITHUB. *Testing your SSH connection*. [N.p.], [n.d.]. Available at: [https://docs.github.com/en/authentication/connecting-to-github-with-ssh/testing-your-ssh-connection](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/testing-your-ssh-connection). Accessed on: Sep. 15, 2026.
-- GITHUB. *GitHub CLI Manual: gh auth*. [N.p.], [n.d.]. Available at: [https://cli.github.com/manual/gh_auth](https://cli.github.com/manual/gh_auth). Accessed on: Sep. 15, 2026.
+- GIT PROJECT. *Pro Git*. 2nd ed., 2014. Available at: [https://git-scm.com/book/pt-br/v2](https://git-scm.com/book/pt-br/v2). Accessed on: Nov. 17, 2026.
+- GIT PROJECT. *Git Reference Documentation*. [S. l.], [n. d.]. Available at: [https://git-scm.com/docs](https://git-scm.com/docs). Accessed on: Nov. 17, 2026.
+- GIT PROJECT. *git-credential-cache*. [S. l.], [n. d.]. Available at: [https://git-scm.com/docs/git-credential-cache](https://git-scm.com/docs/git-credential-cache). Accessed on: Nov. 17, 2026.
+- GIT PROJECT. *git-credential-store*. [S. l.], [n. d.]. Available at: [https://git-scm.com/docs/git-credential-store](https://git-scm.com/docs/git-credential-store). Accessed on: Nov. 17, 2026.
+- GIT ECOSYSTEM. *Git Credential Manager*. [S. l.], [n. d.]. Available at: [https://github.com/git-ecosystem/git-credential-manager/blob/main/docs/usage.md](https://github.com/git-ecosystem/git-credential-manager/blob/main/docs/usage.md). Accessed on: Nov. 17, 2026.
+- GITHUB. *GitHub CLI Manual*. [S. l.], [n. d.]. Available at: [Authentication](https://cli.github.com/manual/gh_auth_login) and [Git integration](https://cli.github.com/manual/gh_auth_setup-git). Accessed on: Nov. 17, 2026.
+- GITHUB. *Managing your personal access tokens*. [S. l.], [n. d.]. Available at: [https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens). Accessed on: Nov. 17, 2026.
+- GITHUB. *Generating a new SSH key and adding it to the ssh-agent*. [S. l.], [n. d.]. Available at: [SSH keys](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent). Accessed on: Nov. 17, 2026.
