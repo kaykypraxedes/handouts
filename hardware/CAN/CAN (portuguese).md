@@ -136,7 +136,7 @@ O CAN representa os *bits* por dois estados do barramento, chamados **dominante*
 | Recessivo | `1` | 2,5 V | 2,5 V | Próxima de 0 V |
 
 ![Circuito CAN](images/screenshot003.png)<br>
-*Fonte: Zhou (2026).*
+*Fonte: **Adaptado** de Voss (2019).*
 
 > Esses valores ilustram o funcionamento de *transceivers* comuns alimentados em 5 V. Os valores exatos e os limites de reconhecimento dependem do componente.
 
@@ -165,11 +165,11 @@ Durante uma mensagem também existem *bits* recessivos. Para reconhecer que o ba
 
 ---
 
-# 3. Componentes
+# 3. Quadros
+
+> A estrutura apresentada neste capítulo corresponde ao **quadro de dados**, utilizado para transportar informações da aplicação. Os demais tipos de quadro e suas diferenças são apresentados ao final.
 
 Um quadro CAN reúne campos que permitem identificar a mensagem, transportar seus dados e verificar a transmissão. É semelhante a uma ficha com espaços definidos, cada um com uma função.
-
-A estrutura apresentada neste capítulo corresponde ao **quadro de dados**, utilizado para transportar informações da aplicação. Os demais tipos de quadro e suas diferenças são apresentados ao final.
 
 ## Estrutura do Quadro de Dados:
 
@@ -381,12 +381,33 @@ Se houver falha, o tratamento de erros pode interromper esse percurso e provocar
 
 ---
 
+# Apêndice A. Desenvolvimento e Simulação
+
+## *Frameworks* e *Drivers*:
+
+Os *frameworks* de desenvolvimento embarcado oferecem *drivers* com funções para configurar o controlador CAN, enviar e receber quadros e definir filtros de aceitação. A escolha depende do microcontrolador e do periférico disponível.
+
+- **ESP-IDF (ESP32):** O *driver* TWAI da Espressif permite usar o controlador CAN clássico do ESP32. Para conectá-lo ao barramento físico, é necessário um transceiver externo. [Documentação oficial do TWAI](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/peripherals/twai.html).
+- **STM32Cube HAL (STM32):** A ST oferece *drivers* para os periféricos CAN e FDCAN, conforme a família do microcontrolador. [Exemplo oficial de CAN no STM32F4](https://github.com/STMicroelectronics/STM32CubeF4/blob/master/Projects/STM324xG_EVAL/Examples/CAN/CAN_Networking/Src/main.c) e [guia oficial do FDCAN no STM32H7P](https://dev.st.com/stm32cube-docs/stm32h7pxx-hal-drivers/2.0.0/en/docs/drivers/hal_drivers/fdcan/hal_fdcan_how_to_use.html).
+- **Zephyr RTOS:** Disponibiliza uma API comum para controladores CAN de diferentes plataformas. O exemplo *CAN Counter* demonstra envio, recepção e filtragem de quadros. [Exemplo oficial do Zephyr](https://docs.zephyrproject.org/latest/samples/drivers/can/counter/README.html).
+
+## Simulação:
+
+- **Proteus VSM:** - Permite executar o *firmware* de um microcontrolador em um circuito simulado e trocar quadros com outros nós. Entre as opções estão o STM32F103, com controlador integrado, e o MCP2515, um controlador externo acessado por SPI. [Simulação CAN no Proteus](https://www.labcenter.com/can-sim/).
+- **Renode:** Executa *firmware* em plataformas emuladas e permite conectar controladores compatíveis a uma rede CAN virtual. No Linux, a integração com SocketCAN permite trocar quadros com programas executados no computador. [Guia oficial de integração CAN](https://renode.readthedocs.io/en/latest/host-integration/can.html).
+
+> O Wokwi simula o ESP32, mas lista o suporte ao TWAI como parcial. Confira se o recurso que você precisa está disponível antes de preparar o teste. [Guia de simulação do ESP32 no Wokwi](https://docs.wokwi.com/guides/esp32#simulation-features).
+
+A simulação permite conferir se o *firmware* envia o ID e os dados esperados e reage aos quadros recebidos. Para verificar níveis de tensão, terminação e efeitos do cabeamento, faça medições no barramento físico.
+
+---
+
 # Fontes
 
 - FASTBIT EMBEDDED BRAIN ACADEMY. *Controller Area Network (CAN) Programming Tutorial Step by Step*. [YouTube], 2019. Disponível em: [https://www.youtube.com/playlist?list=PLERTijJOmYrApVZqiI6gtA8hr1_6QS-cs](https://www.youtube.com/playlist?list=PLERTijJOmYrApVZqiI6gtA8hr1_6QS-cs). Acesso em: 17 nov. 2026.
 - SMITH, Grant Maloy. *O que é barramento CAN (Controller Area Network) e como ele se compara a outras redes de barramento de veículos*. Dewesoft, 17 abr. 2024. Disponível em: [https://dewesoft.com/pt/blog/que-e-barramento-can](https://dewesoft.com/pt/blog/que-e-barramento-can). Acesso em: 17 nov. 2026.
 - PETROLHEADGARAGE. *Diagnóstico de línea CAN Bus. Solución de problemas, ejemplos y técnica*. [S. l.], 2020. Disponível em: [https://petrolheadgarage.com/cursos-automocion/diagnostico-linea-can-bus-solucion-problemas/](https://petrolheadgarage.com/cursos-automocion/diagnostico-linea-can-bus-solucion-problemas/). Acesso em: 17 nov. 2026.
-- ZHOU, Estelle. *CAN Bus Guide: Protocol, Architecture, Types, and Applications*. COME-STAR, 24 abr. 2026. Disponível em: [https://www.come-star.com/blog/can-bus-wiki/](https://www.come-star.com/blog/can-bus-wiki/). Acesso em: 17 nov. 2026.
+- VOSS, Wilfried. *CAN Bus And SAE J1939 Bus Voltage*. Copperhill Technologies, 26 jun. 2019. Disponível em: [https://copperhilltech.com/blog/can-bus-and-sae-j1939-bus-voltage/](https://copperhilltech.com/blog/can-bus-and-sae-j1939-bus-voltage/). Acesso em: 17 nov. 2026.
 - TEXAS INSTRUMENTS. *Controller Area Network Physical Layer Requirements*. SLLA270, jan. 2008. Disponível em: [https://www.ti.com/lit/an/slla270/slla270.pdf](https://www.ti.com/lit/an/slla270/slla270.pdf). Acesso em: 16 nov. 2026.
 - NXP SEMICONDUCTORS. *TJA1057 - High-Speed CAN Transceiver*. Rev. 8.1, 2 mar. 2026. Disponível em: [https://cache.nxp.com/docs/en/data-sheet/TJA1057.pdf](https://cache.nxp.com/docs/en/data-sheet/TJA1057.pdf). Acesso em: 16 nov. 2026.
 - KVASER. *The CAN Bus Protocol Tutorial*. Disponível em: [https://kvaser.com/can-protocol-tutorial/](https://kvaser.com/can-protocol-tutorial/). Acesso em: 16 nov. 2026.
