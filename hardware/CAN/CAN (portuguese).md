@@ -71,7 +71,7 @@ A conexão de um nó ao barramento envolve o processamento da aplicação, o con
 O controlador CAN frequentemente está integrado ao microcontrolador. Quando é externo, o microcontrolador precisa de uma interface para se comunicar com ele, como SPI.
 
 ![Nó CAN](images/screenshot001.png)<br>
-*Fonte: **Adaptado** de Smith (2024).*
+*Fonte: **Adaptado** de DEWESoft - O que é barramento CAN (Controller Area Network) e como ele se compara a outras redes de barramento de veículos, Disponível em: [https://dewesoft.com/pt/blog/que-e-barramento-can](https://dewesoft.com/pt/blog/que-e-barramento-can). Acesso em: 17 nov. 2026.*
 
 O *transceiver* conecta o controlador às duas linhas do barramento, chamadas **CANH** (*CAN High*) e **CANL** (*CAN Low)*.
 
@@ -98,7 +98,7 @@ Nas duas extremidades físicas do barramento, utiliza-se normalmente um resistor
 É semelhante a um eco que se mistura ao som original. No cabo, essas reflexões podem deformar as transições e dificultar a leitura dos *bits*.
 
 ![Circuito CAN](images/screenshot002.png)<br>
-*Fonte: PetrolheadGarage (2020).*
+*Fonte: PetrolheadGarage - Diagnóstico de línea CAN Bus. Solución de problemas, ejemplos y técnica, Disponível em: [https://petrolheadgarage.com/cursos-automocion/diagnostico-linea-can-bus-solucion-problemas/](https://petrolheadgarage.com/cursos-automocion/diagnostico-linea-can-bus-solucion-problemas/). Acesso em: 17 nov. 2026.*
 
 > Com a rede desenergizada e as duas terminações conectadas, a resistência medida entre CANH e CANL costuma ficar próxima de **60 Ω** (dois resistores de 120 Ω em paralelo).
 
@@ -136,7 +136,7 @@ O CAN representa os *bits* por dois estados do barramento, chamados **dominante*
 | Recessivo | `1` | 2,5 V | 2,5 V | Próxima de 0 V |
 
 ![Circuito CAN](images/screenshot003.png)<br>
-*Fonte: **Adaptado** de Voss (2019).*
+*Fonte: **Adaptado** de Copperhill Technologies - CAN Bus And SAE J1939 Bus Voltage, Disponível em: [https://copperhilltech.com/blog/can-bus-and-sae-j1939-bus-voltage/](https://copperhilltech.com/blog/can-bus-and-sae-j1939-bus-voltage/). Acesso em: 17 nov. 2026.*
 
 > Esses valores ilustram o funcionamento de *transceivers* comuns alimentados em 5 V. Os valores exatos e os limites de reconhecimento dependem do componente.
 
@@ -405,9 +405,6 @@ A simulação permite conferir se o *firmware* envia o ID e os dados esperados e
 # Fontes
 
 - FASTBIT EMBEDDED BRAIN ACADEMY. *Controller Area Network (CAN) Programming Tutorial Step by Step*. [YouTube], 2019. Disponível em: [https://www.youtube.com/playlist?list=PLERTijJOmYrApVZqiI6gtA8hr1_6QS-cs](https://www.youtube.com/playlist?list=PLERTijJOmYrApVZqiI6gtA8hr1_6QS-cs). Acesso em: 17 nov. 2026.
-- SMITH, Grant Maloy. *O que é barramento CAN (Controller Area Network) e como ele se compara a outras redes de barramento de veículos*. Dewesoft, 17 abr. 2024. Disponível em: [https://dewesoft.com/pt/blog/que-e-barramento-can](https://dewesoft.com/pt/blog/que-e-barramento-can). Acesso em: 17 nov. 2026.
-- PETROLHEADGARAGE. *Diagnóstico de línea CAN Bus. Solución de problemas, ejemplos y técnica*. [S. l.], 2020. Disponível em: [https://petrolheadgarage.com/cursos-automocion/diagnostico-linea-can-bus-solucion-problemas/](https://petrolheadgarage.com/cursos-automocion/diagnostico-linea-can-bus-solucion-problemas/). Acesso em: 17 nov. 2026.
-- VOSS, Wilfried. *CAN Bus And SAE J1939 Bus Voltage*. Copperhill Technologies, 26 jun. 2019. Disponível em: [https://copperhilltech.com/blog/can-bus-and-sae-j1939-bus-voltage/](https://copperhilltech.com/blog/can-bus-and-sae-j1939-bus-voltage/). Acesso em: 17 nov. 2026.
 - TEXAS INSTRUMENTS. *Controller Area Network Physical Layer Requirements*. SLLA270, jan. 2008. Disponível em: [https://www.ti.com/lit/an/slla270/slla270.pdf](https://www.ti.com/lit/an/slla270/slla270.pdf). Acesso em: 16 nov. 2026.
 - NXP SEMICONDUCTORS. *TJA1057 - High-Speed CAN Transceiver*. Rev. 8.1, 2 mar. 2026. Disponível em: [https://cache.nxp.com/docs/en/data-sheet/TJA1057.pdf](https://cache.nxp.com/docs/en/data-sheet/TJA1057.pdf). Acesso em: 16 nov. 2026.
 - KVASER. *The CAN Bus Protocol Tutorial*. Disponível em: [https://kvaser.com/can-protocol-tutorial/](https://kvaser.com/can-protocol-tutorial/). Acesso em: 16 nov. 2026.
