@@ -523,10 +523,11 @@ Em caso de conflito, siga [Resolver Conflitos](#resolver-conflitos). Uma recusa 
 
 # Fontes
 
-- CHACON, Scott; STRAUB, Ben. *Pro Git*. 2. ed. Apress, 2014. [Edição on-line em português](https://git-scm.com/book/pt-br/v2).
-- GIT PROJECT. *Git Reference Documentation*. [Referência dos comandos](https://git-scm.com/docs). Consultas de revisão: 17 nov. 2026.
-- GIT PROJECT. *Install*. [Windows](https://git-scm.com/install/win), [Linux e outros sistemas Unix](https://git-scm.com/install/linux) e [macOS](https://git-scm.com/install/mac). Acesso em: 17 nov. 2026.
-- GIT PROJECT. *git-credential-cache* e *git-credential-store*. [Armazenamento temporário](https://git-scm.com/docs/git-credential-cache) e [armazenamento em arquivo](https://git-scm.com/docs/git-credential-store). Acesso em: 17 nov. 2026.
-- GIT ECOSYSTEM. *Git Credential Manager*. [Uso](https://github.com/git-ecosystem/git-credential-manager/blob/main/docs/usage.md) e [cofres de credenciais](https://github.com/git-ecosystem/git-credential-manager/blob/main/docs/credstores.md). Acesso em: 17 nov. 2026.
-- GITHUB. *GitHub CLI Manual*. [Autenticação](https://cli.github.com/manual/gh_auth_login) e [integração com Git](https://cli.github.com/manual/gh_auth_setup-git). Acesso em: 17 nov. 2026.
-- GITHUB. *Managing your personal access tokens* e *Generating a new SSH key and adding it to the ssh-agent*. [Tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) e [chaves SSH](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent). Acesso em: 17 nov. 2026.
+- GIT PROJECT. *Pro Git*. 2. ed., 2014. Disponível em: [https://git-scm.com/book/pt-br/v2](https://git-scm.com/book/pt-br/v2). Acesso em: 17 nov. 2026.
+- GIT PROJECT. *Git Reference Documentation*. [S. l.], [s. d.]. Disponível em: [https://git-scm.com/docs](https://git-scm.com/docs). Acesso em: 17 nov. 2026.
+- GIT PROJECT. *git-credential-cache*. [S. l.], [s. d.]. Disponível em: [https://git-scm.com/docs/git-credential-cache](https://git-scm.com/docs/git-credential-cache). Acesso em: 17 nov. 2026.
+- GIT PROJECT. *git-credential-store*. [S. l.], [s. d.]. Disponível em: [https://git-scm.com/docs/git-credential-store](https://git-scm.com/docs/git-credential-store). Acesso em: 17 nov. 2026.
+- GIT ECOSYSTEM. *Git Credential Manager*. [S. l.], [s. d.]. Disponível em: [https://github.com/git-ecosystem/git-credential-manager/blob/main/docs/usage.md](https://github.com/git-ecosystem/git-credential-manager/blob/main/docs/usage.md). Acesso em: 17 nov. 2026.
+- GITHUB. *GitHub CLI Manual*. [S. l.], [s. d.]. Disponível em: [Autenticação](https://cli.github.com/manual/gh_auth_login) e [integração com Git](https://cli.github.com/manual/gh_auth_setup-git). Acesso em: 17 nov. 2026.
+- GITHUB. *Managing your personal access tokens*. [S. l.], [s. d.]. Disponível em: [https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens). Acesso em: 17 nov. 2026.
+- GITHUB. *Generating a new SSH key and adding it to the ssh-agent*. [S. l.], [s. d.]. Disponível em: [chaves SSH](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent). Acesso em: 17 nov. 2026.
