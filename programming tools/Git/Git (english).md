@@ -523,11 +523,11 @@ In case of conflict, follow [Resolving Conflicts](#resolving-conflicts). A refus
 
 # Sources
 
-- GIT PROJECT. *Pro Git*. 2nd ed., 2014. Available at: [https://git-scm.com/book/pt-br/v2](https://git-scm.com/book/pt-br/v2). Accessed on: Nov. 17, 2026.
-- GIT PROJECT. *Git Reference Documentation*. [S. l.], [n. d.]. Available at: [https://git-scm.com/docs](https://git-scm.com/docs). Accessed on: Nov. 17, 2026.
-- GIT PROJECT. *git-credential-cache*. [S. l.], [n. d.]. Available at: [https://git-scm.com/docs/git-credential-cache](https://git-scm.com/docs/git-credential-cache). Accessed on: Nov. 17, 2026.
-- GIT PROJECT. *git-credential-store*. [S. l.], [n. d.]. Available at: [https://git-scm.com/docs/git-credential-store](https://git-scm.com/docs/git-credential-store). Accessed on: Nov. 17, 2026.
-- GIT ECOSYSTEM. *Git Credential Manager*. [S. l.], [n. d.]. Available at: [https://github.com/git-ecosystem/git-credential-manager/blob/main/docs/usage.md](https://github.com/git-ecosystem/git-credential-manager/blob/main/docs/usage.md). Accessed on: Nov. 17, 2026.
-- GITHUB. *GitHub CLI Manual*. [S. l.], [n. d.]. Available at: [Authentication](https://cli.github.com/manual/gh_auth_login) and [Git integration](https://cli.github.com/manual/gh_auth_setup-git). Accessed on: Nov. 17, 2026.
-- GITHUB. *Managing your personal access tokens*. [S. l.], [n. d.]. Available at: [https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens). Accessed on: Nov. 17, 2026.
-- GITHUB. *Generating a new SSH key and adding it to the ssh-agent*. [S. l.], [n. d.]. Available at: [SSH keys](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent). Accessed on: Nov. 17, 2026.
+- CHACON, Scott; STRAUB, Ben. *Pro Git*. 2nd ed. New York: Apress, 2014. Available at: [https://git-scm.com/book/pt-br/v2](https://git-scm.com/book/pt-br/v2). Accessed on: Nov. 17, 2026.
+- GIT PROJECT. *Reference*. \[N. p.\], 2026. Available at: [https://git-scm.com/docs](https://git-scm.com/docs). Accessed on: Nov. 17, 2026.
+- GIT PROJECT. *git-credential-cache*. Version 2.49.0. \[N. p.\], Mar. 2025. Available at: [https://git-scm.com/docs/git-credential-cache](https://git-scm.com/docs/git-credential-cache). Accessed on: Nov. 17, 2026.
+- GIT PROJECT. *git-credential-store*. Version 2.43.0. \[N. p.\], Nov. 2023. Available at: [https://git-scm.com/docs/git-credential-store](https://git-scm.com/docs/git-credential-store). Accessed on: Nov. 17, 2026.
+- GIT ECOSYSTEM. *Command-line usage*. San Francisco: GitHub, 2023. Available at: [https://github.com/git-ecosystem/git-credential-manager/blob/main/docs/usage.md](https://github.com/git-ecosystem/git-credential-manager/blob/main/docs/usage.md). Accessed on: Nov. 17, 2026.
+- GITHUB. *gh auth setup-git*. San Francisco: GitHub Inc., 2026. Available at: [https://cli.github.com/manual/gh_auth_setup-git](https://cli.github.com/manual/gh_auth_setup-git). Accessed on: Nov. 17, 2026.
+- GITHUB. *Managing your personal access tokens*. San Francisco: GitHub Inc., 2026. Available at: [https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens). Accessed on: Nov. 17, 2026.
+- GITHUB. *Generating a new SSH key and adding it to the ssh-agent*. San Francisco: GitHub Inc., 2026. Available at: [https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent). Accessed on: Nov. 17, 2026.

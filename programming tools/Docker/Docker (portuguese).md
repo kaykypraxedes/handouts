@@ -631,11 +631,11 @@ Monte apenas os diretórios necessários e utilize somente leitura quando a apli
 
 # Fontes
 
-- DOCKER INC. *Docker Docs: Docker overview*. [S. l.], [s. d.]. Disponível em: [https://docs.docker.com/get-started/docker-overview/](https://docs.docker.com/get-started/docker-overview/). Acesso em: 15 set. 2026.
-- DOCKER INC. *Docker Engine security: Rootless mode*. [S. l.], [s. d.]. Disponível em: [https://docs.docker.com/engine/security/rootless/](https://docs.docker.com/engine/security/rootless/). Acesso em: 15 set. 2026.
-- DOCKER INC. *Docker CLI reference*. [S. l.], [s. d.]. Disponível em: [https://docs.docker.com/reference/cli/docker/](https://docs.docker.com/reference/cli/docker/). Acesso em: 15 set. 2026.
-- DOCKER INC. *Dockerfile reference*. [S. l.], [s. d.]. Disponível em: [https://docs.docker.com/reference/dockerfile/](https://docs.docker.com/reference/dockerfile/). Acesso em: 15 set. 2026.
-- DOCKER INC. *Storage*. [S. l.], [s. d.]. Disponível em: [https://docs.docker.com/engine/storage/](https://docs.docker.com/engine/storage/). Acesso em: 15 set. 2026.
-- DOCKER INC. *Networking overview*. [S. l.], [s. d.]. Disponível em: [https://docs.docker.com/engine/network/](https://docs.docker.com/engine/network/). Acesso em: 15 set. 2026.
-- DOCKER INC. *Docker Compose*. [S. l.], [s. d.]. Disponível em: [https://docs.docker.com/compose/](https://docs.docker.com/compose/). Acesso em: 15 set. 2026.
-- DOCKER INC. *Set, use, and manage variables in a Compose file with interpolation*. [S. l.], [s. d.]. Disponível em: [https://docs.docker.com/compose/how-tos/environment-variables/variable-interpolation/](https://docs.docker.com/compose/how-tos/environment-variables/variable-interpolation/). Acesso em: 15 set. 2026.
+- DOCKER INC. *What is Docker?* Palo Alto: Docker Inc., 2026. Disponível em: [https://docs.docker.com/get-started/docker-overview/](https://docs.docker.com/get-started/docker-overview/). Acesso em: 15 set. 2026.
+- DOCKER INC. *Rootless mode*. Palo Alto: Docker Inc., 2026. Disponível em: [https://docs.docker.com/engine/security/rootless/](https://docs.docker.com/engine/security/rootless/). Acesso em: 15 set. 2026.
+- DOCKER INC. *docker*. Palo Alto: Docker Inc., 2026. Disponível em: [https://docs.docker.com/reference/cli/docker/](https://docs.docker.com/reference/cli/docker/). Acesso em: 15 set. 2026.
+- DOCKER INC. *Dockerfile reference*. Palo Alto: Docker Inc., 2026. Disponível em: [https://docs.docker.com/reference/dockerfile/](https://docs.docker.com/reference/dockerfile/). Acesso em: 15 set. 2026.
+- DOCKER INC. *Storage*. Palo Alto: Docker Inc., 2026. Disponível em: [https://docs.docker.com/engine/storage/](https://docs.docker.com/engine/storage/). Acesso em: 15 set. 2026.
+- DOCKER INC. *Networking overview*. Palo Alto: Docker Inc., 2026. Disponível em: [https://docs.docker.com/engine/network/](https://docs.docker.com/engine/network/). Acesso em: 15 set. 2026.
+- DOCKER INC. *Docker Compose*. Palo Alto: Docker Inc., 2026. Disponível em: [https://docs.docker.com/compose/](https://docs.docker.com/compose/). Acesso em: 15 set. 2026.
+- DOCKER INC. *Set, use, and manage variables in a Compose file with interpolation*. Palo Alto: Docker Inc., 2026. Disponível em: [https://docs.docker.com/compose/how-tos/environment-variables/variable-interpolation/](https://docs.docker.com/compose/how-tos/environment-variables/variable-interpolation/). Acesso em: 15 set. 2026.

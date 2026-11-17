@@ -416,9 +416,9 @@ O **AUTOSAR Classic** define como o software de uma ECU baseada em microcontrola
 
 # Fontes
 
-- FASTBIT EMBEDDED BRAIN ACADEMY. *Controller Area Network (CAN) Programming Tutorial Step by Step*. [YouTube], 2019. Disponível em: [https://www.youtube.com/playlist?list=PLERTijJOmYrApVZqiI6gtA8hr1_6QS-cs](https://www.youtube.com/playlist?list=PLERTijJOmYrApVZqiI6gtA8hr1_6QS-cs). Acesso em: 17 nov. 2026.
-- TEXAS INSTRUMENTS. *Controller Area Network Physical Layer Requirements*. SLLA270, jan. 2008. Disponível em: [https://www.ti.com/lit/an/slla270/slla270.pdf](https://www.ti.com/lit/an/slla270/slla270.pdf). Acesso em: 16 nov. 2026.
-- NXP SEMICONDUCTORS. *TJA1057 - High-Speed CAN Transceiver*. Rev. 8.1, 2 mar. 2026. Disponível em: [https://cache.nxp.com/docs/en/data-sheet/TJA1057.pdf](https://cache.nxp.com/docs/en/data-sheet/TJA1057.pdf). Acesso em: 16 nov. 2026.
-- KVASER. *The CAN Bus Protocol Tutorial*. Disponível em: [https://kvaser.com/can-protocol-tutorial/](https://kvaser.com/can-protocol-tutorial/). Acesso em: 16 nov. 2026.
-- KVASER. *CAN Error Handling*. Disponível em: [https://kvaser.com/lesson/can-error-handling/](https://kvaser.com/lesson/can-error-handling/). Acesso em: 16 nov. 2026.
-- KVASER. *CAN FD Protocol Tutorial*. Disponível em: [https://kvaser.com/can-fd-protocol-tutorial/](https://kvaser.com/can-fd-protocol-tutorial/). Acesso em: 16 nov. 2026.
+- FASTBIT EMBEDDED BRAIN ACADEMY. *Controller Area Network (CAN) Programming Tutorial Step by Step*. \[YouTube\], 2019. Disponível em: [https://www.youtube.com/playlist?list=PLERTijJOmYrApVZqiI6gtA8hr1_6QS-cs](https://www.youtube.com/playlist?list=PLERTijJOmYrApVZqiI6gtA8hr1_6QS-cs). Acesso em: 17 nov. 2026.
+- CORRIGAN, Steve. *Controller Area Network Physical Layer Requirements*. SLLA270. Dallas: Texas Instruments, 2008. Disponível em: [https://www.ti.com/lit/an/slla270/slla270.pdf](https://www.ti.com/lit/an/slla270/slla270.pdf). Acesso em: 16 nov. 2026.
+- NXP SEMICONDUCTORS. *TJA1057: High-speed CAN transceiver*. Rev. 8.1. Eindhoven: NXP B.V., 2026. Disponível em: [https://cache.nxp.com/docs/en/data-sheet/TJA1057.pdf](https://cache.nxp.com/docs/en/data-sheet/TJA1057.pdf). Acesso em: 16 nov. 2026.
+- KVASER. *The CAN Bus Protocol Tutorial*. Mölndal: Kvaser AB, 2026. Disponível em: [https://kvaser.com/can-protocol-tutorial/](https://kvaser.com/can-protocol-tutorial/). Acesso em: 16 nov. 2026.
+- KVASER. *CAN Error Handling*. Mölndal: Kvaser AB, 2026. Disponível em: [https://kvaser.com/lesson/can-error-handling/](https://kvaser.com/lesson/can-error-handling/). Acesso em: 16 nov. 2026.
+- KVASER. *CAN FD Protocol Tutorial*. Mölndal: Kvaser AB, 2026. Disponível em: [https://kvaser.com/can-fd-protocol-tutorial/](https://kvaser.com/can-fd-protocol-tutorial/). Acesso em: 16 nov. 2026.

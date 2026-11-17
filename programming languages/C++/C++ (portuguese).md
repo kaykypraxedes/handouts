@@ -1141,16 +1141,10 @@ O exemplo pressupõe notas inicialmente entre zero e dez e bônus não negativos
 
 # Fontes:
 
-- STANDARD C++ FOUNDATION. *Learning C++ if you already know C*. [S. l.], [s. d.]. Disponível em: [https://isocpp.org/wiki/faq/c](https://isocpp.org/wiki/faq/c). Acesso em: 5 out. 2026.
-
-- STROUSTRUP, Bjarne; SUTTER, Herb (ed.). *C++ Core Guidelines*. [S. l.], 2026. Disponível em: [https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines). Acesso em: 5 out. 2026.
-
-- FREE SOFTWARE FOUNDATION. *Compiling C++ Programs*. In: *Using the GNU Compiler Collection (GCC)*. [S. l.], [s. d.]. Disponível em: [https://gcc.gnu.org/onlinedocs/gcc/Invoking-G_002b_002b.html](https://gcc.gnu.org/onlinedocs/gcc/Invoking-G_002b_002b.html). Acesso em: 5 out. 2026.
-
-- LEARNCPP. *Lvalue references*. [S. l.], 2024. Disponível em: [https://www.learncpp.com/cpp-tutorial/lvalue-references/](https://www.learncpp.com/cpp-tutorial/lvalue-references/). Acesso em: 5 out. 2026.
-
-- LEARNCPP. *Constexpr variables*. [S. l.], [s. d.]. Disponível em: [https://www.learncpp.com/cpp-tutorial/constexpr-variables/](https://www.learncpp.com/cpp-tutorial/constexpr-variables/). Acesso em: 5 out. 2026.
-
-- LEARNCPP. *Struct aggregate initialization*. [S. l.], [s. d.]. Disponível em: [https://www.learncpp.com/cpp-tutorial/struct-aggregate-initialization/](https://www.learncpp.com/cpp-tutorial/struct-aggregate-initialization/). Acesso em: 5 out. 2026.
-
-- LEARNCPP. *Default arguments*. [S. l.], 2024. Disponível em: [https://www.learncpp.com/cpp-tutorial/default-arguments/](https://www.learncpp.com/cpp-tutorial/default-arguments/). Acesso em: 5 out. 2026.
+- STANDARD C++ FOUNDATION. *Learning C++ if you already know C*. \[S. l.\], 2026. Disponível em: [https://isocpp.org/wiki/faq/c](https://isocpp.org/wiki/faq/c). Acesso em: 5 out. 2026.
+- STROUSTRUP, Bjarne; SUTTER, Herb (ed.). *C++ Core Guidelines*. \[S. l.\], 2026. Disponível em: [https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines). Acesso em: 5 out. 2026.
+- FREE SOFTWARE FOUNDATION. *Compiling C++ Programs*. In: *Using the GNU Compiler Collection (GCC)*. Boston: Free Software Foundation, 2026. Disponível em: [https://gcc.gnu.org/onlinedocs/gcc/Invoking-G_002b_002b.html](https://gcc.gnu.org/onlinedocs/gcc/Invoking-G_002b_002b.html). Acesso em: 5 out. 2026.
+- LEARNCPP. *Lvalue references*. \[S. l.\], 2024. Disponível em: [https://www.learncpp.com/cpp-tutorial/lvalue-references/](https://www.learncpp.com/cpp-tutorial/lvalue-references/). Acesso em: 5 out. 2026.
+- LEARNCPP. *Constexpr variables*. \[S. l.\], 5 fev. 2025. Disponível em: [https://www.learncpp.com/cpp-tutorial/constexpr-variables/](https://www.learncpp.com/cpp-tutorial/constexpr-variables/). Acesso em: 5 out. 2026.
+- LEARNCPP. *Struct aggregate initialization*. \[S. l.\], 6 jan. 2025. Disponível em: [https://www.learncpp.com/cpp-tutorial/struct-aggregate-initialization/](https://www.learncpp.com/cpp-tutorial/struct-aggregate-initialization/). Acesso em: 5 out. 2026.
+- LEARNCPP. *Default arguments*. \[S. l.\], 2024. Disponível em: [https://www.learncpp.com/cpp-tutorial/default-arguments/](https://www.learncpp.com/cpp-tutorial/default-arguments/). Acesso em: 5 out. 2026.

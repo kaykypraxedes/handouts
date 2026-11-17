@@ -1889,15 +1889,13 @@ Insertion, removal, traversal, and balancing algorithms are explored in the Algo
 # Sources:
 
 - DEITEL, Harvey M.; DEITEL, Paul J. *Como programar em C*. 2nd ed. Rio de Janeiro: LTC, 1994.
-
 - ZIVIANI, Nivio. *Projeto de algoritmos com implementações em Pascal e C*. 4th ed. São Paulo: Pioneira, 1999.
-
-- PEIXOTO, Daniela Cristina Cascini. *Disciplina: Lógica de programação*. Undergraduate Computer Engineering program - Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG), 2024.
-- CAMPOS, Luciana Maria de Assis. *Disciplina: Programação orientada a objetos*. Undergraduate Computer Engineering program - CEFET-MG, 2024.
-- BATISTA, Natália Cosse. *Disciplina: Algoritmos e estruturas de dados*. Undergraduate Computer Engineering program - CEFET-MG, 2025.
-- CPPREFERENCE.COM. *C reference*. [No place], [no date]. Available at: [https://en.cppreference.com/w/c](https://en.cppreference.com/w/c). Accessed: 4 Aug. 2026.
-- FREE SOFTWARE FOUNDATION. *Options Controlling C Dialect*. [No place], [no date]. Available at: [https://gcc.gnu.org/onlinedocs/gcc/C-Dialect-Options.html](https://gcc.gnu.org/onlinedocs/gcc/C-Dialect-Options.html). Accessed: 26 Sep. 2026.
-- FREE SOFTWARE FOUNDATION. *Options to Request or Suppress Warnings*. [No place], [no date]. Available at: [https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html](https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html). Accessed: 26 Sep. 2026.
-- ISO/IEC JTC 1/SC 22/WG 14. *Programming languages — C*. [No place], 12 Apr. 2011. Available at: [https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf](https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf). Accessed: 26 Sep. 2026.
-- FREE SOFTWARE FOUNDATION. *The C Preprocessor*. [No place], [no date]. Available at: [https://gcc.gnu.org/onlinedocs/cpp/](https://gcc.gnu.org/onlinedocs/cpp/). Accessed: 26 Sep. 2026.
-- FREE SOFTWARE FOUNDATION. *Using the GNU Compiler Collection (GCC)*. [No place], [no date]. Available at: [https://gcc.gnu.org/onlinedocs/gcc/](https://gcc.gnu.org/onlinedocs/gcc/). Accessed: 26 Sep. 2026.
+- PEIXOTO, Daniela Cristina Cascini. *Course: Lógica de programação*. Undergraduate program in Computer Engineering - Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG), 2024.
+- CAMPOS, Luciana Maria de Assis. *Course: Programação orientada a objetos*. Undergraduate program in Computer Engineering - CEFET-MG, 2024.
+- BATISTA, Natália Cosse. *Course: Algoritmos e estruturas de dados*. Undergraduate program in Computer Engineering - CEFET-MG, 2025.
+- CPPREFERENCE.COM. *C reference*. \[N. p.\], 2026. Available at: [https://en.cppreference.com/w/c](https://en.cppreference.com/w/c). Accessed on: August 4, 2026.
+- FREE SOFTWARE FOUNDATION. *Options Controlling C Dialect*. Boston: Free Software Foundation, 2026. Available at: [https://gcc.gnu.org/onlinedocs/gcc/C-Dialect-Options.html](https://gcc.gnu.org/onlinedocs/gcc/C-Dialect-Options.html). Accessed on: September 26, 2026.
+- FREE SOFTWARE FOUNDATION. *Options to Request or Suppress Warnings*. Boston: Free Software Foundation, 2026. Available at: [https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html](https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html). Accessed on: September 26, 2026.
+- INTERNATIONAL ORGANIZATION FOR STANDARDIZATION (ISO); INTERNATIONAL ELECTROTECHNICAL COMMISSION (IEC). *Programming languages - C*. ISO/IEC 9899:2011. Geneva: ISO; IEC, 2011. Available at: [https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf](https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf). Accessed on: September 26, 2026.
+- FREE SOFTWARE FOUNDATION. *The C Preprocessor*. Boston: Free Software Foundation, 2026. Available at: [https://gcc.gnu.org/onlinedocs/cpp/](https://gcc.gnu.org/onlinedocs/cpp/). Accessed on: September 26, 2026.
+- FREE SOFTWARE FOUNDATION. *Using the GNU Compiler Collection (GCC)*. Boston: Free Software Foundation, 2026. Available at: [https://gcc.gnu.org/onlinedocs/gcc/](https://gcc.gnu.org/onlinedocs/gcc/). Accessed on: September 26, 2026.
