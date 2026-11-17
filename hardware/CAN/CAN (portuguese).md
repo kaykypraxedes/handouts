@@ -391,7 +391,7 @@ Os *frameworks* de desenvolvimento embarcado oferecem *drivers* com funções pa
 - **STM32Cube HAL (STM32):** A ST oferece *drivers* para os periféricos CAN e FDCAN, conforme a família do microcontrolador. [Exemplo oficial de CAN no STM32F4](https://github.com/STMicroelectronics/STM32CubeF4/blob/master/Projects/STM324xG_EVAL/Examples/CAN/CAN_Networking/Src/main.c) e [guia oficial do FDCAN no STM32H7P](https://dev.st.com/stm32cube-docs/stm32h7pxx-hal-drivers/2.0.0/en/docs/drivers/hal_drivers/fdcan/hal_fdcan_how_to_use.html).
 - **Zephyr RTOS:** Disponibiliza uma API comum para controladores CAN de diferentes plataformas. O exemplo *CAN Counter* demonstra envio, recepção e filtragem de quadros. [Exemplo oficial do Zephyr](https://docs.zephyrproject.org/latest/samples/drivers/can/counter/README.html).
 
-## Simulação:
+## Simulação de Firmware Embarcado:
 
 - **Proteus VSM:** - Permite executar o *firmware* de um microcontrolador em um circuito simulado e trocar quadros com outros nós. Entre as opções estão o STM32F103, com controlador integrado, e o MCP2515, um controlador externo acessado por SPI. [Simulação CAN no Proteus](https://www.labcenter.com/can-sim/).
 - **Renode:** Executa *firmware* em plataformas emuladas e permite conectar controladores compatíveis a uma rede CAN virtual. No Linux, a integração com SocketCAN permite trocar quadros com programas executados no computador. [Guia oficial de integração CAN](https://renode.readthedocs.io/en/latest/host-integration/can.html).
@@ -399,6 +399,18 @@ Os *frameworks* de desenvolvimento embarcado oferecem *drivers* com funções pa
 > O Wokwi simula o ESP32, mas lista o suporte ao TWAI como parcial. Confira se o recurso que você precisa está disponível antes de preparar o teste. [Guia de simulação do ESP32 no Wokwi](https://docs.wokwi.com/guides/esp32#simulation-features).
 
 A simulação permite conferir se o *firmware* envia o ID e os dados esperados e reage aos quadros recebidos. Para verificar níveis de tensão, terminação e efeitos do cabeamento, faça medições no barramento físico.
+
+## Testes Automotivos:
+
+- **CANoe (Vector):** Simula, analisa e testa a comunicação entre ECUs em redes como CAN e CAN FD. Pode representar os módulos ausentes numa bancada de teste. Por exemplo, o CANoe pode simular a ECU que envia a velocidade do veículo e verificar como um painel real reage. Isso é chamado de *restbus simulation* (simulação do restante da rede). [Página oficial do CANoe](https://www.vector.com/en/product/canoe/).
+- **dSPACE VEOS:** Executa ECUs virtuais no computador e permite testar a comunicação entre elas. Pode combinar redes CAN com modelos de funções e do veículo. [Página oficial do VEOS](https://www.dspace.com/en/ltd/home/products/sw/simulation_software/veos.cfm).
+- **CarMaker (IPG Automotive):** Simula o veículo e o ambiente de condução, incluindo pista, tráfego e sensores. É usado em testes de dinâmica veicular e de sistemas de assistência ao motorista. [Página oficial do CarMaker](https://www.ipg-automotive.com/solutions/product-portfolio/carmaker).
+
+A Vector também oferece o **CANalyzer**, voltado à análise e ao diagnóstico da rede. Ele permite registrar e reproduzir tráfego e enviar mensagens de teste. [Página oficial do CANalyzer](https://www.vector.com/int/en/products/products-a-z/software/canalyzer/).
+
+O **CAPL** (*Communication Access Programming Language*) tem sintaxe semelhante à de C. No CANoe, um *script* pode reagir à chegada de uma mensagem ou enviar um quadro sempre que um temporizador expira. [Curso básico de CAPL da Vector](https://elearning.vector.com/course/view.php?id=158).
+
+O **AUTOSAR Classic** define como o software de uma ECU baseada em microcontrolador é organizado, incluindo os módulos *CAN Driver* e *CAN Interface*. As ferramentas de simulação e teste podem ser usadas para verificar o comportamento de ECUs que seguem esse padrão. [Documentação oficial do AUTOSAR Classic](https://www.autosar.org/standards/classic-platform).
 
 ---
 
