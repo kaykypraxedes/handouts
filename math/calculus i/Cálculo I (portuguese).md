@@ -25,7 +25,7 @@ Para $\displaystyle f\left(x\right)=\frac{1}{\left\lvert x\right\rvert}$: $\disp
 **Para um limite existir (bilateral), ao se aproximar de um ponto pelos dois lados, os limites laterais devem ser iguais** (o mesmo valor com a função se aproximando pela esquerda e direita).
 
 $$
-\displaystyle \lim_{x \to a^-} f\left(x\right) = \lim_{x \to a^+} f\left(x\right) = L \Rightarrow \lim_{x \to a} f\left(x\right) = L
+\displaystyle \lim_{x \to a^-} f\left(x\right) = \lim_{x \to a^+} f\left(x\right) = L \quad \Rightarrow \quad \lim_{x \to a} f\left(x\right) = L
 $$
 
 ![Limites laterais de 1/x em zero](images/screenshot002.png)<br>
@@ -173,17 +173,17 @@ $$
 Se $\displaystyle f$ for uma função contínua em um intervalo $\displaystyle \left[a, b\right]$, se $\displaystyle d$ está entre $\displaystyle f\left(a\right)$ e $\displaystyle f\left(b\right)$, então existe um valor $\displaystyle c$, tal que $\displaystyle f\left(c\right) = d$.
 
 $$
-\displaystyle \min\left\{f\left(a\right),f\left(b\right)\right\}\le d\le\max\left\{f\left(a\right),f\left(b\right)\right\}
-\quad\Rightarrow\ \\
-\exists c\in\left[a,b\right]:\ f\left(c\right)=d
+\min\lbrace f(a),f(b)\rbrace \le d \le \max\lbrace f(a),f(b)\rbrace\\
+\quad\Rightarrow \quad \exists c\in[a,b]\colon f(c)=d
 $$
+
 > Útil especialmente se uma função é muito difícil de calcular um valor, como o valor de $x$ onde $e^x = \pi$. Definir o valor exato é difícil, mas como a função é contínua, certamente existe um valor para tornar essa igualdade verdadeira.
 
 ## Formalizando o Conceito de Limite:
 
 $$
 \displaystyle \forall \varepsilon > 0\ \exists \delta > 0 \text{ tal que, }\forall x \in D_f \text{: }\\
-0 < \left|x-a\right| < \delta \Rightarrow \left|f\left(x\right) - L\right| < \varepsilon
+0 < \left|x-a\right| < \delta \quad \Rightarrow \quad \left|f\left(x\right) - L\right| < \varepsilon
 $$
 
 **Pode-se tornar o valor de $\displaystyle f\left(x\right)$ arbitrariamente próximo de $\displaystyle L$ aproximando $\displaystyle x$ de $\displaystyle a$, sem exigir $\displaystyle x=a$.** Para cada margem de erro $\displaystyle \varepsilon>0$ escolhida em $\displaystyle y$, existe uma distância $\displaystyle \delta>0$ em $\displaystyle x$ que garante essa proximidade.
@@ -269,9 +269,8 @@ Para $\displaystyle h$ pequeno e diferente de zero:
 
 $$
 \displaystyle 
-f'\left(x\right)\approx\frac{f\left(x+h\right)-f\left(x\right)}h
-\quad\Rightarrow \\
-f\left(x+h\right)\approx f\left(x\right)+hf'\left(x\right)
+f'\left(x\right)\approx\frac{f\left(x+h\right)-f\left(x\right)}h \\
+\Rightarrow \quad f\left(x+h\right)\approx f\left(x\right)+hf'\left(x\right)
 $$
 
 Para valores de $\displaystyle h$ pequenos, a variação da função é praticamente igual ao valor correspondente na reta tangente.
@@ -392,16 +391,15 @@ $$
 $$
 
 $$
-\displaystyle \frac{d}{dx}x^2+\frac{d}{dx}y^2-\frac{d}{dx}25=0
-\quad\Rightarrow \\
-2x+\frac{d}{dx}y^2=0
+\displaystyle \frac{d}{dx}x^2+\frac{d}{dx}y^2-\frac{d}{dx}25=0 \\
+\Rightarrow \quad 2x+\frac{d}{dx}y^2=0
 $$
 
 Como $\displaystyle y$ depende de $\displaystyle x$, aplicamos a regra da cadeia: $\displaystyle \frac{d}{dx}\left[y\left(x\right)^2\right]=2y\frac{dy}{dx}$. Assim:
 
 $$
-\displaystyle 2x + 2y \dfrac{dy}{dx} = 0 \Rightarrow 2y \dfrac{dy}{dx} = -2x \quad \Rightarrow 
-\\\dfrac{dy}{dx} = -\dfrac{2x}{2y} = -\dfrac{x}{y},\quad y\ne0
+\displaystyle 2x + 2y \dfrac{dy}{dx} = 0 \quad \Rightarrow \quad 2y \dfrac{dy}{dx} = -2x\\
+\Rightarrow \quad \dfrac{dy}{dx} = -\dfrac{2x}{2y} = -\dfrac{x}{y},\quad y\ne0
 $$
 
 ![Tangentes horizontal e vertical à circunferência x² + y² = 25](images/screenshot007.png)<br>
@@ -418,7 +416,7 @@ Dada uma função muito complexa, tal qual $\displaystyle f\left(x\right) = y = 
 Uma abordagem interessante pode ser trabalhar com logaritmos. Neste desenvolvimento, consideramos $\displaystyle x>0$, de modo que todos os logaritmos escritos estejam definidos. Pela regra da cadeia:
 
 $$
-\displaystyle \dfrac{d}{dx} \ln y = \frac{dy}{dx} \dfrac{d}{dy} \ln y = \frac{dy}{dx} \dfrac{1}{y} \Rightarrow \frac{dy}{dx} = y\,\frac{d}{dx}\ln y
+\displaystyle \dfrac{d}{dx} \ln y = \frac{dy}{dx} \dfrac{d}{dy} \ln y = \frac{dy}{dx} \dfrac{1}{y} \quad \Rightarrow\quad \frac{dy}{dx} = y\,\frac{d}{dx}\ln y
 $$
 
 $$
@@ -740,9 +738,8 @@ Cada limite deve existir e ser finito. Se o problema estiver apenas em uma extre
 A substituição utiliza a regra da cadeia no sentido inverso:
 
 $$
-\displaystyle \frac{d}{dx}f\left(g\left(x\right)\right)=f'\left(g\left(x\right)\right)g'\left(x\right)
-\quad\Rightarrow \\
-\int f'\left(g\left(x\right)\right)g'\left(x\right)\,dx=f\left(g\left(x\right)\right)+c
+\displaystyle \frac{d}{dx}f\left(g\left(x\right)\right)=f'\left(g\left(x\right)\right)g'\left(x\right) \\
+\Rightarrow \quad \int f'\left(g\left(x\right)\right)g'\left(x\right)\,dx=f\left(g\left(x\right)\right)+c
 $$
 
 Para resolver $\displaystyle \int x\sqrt{x^2+1}\,dx$, fazemos $\displaystyle u=x^2+1$ e $\displaystyle du=2x\,dx$. Assim, $\displaystyle x\,dx=\frac{du}{2}$:
@@ -759,9 +756,9 @@ $$
 
 $$
 \displaystyle 
-\frac{d}{dx} \left[f\left(x\right)\,g\left(x\right)\right] = f'\left(x\right)\,g\left(x\right) + f\left(x\right)\,g'\left(x\right) \quad \Rightarrow \\
-\int\frac{d}{dx} \left[f\left(x\right)\,g\left(x\right)\right] \, dx= \int f'\left(x\right)\,g\left(x\right)\, dx + \int f\left(x\right)\,g'\left(x\right) \, dx  \quad \Rightarrow \\
-f\left(x\right)\,g\left(x\right) = \int f'\left(x\right)\,g\left(x\right)\, dx + \int f\left(x\right)\,g'\left(x\right) \, dx
+\frac{d}{dx} \left[f\left(x\right)\,g\left(x\right)\right] = f'\left(x\right)\,g\left(x\right) + f\left(x\right)\,g'\left(x\right) \\
+\Rightarrow \quad \int\frac{d}{dx} \left[f\left(x\right)\,g\left(x\right)\right] \, dx= \int f'\left(x\right)\,g\left(x\right)\, dx + \int f\left(x\right)\,g'\left(x\right) \, dx  \\ 
+\Rightarrow \quad f\left(x\right)\,g\left(x\right) = \int f'\left(x\right)\,g\left(x\right)\, dx + \int f\left(x\right)\,g'\left(x\right) \, dx
 $$
 
 Assim:
@@ -829,8 +826,9 @@ $$
 
 $$
 \displaystyle
-\int e^x \sin{x} \, dx=e^x\sin{x}-e^x\cos{x}-\int e^x\sin{x} \,dx \quad \Rightarrow \\ 2\int e^x \sin{x} \, dx=e^x\sin{x}-e^x\cos{x} + c \quad
-\Rightarrow \\
+\int e^x \sin{x} \, dx=e^x\sin{x}-e^x\cos{x}-\int e^x\sin{x} \,dx \\ 
+\Rightarrow \quad 2\int e^x \sin{x} \, dx=e^x\sin{x}-e^x\cos{x} + c \quad \\
+\Rightarrow \quad 
 \int e^x \sin{x} \, dx=\frac{e^x\left(\sin{x}-\cos{x}\right)}{2} + c
 $$
 
@@ -959,8 +957,8 @@ $$
 $$
 
 $$
-\displaystyle 5x - 3= A\left(x-3\right) + B\left(x+1\right) \quad \Rightarrow \\
-\left(A + B - 5\right)x +\left(-3A + B +3\right) = 0
+\displaystyle 5x - 3= A\left(x-3\right) + B\left(x+1\right) \\ 
+\Rightarrow \quad \left(A + B - 5\right)x +\left(-3A + B +3\right) = 0
 $$
 
 $$
@@ -1072,11 +1070,8 @@ $$
 Na composição $\displaystyle f\left(g\left(x\right)\right)$, uma pequena mudança em $\displaystyle x$ altera primeiro $\displaystyle g$ e, em seguida, $\displaystyle f$. Pela aproximação linear:
 
 $$
-\displaystyle \Delta g=g\left(x+h\right)-g\left(x\right)\approx g'\left(x\right)h  \quad \Rightarrow
-$$
-
-$$
-\displaystyle f\left(g\left(x+h\right)\right)-f\left(g\left(x\right)\right)\approx f'\left(g\left(x\right)\right)\Delta g
+\displaystyle \Delta g=g\left(x+h\right)-g\left(x\right)\approx g'\left(x\right)h\\
+\Rightarrow \quad \displaystyle f\left(g\left(x+h\right)\right)-f\left(g\left(x\right)\right)\approx f'\left(g\left(x\right)\right)\Delta g
 $$
 
 Juntando as duas relações, a variação da composição é aproximada por $\displaystyle f'\left(g\left(x\right)\right)g'\left(x\right)h$. Dividindo por $\displaystyle h$, obtemos a intuição para a regra:

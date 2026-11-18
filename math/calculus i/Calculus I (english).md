@@ -25,7 +25,7 @@ For $\displaystyle f\left(x\right)=\frac{1}{\left\lvert x\right\rvert}$: $\displ
 **For a limit to exist (two-sided), when approaching a point from both sides, the one-sided limits must be equal** (the same value as the function approaches from the left and right).
 
 $$
-\displaystyle \lim_{x \to a^-} f\left(x\right) = \lim_{x \to a^+} f\left(x\right) = L \Rightarrow \lim_{x \to a} f\left(x\right) = L
+\displaystyle \lim_{x \to a^-} f\left(x\right) = \lim_{x \to a^+} f\left(x\right) = L \quad \Rightarrow \quad \lim_{x \to a} f\left(x\right) = L
 $$
 
 ![One-sided limits of 1/x at zero](images/screenshot002.png)<br>
@@ -173,9 +173,8 @@ $$
 If $\displaystyle f$ is a continuous function on an interval $\displaystyle \left[a, b\right]$, and $\displaystyle d$ is between $\displaystyle f\left(a\right)$ and $\displaystyle f\left(b\right)$, then there is a value $\displaystyle c$ such that $\displaystyle f\left(c\right) = d$.
 
 $$
-\displaystyle \min\left\{f\left(a\right),f\left(b\right)\right\}\le d\le\max\left\{f\left(a\right),f\left(b\right)\right\}
-\quad\Rightarrow\ \\
-\exists c\in\left[a,b\right]:\ f\left(c\right)=d
+\min\lbrace f(a),f(b)\rbrace \le d \le \max\lbrace f(a),f(b)\rbrace\\
+\quad\Rightarrow \quad \exists c\in[a,b]\colon f(c)=d
 $$
 
 > This is especially useful when a value is difficult to calculate, such as the value of $x$ for which $e^x = \pi$. Finding the exact value may be difficult, but the continuity of the function ensures that a value satisfying this equality exists.
@@ -183,8 +182,8 @@ $$
 ## Formalizing the Concept of a Limit:
 
 $$
-\displaystyle \forall \varepsilon > 0\ \exists \delta > 0 \text{ such that, }\forall x \in D_f \text{: }\\
-0 < \left|x-a\right| < \delta \Rightarrow \left|f\left(x\right) - L\right| < \varepsilon
+\displaystyle \forall \varepsilon > 0\ \exists \delta > 0 \text{ tal que, }\forall x \in D_f \text{: }\\
+0 < \left|x-a\right| < \delta \quad \Rightarrow \quad \left|f\left(x\right) - L\right| < \varepsilon
 $$
 
 **The value of $\displaystyle f\left(x\right)$ can be made arbitrarily close to $\displaystyle L$ by bringing $\displaystyle x$ close to $\displaystyle a$, without requiring $\displaystyle x=a$.** For each margin of error $\displaystyle \varepsilon>0$ chosen in $\displaystyle y$, there is a distance $\displaystyle \delta>0$ in $\displaystyle x$ that guarantees this closeness.
@@ -270,9 +269,8 @@ For small, nonzero $\displaystyle h$:
 
 $$
 \displaystyle 
-f'\left(x\right)\approx\frac{f\left(x+h\right)-f\left(x\right)}h
-\quad\Rightarrow \\
-f\left(x+h\right)\approx f\left(x\right)+hf'\left(x\right)
+f'\left(x\right)\approx\frac{f\left(x+h\right)-f\left(x\right)}h \\
+\Rightarrow \quad f\left(x+h\right)\approx f\left(x\right)+hf'\left(x\right)
 $$
 
 For small values of $\displaystyle h$, the change in the function is practically equal to the corresponding value on the tangent line.
@@ -393,16 +391,15 @@ $$
 $$
 
 $$
-\displaystyle \frac{d}{dx}x^2+\frac{d}{dx}y^2-\frac{d}{dx}25=0
-\quad\Rightarrow \\
-2x+\frac{d}{dx}y^2=0
+\displaystyle \frac{d}{dx}x^2+\frac{d}{dx}y^2-\frac{d}{dx}25=0 \\
+\Rightarrow \quad 2x+\frac{d}{dx}y^2=0
 $$
 
 Since $\displaystyle y$ depends on $\displaystyle x$, we apply the chain rule: $\displaystyle \frac{d}{dx}\left[y\left(x\right)^2\right]=2y\frac{dy}{dx}$. Thus:
 
 $$
-\displaystyle 2x + 2y \dfrac{dy}{dx} = 0 \Rightarrow 2y \dfrac{dy}{dx} = -2x \quad \Rightarrow 
-\\\dfrac{dy}{dx} = -\dfrac{2x}{2y} = -\dfrac{x}{y},\quad y\ne0
+\displaystyle 2x + 2y \dfrac{dy}{dx} = 0 \quad \Rightarrow \quad 2y \dfrac{dy}{dx} = -2x\\
+\Rightarrow \quad \dfrac{dy}{dx} = -\dfrac{2x}{2y} = -\dfrac{x}{y},\quad y\ne0
 $$
 
 ![Horizontal and vertical tangents to the circle x² + y² = 25](images/screenshot007.png)<br>
@@ -741,9 +738,8 @@ Each limit must exist and be finite. If the problem is only at one endpoint, we 
 Substitution uses the chain rule in reverse:
 
 $$
-\displaystyle \frac{d}{dx}f\left(g\left(x\right)\right)=f'\left(g\left(x\right)\right)g'\left(x\right)
-\quad\Rightarrow \\
-\int f'\left(g\left(x\right)\right)g'\left(x\right)\,dx=f\left(g\left(x\right)\right)+c
+\displaystyle \frac{d}{dx}f\left(g\left(x\right)\right)=f'\left(g\left(x\right)\right)g'\left(x\right) \\
+\Rightarrow \quad \int f'\left(g\left(x\right)\right)g'\left(x\right)\,dx=f\left(g\left(x\right)\right)+c
 $$
 
 To evaluate $\displaystyle \int x\sqrt{x^2+1}\,dx$, we set $\displaystyle u=x^2+1$ and $\displaystyle du=2x\,dx$. Thus, $\displaystyle x\,dx=\frac{du}{2}$:
@@ -760,9 +756,9 @@ $$
 
 $$
 \displaystyle 
-\frac{d}{dx} \left[f\left(x\right)\,g\left(x\right)\right] = f'\left(x\right)\,g\left(x\right) + f\left(x\right)\,g'\left(x\right) \quad \Rightarrow \\
-\int\frac{d}{dx} \left[f\left(x\right)\,g\left(x\right)\right] \, dx= \int f'\left(x\right)\,g\left(x\right)\, dx + \int f\left(x\right)\,g'\left(x\right) \, dx  \quad \Rightarrow \\
-f\left(x\right)\,g\left(x\right) = \int f'\left(x\right)\,g\left(x\right)\, dx + \int f\left(x\right)\,g'\left(x\right) \, dx
+\frac{d}{dx} \left[f\left(x\right)\,g\left(x\right)\right] = f'\left(x\right)\,g\left(x\right) + f\left(x\right)\,g'\left(x\right) \\
+\Rightarrow \quad \int\frac{d}{dx} \left[f\left(x\right)\,g\left(x\right)\right] \, dx= \int f'\left(x\right)\,g\left(x\right)\, dx + \int f\left(x\right)\,g'\left(x\right) \, dx  \\ 
+\Rightarrow \quad f\left(x\right)\,g\left(x\right) = \int f'\left(x\right)\,g\left(x\right)\, dx + \int f\left(x\right)\,g'\left(x\right) \, dx
 $$
 
 Thus:
@@ -830,8 +826,9 @@ $$
 
 $$
 \displaystyle
-\int e^x \sin{x} \, dx=e^x\sin{x}-e^x\cos{x}-\int e^x\sin{x} \,dx \quad \Rightarrow \\ 2\int e^x \sin{x} \, dx=e^x\sin{x}-e^x\cos{x} + c \quad
-\Rightarrow \\
+\int e^x \sin{x} \, dx=e^x\sin{x}-e^x\cos{x}-\int e^x\sin{x} \,dx \\ 
+\Rightarrow \quad 2\int e^x \sin{x} \, dx=e^x\sin{x}-e^x\cos{x} + c \quad \\
+\Rightarrow \quad 
 \int e^x \sin{x} \, dx=\frac{e^x\left(\sin{x}-\cos{x}\right)}{2} + c
 $$
 
@@ -960,8 +957,8 @@ $$
 $$
 
 $$
-\displaystyle 5x - 3= A\left(x-3\right) + B\left(x+1\right) \quad \Rightarrow \\
-\left(A + B - 5\right)x +\left(-3A + B +3\right) = 0
+\displaystyle 5x - 3= A\left(x-3\right) + B\left(x+1\right) \\ 
+\Rightarrow \quad \left(A + B - 5\right)x +\left(-3A + B +3\right) = 0
 $$
 
 $$
@@ -1073,11 +1070,8 @@ $$
 In the composition $\displaystyle f\left(g\left(x\right)\right)$, a small change in $\displaystyle x$ first changes $\displaystyle g$ and then $\displaystyle f$. By linear approximation:
 
 $$
-\displaystyle \Delta g=g\left(x+h\right)-g\left(x\right)\approx g'\left(x\right)h \quad \Rightarrow
-$$
-
-$$
-\displaystyle f\left(g\left(x+h\right)\right)-f\left(g\left(x\right)\right)\approx f'\left(g\left(x\right)\right)\Delta g
+\displaystyle \Delta g=g\left(x+h\right)-g\left(x\right)\approx g'\left(x\right)h\\
+\Rightarrow \quad \displaystyle f\left(g\left(x+h\right)\right)-f\left(g\left(x\right)\right)\approx f'\left(g\left(x\right)\right)\Delta g
 $$
 
 Combining the two relations, the change in the composition is approximated by $\displaystyle f'\left(g\left(x\right)\right)g'\left(x\right)h$. Dividing by $\displaystyle h$, we obtain the intuition for the rule:
