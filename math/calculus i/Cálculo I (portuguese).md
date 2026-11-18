@@ -1357,6 +1357,6 @@ $$
 - THOMAS, George B.; WEIR, Maurice D.; HASS, Joel. *Cálculo: volume 1*. 12. ed. São Paulo: Pearson, 2012.
 - THOMAS, George B.; WEIR, Maurice D.; HASS, Joel. *Cálculo: volume 2*. 12. ed. São Paulo: Pearson, 2012.
 - LIMA, Elon Lages. *Análise real: volume 1*. 8. ed. Rio de Janeiro: IMPA, 2006.
-- TAKHE. *Cálculo 1: aulas e exercícios resolvidos*. \[YouTube\], 2023. Disponível em: [https://www.youtube.com/playlist?list=PLmAu9dltGZtp1apl5ib_uL7UkP4fDwy4m](https://www.youtube.com/playlist?list=PLmAu9dltGZtp1apl5ib_uL7UkP4fDwy4m). Acesso em: 10 set. 2025.
 - BARROS, Tatiana Leal. *Disciplina: Cálculo com funções de uma variável real*. Curso de graduação em Engenharia de Computação - Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG), 2024.
 - CAMARGO JUNIOR, Fausto de. *Disciplina: Integração e séries*. Curso de graduação em Engenharia de Computação - CEFET-MG, 2024.
+- TAKHE. *Cálculo 1: aulas e exercícios resolvidos*. \[YouTube\], 2023. Disponível em: [https://www.youtube.com/playlist?list=PLmAu9dltGZtp1apl5ib_uL7UkP4fDwy4m](https://www.youtube.com/playlist?list=PLmAu9dltGZtp1apl5ib_uL7UkP4fDwy4m). Acesso em: 10 set. 2025.

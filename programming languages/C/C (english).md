@@ -1857,7 +1857,7 @@ The declaration defines the possible connections. Insertion and query rules dete
 In a **binary search tree**, smaller values are in the left subtree and larger ones in the right, assuming distinct values here.
 
 ![Trees](images/screenshot003.png)
-*Source: estrategiaconcursos - Percursos em Árvores Binárias para o CNU (TI), Available at: [https://www.estrategiaconcursos.com.br/blog/percursos-arvores-binarias/](https://www.estrategiaconcursos.com.br/blog/percursos-arvores-binarias/). Accessed: 26 Sep. 2026.*
+*Source: estrategiaconcursos - Percursos em Árvores Binárias para o CNU (TI), Available at: [https://www.estrategiaconcursos.com.br/blog/percursos-arvores-binarias/](https://www.estrategiaconcursos.com.br/blog/percursos-arvores-binarias/). Accessed: Sep. 26, 2026.*
 
 To search for `5`, the comparison with `7` directs the search to the left; the comparison with `4`, to the right. This organization allows discarding parts of the tree without visiting all its elements.
 
@@ -1893,9 +1893,9 @@ Insertion, removal, traversal, and balancing algorithms are explored in the Algo
 - PEIXOTO, Daniela Cristina Cascini. *Course: Lógica de programação*. Undergraduate program in Computer Engineering - Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG), 2024.
 - CAMPOS, Luciana Maria de Assis. *Course: Programação orientada a objetos*. Undergraduate program in Computer Engineering - CEFET-MG, 2024.
 - BATISTA, Natália Cosse. *Course: Algoritmos e estruturas de dados*. Undergraduate program in Computer Engineering - CEFET-MG, 2025.
-- CPPREFERENCE.COM. *C reference*. \[N. p.\], 2026. Available at: [https://en.cppreference.com/w/c](https://en.cppreference.com/w/c). Accessed on: August 4, 2026.
-- FREE SOFTWARE FOUNDATION. *Options Controlling C Dialect*. Boston: Free Software Foundation, 2026. Available at: [https://gcc.gnu.org/onlinedocs/gcc/C-Dialect-Options.html](https://gcc.gnu.org/onlinedocs/gcc/C-Dialect-Options.html). Accessed on: September 26, 2026.
-- FREE SOFTWARE FOUNDATION. *Options to Request or Suppress Warnings*. Boston: Free Software Foundation, 2026. Available at: [https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html](https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html). Accessed on: September 26, 2026.
-- INTERNATIONAL ORGANIZATION FOR STANDARDIZATION (ISO); INTERNATIONAL ELECTROTECHNICAL COMMISSION (IEC). *Programming languages - C*. ISO/IEC 9899:2011. Geneva: ISO; IEC, 2011. Available at: [https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf](https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf). Accessed on: September 26, 2026.
-- FREE SOFTWARE FOUNDATION. *The C Preprocessor*. Boston: Free Software Foundation, 2026. Available at: [https://gcc.gnu.org/onlinedocs/cpp/](https://gcc.gnu.org/onlinedocs/cpp/). Accessed on: September 26, 2026.
-- FREE SOFTWARE FOUNDATION. *Using the GNU Compiler Collection (GCC)*. Boston: Free Software Foundation, 2026. Available at: [https://gcc.gnu.org/onlinedocs/gcc/](https://gcc.gnu.org/onlinedocs/gcc/). Accessed on: September 26, 2026.
+- CPPREFERENCE.COM. *C reference*. \[N. p.\], 2026. Available at: [https://en.cppreference.com/w/c](https://en.cppreference.com/w/c). Accessed on: Aug. 4, 2026.
+- FREE SOFTWARE FOUNDATION. *Options Controlling C Dialect*. Boston: Free Software Foundation, 2026. Available at: [https://gcc.gnu.org/onlinedocs/gcc/C-Dialect-Options.html](https://gcc.gnu.org/onlinedocs/gcc/C-Dialect-Options.html). Accessed on: Sep. 26, 2026.
+- FREE SOFTWARE FOUNDATION. *Options to Request or Suppress Warnings*. Boston: Free Software Foundation, 2026. Available at: [https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html](https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html). Accessed on: Sep. 26, 2026.
+- INTERNATIONAL ORGANIZATION FOR STANDARDIZATION (ISO); INTERNATIONAL ELECTROTECHNICAL COMMISSION (IEC). *Programming languages - C*. ISO/IEC 9899:2011. Geneva: ISO; IEC, 2011. Available at: [https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf](https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf). Accessed on: Sep. 26, 2026.
+- FREE SOFTWARE FOUNDATION. *The C Preprocessor*. Boston: Free Software Foundation, 2026. Available at: [https://gcc.gnu.org/onlinedocs/cpp/](https://gcc.gnu.org/onlinedocs/cpp/). Accessed on: Sep. 26, 2026.
+- FREE SOFTWARE FOUNDATION. *Using the GNU Compiler Collection (GCC)*. Boston: Free Software Foundation, 2026. Available at: [https://gcc.gnu.org/onlinedocs/gcc/](https://gcc.gnu.org/onlinedocs/gcc/). Accessed on: Sep. 26, 2026.
