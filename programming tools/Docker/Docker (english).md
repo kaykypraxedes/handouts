@@ -41,7 +41,7 @@ If the *tag* is omitted, Docker uses `latest`. This name is a convention: it doe
 
 The form most used in this handbook is `docker {object} {command} {options} {arguments}`. The object indicates the resource, such as `image`, `container`, or `volume`; the command indicates the operation, such as `ls`, `run`, or `rm`.
 
-> Elements between `{braces}` must be replaced, without keeping the braces. `{options}` represents optional modifiers; the main description presents the behavior without them, considering the indicated arguments. When an argument can be omitted, this will be explained in the text. Arguments in the plural, such as `{containers}`, accept one or more names or identifiers separated by spaces.
+> In the syntax models, **elements enclosed in braces indicate content to be replaced** (such as commands, paths, values, flags, etc.), and should be removed in actual use, unless they are explicitly presented as part of the syntax. `{options}` indicates optional modifiers; the main description presents the behavior without them, considering the indicated arguments. When an argument can also be omitted, this will be explained in the text. The concrete examples already present the form used in the terminal.
 
 Some commands have short forms: `docker container run` is equivalent to `docker run`, `docker container ls` to `docker ps`, `docker image ls` to `docker images`, and `docker image rm` to `docker rmi`. Here, the extended form is kept to make explicit the resource used.
 

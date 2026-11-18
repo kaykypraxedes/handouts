@@ -21,7 +21,7 @@
 
 > Este resumo utiliza **Bash em GNU/*Linux***. Os comandos de sistema podem variar conforme a distribuição; recursos próprios do Bash não estão necessariamente disponíveis em outras *shells* ou ao executar um arquivo com `sh`. 
 
-> Nos modelos de sintaxe, **elementos entre chaves indicam conteúdo a ser substituído** (como comandos, caminhos, valores, *flags*, etc.). As chaves devem ser retiradas no uso real, salvo quando forem explicitamente apresentadas como parte da sintaxe da *shell*.
+> Nos modelos de sintaxe, **elementos entre chaves indicam conteúdo a ser substituído** (como comandos, caminhos, valores, *flags*, etc.), e devem ser retiradas no uso real, salvo quando forem explicitamente apresentadas como parte da sintaxe. `{opções}` indica modificadores opcionais; a descrição principal apresenta o comportamento sem eles, considerando os argumentos indicados. Quando um argumento também puder ser omitido, isso será explicado no texto. Os exemplos concretos já apresentam a forma usada no terminal.
 
 ## *Shell*:
 

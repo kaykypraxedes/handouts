@@ -83,7 +83,7 @@ A opção `--global` aplica a configuração ao usuário atual. Para usar outra 
 
 A forma básica é `git {comando} {opções} {argumentos}`. O comando escolhe a operação; as opções, também chamadas de *flags*, ajustam seu comportamento; os argumentos indicam sobre o que ela atua.
 
-> Nos modelos de sintaxe, elementos entre `{chaves}` representam conteúdo a ser substituído, sem manter as chaves. `{opções}` indica modificadores opcionais; a descrição principal apresenta o comportamento sem eles, considerando os argumentos indicados. Quando um argumento também puder ser omitido, isso será explicado no texto. Os exemplos concretos já apresentam a forma usada no terminal.
+> Nos modelos de sintaxe, **elementos entre chaves indicam conteúdo a ser substituído** (como comandos, caminhos, valores, *flags*, etc.), e devem ser retiradas no uso real, salvo quando forem explicitamente apresentadas como parte da sintaxe. `{opções}` indica modificadores opcionais; a descrição principal apresenta o comportamento sem eles, considerando os argumentos indicados. Quando um argumento também puder ser omitido, isso será explicado no texto. Os exemplos concretos já apresentam a forma usada no terminal.
 
 > Variações de uso que mudam significativamente a operação aparecem em listas subordinadas, com o comando completo. Ajustes simples são explicados na descrição principal. Formas específicas também podem aparecer separadamente na seção correspondente à sua finalidade.
 

@@ -41,7 +41,7 @@ Se a *tag* for omitida, o Docker utiliza `latest`. Esse nome é uma convenção:
 
 A forma mais utilizada nesta apostila é `docker {objeto} {comando} {opções} {argumentos}`. O objeto indica o recurso, como `image`, `container` ou `volume`; o comando indica a operação, como `ls`, `run` ou `rm`.
 
-> Elementos entre `{chaves}` devem ser substituídos, sem manter as chaves. `{opções}` representa modificadores opcionais; a descrição principal apresenta o comportamento sem eles, considerando os argumentos indicados. Quando um argumento puder ser omitido, isso será explicado no texto. Argumentos no plural, como `{containers}`, aceitam um ou mais nomes ou identificadores separados por espaços.
+> Nos modelos de sintaxe, **elementos entre chaves indicam conteúdo a ser substituído** (como comandos, caminhos, valores, *flags*, etc.), e devem ser retiradas no uso real, salvo quando forem explicitamente apresentadas como parte da sintaxe. `{opções}` indica modificadores opcionais; a descrição principal apresenta o comportamento sem eles, considerando os argumentos indicados. Quando um argumento também puder ser omitido, isso será explicado no texto. Os exemplos concretos já apresentam a forma usada no terminal.
 
 Alguns comandos possuem formas curtas: `docker container run` equivale a `docker run`, `docker container ls` a `docker ps`, `docker image ls` a `docker images` e `docker image rm` a `docker rmi`. Aqui, a forma extensa é mantida para deixar explícito o recurso utilizado.
 

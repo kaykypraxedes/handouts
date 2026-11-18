@@ -83,7 +83,7 @@ The `--global` option applies the configuration to the current user. To use anot
 
 The basic form is `git {command} {options} {arguments}`. The command chooses the operation; the options, also called *flags*, adjust its behavior; the arguments indicate what it acts on.
 
-> In the syntax models, elements between `{braces}` represent content to be replaced, without keeping the braces. `{options}` indicates optional modifiers; the main description presents the behavior without them, considering the indicated arguments. When an argument can also be omitted, this will be explained in the text. The concrete examples already present the form used in the terminal.
+> In the syntax models, **elements enclosed in braces indicate content to be replaced** (such as commands, paths, values, flags, etc.), and should be removed in actual use, unless they are explicitly presented as part of the syntax. `{options}` indicates optional modifiers; the main description presents the behavior without them, considering the indicated arguments. When an argument can also be omitted, this will be explained in the text. The concrete examples already present the form used in the terminal.
 
 > Usage variations that significantly change the operation appear in subordinate lists, with the complete command. Simple adjustments are explained in the main description. Specific forms can also appear separately in the section corresponding to their purpose.
 
