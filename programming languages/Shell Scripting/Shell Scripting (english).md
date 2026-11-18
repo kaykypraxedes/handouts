@@ -10,7 +10,7 @@
 
 ## Shell:
 
-The shell is a program that works as a **command interpreter** and also as a **programming language**, allowing you to control and combine other system programs. The **terminal** provides the input and output medium used to interact with the shell, while the ***kernel*** is the part of the operating system responsible for managing resources such as processes, files, and devices.
+The shell is a program that works as a **command interpreter** and also as a **programming language**, allowing you to control and combine other system programs. The **terminal** provides the input and output medium used to interact with the shell, while the **kernel** is the part of the operating system responsible for managing resources such as processes, files, and devices.
 
 When you open a terminal in a graphical interface, a **pseudoterminal** is normally created and a shell (such as `bash`) is started connected to it. The commands typed are then interpreted by the shell, which can execute them internally or start other programs.
 
@@ -28,24 +28,24 @@ The status of the last command executed is available in `$?`. This value is impo
 
 ## Manuals:
 
-Since *Linux* receives recurring updates, printed manuals may become outdated. Most of the necessary information, from user commands to internal *kernel* and C library interfaces, can be consulted in the operating system (OS) itself.
+Since *Linux* receives recurring updates, printed manuals may become outdated. Most of the necessary information, from user commands to internal kernel and C library interfaces, can be consulted in the operating system (OS) itself.
 
 ### System Hierarchy:
 
 For organization purposes, the manuals were divided into groups represented by numbers, following this hierarchy:
 
 1. User commands;
-2. *Kernel* system call interfaces;
+2. Kernel system call interfaces;
 3. C library interfaces;
 4. Special files (devices, drivers, etc.);
 5. File formats;
 6. Games and amusements;
 7. Miscellaneous subjects;
 8. System administration commands;
-9. *Kernel* internal commands (rarely used on *Linux*, which keeps this documentation on the official website);
-10. *New* (additional section for new or in-progress documentation, when used).
+9. Kernel internal commands (rarely used on *Linux*, which keeps this documentation on the official website);
+10. New (additional section for new or in-progress documentation, when used).
 
-> The last two entries vary by distribution and *Linux* environment. Section 9 is not standardized; *New* may appear identified by `n`, not being a universal section 10.
+> The last two entries vary by distribution and *Linux* environment. Section 9 is not standardized; New may appear identified by `n`, not being a universal section 10.
 
 - `apropos {word}` - Shows a one-line summary about the searched word (what the command is for, what type of file it is, etc.). Returns partial results found in the title and summary, including when the search matches part of a word.
 
@@ -373,7 +373,7 @@ With `umask 022`, a creation that requests `666` results in `644` (`rw-r--r--`);
 
 # 3. Processes
 
-Every program running on *Linux* is treated by the *kernel* as a **process**. Since modern operating systems are multitasking, the *kernel* rapidly switches which process has access to the CPU (Central Processing Unit), creating the impression of simultaneity even on a single core. With multiple cores, there can also be truly parallel execution.
+Every program running on *Linux* is treated by the kernel as a **process**. Since modern operating systems are multitasking, the kernel rapidly switches which process has access to the CPU (Central Processing Unit), creating the impression of simultaneity even on a single core. With multiple cores, there can also be truly parallel execution.
 
 The shell itself is also a **process**. In a common execution from an interactive shell, when it starts an external program, that program normally runs in another process, related to the shell as its child process. Internal commands (builtins) can be executed directly by the shell process itself.
 
@@ -390,7 +390,7 @@ parent_process
 - Each process receives a PID (process ID), which can be reused after the process ends, in addition to keeping information such as allocated memory, execution state, and associated owner/user (as well as files).
 - Many system services run as ***daemons***: processes in the background, without a user interface.
 
-> Conceptually, PID 0 can be associated with the *kernel* side in this tree: it corresponds to the initial task, linked to the idle task (swapper/idle), and not to the *kernel* as a whole as a common program. From it originates PID 1 (`init`, often implemented by `systemd`), responsible for initializing services.
+> Conceptually, PID 0 can be associated with the kernel side in this tree: it corresponds to the initial task, linked to the idle task (swapper/idle), and not to the kernel as a whole as a common program. From it originates PID 1 (`init`, often implemented by `systemd`), responsible for initializing services.
 
 Processes can have different states indicating how their execution is, with the main ones being:
 
@@ -930,8 +930,8 @@ esac
 
 Chain commands based on their results, avoiding unnecessary executions:
 
-- `{command_1} && {command_2}` - *AND* logic: executes the second only if the first ends with success.
-- `{command_1} || {command_2}` - *OR* logic: executes the second only if the first fails.
+- `{command_1} && {command_2}` - AND logic: executes the second only if the first ends with success.
+- `{command_1} || {command_2}` - OR logic: executes the second only if the first fails.
 - `! {command}` - Inverts the logical result: success becomes failure and failure becomes success.
 
 The status of a list with `&&` or `||` is that of the last command actually executed. These operators have the same precedence among themselves and are evaluated from left to right.
