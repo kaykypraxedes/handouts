@@ -714,11 +714,11 @@ A *shell* mantém diversas variáveis com funções específicas, convencionalme
 
 Alguns atributos importantes são:
 
-| Atributo | Função                                                                                                           |
-| -------- | ---------------------------------------------------------------------------------------------------------------- |
-| `-x`     | Marca para exportação, como `export`.                                                                            |
-| `-r`     | Torna somente leitura, como `readonly`: impede atribuição e remoção com `unset`. Não pode ser desfeito com `+r`. |
-| `-i`     | Avalia atribuições como expressões inteiras: `declare -i total=2+3` armazena `5`.                                |
+| Atributo | Função |
+| --- | --- |
+| `-x` | Marca para exportação, como `export`. |
+| `-r` | Torna somente leitura, como `readonly`: impede atribuição e remoção com `unset`. Não pode ser desfeito com `+r`. |
+| `-i` | Avalia atribuições como expressões inteiras: `declare -i total=2+3` armazena `5`. |
 
 > Os atributos podem ser combinados: uma variável pode ser exportada e somente leitura ao mesmo tempo. No Bash, o comando `typeset` é equivalente a `declare` (*alias*).
 
@@ -752,12 +752,12 @@ printf '%s\n' "${#arquivos[@]}" # 2
 
 Fornecem informações sobre a execução. Parâmetros especiais, como `$?` e `$$`, não são nomes comuns aos quais se atribui um valor com `=`.
 
-| Forma     | Descrição                                                                                                                                                          |
-| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `$RANDOM` | Produz um inteiro pseudoaleatório de `0` a `32767` (15 *bits*).                                                                                                    |
-| `$$`      | PID da *shell* original; mantém esse valor em contextos de *subshell*, como `( ... )`. `$BASHPID` identifica o processo Bash que está executando naquele contexto. |
-| `$!`      | PID associado ao comando ou trabalho mais recente iniciado em segundo plano.                                                                                       |
-| `$?`      | *Status* de saída do último comando ou *pipeline*, conforme as regras de redirecionamento e execução.                                                              |
+| Forma | Descrição |
+| --- | --- |
+| `$RANDOM` | Produz um inteiro pseudoaleatório de `0` a `32767` (15 *bits*). |
+| `$$` | PID da *shell* original; mantém esse valor em contextos de *subshell*, como `( ... )`. `$BASHPID` identifica o processo Bash que está executando naquele contexto. |
+| `$!` | PID associado ao comando ou trabalho mais recente iniciado em segundo plano. |
+| `$?` | *Status* de saída do último comando ou *pipeline*, conforme as regras de redirecionamento e execução. |
 
 > `$?` é atualizado após cada comando. Depois de `echo $?`, passa a indicar o resultado desse próprio `echo`; para guardar um resultado, a atribuição `resultado=$?` deve vir imediatamente após o comando de interesse.
 
@@ -1152,7 +1152,7 @@ grep -E '^(\([0-9]{2}\)|[0-9]{2}) [0-9]{4,5}-?[0-9]{4}$' contatos.txt
 
 A primeira parte aceita dois dígitos **com o par de parênteses ou sem ambos**. Depois, exige um espaço, quatro ou cinco dígitos, um hífen opcional e mais quatro dígitos. As âncoras exigem que a linha inteira siga esse formato; o teste não verifica se o telefone existe.
 
-### Comportamento Guloso (Greedy):
+### Comportamento Guloso (*Greedy*):
 
 No modelo POSIX, procura-se a correspondência que começa mais à esquerda e, nessa posição, a mais longa possível. Assim, uma repetição pode abranger separadores intermediários enquanto o padrão completo continuar correspondendo.
 
@@ -1237,514 +1237,277 @@ As aspas na atribuição preservam a regex como texto. No teste, **`$padrao` fic
 
 # 10. `sed`
 
-O `sed` (*Stream Editor*) é um editor de texto não interativo: aplica instruções de edição a dados de arquivos ou da entrada padrão, como em um *pipe*, e envia o resultado para a saída padrão. Sua leitura percorre a entrada sequencialmente, processando uma linha por vez no funcionamento básico.
+O `sed` (*stream editor*) aplica instruções de edição ao texto de um arquivo ou da entrada padrão (via *pipe*, por exemplo). Por padrão, lê uma linha por vez e envia o resultado para a saída padrão.
 
 ## Sintaxe:
 
-- `sed {opções} '{comandos}' {arquivos_de_input}` - Realiza a edição sobre os arquivos informados; sem arquivos, lê a entrada padrão.
+> As aspas simples envolvendo os comandos são importantes pois fazem o *shell* passar o programa literalmente ao comando.
 
-- `sed {opções} -f {arquivo.sed} {arquivos_de_input}` - Lê os comandos de um arquivo (bom para programas maiores). A extensão `.sed` é uma convenção (assim como `.sh` em *scripts* de *shell*).
+- `sed {opções} '{comandos}' {arquivos_de_input}` - Realiza a edição sobre os arquivos informados e imprime as mudanças na saída padrão (sem nenhuma modificação no arquivo original). 
 
-Algumas opções importantes são:
+    - `sed -f {arquivo.sed} {arquivos_de_input}` - Lê os comandos de um arquivo (bom para programas maiores). A extensão `.sed` é uma convenção (assim como `.sh` em *scripts* de *shell*).
+    - `sed -n '{comandos}' {arquivos_de_input}` - Desativa a impressão automática; comandos como `p` permitem escolher o que imprimir.
+    - `sed -E '{comandos}' {arquivos_de_input}` - Habilita expressões regulares estendidas.
+    - `sed -i{sufixo} '{comandos}' {arquivos_de_input}` - Edita o arquivo no disco. Com um sufixo, como `-i.backup`, guarda uma cópia do original. Sem sufixo (só `-i`), edita sem criar cópia.
+    
+    > O `-i` exige que o arquivo a editar seja informado como argumento (não funciona com dados recebidos pela entrada padrão).
 
-| Opção | Descrição |
-| --- | ---- |
-| `-i{sufixo}` | Edita o arquivo no disco. Com um sufixo, como `-i.backup`, guarda uma cópia do original; sem `-i`, o resultado vai para a saída padrão. |
-| `-n` | Desativa a impressão automática; comandos como `p` permitem escolher o que imprimir. |
-
-## Estrutura
-
-Um programa consiste em **instruções**: o endereço seleciona onde executar, o comando define a operação e os argumentos fornecem os dados necessários:
-
-```
-{endereço}comando{argumentos}
-```
-
-As chaves indicam partes opcionais no modelo (**não são digitados**). Cada parte funciona assim:
-
-- **Endereço:** Pode ser omitido para aplicar o comando a todas as linhas, indicar uma seleção ou delimitar um intervalo com dois endereços.
-- **Comando:** É obrigatório e determina a operação, como imprimir (`p`), remover (`d`) ou substituir (`s`).
-- **Argumentos:** Dependem do comando. `p` e `d` não exigem argumentos; `s` recebe um padrão e o texto de substituição, podendo incluir opções.
-
-Por exemplo:
-
-```
-2s/linha/frase/g
-```
-
-| Parte | Função |
-| --- | --- |
-| `2` | Seleciona a segunda linha. |
-| `s` | Executa uma substituição. |
-| `/linha/frase/` | Define o padrão procurado e o texto substituto. |
-|` g` | Substitui todas as ocorrências encontradas, em vez de apenas a primeira. |
-
-As instruções são separadas por quebras de linha ou, quando a sintaxe permitir, por `;`. Para cada linha, são percorridas **na ordem escrita**; alterações feitas por uma instrução ficam disponíveis às seguintes.
-
-### Funcionamento:
-
-O texto em processamento fica em um espaço de trabalho chamado _**pattern space**_. O ciclo básico funciona assim:
-
-1. **Leitura:** Coloca a próxima linha da entrada no _pattern space_.
-2. **Execução:** Percorre as instruções, executando aquelas cujos endereços selecionam a linha ou o conteúdo atual.
-3. **Impressão:** Imprime o conteúdo resultante, salvo quando a impressão automática está desativada, como com `-n`.
-4. **Repetição:** Recomeça pela leitura da próxima linha, até o fim da entrada.
-
-> Algumas instruções alteram esse fluxo: podem antecipar a leitura de outra linha, iniciar um novo ciclo ou encerrar o programa.
-
-## Endereços:
-
-Selecionam onde aplicar uma instrução: podem ser **números de linha**, **`$`** (última linha) ou **expressões regulares entre barras**, como `/erro/`.
-
-- **Sem endereço:** Aplica a instrução a todas as linhas.
-- **Um endereço:** Aplica somente às linhas selecionadas.
-- **Dois endereços:** Separados por vírgula, selecionam um intervalo incluindo as extremidades. `1,10` seleciona da primeira à décima linha; `5,$`, da quinta até a última.
-
-> Os endereços não são reordenados: `10,1` seleciona somente a décima linha, pois o segundo endereço numérico já foi ultrapassado quando o intervalo começa. A quantidade aceita depende do comando; `q` permite apenas um ou nenhum.
-
-## Instruções:
-
-Os exemplos utilizam o mesmo arquivo `linhas.txt`:
+Os exemplos utilizam o arquivo `servico.conf`.
 
 ```text
-Primeira linha.
-Segunda linha.
-Terceira linha.
-Quarta linha.
+# Serviço local
+host=localhost
+porta=8080
+rotas=/teste/api,/teste/status
 ```
 
-### Inserção de Texto:
-
-- **`a` (*append*):** Acrescenta texto depois da linha selecionada.
-- **`i` (*insert*):** Insere texto antes da linha selecionada.
-
-O texto inserido por ambos é enviado à saída mesmo com `-n`. No arquivo `acrescentar.sed`:
-
-```sed
-2a\
-Texto acrescentado.
-```
+Para visualizar a configuração com a porta alterada:
 
 ```bash
-sed -f acrescentar.sed linhas.txt
+sed 's/^porta=8080$/porta=9000/' servico.conf
 ```
 
-```text
-Primeira linha.
-Segunda linha.
-Texto acrescentado.
-Terceira linha.
-Quarta linha.
-```
+A saída contém as quatro linhas, com `porta=9000` na terceira (sendo a única alterada). O arquivo em disco continua com `porta=8080`.
 
-### Remoção e Troca de Linhas:
+## Estrutura e Funcionamento:
 
-- **`d` (*delete*):** Descarta o conteúdo em processamento e inicia o próximo ciclo, ignorando as instruções restantes e a impressão automática do ciclo atual.
-- **`c` (*change*):** Substitui a linha selecionada pelo texto informado; em um intervalo, troca o bloco por uma única ocorrência desse texto.
+Uma instrução tem a forma **endereço + comando + argumentos**. 
+
+- O endereço é opcional e seleciona onde executar. 
+- O comando define a operação e determina quais argumentos ela recebe (e se precisa receber algum). 
+
+Em `3s/8080/9000/`, por exemplo, `3` seleciona a terceira linha, `s` indica substituição e `/8080/9000/` informa o que procurar e o que colocar no lugar.
+
+O espaço que contém o texto em edição é chamado de ***pattern space***. No ciclo básico, o `sed` lê uma linha para esse espaço, **percorre as instruções na ordem escrita** e imprime o conteúdo resultante. O ciclo recomeça com a próxima linha. 
+
+Uma instrução pode, por exemplo, modificar o texto que a seguinte encontrará:
 
 ```bash
-sed '2d' linhas.txt
+sed -n 's/^porta=/PORTA /; /^PORTA /p' servico.conf   # Imprime só "PORTA 8080"
 ```
 
-```text
-Primeira linha.
-Terceira linha.
-Quarta linha.
-```
+A primeira instrução transforma `porta=8080` em `PORTA 8080`. A segunda encontra o início `PORTA ` no texto já alterado e o imprime. O `;` separa instruções que admitem essa forma. Em um arquivo `.sed`, elas também podem ocupar linhas distintas. 
 
-Para trocar um intervalo, o arquivo `trocar.sed` contém:
+> Ao contrário (`sed -n '/^PORTA /p; s/^porta=/PORTA /' servico.conf`) não funcionaria da mesma maneira: Não acharia nenhum "PORTA" e não imprimiria nada, mas continuaria fazendo a substituição.
 
-```sed
-2,3c\
-Texto substituto.
-```
+### Seleção por Endereço:
+
+| Endereço | Onde a instrução se aplica | Exemplo |
+| --- | --- | --- |
+| Omitido | Em todas as linhas. | `p` imprime cada linha. |
+| Número | Na linha indicada, contando a partir de 1. | `3p` imprime a terceira. |
+| `$` | Na última linha da entrada. | `$p` imprime a última. |
+| `/expressão/` | Nas linhas cujo conteúdo corresponde à expressão regular. | `/^porta=/p` imprime a configuração da porta. |
+| `início,fim` | No intervalo entre os dois endereços, incluindo os extremos. | `/^host=/,/^porta=/p` imprime o trecho de `host` a `porta`. |
 
 ```bash
-sed -f trocar.sed linhas.txt
+sed -n '2,3p' servico.conf
+# host=localhost
+# porta=8080
 ```
 
-```text
-Primeira linha.
-Texto substituto.
-Quarta linha.
-```
+O comando `p` imprime imediatamente o conteúdo atual. Sem `-n`, as linhas 2 e 3 apareceriam **duas vezes**, uma pela instrução `p` e outra pela impressão automática. As demais apareceriam uma vez.
 
-### Impressão e Encerramento:
-
-- **`p` (*print*):** Imprime imediatamente o conteúdo em processamento. Com `-n`, permite mostrar somente as linhas desejadas.
-- **`q` (*quit*):** Encerra o processamento sem ler mais linhas. Antes de sair, imprime o conteúdo atual se a impressão automática estiver ativa.
-
-```bash
-sed -n '2,3p' linhas.txt
-```
-
-```text
-Segunda linha.
-Terceira linha.
-```
-
-```bash
-sed '2q' linhas.txt
-```
-
-```text
-Primeira linha.
-Segunda linha.
-```
-
-Sem `-n`, as linhas selecionadas por `p` seriam impressas duas vezes: pelo comando e pela impressão automática.
+## Edição:
 
 ### Substituição de Trechos:
 
-- **`s` (*substitute*):** Troca o trecho correspondente ao padrão, preservando o restante do texto (`c` substitui a linha inteira).
+`s/padrão/substituição/` troca a primeira correspondência em cada linha selecionada. A opção `g` estende a troca às demais correspondências **da mesma linha**. Compare as saídas para a configuração de rotas:
 
 ```bash
-sed 's/linha/frase/' linhas.txt
+sed -n '/^rotas=/{s|/teste|/prod|;p;}' servico.conf
+# rotas=/prod/api,/teste/status
+
+sed -n '/^rotas=/{s|/teste|/prod|g;p;}' servico.conf
+# rotas=/prod/api,/prod/status
+```
+
+O endereço `/^rotas=/` seleciona a linha. As chaves agrupam as duas instruções aplicadas à linha selecionada: substituir e imprimir. O delimitador de `s` pode ser outro caractere além de `/`. Aqui, `|` deixa legíveis as barras que pertencem aos caminhos.
+
+> Na substituição, `&` recupera todo o trecho encontrado e `\1`, `\2` etc. recuperam grupos capturados (capítulo 9).
+
+### Remoção, Inserção e Troca de Linhas:
+
+| Instrução | Efeito |
+| --- | --- |
+| `d` | Descarta o conteúdo atual e inicia o próximo ciclo, pulando as instruções restantes e a impressão automática. |
+| `i` | Insere texto antes da linha selecionada. |
+| `a` | Acrescenta texto depois da linha selecionada (*append*). |
+| `c` | Troca a linha inteira pelo texto indicado. Aplicado a um intervalo, substitui o bloco por uma única ocorrência do texto. |
+
+Para obter apenas as configurações ativas do exemplo, `sed '/^#/d' servico.conf` descarta a linha de comentário. Para também inserir um tempo limite após a porta, as duas operações podem ficar no arquivo `configurar.sed`:
+
+```sed
+/^#/d
+/^porta=/a\
+timeout=30
+```
+
+```bash
+sed -f configurar.sed servico.conf
 ```
 
 ```text
-Primeira frase.
-Segunda frase.
-Terceira frase.
-Quarta frase.
+host=localhost
+porta=8080
+timeout=30
+rotas=/teste/api,/teste/status
 ```
 
-Um endereço antes de `s` seleciona **as linhas em que a substituição será tentada**.
+> A barra invertida após `a` indica que o texto começa na linha seguinte do programa. Com `i`, a opção `timeout=30` apareceria antes da porta. Com `c`, ocuparia o lugar da linha `porta=8080`. O texto fornecido a esses comandos também é emitido quando se usa `-n`.
 
-Por padrão, substitui somente a primeira ocorrência de cada linha; `s/linha/frase/g` substitui todas.
+### Encerramento, Leitura e Escrita de Arquivos:
 
-> O reaproveitamento com `&`, `\1`, `\2` etc. foi apresentado no capítulo de expressões regulares.
+| Instrução | Efeito | Exemplo |
+| --- | --- | --- |
+| `q` | Encerra a leitura. Com a impressão automática ativa, imprime a linha atual antes de sair. | `sed '2q' servico.conf` mostra as duas primeiras linhas. |
+| `r arquivo` | Acrescenta o conteúdo de outro arquivo à saída após a linha selecionada. | `sed '/^porta=/r extras.conf' servico.conf` insere as opções de `extras.conf` após a porta. |
+| `w arquivo` | Grava o conteúdo em processamento no arquivo de destino. | `sed -n '/^rotas=/w rotas.conf' servico.conf` grava somente a configuração de rotas. |
 
-### Leitura e Escrita de Arquivos:
+Com `-n`, `r` continua enviando o texto lido à saída e `w` continua escrevendo no destino. A opção controla a impressão automática do *pattern space*.
 
-- **`r` (*read*):** Acrescenta o conteúdo de outro arquivo depois da linha selecionada.
-- **`w` (*write*):** Escreve o conteúdo em processamento no arquivo indicado.
+## Processamento de Mais de uma Linha:
 
-Ambos funcionam mesmo com `-n`: o texto lido por `r` é enviado à saída, e `w` escreve no arquivo de destino.
+Considere o arquivo `medidas.txt`, em que cada medição ocupa duas linhas consecutivas. A primeira identifica o sensor e a segunda contém a leitura.
 
-```bash
-sed '2r extra.txt' linhas.txt
-# Insere o conteúdo de extra.txt entre a segunda e a terceira linhas.
-
-sed -n '2,3w selecionadas.txt' linhas.txt
-# Grava a segunda e a terceira linhas em selecionadas.txt; não imprime no terminal.
+```text
+temperatura
+24 C
+umidade
+60 %
 ```
 
 ### Avanço da Leitura:
 
-- **`n` (*next*):** Imprime o conteúdo atual se a impressão automática estiver ativa, substitui esse conteúdo pela próxima linha e continua pela instrução seguinte do programa.
+- **`n`** - Imprime o conteúdo atual se a impressão automática estiver ativa, substitui esse conteúdo pela próxima linha e continua na instrução seguinte.
+- **`N`** - Acrescenta a próxima linha ao conteúdo atual, preservando uma quebra de linha entre os textos, e continua na instrução seguinte.
 
 ```bash
-sed -n 'n;p' linhas.txt
+sed -n 'n;p' medidas.txt
+# 24 C
+# 60 %
+
+sed 'N;s/\n/: /' medidas.txt
+# temperatura: 24 C
+# umidade: 60 %
 ```
 
-```text
-Segunda linha.
-Quarta linha.
-```
+No primeiro comando, o ciclo começa com o nome do sensor. `n` substitui o nome do sensor pelo valor da medição e `p` imprime esse valor. No segundo, `N` mantém o nome e o valor juntos, permitindo que `s` troque a quebra interna por "`: `".
 
-O ciclo lê a primeira linha; `n` a substitui pela segunda, que `p` imprime. O próximo ciclo faz o mesmo com a terceira e a quarta. Com `-n`, as linhas substituídas por `n` não são impressas.
+### Memória Auxiliar (*Hold Space*):
 
-- **`N`:** Acrescenta a próxima linha ao conteúdo atual, mantendo uma quebra de linha entre os dois textos. Depois, continua pela instrução seguinte.
+O ***hold space*** é uma reserva que começa vazia e conserva seu conteúdo entre ciclos. Ela permite guardar uma linha, continuar a leitura e recuperar o texto quando necessário.
+
+| Instrução | Origem - Destino | Efeito no destino |
+| --- | --- | --- |
+| `h` | *Pattern space* - *Hold space* | Substitui o conteúdo guardado por uma cópia do atual. |
+| `g` | *Hold space* - *Pattern space* | Recupera uma cópia do conteúdo guardado. |
+| `H` | *Pattern space* - *Hold space* | Acrescenta uma quebra de linha e o conteúdo atual. |
+| `G` | *Hold space* - *Pattern space* | Acrescenta uma quebra de linha e o conteúdo guardado. |
+| `x` | *Pattern space* - *Hold space* e *Hold space* - *Pattern space* | Troca os conteúdos dos dois espaços. |
+
+Para exibir **valor seguido do nome do sensor entre parênteses**, é preciso conservar o nome enquanto se lê a medição:
 
 ```bash
-sed 'N;s/\n/ /' linhas.txt
+sed -n 'h;n;G;s/\n/ (/;s/$/)/;p' medidas.txt
+# 24 C (temperatura)
+# 60 % (umidade)
 ```
 
-```text
-Primeira linha. Segunda linha.
-Terceira linha. Quarta linha.
-```
+| Após a operação no primeiro par | *Pattern space* | *Hold space* |
+| --- | --- | --- |
+| Leitura de `temperatura` | `temperatura` | Vazio |
+| `h` guarda o nome | `temperatura` | `temperatura` |
+| `n` lê o valor | `24 C` | `temperatura` |
+| `G` acrescenta o nome ao valor | `24 C\ntemperatura` | `temperatura` |
 
-`N` reúne duas linhas no *pattern space*; `s` troca a quebra interna (`\n`) por um espaço. Cada ciclo processa um par de linhas.
+Na tabela, `\n` representa a quebra de linha interna. As duas substituições dão forma ao resultado e `p` o imprime. No par seguinte, `h` atualiza o nome guardado para `umidade`.
 
-## *Hold Space*:
-
-O ***hold space*** é uma reserva auxiliar que começa vazia e permite **guardar texto para recuperar depois**. Seu conteúdo permanece entre os ciclos até que uma instrução o altere.
-
-### Guardar e Recuperar:
-
-- **`h`:** Copia o *pattern space* para o *hold space*, substituindo o conteúdo guardado.
-- **`g`:** Copia o *hold space* para o *pattern space*, substituindo o conteúdo em processamento.
-
-As cópias preservam o conteúdo da origem. No arquivo `guardar.sed`:
-
-```sed
-h
-s/linha/frase/
-p
-g
-p
-```
-
-```bash
-sed -n -f guardar.sed linhas.txt
-```
-
-```text
-Primeira frase.
-Primeira linha.
-Segunda frase.
-Segunda linha.
-Terceira frase.
-Terceira linha.
-Quarta frase.
-Quarta linha.
-```
-
-`h` guarda o original; o primeiro `p` imprime a versão modificada. Depois, `g` recupera a cópia para o segundo `p`. A reserva também permanece entre ciclos: `sed '1h;3g' linhas.txt` guarda a primeira linha e a utiliza no lugar da terceira.
-
-> O comando `g` recupera texto; a opção `g` em `s/padrão/substituição/g` torna a substituição global. São usos diferentes da mesma letra.
-
-### Acumular e Acrescentar:
-
-As formas maiúsculas preservam o conteúdo do destino e acrescentam **uma quebra de linha seguida do texto copiado**, sem alterar a origem:
-
-- **`H`:** Acrescenta o *pattern space* ao final do *hold space*.
-- **`G`:** Acrescenta o *hold space* ao final do *pattern space*.
-
-```bash
-sed -n '1h;2H;2g;2p' linhas.txt
-```
-
-```text
-Primeira linha.
-Segunda linha.
-```
-
-`1h` guarda a primeira linha; `2H` acrescenta a segunda à reserva. Em seguida, `g` recupera as duas juntas e `p` as imprime.
-
-`H` acrescenta a quebra mesmo quando a reserva está vazia; começar com `h` evita uma linha vazia inicial.
-
-> Da mesma forma, `sed 'G' linhas.txt` insere uma linha vazia após cada linha da entrada, pois acrescenta a quebra seguida do conteúdo vazio da reserva.
-
-### Troca dos Conteúdos:
-
-- **`x`:** Troca os conteúdos dos dois espaços: o texto em edição passa para a reserva, e o reservado passa para a edição. 
-
-No arquivo `trocar_pares.sed`:
-
-```sed
-h
-n
-p
-x
-p
-```
-
-```bash
-sed -n -f trocar_pares.sed linhas.txt
-```
-
-```text
-Segunda linha.
-Primeira linha.
-Quarta linha.
-Terceira linha.
-```
-
-`h` guarda a primeira linha do par; `n` lê a segunda, impressa por `p`. Depois, `x` traz a primeira de volta ao *pattern space* para o último `p`. O próximo ciclo repete a operação com o par seguinte.
+> `H` e `G` acrescentam a quebra mesmo que o destino esteja vazio. Para acumular linhas sem começar com uma linha vazia, use `h` para guardar a primeira e `H` para acrescentar as seguintes. O comando isolado `g` recupera a reserva. O `g` ao final de `s/padrão/texto/g` indica substituição global.
 
 ---
 
 # 11. AWK
 
-> Este capítulo utiliza o **GNU AWK (`gawk`)**. Outras implementações, como as utilizadas em sistemas BSD, podem apresentar diferenças de recursos. Em sistemas nos quais `awk` chama o `gawk`, ele funciona, na prática, como um *alias* desse programa.
+> Este capítulo utiliza o **GNU AWK (`gawk`)**. Outras implementações (como as utilizadas em sistemas BSD), podem apresentar diferenças de recursos. Em sistemas nos quais `awk` chama o `gawk`, ele funciona, na prática, como um *alias* desse programa.
 
-AWK é uma **linguagem de processamento de texto orientada a dados**: percorre a entrada e executa ações quando as condições definidas são atendidas. Por padrão, trabalha linha por linha; cada condição funciona como um **gatilho** para imprimir, modificar o texto, incrementar um contador etc.
+AWK é uma linguagem de processamento de texto. Ela lê arquivos ou a entrada padrão (via *pipe*, por exemplo), divide o texto em registros e separa cada registro em campos.
 
 ## Sintaxe:
 
-- `awk {opções} '{comandos}' {arquivos_de_input}` - Executa os comandos sobre os arquivos informados; sem arquivos, lê a entrada padrão.
+> As aspas simples envolvendo os comandos são importantes pois fazem o *shell* passar o programa literalmente ao comando.
 
-- `awk -f {arquivo.awk} {arquivos_de_input}` - Lê o programa de um arquivo (bom para programas maiores). A extensão `.awk` é uma convenção (assim como `.sh` em *scripts* de *shell*).
+- `awk {opções} '{comandos}' {arquivos_de_input}` - Realiza os comandos sobre os arquivos informados.
 
-O caractere **`#`** inicia um comentário até o fim da linha, preservando o código anterior:
+    - `awk -f {arquivo.awk} {arquivos_de_input}` - Lê os comandos de um arquivo (bom para programas maiores). A extensão `.awk` é uma convenção (assim como `.sh` em *scripts* de *shell*).
+    - `awk -F '{separador}' '{comandos}' {arquivos_de_input}` - Define como separar os campos da entrada. Por padrão, são espaços e tabulações.
+    - `awk -v {var_1=valor_1} -v {var_2=valor_2} ... '{comandos}' {arquivos_de_input}` - Fornece um valor inicial a uma variável do programa.
 
-```awk
-# Comentário ocupando uma linha inteira.
-total += 1  # Comentário depois de uma instrução.
-```
-
-Dentro de textos entre aspas ou expressões regulares entre barras, `#` representa o próprio caractere.
-
-## Organização do Programa e Padrões:
-
-Um programa consiste em **regras**: o padrão seleciona quando executar, e a ação reúne as instruções entre chaves. Aqui, as chaves fazem parte da sintaxe real:
-
-```awk
-padrão { ação }
-```
-
-Para cada linha, as regras são avaliadas **na ordem escrita**. Uma linha pode atender a vários padrões; se uma ação modificar seu texto, os padrões seguintes considerarão o conteúdo modificado. Dentro das ações, as instruções também seguem a ordem escrita, separadas por quebras de linha ou `;`.
-
-- **Sem padrão:** Executa a ação para todas as linhas.
-- **Sem ação:** Executa implicitamente `print`, imprimindo a linha selecionada.
-
-### Padrões Simples:
-
-Podem utilizar **expressões regulares** ou **comparações numéricas e textuais**. Uma regex sozinha, como `/erro/`, procura uma correspondência na linha inteira; para testar um texto específico:
-
-- `texto ~ /expressão/` - Verifica se o texto corresponde à regex.
-- `texto !~ /expressão/` - Verifica se o texto não corresponde à regex.
-
-Usar apenas `"erro"` como padrão não procura esse trecho: o texto não vazio é considerado verdadeiro. Para buscar na linha inteira, utiliza-se `/erro/`.
-
-> À direita de `~` e `!~`, a regex também pode vir de um texto entre aspas ou de uma variável: `texto ~ "erro"` e `texto ~ padrao` fazem a mesma busca quando `padrao` contém `erro`.
-
-| Operadores | Comparação |
-| --- | --- |
-| `<` / `<=` | Menor / menor ou igual. |
-| `==` / `!=` | Igual / diferente. |
-| `>` / `>=` | Maior / maior ou igual. |
-
-As condições podem ser combinadas com **`&&` (E)**, que exige ambas verdadeiras, e **`||` (OU)**, que exige pelo menos uma verdadeira.
-
-### Padrões Especiais:
-
-**`BEGIN`** e **`END`**, em maiúsculas, determinam quando executar a ação, sem selecionar linhas:
-
-- `BEGIN { ação }` - Antes de ler os dados de entrada.
-- `END { ação }` - Após terminar o processamento da entrada.
-
-### Intervalos de Registros:
-
-Dois padrões separados por vírgula selecionam um intervalo, incluindo as extremidades:
-
-```awk
-padrão_inicial, padrão_final { ação }
-```
-
-A seleção começa quando o primeiro padrão é atendido e continua até o segundo ser atendido; se isso não ocorrer, segue até o fim da entrada. Depois de encerrar, procura um novo início na linha seguinte. 
-
-> Cada regra mantém seu próprio intervalo: enquanto ele estiver ativo, novos inícios não abrem seleções sobrepostas.
-
-## Variáveis, Registros e Campos:
-
-Variáveis armazenam **números ou textos (*strings*)**, sem exigir declaração de tipo ou atribuição prévia, e podem receber ambos ao longo do programa. Antes de receber um valor, representam **`0` em operações numéricas** ou **texto vazio `""` em operações textuais**.
-
-O AWK mantém informações sobre a entrada e permite configurar sua divisão e a saída:
-
-| Elemento | Significado |
-| --- | --- |
-| `$0` | Registro atual completo; por padrão, a linha inteira. |
-| `$1`, `$2` etc. | Campos do registro atual, numerados a partir de 1. |
-| `FILENAME` | Nome do arquivo de entrada atual. |
-| `FS` | Separador de campos da entrada; o padrão `" "` trata sequências de espaços e tabulações como separadores. |
-| `RS` | Separador de registros da entrada; por padrão, nova linha (`"\n"`). |
-| `NF` | Número de campos do registro atual. |
-| `NR` | Total de registros lidos, mantendo a contagem entre arquivos. |
-| `OFS` | Separador dos itens de `print` separados por vírgulas; por padrão, um espaço (`" "`). |
-| `ORS` | Separador acrescentado ao final de cada saída de `print`; por padrão, nova linha (`"\n"`). |
-
-**`FS` e `RS` controlam a entrada; `OFS` e `ORS`, a saída.** Assim, a apresentação pode utilizar separações diferentes das encontradas na leitura.
-
-> Com `FS = " "`, espaços e tabulações nas extremidades da linha são desconsiderados na divisão dos campos.
-
-## Operadores:
-
-Os operadores aritméticos e de atribuição têm funcionamento semelhante aos de C:
-
-| Operadores | Operação |
-| --- | --- |
-| `^` / `**` | Potenciação. |
-| `*` / `/` / `%` | Multiplicação / divisão / resto da divisão. |
-| `+` / `-` | Adição / subtração. |
-| `=` | Atribuição. |
-| `++` / `--` | Incremento / decremento de uma unidade. |
-| `+=` / `-=` | Adição / subtração seguida de atribuição. |
-| `*=` / `/=` / `%=` | Multiplicação / divisão / resto seguido de atribuição. |
-
-## Arranjos Associativos:
-
-Armazenam dados associando **uma chave a um valor**, como em um mapa. A chave identifica o elemento para consulta ou modificação:
-
-```awk
-arranjo[chave] = valor
-```
-
-Aceitam textos ou números como índices. Os numéricos são convertidos para texto: `dados[1]` e `dados["1"]` acessam o mesmo elemento.
-
-### Percorrendo os Elementos:
-
-Em `for (chave in arranjo)`, a variável recebe **cada chave existente**; `arranjo[chave]` acessa seu valor:
-
-```awk
-BEGIN {
-    precos["arroz"] = 25
-    precos["feijao"] = 8
-
-    for (produto in precos)
-        print produto, precos[produto]
-}
-```
-
-**Uma saída possível:**
-
-```text
-arroz 25
-feijao 8
-```
-
-> A ordem não é garantida: pode diferir da ordem de inserção, alfabética ou numérica, mesmo com índices numéricos.
-
-## Funções *built-ins*:
-
-| Função | Funcionamento |
-| --- | --- |
-| `length(str)` | Retorna a quantidade de caracteres; sem argumento, `length()` considera `$0`.  |
-| `int(num)` | Descarta a parte fracionária, truncando em direção a zero.  |
-| `index(str, trecho)` | Retorna a posição da primeira ocorrência de `trecho`, ou `0` se não encontrar. |
-| `split(str, arranjo, delimitador)` | Divide o texto, armazena as partes em `arranjo[1]`, `arranjo[2]` etc. e retorna sua quantidade. |
-| `substr(str, pos, len)` | Retorna até `len` caracteres a partir de `pos`, sem ultrapassar o final do texto. |
-| `tolower(str)` / `toupper(str)`    | Retornam uma cópia com letras minúsculas / maiúsculas. |
-
-> As posições de `index()` e `substr()` começam em **1**. `index("banana", "ana")` retorna `2`.
-
-## Saída e Formatação:
-
-**`print`** imprime os valores informados, usando `OFS` entre itens separados por vírgulas e acrescentando `ORS` ao final. Alterar `OFS` não reformata automaticamente `print $0`; ele atua, por exemplo, entre os campos em `print $1, $2`.
-
-**`printf`** controla a apresentação com sintaxe semelhante à de C. Cada especificador começa com `%` e termina com a letra da conversão, podendo incluir:
-
-- **`-`:** Alinhamento à esquerda; o padrão é à direita.
-- **Largura:** Quantidade mínima de caracteres, preenchida com espaços quando necessário; não corta conteúdos maiores.
-- **`.precisão`:** Casas após o separador decimal em `%f` e `%e`; algarismos significativos em `%g`; máximo de caracteres em `%s`.
-
-| Formato | Apresentação |
-| --- | --- |
-| `%d` | Número inteiro decimal. |
-| `%f` | Notação decimal, como `12.50`. |
-| `%e` | Notação exponencial, como `1.25e+01`. |
-| `%g` | Alterna entre decimal e exponencial conforme a magnitude e a precisão, normalmente removendo zeros finais desnecessários. |
-| `%o` / `%x` | Número inteiro sem sinal em octal / hexadecimal. |
-| `%s` | Texto (*string*). |
-
-```awk
-BEGIN {
-    printf "|%-10s|%8.2f|\n", "Arroz", 25.5
-}
-```
-
-```text
-|Arroz     |   25.50|
-```
-
-`%-10s` reserva pelo menos 10 caracteres para o texto, alinhado à esquerda; `%8.2f`, pelo menos 8 para o número, com duas casas decimais e alinhamento à direita.
-
-`printf` não acrescenta `OFS` nem `ORS` automaticamente: os espaços e a quebra de linha (`\n`) devem constar no formato.
-
-### Exemplo de Processamento:
-
-O arquivo `produtos.txt` contém um produto e seu valor em cada linha, separados por ponto e vírgula:
+Os exemplos utilizam `produtos.txt`. Cada linha registra um produto e o valor de uma compra. Um produto pode aparecer em mais de uma compra.
 
 ```text
 Arroz;25
 Feijão;8
 Café;15
+Arroz;12
 ```
 
-O programa `selecionar.awk` seleciona os produtos com valor maior ou igual a 10, imprime seus campos e soma os valores selecionados:
+```bash
+awk -F ';' '{ print $1 }' produtos.txt
+# Arroz
+# Feijão
+# Café
+# Arroz
+```
+
+Por padrão, cada linha é um registro. Com `-F ';'`, o ponto e vírgula separa seus campos. No primeiro registro, `$0` contém a linha inteira (`Arroz;25`), `$1` contém `Arroz` e `$2` contém `25`. A ação `{ print $1 }` imprime o primeiro campo a cada leitura.
+
+## Estrutura e Funcionamento:
+
+Um programa é formado por regras com a estrutura **`padrão { ação }`**. O padrão determina quando executar a ação. As chaves delimitam as instruções e fazem parte do código. Para obter os nomes dos produtos em compras de pelo menos 15:
+
+```bash
+awk -F ';' '$2 >= 15 { print $1 }' produtos.txt
+# Arroz
+# Café
+```
+
+Para cada registro, **o AWK avalia as regras na ordem escrita**. Mais de uma regra pode ser executada para o mesmo registro. Se uma ação modificar um campo, as regras seguintes já recebem o novo valor. Dentro de uma ação, quebras de linha ou `;` separam as instruções. Fora de textos e expressões regulares, `#` inicia um comentário até o fim da linha.
+
+- **Sem padrão**, a ação é executada para todos os registros, como em `{ print $1 }`.
+- **Sem ação**, o AWK imprime o registro selecionado. Com o mesmo separador, `$2 >= 15` sozinho imprime `Arroz;25` e `Café;15`.
+
+### Registros, Campos e Separadores:
+
+| Elemento | Significado |
+| --- | --- |
+| `$0` | Registro atual completo. |
+| `$1`, `$2` etc. | Campos do registro, numerados a partir de 1. |
+| `NF` | Número de campos do registro atual. `$NF` acessa o último campo. |
+| `NR` | Número do registro atual, com contagem contínua entre arquivos. |
+| `FILENAME` | Nome do arquivo de entrada atual. |
+| `FS` | Separador de campos da entrada. `-F ';'` equivale a iniciar com `FS = ";"`. |
+| `RS` | Separador de registros da entrada. O padrão é a quebra de linha. |
+| `OFS` | Separador inserido entre os argumentos de `print` separados por vírgulas. O padrão é um espaço. |
+| `ORS` | Separador acrescentado ao final de cada `print`. O padrão é uma quebra de linha. |
+
+## Seleção por Padrão:
+
+| Padrão | Seleção em `produtos.txt`, com `-F ';'` |
+| --- | --- |
+| `/Arroz/` | Registros que contêm o trecho `Arroz` em qualquer posição. |
+| `$1 == "Arroz"` | Registros cujo primeiro campo é exatamente `Arroz`. |
+| `$1 ~ /^F/` | Produtos cujo nome começa com `F`. O operador `!~` inverte o teste. |
+| `$2 >= 10 && $2 < 20` | Compras de valor maior ou igual a 10 e menor que 20. |
+| `NR == 2, NR == 3` | Do segundo ao terceiro registro, incluindo ambos. |
+
+Comparações aceitam `==`, `!=`, `<`, `<=`, `>` e `>=`. Para combinar condições, `&&` exige que ambas sejam verdadeiras e `||` exige pelo menos uma verdadeira. Uma expressão regular isolada testa `$0`. Para procurar um trecho, escreva `/Arroz/`. A string isolada `"Arroz"` é uma condição verdadeira por ser um texto não vazio.
+
+Dois padrões separados por vírgula abrem e fecham um intervalo. Uma vez aberto, ele inclui os registros seguintes até encontrar o padrão final ou chegar ao fim da entrada. Depois de fechado, a busca pelo próximo início recomeça no registro seguinte.
+
+### Antes e Depois da Leitura:
+
+`BEGIN` executa uma ação antes do primeiro registro. `END` executa uma ação após o processamento completo da entrada. Entre esses momentos, uma variável pode acumular valores de vários registros. O programa `selecionar.awk` soma somente as compras de valor maior ou igual a 15:
 
 ```awk
 BEGIN {
@@ -1753,13 +1516,13 @@ BEGIN {
     print "Produto", "Valor"
 }
 
-$2 >= 10 {
+$2 >= 15 {
     print $1, $2
     total += $2
 }
 
 END {
-    print "Total", total
+    print "Total", total + 0
 }
 ```
 
@@ -1774,37 +1537,153 @@ Café | 15
 Total | 40
 ```
 
-`BEGIN` define os separadores e imprime o cabeçalho antes da leitura. Em cada linha, `$1` contém o produto e `$2`, seu valor; somente as que atendem a `$2 >= 10` executam a ação. `total` acumula esses valores entre os registros, e `END` imprime a soma após o fim da entrada. As vírgulas de `print` inserem `OFS` entre os itens, produzindo uma saída com separação diferente da entrada.
+`BEGIN` imprime o cabeçalho uma vez. A regra central seleciona dois registros e soma 25 e 15. Variáveis dispensam declaração e valem zero em contexto numérico ou texto vazio em contexto textual enquanto não recebem valor. A expressão `total + 0` também exibe um zero numérico se nenhuma compra passar pelo filtro.
+
+## Saída e Formatação:
+
+O `print` imprime o registro inteiro quando usado sozinho. Com argumentos separados por vírgulas, insere `OFS` entre eles e acrescenta `ORS` ao final. Para visualizar a diferença, compare as duas instruções aplicadas ao primeiro registro:
+
+```bash
+awk -F ';' -v OFS=' | ' 'NR == 1 { print $0; print $1, $2 }' produtos.txt
+# Arroz;25
+# Arroz | 25
+```
+
+No primeiro `print`, a linha ainda contém o separador original. No segundo, o AWK recebe dois argumentos e os separa com `OFS`. Se uma ação atribuir um novo valor a um campo, o AWK reconstruirá `$0` usando `OFS`:
+
+```bash
+awk -F ';' -v OFS=';' '$1 == "Café" { $2 += 2; print }' produtos.txt
+# Café;17
+```
+
+O `printf` permite definir o formato de cada valor (semelhante ao `printf` em C). Os espaços e a quebra de linha devem constar na string de formato.
+
+```bash
+awk -F ';' 'NR == 1 { printf "|%-10s|%8.2f|\n", $1, $2 }' produtos.txt
+# |Arroz     |   25.00|
+```
+
+`%-10s` alinha o nome à esquerda em pelo menos dez posições. `%8.2f` reserva pelo menos oito posições, alinha o número à direita e apresenta duas casas decimais. A largura é mínima, portanto um valor maior pode ultrapassá-la.
+
+| Formato | Apresentação |
+| --- | --- |
+| `%s` | Texto. A precisão em `%.3s`, por exemplo, limita a saída a três caracteres. |
+| `%d` | Número inteiro decimal. |
+| `%f` / `%e` | Número decimal / notação exponencial. A precisão define as casas após o separador decimal. |
+| `%g` | Forma decimal ou exponencial conforme a magnitude e a precisão, expressa em algarismos significativos. |
+| `%o` / `%x` | Número inteiro em octal / hexadecimal. |
+
+## Operadores e Funções:
+
+| Operadores | Operação |
+| --- | --- |
+| `+`, `-`, `*`, `/`, `%` | Soma, subtração, multiplicação, divisão e resto. |
+| `^` | Potenciação. O GNU AWK também aceita `**`. |
+| `=` | Atribuição. Para comparar igualdade, utiliza-se `==`. |
+| `+=`, `-=`, `*=`, `/=`, `%=` | Aplicam a operação e guardam o resultado na variável ou no campo. |
+| `++`, `--` | Incrementam ou decrementam uma unidade. |
+
+As funções embutidas podem ser chamadas tanto na condição quanto na ação. Por exemplo, `tolower` permite comparar os nomes em minúsculas e ainda imprimir a grafia original:
+
+```bash
+awk -F ';' 'tolower($1) == "arroz" { print $1, $2 }' produtos.txt
+# Arroz 25
+# Arroz 12
+```
+
+| Função | Resultado |
+| --- | --- |
+| `length(texto)` | Quantidade de caracteres. Sem argumento, `length()` usa `$0`. |
+| `int(n)` | Parte inteira, truncada em direção a zero. |
+| `index(texto, trecho)` | Posição da primeira ocorrência, contando a partir de 1. Retorna 0 se não encontrar. |
+| `substr(texto, início, tamanho)` | Até `tamanho` caracteres a partir da posição indicada. Sem o tamanho, segue até o fim. |
+| `split(texto, arranjo, separador)` | Divide o texto, guarda as partes em índices a partir de 1 e retorna a quantidade obtida. |
+| `tolower(texto)` / `toupper(texto)` | Cópia do texto em minúsculas / maiúsculas. |
 
 ## Estruturas de Controle:
 
-AWK utiliza **`if/else` para decisões** e **`while` e `for` para repetições**, com sintaxe semelhante à de C. As condições ficam entre parênteses; as chaves agrupam instruções e podem ser omitidas quando o corpo contém apenas uma. Os modelos abaixo ilustram a sintaxe:
+### Decisões com `if` e `else`:
 
-### `if` e `else`:
+O padrão seleciona **os registros para os quais a ação será executada**. Um `if` dentro da ação permite **escolher o que fazer com o registro atual**. Para classificar todas as compras, ambas as alternativas produzem uma saída:
 
-```text
-if (condição) {
-    instruções
-} else {
-    instruções
-}
+```bash
+awk -F ';' '{
+    if ($2 >= 15)
+        faixa = "15 ou mais"
+    else
+        faixa = "abaixo de 15"
+
+    print $1, "-", faixa
+}' produtos.txt
 ```
 
-### `while` e `for`:
-
 ```text
-while (condição) {
-    instruções
-}
-
-for (inicialização; condição; atualização) {
-    instruções
-}
+Arroz - 15 ou mais
+Feijão - abaixo de 15
+Café - 15 ou mais
+Arroz - abaixo de 15
 ```
 
-A forma `for (chave in arranjo)`, apresentada anteriormente, percorre arranjos associativos.
+A condição fica entre parênteses. Cada ramo aceita uma instrução ou um bloco de instruções entre chaves. O `print` está fora dos ramos e utiliza a classificação escolhida em qualquer um deles.
 
-> Como em C, `break` encerra o laço atual e `continue` ignora o restante da repetição, avançando para a próxima iteração.
+### Repetições com `for` e `while`:
+
+O AWK já percorre os registros da entrada. Um laço dentro da ação serve para repetir uma operação **durante o processamento do mesmo registro**. Para numerar os campos da primeira compra:
+
+```bash
+awk -F ';' 'NR == 1 {
+    for (i = 1; i <= NF; i++)
+        printf "Campo %d = %s\n", i, $i
+}' produtos.txt
+# Campo 1 = Arroz
+# Campo 2 = 25
+```
+
+Em `for (inicialização; condição; atualização)`, `i` começa em 1 e avança até `NF`. A expressão `$i` acessa o campo cujo número está em `i`.
+
+`while (condição)` repete o corpo enquanto o teste for verdadeiro. É útil quando a parada depende do conteúdo. Este comando procura o valor `15` entre os campos e imprime o primeiro registro correspondente:
+
+```bash
+awk -F ';' '{
+    i = 1
+    while (i <= NF && $i != "15")
+        i++
+
+    if (i <= NF) {
+        print "Registro", NR, "-", $0
+        exit
+    }
+}' produtos.txt
+# Registro 3 - Café;15
+```
+
+O contador recomeça em 1 para cada registro. Se ultrapassar `NF`, nenhum campo correspondeu. Se a busca encontrar o valor, `exit` encerra a leitura. Dentro de um laço, `break` encerra apenas esse laço e `continue` passa à próxima iteração.
+
+### Arranjos Associativos:
+
+Um arranjo associativo armazena valores identificados por **chaves**. Na soma anterior, `total` guardava um único resultado. Para calcular um total separado para cada produto, o nome pode ser a chave de `total[produto]`. Assim, as duas compras de arroz atualizam o mesmo elemento:
+
+```bash
+awk -F ';' '
+    { total[$1] += $2 }
+    END {
+        for (produto in total)
+            print produto, total[produto]
+    }
+' produtos.txt
+```
+
+Uma saída possível é:
+
+```text
+Arroz 37
+Feijão 8
+Café 15
+```
+
+Na primeira ocorrência de `Arroz`, o acumulador parte de zero e recebe 25. Na segunda, soma 12 ao valor guardado. Ao final da leitura, `for (produto in total)` percorre as **chaves existentes**, e `total[produto]` recupera o valor associado a cada uma. A ordem de percurso não é garantida.
+
+> Os índices podem ser fornecidos como texto ou número. Um índice numérico é convertido para texto, de modo que `dados[1]` e `dados["1"]` acessam o mesmo elemento.
 
 ---
 
