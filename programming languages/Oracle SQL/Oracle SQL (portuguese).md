@@ -31,11 +31,11 @@ Em um banco relacional, **tabelas** organizam registros em **linhas**, com suas 
 
 A arquitetura separa o que cada aplicação enxerga, a organização geral dos dados e seu armazenamento.
 
-| Nível                                   | Finalidade                                          | Exemplo                                                 |
-| --------------------------------------- | --------------------------------------------------- | ------------------------------------------------------- |
-| **VDL (*View Definition Language*)**    | Externo. Visão dos dados para cada público.         | RH consulta salários; o diretório interno mostra nomes. |
-| **DDL (*Data Definition Language*)**    | Conceitual. Estruturas, relações e regras do banco. | Funcionários vinculados a departamentos.                |
-| **SDL (*Storage Definition Language*)** | Interno. Armazenamento e estruturas de acesso.      | Arquivos e índices.                                     |
+| Nível | Finalidade | Exemplo |
+| --- | --- | --- |
+| **VDL (*View Definition Language*)** | Externo. Visão dos dados para cada público. | RH consulta salários; o diretório interno mostra nomes. |
+| **DDL (*Data Definition Language*)** | Conceitual. Estruturas, relações e regras do banco. | Funcionários vinculados a departamentos. |
+| **SDL (*Storage Definition Language*)** | Interno. Armazenamento e estruturas de acesso. | Arquivos e índices. |
 
 No Oracle, comandos de definição podem atender a mais de uma dessas necessidades.
 
@@ -43,6 +43,8 @@ No Oracle, comandos de definição podem atender a mais de uma dessas necessidad
 - **Independência lógica:** busca preservar as interfaces externas diante de mudanças na estrutura conceitual.
 
 ## Convenções e Exemplos:
+
+> Nos modelos de sintaxe, **elementos entre chaves indicam conteúdo a ser substituído** (como comandos, colunas, valores, etc.), e devem ser retiradas no uso real, salvo quando forem explicitamente apresentadas como parte da sintaxe. Quando um argumento também puder ser omitido, isso será explicado no texto. Os exemplos concretos já apresentam a forma usada no SGBD.
 
 Palavras-chave são escritas em maiúsculas por convenção. Nomes sem aspas duplas não diferenciam maiúsculas de minúsculas (a linguagem não é *case-sensitive*); textos usam aspas simples (`'Carlos'`) e identificadores delimitados usam aspas duplas (`"Nome Completo"`).
 
@@ -61,7 +63,7 @@ Palavras-chave são escritas em maiúsculas por convenção. Nomes sem aspas dup
 ## Tipos de Dados:
 
 | Tipo | Utilização |
-|---|---|
+| --- | --- |
 | `NUMBER(p,s)` | Número com precisão `p` e escala `s`; por exemplo, `NUMBER(8,2)` admite seis dígitos inteiros e dois decimais. |
 | `NUMBER(p)` | Equivale a `NUMBER(p,0)`, utilizado para inteiros de até `p` dígitos. |
 | `VARCHAR2(n)` | Texto de tamanho variável, até o limite indicado. |
@@ -103,13 +105,13 @@ Alterar o padrão não substitui os dados existentes. Na declaração comum de `
 
 As **restrições** (*constraints*) definem os valores e relacionamentos aceitos pela tabela.
 
-| Restrição     | Regra                                                                             |
-| ------------- | --------------------------------------------------------------------------------- |
-| `PRIMARY KEY` | Identificador único e não nulo da linha.                                          |
-| `FOREIGN KEY` | Referência a uma chave primária ou única.                                         |
-| `UNIQUE`      | Impede valores repetidos; uma coluna com essa restrição pode conter vários nulos. |
-| `NOT NULL`    | Exige preenchimento.                                                              |
-| `CHECK`       | Rejeita valores que tornem a condição falsa.                                      |
+| Restrição | Regra |
+| --- | --- |
+| `PRIMARY KEY` | Identificador único e não nulo da linha. |
+| `FOREIGN KEY` | Referência a uma chave primária ou única. |
+| `UNIQUE` | Impede valores repetidos; uma coluna com essa restrição pode conter vários nulos. |
+| `NOT NULL` | Exige preenchimento. |
+| `CHECK` | Rejeita valores que tornem a condição falsa. |
 
 Uma **chave composta** utiliza a combinação das colunas: `PRIMARY KEY (a, b)` aceita `(1,2)` e `(1,3)`, mas não duas ocorrências de `(1,2)`. Nenhuma de suas colunas pode ser nula.
 
@@ -131,11 +133,11 @@ Uma **chave composta** utiliza a combinação das colunas: `PRIMARY KEY (a, b)` 
 
 ### Dependências e Exclusão:
 
-| Opção da chave estrangeira | Ao excluir uma linha pai com dependentes                       |
-| -------------------------- | -------------------------------------------------------------- |
-| Sem `ON DELETE`            | Rejeita a exclusão.                                            |
-| `ON DELETE CASCADE`        | Exclui as linhas filhas correspondentes.                       |
-| `ON DELETE SET NULL`       | Define a referência como nula, se as demais regras permitirem. |
+| Opção da chave estrangeira | Ao excluir uma linha pai com dependentes |
+| --- | --- |
+| Sem `ON DELETE` | Rejeita a exclusão. |
+| `ON DELETE CASCADE` | Exclui as linhas filhas correspondentes. |
+| `ON DELETE SET NULL` | Define a referência como nula, se as demais regras permitirem. |
 
 - `DROP TABLE {tabela} CASCADE CONSTRAINTS` - Remove a tabela e as restrições referenciais que dependem de suas chaves; preserva as tabelas filhas.
 
@@ -204,7 +206,7 @@ Podem ser adicionados sufixos ao `SELECT` para formatar os dados e controlar a f
 - `FETCH FIRST {n} ROWS ONLY` - Limita a quantidade de linhas retornadas.
 
 | Operador | Utilização |
-|---|---|
+| --- | --- |
 | `=`, `<>` ou `!=` | Igual ou diferente. |
 | `<`, `>`, `<=`, `>=` | Comparações de ordem. |
 | `AND`, `OR`, `NOT` | Combinação ou negação de condições. |
@@ -344,7 +346,7 @@ DROP TABLE Historico;
 ## Formas de Remoção:
 
 | Comando | Efeito | `ROLLBACK` antes da confirmação |
-|---|---|---|
+| --- | --- | --- |
 | `DELETE FROM {tabela}` | Exclui linhas; aceita `WHERE`. | Pode desfazer. |
 | `TRUNCATE TABLE {tabela}` | Esvazia uma tabela comum por DDL; não aceita filtro. | Não desfaz. |
 | `DROP TABLE {tabela}` | Remove a tabela. | Não desfaz. |
@@ -800,7 +802,7 @@ O corpo PL/SQL fica entre `BEGIN` e `END`. Declarações opcionais ficam em `DEC
 ## Valores da Linha:
 
 | Evento | `:OLD` | `:NEW` |
-|---|---|---|
+| --- | --- | --- |
 | `INSERT` | Campos nulos. | Nova linha. |
 | `UPDATE` | Valores anteriores. | Valores após a atualização. |
 | `DELETE` | Linha excluída. | Campos nulos. |
@@ -910,10 +912,10 @@ O *schema* agrupa os objetos de um usuário. `usuario.Funcionario` identifica su
 
 `SHOW` e `SET` acima são comandos do cliente, sem `;`. Os exemplos utilizam `localhost:1521/FREEPDB1`; ajuste esses valores à instalação.
 
-| Acesso    | Utilização                                                                 |
-| --------- | -------------------------------------------------------------------------- |
-| Padrão    | Privilégios concedidos ao usuário e papéis habilitados.                    |
-| `SYSDBA`  | Administração ampla do banco.                                              |
+| Acesso | Utilização |
+| --- | --- |
+| Padrão | Privilégios concedidos ao usuário e papéis habilitados. |
+| `SYSDBA` | Administração ampla do banco. |
 | `SYSOPER` | Operações administrativas mais restritas, como iniciar e desligar o banco. |
 
 `SYSDBA` e `SYSOPER` são privilégios administrativos especiais. `SYS` exige conexão administrativa apropriada; `SYSTEM` pode operar em conexão padrão com seus privilégios. Utilize um usuário próprio para os exemplos.
@@ -970,7 +972,7 @@ REVOKE UPDATE ON Funcionario FROM outro_usuario;
 ## Consultas Administrativas:
 
 | Fonte | Informação |
-|---|---|
+| --- | --- |
 | `USER_TABLES` | Tabelas do próprio usuário. |
 | `USER_OBJECTS` | Objetos do próprio usuário. |
 | `ALL_USERS` | Usuários visíveis no contêiner. |

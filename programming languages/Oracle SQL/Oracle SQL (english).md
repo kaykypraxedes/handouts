@@ -25,14 +25,14 @@ A **database** brings together organized information; a **Database Management Sy
 
 In a relational database, **tables** organize records into **rows**, with their information distributed across **columns**. An employee table might contain an employee ID, name, and department.
 
-**SQL** allows you to define structures, query data, and modify data. It is declarative: it specifies the desired result, such as “employees in department 10”, without describing how to traverse the records. **PL/SQL** adds variables, conditions, and programming blocks, used here in *triggers*.
+**SQL** allows you to define structures, query data, and modify data. It is declarative: it specifies the desired result, such as “employees in department 10”, without describing how to traverse the records. **PL/SQL** adds variables, conditions, and programming blocks, used here in triggers.
 
 ## Three-Schema Architecture:
 
 This architecture separates what each application sees, the overall organization of the data, and how the data is stored.
 
 | Level | Purpose | Example |
-| --------------------------------------- | --------------------------------------------------- | ------------------------------------------------------- |
+| --- | --- | --- |
 | **VDL (View Definition Language)** | External. A view of the data for each audience. | HR queries salaries; the internal directory shows names. |
 | **DDL (Data Definition Language)** | Conceptual. Database structures, relationships, and rules. | Employees linked to departments. |
 | **SDL (Storage Definition Language)** | Internal. Storage and access structures. | Files and indexes. |
@@ -44,7 +44,9 @@ In Oracle, definition commands can address more than one of these needs.
 
 ## Conventions and Examples:
 
-Keywords are written in uppercase by convention. Names without double quotes do not distinguish between uppercase and lowercase (the language is not *case-sensitive*); text uses single quotes (`'Carlos'`), and delimited identifiers use double quotes (`"Nome Completo"`).
+> In the syntax models, **elements enclosed in braces indicate content to be replaced** (such as commands, columns, values, etc.), and should be removed in actual use, unless they are explicitly presented as part of the syntax. When an argument can also be omitted, this will be explained in the text. The concrete examples already present the form used in the DBMS.
+
+Keywords are written in uppercase by convention. Names without double quotes do not distinguish between uppercase and lowercase (the language is not case-sensitive); text uses single quotes (`'Carlos'`), and delimited identifiers use double quotes (`"Full Name"`).
 
 - `-- {comment}` - Comments out the rest of the line.
 
@@ -61,7 +63,7 @@ Keywords are written in uppercase by convention. Names without double quotes do 
 ## Data Types:
 
 | Type | Usage |
-|---|---|
+| --- | --- |
 | `NUMBER(p,s)` | Number with precision `p` and scale `s`; for example, `NUMBER(8,2)` allows six integer digits and two decimal digits. |
 | `NUMBER(p)` | Equivalent to `NUMBER(p,0)`, used for integers of up to `p` digits. |
 | `VARCHAR2(n)` | Variable-length text, up to the specified limit. |
@@ -101,10 +103,10 @@ For text, `VARCHAR2(30 CHAR)` limits characters, and `VARCHAR2(30 BYTE)` limits 
 
 Changing the default does not replace existing data. With an ordinary `DEFAULT` declaration, explicitly supplying `NULL` does not apply the default.
 
-***Constraints*** define the values and relationships accepted by the table.
+**Constraints** define the values and relationships accepted by the table.
 
 | Constraint | Rule |
-| ------------- | --------------------------------------------------------------------------------- |
+| --- | --- |
 | `PRIMARY KEY` | Unique, non-null identifier for the row. |
 | `FOREIGN KEY` | Reference to a primary or unique key. |
 | `UNIQUE` | Prevents duplicate values; a column with this constraint can contain multiple nulls. |
@@ -132,7 +134,7 @@ A **composite key** uses the combination of columns: `PRIMARY KEY (a, b)` accept
 ### Dependencies and Deletion:
 
 | Foreign key option | When deleting a parent row with dependents |
-| -------------------------- | -------------------------------------------------------------- |
+| --- | --- |
 | Without `ON DELETE` | Rejects the deletion. |
 | `ON DELETE CASCADE` | Deletes the corresponding child rows. |
 | `ON DELETE SET NULL` | Sets the reference to null, if the other rules allow it. |
@@ -204,7 +206,7 @@ Additional parts can be added to `SELECT` to format the data and control how it 
 - `FETCH FIRST {n} ROWS ONLY` - Limits the number of rows returned.
 
 | Operator | Usage |
-|---|---|
+| --- | --- |
 | `=`, `<>` or `!=` | Equal or not equal. |
 | `<`, `>`, `<=`, `>=` | Ordering comparisons. |
 | `AND`, `OR`, `NOT` | Combination or negation of conditions. |
@@ -344,14 +346,14 @@ DROP TABLE Historico;
 ## Removal Methods:
 
 | Command | Effect | `ROLLBACK` before commit |
-|---|---|---|
+| --- | --- | --- |
 | `DELETE FROM {table}` | Deletes rows; accepts `WHERE`. | Can undo. |
 | `TRUNCATE TABLE {table}` | Empties an ordinary table through DDL; does not accept a filter. | Cannot undo. |
 | `DROP TABLE {table}` | Removes the table. | Cannot undo. |
 
 ## Identifier Generation:
 
-A ***sequence*** generates numbers that can identify records. Used numbers are not returned by `ROLLBACK`, so gaps can occur.
+A **sequence** generates numbers that can identify records. Used numbers are not returned by `ROLLBACK`, so gaps can occur.
 
 - `CREATE SEQUENCE {name} START WITH {start} INCREMENT BY {step}` - Creates the sequence.
 
@@ -581,7 +583,7 @@ FROM Funcionario;
 
 ## Joins:
 
-*Joins* combine rows according to a condition. Table aliases identify the source of columns: in `Funcionario F`, `F.mat` belongs to that source.
+Joins combine rows according to a condition. Table aliases identify the source of columns: in `Funcionario F`, `F.mat` belongs to that source.
 
 - `{A} JOIN {B} ON {condition}` - Inner join: keeps combinations that satisfy the condition; equivalent to `INNER JOIN`.
 
@@ -629,7 +631,7 @@ In `ON`, the filter limits matches and keeps all departments. Moving it to `WHER
 
 ### Self Join:
 
-A *self join* uses the same table in different roles, such as employee and supervisor.
+A self join uses the same table in different roles, such as employee and supervisor.
 
 ```sql
 ALTER TABLE Funcionario ADD mat_supervisor NUMBER(5)
@@ -648,7 +650,7 @@ ALTER TABLE Funcionario DROP COLUMN mat_supervisor;
 
 ## Subqueries:
 
-A *subquery* is a `SELECT` inside another command. It can provide a value, a list, or a source of rows; it is correlated when it uses a column from the outer query.
+A subquery is a `SELECT` inside another command. It can provide a value, a list, or a source of rows; it is correlated when it uses a column from the outer query.
 
 - `({SELECT})` in an expression - Provides a single value: one column and at most one row. With no rows, returns `NULL`; with more than one, an error occurs.
 
@@ -729,7 +731,7 @@ ORDER BY dept_id; -- 60.
 
 # 7. Views
 
-A ***view*** is a stored query used as a virtual table. It works as a window onto the data: it can simplify queries and expose only the necessary rows and columns.
+A **view** is a stored query used as a virtual table. It works as a window onto the data: it can simplify queries and expose only the necessary rows and columns.
 
 ## Commands:
 
@@ -775,7 +777,7 @@ DROP VIEW vw_Depto10;
 
 # 8. Triggers
 
-A ***trigger*** runs automatically in response to an event. The examples use DML operations to validate dates, calculate a column, and block insertions.
+A **trigger** runs automatically in response to an event. The examples use DML operations to validate dates, calculate a column, and block insertions.
 
 ## Structure and Events:
 
@@ -795,12 +797,12 @@ The PL/SQL body goes between `BEGIN` and `END`. Optional declarations go in `DEC
 
 - `RAISE_APPLICATION_ERROR({code}, {message})` - Raises an application error; codes range from `-20000` to `-20999`.
 
-`AFTER` does not mean after `COMMIT`: ordinary DML triggers participate in the same transaction as the command. Simple rules, such as required values and uniqueness, continue to be expressed directly through *constraints*.
+`AFTER` does not mean after `COMMIT`: ordinary DML triggers participate in the same transaction as the command. Simple rules, such as required values and uniqueness, continue to be expressed directly through constraints.
 
 ## Row Values:
 
 | Event | `:OLD` | `:NEW` |
-|---|---|---|
+| --- | --- | --- |
 | `INSERT` | Null fields. | New row. |
 | `UPDATE` | Previous values. | Values after the update. |
 | `DELETE` | Deleted row. | Null fields. |
@@ -896,9 +898,9 @@ Dropping a table also removes its associated triggers. Cleanup for the tables in
 
 ## Environment and Connection:
 
-An **instance** brings together memory and processes that access the database. In a *multitenant* installation, the **CDB** contains pluggable databases, the **PDBs**, which share infrastructure. The **service** identifies the connection destination.
+An **instance** brings together memory and processes that access the database. In a multitenant installation, the **CDB** contains pluggable databases, the **PDBs**, which share infrastructure. The **service** identifies the connection destination.
 
-A *schema* groups a user's objects. `usuario.Funcionario` identifies that user's table; another user can have a table with the same name. The prefix selects the object but does not grant access to it.
+A schema groups a user's objects. `usuario.Funcionario` identifies that user's table; another user can have a table with the same name. The prefix selects the object but does not grant access to it.
 
 - `sqlplus {user}@//{host}:{port}/{service}` - Opens a connection from the terminal, prompting for the password.
 
@@ -911,7 +913,7 @@ A *schema* groups a user's objects. `usuario.Funcionario` identifies that user's
 `SHOW` and `SET` above are client commands, without `;`. The examples use `localhost:1521/FREEPDB1`; adjust these values to your installation.
 
 | Access | Usage |
-| --------- | -------------------------------------------------------------------------- |
+| --- | --- |
 | Standard | Privileges granted to the user and enabled roles. |
 | `SYSDBA` | Broad database administration. |
 | `SYSOPER` | More restricted administrative operations, such as starting and shutting down the database. |
@@ -930,7 +932,7 @@ A *schema* groups a user's objects. `usuario.Funcionario` identifies that user's
 
 - `DROP USER {user} CASCADE` - Removes the user and their objects.
 
-A *tablespace* organizes storage. Permission to create tables does not remove the need for the quota required to allocate them.
+A tablespace organizes storage. Permission to create tables does not remove the need for the quota required to allocate them.
 
 ## Permissions:
 
@@ -946,7 +948,7 @@ A *tablespace* organizes storage. Permission to create tables does not remove th
 
 ### Preparing a User:
 
-Run as an administrator connected to the **desired PDB**, with the `USERS` *tablespace* available. Then connect as `usuario` to prepare the scenario in the appendix.
+Run as an administrator connected to the **desired PDB**, with the `USERS` tablespace available. Then connect as `usuario` to prepare the scenario in the appendix.
 
 ```sql
 CREATE USER usuario IDENTIFIED BY "Troque_Esta_Senha_2026"
@@ -970,7 +972,7 @@ REVOKE UPDATE ON Funcionario FROM outro_usuario;
 ## Administrative Queries:
 
 | Source | Information |
-|---|---|
+| --- | --- |
 | `USER_TABLES` | Current user's tables. |
 | `USER_OBJECTS` | Current user's objects. |
 | `ALL_USERS` | Users visible in the container. |
