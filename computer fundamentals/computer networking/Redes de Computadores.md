@@ -472,12 +472,12 @@ Uma **confirmação** informa o que já foi recebido. Um **crédito** informa qu
 
 Considere um notebook que precisa imprimir um documento e, depois, enviá-lo a um servidor da faculdade. A impressora está na mesma rede local. O servidor está em outra rede, acessível por um roteador. Como o notebook decide a quem entregar cada transmissão?
 
-A **camada de Rede** utiliza endereços lógicos para identificar as interfaces de origem e destino e encaminha os **pacotes** entre redes. Na Internet, essa função é desempenhada pelo **IP** (*Internet Protocol*). O computador consulta suas rotas para decidir se pode entregar o pacote diretamente ao destino ou se deve enviá-lo a um equipamento intermediário, o **próximo salto**.
+A **camada de Rede** utiliza endereços lógicos para identificar as interfaces de origem e destino e encaminha **pacotes** entre redes. Na Internet, essa função é desempenhada pelo **IP** (*Internet Protocol*). O computador consulta suas rotas para decidir se pode entregar o pacote diretamente ao destino ou se deve enviá-lo a um equipamento intermediário, o **próximo salto**.
 
 ![Rede de interconexão entre dispositivos](images/screenshot039.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 261.*
 
-Um **roteador** possui interfaces em diferentes redes. Ao receber um pacote, ele consulta o endereço IP de destino, escolhe uma saída e prepara o pacote para o enlace seguinte. Cada roteador faz sua própria consulta. Assim, o notebook pode alcançar o servidor conhecendo apenas o primeiro roteador do percurso.
+Um **roteador** interliga redes por meio de suas interfaces. Ao receber um pacote, consulta o endereço IP de destino, escolhe uma saída e prepara a transmissão pelo enlace seguinte. Cada roteador faz sua própria consulta. Assim, o notebook pode alcançar o servidor conhecendo apenas o primeiro roteador do percurso.
 
 ![Roteadores na rede de interconexão](images/screenshot040.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 262.*
@@ -513,7 +513,7 @@ Os dados são enviados em pacotes, que compartilham os enlaces com pacotes de ou
 Uma rede de pacotes pode tomar a decisão de encaminhamento de duas maneiras:
 
 - **Datagrama:** Cada pacote traz o endereço de destino e é encaminhado de acordo com a tabela disponível em cada roteador. É o modelo do IP. Pacotes de uma comunicação podem seguir pelo mesmo caminho enquanto as rotas forem estáveis ou percorrer caminhos diferentes após uma mudança. O IP oferece entrega de **melhor esforço**, sem garantia de entrega ou de ordem.
-- **Circuito virtual:** Antes do envio, a rede estabelece um caminho lógico e registra nos equipamentos como encaminhar os pacotes daquele circuito. Durante a comunicação, um identificador permite consultar essa associação. Vários circuitos virtuais podem compartilhar o mesmo enlace físico, e a reserva de capacidade depende do serviço oferecido.
+- **Circuito virtual:** Antes do envio, a rede estabelece um caminho lógico e registra nos equipamentos como encaminhar os pacotes daquele circuito. Durante a comunicação, um identificador permite consultar essa associação. Vários circuitos virtuais podem compartilhar o mesmo enlace físico, e a reserva de capacidade depende do serviço oferecido. Esse modelo é utilizado por ATMs, por exemplo.
 
 ![Caminhos em uma rede com comutação por pacotes](images/screenshot003.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 41.*
@@ -522,15 +522,19 @@ Uma rede de pacotes pode tomar a decisão de encaminhamento de duas maneiras:
 
 Um endereço IP identifica uma **interface de rede**. Um notebook conectado por cabo e por Wi-Fi pode ter um endereço em cada interface. Uma mesma interface também pode possuir endereços IPv4 e IPv6 ao mesmo tempo.
 
-O **IPv4** utiliza 32 bits, geralmente escritos como quatro números decimais separados por pontos. O **IPv6** utiliza 128 bits, organizados em grupos hexadecimais. 
+O **IPv4** utiliza 32 bits, geralmente escritos como quatro números decimais separados por pontos. O **IPv6** utiliza 128 bits, organizados em grupos hexadecimais.
 
 O endereço de uma interface pode ser interpretado em duas partes. O **identificador de rede** (*NetID*) é o prefixo comum às interfaces da mesma sub-rede. O **identificador de host** (*HostID*) distingue a interface dentro dessa sub-rede. O comprimento do prefixo indica onde termina uma parte e começa a outra.
 
 Por exemplo, em `192.168.10.34/27`, os primeiros 27 bits identificam a sub-rede `192.168.10.32/27`. Os cinco bits restantes identificam a interface dentro dela. No último octeto, `34` corresponde a `00100010` em binário. Os três primeiros bits (`001`) ainda pertencem ao prefixo, e os cinco últimos (`00010`) formam o HostID.
 
-A atribuição de endereços pode ser **estática**, quando configurada diretamente, ou **dinâmica**, como ocorre no IPv4 quando o computador recebe sua configuração por DHCP. Endereços privados, como os do exemplo, podem ser reutilizados em redes independentes. Ao acessar a Internet por IPv4, essas redes frequentemente usam **NAT** para traduzir os endereços na saída.
+### Atribuição de Endereços:
 
-> No Linux, `ip a` permite observar duas camadas na mesma interface: `link/ether` mostra o endereço de enlace, enquanto `inet` e `inet6` mostram os endereços IPv4 e IPv6 com seus prefixos. A leitura da saída está em A.2.1.
+O endereço pode ser configurado **manualmente** na interface ou recebido **dinamicamente**. Em redes IPv4, é comum que um servidor **DHCP** (*Dynamic Host Configuration Protocol*) forneça o endereço, a máscara e outras informações, como o gateway padrão.
+
+- **Concessão:** O notebook recebe um endereço por determinado período e pode renovar a concessão para continuar usando-o. Quando ela expira, o servidor pode voltar a oferecer o endereço.
+- **Reserva:** O administrador pode associar um endereço a um cliente identificado. A impressora, por exemplo, continua usando DHCP, mas recebe sempre o mesmo IP, facilitando sua localização.
+- **Conflito de IP:** Se alguém configurar manualmente em outro equipamento o endereço que a impressora já utiliza na mesma sub-rede, ambos podem responder pelo mesmo IP. O notebook pode acabar enviando os dados ao equipamento errado, e o acesso à impressora pode ficar intermitente.
 
 ### Endereçamento por Classes e CIDR:
 
@@ -548,7 +552,7 @@ No modelo histórico de **endereçamento por classes**, os bits iniciais do ende
 
 Considere uma organização com **500 interfaces**. Uma rede classe C oferecia 254 endereços de host utilizáveis. Uma classe B oferecia 65.534, reservando muito mais endereços que o necessário. Receber duas redes classe C reduziria o desperdício, mas cada rede poderia exigir uma entrada própria nas tabelas de roteamento.
 
-O **CIDR** (*Classless Inter-Domain Routing*) tornou explícito o tamanho do prefixo na alocação de blocos e no anúncio de rotas. Nesse exemplo, um bloco `/23` oferece 512 endereços, dos quais 510 podem ser atribuídos a interfaces em uma sub-rede IPv4 convencional. Além de permitir blocos mais adequados à demanda, o CIDR permite **agregar rotas**: redes contíguas e alinhadas podem ser anunciadas por um único prefixo quando compartilham o mesmo encaminhamento.
+O **CIDR** (*Classless Inter-Domain Routing*) tornou explícito o tamanho do prefixo na alocação de blocos e no anúncio de rotas. Nesse exemplo, um bloco `/23` oferece 512 endereços, dos quais 510 podem ser atribuídos a interfaces em uma sub-rede IPv4 convencional. O CIDR também permite **agregar rotas**. Redes contíguas e alinhadas podem ser anunciadas por um único prefixo quando compartilham o mesmo encaminhamento. A.2.2 mostra como verificar o alinhamento.
 
 ### Exemplo de uma Sub-rede IPv4:
 
@@ -563,18 +567,15 @@ Com `/27`, cada bloco contém $2^5 = 32$ endereços. A máscara correspondente �
 | ***Broadcast* da sub-rede** | `192.168.10.63` | Endereço de difusão desse bloco IPv4. |
 | **Servidor** | `192.168.10.70` | Pertence ao bloco seguinte, `192.168.10.64/27`. |
 
-Embora os três primeiros números sejam iguais, a impressora e o servidor estão em sub-redes diferentes. É o comprimento do prefixo que permite fazer essa distinção. A configuração do endereço e do prefixo pode ser **estática**, informada diretamente, ou **dinâmica**, como ocorre no IPv4 quando o computador recebe sua configuração por DHCP.
+Embora os três primeiros números sejam iguais, a impressora e o servidor estão em sub-redes diferentes. É o comprimento do prefixo que permite fazer essa distinção.
 
-O endereçamento por prefixos também permite **agregar rotas**. Por exemplo, `192.168.10.0/27` e `192.168.10.32/27` formam, juntos, o bloco `192.168.10.0/26`. Se ambos puderem ser alcançados pela mesma direção, outro roteador pode representá-los por uma única rota. Essa organização por prefixos de comprimento variável é a base do **CIDR** (*Classless Inter-Domain Routing*).
-
-![Agregação de rotas por prefixo](images/screenshot043.png)<br>
-*Fonte: Elaborado pelo autor com auxílio do ChatGPT, 2026.*
+Os endereços do laboratório são **privados** e podem ser reutilizados em redes independentes. A escassez de IPv4 públicos motivou o uso amplo da **tradução de endereços de rede** (*Network Address Translation*, NAT). Em casa, por exemplo, o notebook e o celular podem acessar a Internet pelo mesmo IPv4 público do roteador. Na modalidade mais comum, o roteador também traduz portas e registra as associações para entregar cada resposta ao dispositivo correto. A.2.4 acompanha uma dessas conexões na ida e na volta.
 
 ## Encaminhamento e Próximo Salto:
 
 Uma **tabela de rotas** associa redes de destino a interfaces de saída. Quando o destino precisa ser alcançado por um roteador, a rota também indica o **próximo salto**.
 
-No laboratório, considere que o notebook possui apenas duas rotas: uma para a rede diretamente conectada `192.168.10.32/27` e uma **rota padrão** pelo roteador `192.168.10.33`.
+No laboratório, considere que o notebook possui apenas duas rotas para o encaminhamento do exemplo: uma para a rede diretamente conectada `192.168.10.32/27` e uma **rota padrão** pelo roteador `192.168.10.33`.
 
 | Destino do pacote | Decisão do notebook | Destino do quadro local |
 | --- | --- | --- |
@@ -583,7 +584,7 @@ No laboratório, considere que o notebook possui apenas duas rotas: uma para a r
 
 Quando mais de uma rota corresponde ao destino, prevalece o **prefixo mais longo**, que descreve o bloco mais específico. A rota padrão tem prefixo de comprimento zero (`0.0.0.0/0` em IPv4 ou `::/0` em IPv6) e atende aos destinos sem correspondência mais específica. O roteador indicado por ela é o **gateway padrão**.
 
-Depois de escolher o próximo salto, o notebook precisa descobrir seu endereço de enlace. Em uma rede Ethernet com IPv4, essa associação é feita por **ARP**. Para imprimir, o notebook procura o MAC de `.50`. Para enviar ao servidor `.70`, procura o MAC de `.33`. O endereço IP de destino do pacote continua sendo o do servidor. Em IPv6, a resolução do endereço de enlace faz parte da **descoberta de vizinhos** (*Neighbor Discovery*).
+Depois de escolher o próximo salto, o notebook precisa descobrir seu endereço de enlace. No laboratório, essa associação é feita por **ARP**. Para imprimir, o notebook procura o MAC de `.50`. Para enviar ao servidor `.70`, procura o MAC de `.33`. O endereço IP de destino do pacote continua sendo o do servidor. Em IPv6, a resolução do endereço de enlace faz parte da **descoberta de vizinhos** (*Neighbor Discovery*).
 
 > A tabela de rotas responde “por onde envio este pacote?”. A tabela de vizinhos responde “qual endereço de enlace uso para entregá-lo no próximo salto?”.
 
@@ -595,30 +596,81 @@ O **encaminhamento** acontece quando chega um pacote e o equipamento escolhe por
 
 | Origem | Como a rota aparece | Exemplo |
 | --- | --- | --- |
-| **Rede diretamente conectada** | O sistema reconhece um prefixo como alcançável pela própria interface. | A configuração `192.168.10.34/27` normalmente cria uma rota local para `192.168.10.32/27`. |
+| **Rede diretamente conectada** | O sistema reconhece um prefixo como alcançável pela própria interface. | A configuração `192.168.10.34/27` normalmente cria uma rota para `192.168.10.32/27` pela interface do notebook. |
 | **Rota estática** | Um administrador configura o destino e a saída. | Encaminhar `192.168.10.64/27` pelo roteador `.62`. |
-| **Rota dinâmica** | Roteadores trocam informações e atualizam os caminhos conforme o protocolo utilizado. | Um roteador aprende que uma rede passou a ser alcançável por outro vizinho após uma falha. |
+| **Rota dinâmica** | Roteadores trocam informações e atualizam os caminhos conforme o protocolo utilizado. | Após uma falha, um roteador aprende que a rede passou a ser alcançável por outro vizinho. |
 
-Três termos descrevem partes diferentes dessa decisão. A **métrica** mede o custo de um caminho, como a quantidade de saltos. O **algoritmo** usa as informações disponíveis para determinar os caminhos. O **protocolo** define as mensagens e as regras que os roteadores seguem para trocar e atualizar essas informações.
+### Métricas e Escolha de Caminhos:
 
-### Vetor de Distância e Estado de Enlace:
+O **protocolo** define como os roteadores trocam informações. O **algoritmo** usa essas informações para calcular caminhos. A **métrica** expressa o critério de comparação. Um caminho de dois saltos, por exemplo, pode atravessar um enlace lento e levar mais tempo que outro de três. A escolha depende do que o protocolo mede.
 
-Imagine que o roteador A alcança uma rede passando por B. Se um enlace adiante falhar, como A descobrirá uma alternativa? Duas estratégias diferem principalmente pelo que A aprende dos outros roteadores.
+| Métrica ou característica | O que representa |
+| --- | --- |
+| **Número de saltos** | Quantos saltos há até o destino. |
+| **Capacidade e carga** | A taxa de transmissão que o enlace comporta e quanto dessa capacidade está em uso. |
+| **Atraso** | O tempo necessário para atravessar um enlace ou caminho. |
+| **Taxa de erro** | A frequência de erros de transmissão. |
+| **Disponibilidade** | A parcela do tempo em que o enlace permanece operacional. |
+| **Custo do enlace** | Um valor configurado pelo administrador ou calculado pelo protocolo. Com custos aditivos, somam-se os valores dos enlaces do caminho. |
 
-| Estratégia | O que cada roteador conhece | Como escolhe o caminho |
-| --- | --- | --- |
-| **Vetor de distância** | Os destinos e custos anunciados pelos vizinhos. | Soma o custo de chegar ao vizinho ao custo que ele anunciou para o destino. Compara as alternativas e escolhe o próximo salto. O RIP é um exemplo. |
-| **Estado de enlace** | Informações sobre enlaces e custos distribuídas pelos roteadores da área. | Monta um mapa da topologia e calcula caminhos a partir de si mesmo. O OSPF utiliza essa abordagem e o algoritmo de Dijkstra. |
+Além de escolher rotas adequadas, um algoritmo precisa reagir a mudanças. Quando um cabo se rompe, interessa saber quanto tempo leva até os roteadores estabilizarem suas rotas. Esse processo é a **convergência**. Também são desejáveis a **robustez** diante de falhas e informações atrasadas, a **escalabilidade** com o crescimento da rede e o baixo consumo de memória, processamento e tráfego de controle.
 
-![Rede de interconexão utilizada no exemplo de roteamento](images/screenshot047.png)<br>
+### Classificações do Roteamento:
+
+| Critério | Alternativas |
+| --- | --- |
+| **Atualização** | **Estático** ou **dinâmico**, conforme a forma de manutenção das rotas descrita em *Origem das Rotas*. |
+| **Organização** | **Plano:** o domínio opera sem subdivisão hierárquica. **Hierárquico:** a rede é organizada em áreas ou domínios, permitindo resumir informações entre eles. |
+| **Informação disponível** | **Local ou parcial:** o roteador se orienta pelas informações dos vizinhos. **Global:** o cálculo utiliza o mapa da topologia do domínio ou da área. |
+| **Local do cálculo** | **Centralizado:** uma entidade calcula as rotas para os equipamentos. **Distribuído:** os roteadores participam do cálculo. |
+
+Os critérios podem ser combinados. No estado de enlace, por exemplo, cada roteador pode ter um **mapa global da área** e calcular suas próprias rotas de forma **distribuída**.
+
+### Vetor de Distância:
+
+Cada roteador anuncia aos vizinhos os destinos que conhece e o custo para alcançá-los. Ao receber um anúncio, soma o custo até o vizinho ao custo anunciado. Assim, A pode descobrir um caminho até E sabendo quanto custa chegar a B e qual distância B anuncia até E.
+
+![Rede utilizada no exemplo de vetor de distância](images/screenshot047.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 301.*
 
-No vetor de distância, se B deixa de alcançar o destino, A precisa receber a atualização ou perceber que a informação expirou. No estado de enlace, a mudança do enlace é anunciada, permitindo aos roteadores recalcular seus caminhos. Até que as atualizações se propaguem, alguns equipamentos podem continuar usando informações antigas, provocando perdas ou ciclos temporários.
+Na figura, cada enlace tem custo 1. A tabela acompanha as informações disponíveis em A.
 
-![Rede de interconexão após a falha de um enlace](images/screenshot048.png)<br>
+| Etapa | O que acontece | O que A sabe |
+| --- | --- | --- |
+| **T0 — Inicialização** | Cada roteador começa com sua própria entrada. | Chegar a A custa 0. |
+| **T1 — Vizinhos** | Os roteadores identificam seus enlaces diretos. | B e D estão a custo 1. |
+| **T2 — Troca de vetores** | Os vizinhos anunciam os destinos que alcançam. | B anuncia E a custo 1. A calcula `1 + 1 = 2` até E por B. D também oferece uma rota de custo 2 até E. |
+| **T3 — Convergência** | Novas trocas mantêm os menores custos encontrados. | A pode alcançar E por B ou por D. Para acompanhar a falha, considere que escolheu B no desempate. |
+
+**O que acontece quando o enlace A–B falha?** O enlace C1 fica indisponível para todos no mesmo instante, mas a notícia leva tempo para alcançar cada roteador.
+
+![Rede após a falha do enlace C1 entre A e B](images/screenshot048.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 305.*
 
-A **convergência** ocorre quando os roteadores se ajustam à nova situação e as rotas se estabilizam. Um caminho alternativo só ajuda se estiver disponível e se os equipamentos conseguirem passar a utilizá-lo.
+| Etapa | O que muda | O que A registra |
+| --- | --- | --- |
+| **T0 — Detecção** | A e B detectam a falha e invalidam as rotas selecionadas que dependiam de C1. | As entradas para B e E passam a custo `∞`. O enlace direto até D continua válido. |
+| **T1 — Propagação** | Os vizinhos recebem os anúncios e reavaliam suas próprias entradas. | Nesta etapa do exemplo, A ainda registra `∞` para B e E. |
+| **T2 — Alternativas** | Anúncios recebidos por D revelam caminhos válidos. | A volta a alcançar E por `A–D–E`, a custo 2. Ainda registra `∞` para B. |
+| **T3 — Nova convergência** | As rotas se estabilizam sem utilizar C1. | A alcança B por `A–D–E–B`, a custo 3. Antes da falha, o enlace direto custava 1. |
+
+> O custo `∞` indica que o roteador considera o destino inalcançável com as informações disponíveis naquele instante. E continuava fisicamente acessível por D. A sequência T0–T3 ilustra uma ordem possível de atualização. Um roteador que já mantenha uma alternativa válida pode utilizá-la mais cedo.
+
+### Estado de Enlace:
+
+No **estado de enlace**, cada roteador anuncia quais são seus vizinhos e quanto custa alcançá-los diretamente. Os anúncios se propagam pela área. Com eles, cada roteador monta uma cópia do mapa e calcula os caminhos a partir de sua própria posição.
+
+![Topologia de oito roteadores com os custos dos enlaces](images/screenshot049.png)<br>
+*Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 308.*
+
+1. **Conhecimento local:** A identifica dois enlaces diretos. Chegar a B custa 2, e chegar a G custa 6.
+2. **Construção do mapa:** B anuncia, entre outros, seu enlace até E, de custo 2. E anuncia seu enlace até G, de custo 1. Os anúncios dos oito roteadores permitem reconstruir a topologia da figura.
+3. **Escolha do próximo salto:** A compara o enlace direto até G, de custo 6, com `A–B–E–G`, de custo `2 + 2 + 1 = 5`. Para chegar a G pelo caminho de menor custo, A envia o pacote primeiro a B.
+
+![Árvore de caminhos mínimos calculada a partir de A](images/screenshot050.png)<br>
+*Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 310.*
+
+A figura mostra a **árvore de caminhos mínimos de A**. O enlace A–G continua disponível e pode ser escolhido se algum custo mudar. Quando um enlace falha, a mudança é anunciada. À medida que os roteadores recebem a atualização, recalculam os caminhos afetados. Até que os mapas sejam atualizados, podem ocorrer perdas ou ciclos temporários. O cálculo para os oito roteadores aparece em A.2.6.
 
 ### Hierarquia e Sistemas Autônomos:
 
@@ -631,27 +683,54 @@ Dentro do AS, o roteamento pode privilegiar custos internos. Entre sistemas aut�
 
 ## Distribuição para Múltiplos Destinos:
 
-Se um servidor envia o mesmo conteúdo para vinte receptores por **unicast**, ele mantém envios individuais. Se os caminhos compartilham um mesmo enlace, várias cópias idênticas podem passar por esse trecho. Uma rede com suporte à entrega em grupo pode transportar uma cópia pelo trecho comum e replicá-la onde os caminhos se separam.
+Se um servidor envia o mesmo conteúdo para vinte receptores por **unicast**, ele mantém envios individuais. Se os caminhos compartilham um enlace, várias cópias idênticas podem passar pelo mesmo trecho. Uma rede com suporte à entrega em grupo pode transportar uma cópia pelo trecho comum e replicá-la onde os caminhos se separam.
 
 | Forma de entrega | Destinatários | Alcance |
 | --- | --- | --- |
 | ***Unicast*** | Uma interface de destino. | Segue o caminho escolhido para aquele endereço. |
-| ***Broadcast*** | Todos os participantes de um âmbito de difusão. | No laboratório, o *broadcast* IPv4 `192.168.10.63` identifica a difusão da sub-rede `/27`. Seu alcance é delimitado pela rede e pelas regras de encaminhamento. |
+| ***Broadcast*** | Todos os participantes de um âmbito de difusão. | No laboratório, `192.168.10.63` identifica a difusão da sub-rede `192.168.10.32/27`. |
 | ***Multicast*** | Interfaces interessadas em um grupo. | Pode atravessar várias redes quando os roteadores oferecem suporte à distribuição para o grupo. |
 
 ![Comparação entre distribuição por unicast e por broadcast](images/screenshot052.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 318.*
 
-### Inundação e Árvores de Distribuição:
+### Inundação e Árvore de Cobertura:
 
 Na **inundação** (*flooding*), cada nó que recebe uma mensagem a replica pelas demais saídas participantes. Se existem ciclos, cópias podem voltar ao mesmo nó. Identificadores de mensagens e registros das cópias já vistas permitem descartar duplicatas. Um limite de saltos também restringe por quanto tempo uma cópia pode circular.
 
 ![Distribuição por inundação iniciada no roteador A](images/screenshot053.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 318.*
 
-Uma **árvore de distribuição** seleciona caminhos sem ciclos. No *multicast*, os ramos precisam alcançar as redes com receptores interessados. Uma **árvore por origem** pode favorecer os caminhos a partir de cada emissor. Uma **árvore compartilhada** permite que vários emissores usem a mesma estrutura, embora o percurso possa ficar mais longo para alguns deles.
+Uma **árvore de cobertura** (*spanning tree*) seleciona enlaces que alcançam todos os roteadores sem formar ciclos. Na distribuição por essa árvore, cada roteador replica a mensagem apenas nas ramificações necessárias. Isso reduz as cópias redundantes. A escolha da árvore, porém, pode concentrar tráfego ou alongar o caminho para alguns emissores. Se um enlace selecionado falhar, o ramo que dependia dele pode ficar sem receber mensagens até que a árvore seja ajustada.
 
-> A inundação é uma técnica de distribuição utilizada por protocolos específicos. O *broadcast* local do laboratório fica no seu domínio de difusão. Em IPv6, funções de comunicação com grupos utilizam *multicast*.
+> A inundação é uma técnica de distribuição usada por protocolos específicos. O *broadcast* local do laboratório fica no seu domínio de difusão. Em IPv6, funções de entrega a grupos utilizam *multicast*.
+
+### Grupos Multicast e Poda:
+
+Um endereço de *multicast* identifica um **grupo**. Em um **grupo permanente**, o endereço continua atribuído à sua finalidade mesmo quando ninguém recebe a transmissão. Um **grupo temporário** pode existir durante um evento, como a distribuição de uma aula ao vivo. Em ambos os casos, os dispositivos podem entrar e sair do grupo.
+
+Uma forma de alcançar os receptores é construir uma **árvore por origem**. No **roteamento multicast por caminho reverso** (RPM), cada roteador verifica se o pacote chegou pela interface que usaria para alcançar a origem. Na distribuição inicial, ainda podem ser alcançados ramos sem receptores.
+
+![Topologia da rede e árvore antes da poda no RPM](images/screenshot054.png)<br>
+*Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 322.*
+
+A **poda** retira essas saídas da distribuição. Se o ramo de um roteador não leva a nenhum receptor, ele sinaliza ao roteador anterior que as próximas cópias daquele tráfego podem deixar de ser enviadas por ali.
+
+![Árvore de distribuição após a poda no RPM](images/screenshot055.png)<br>
+*Fonte: **Adaptado** de MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 322.*
+
+Compare **B–H** e **A–D–I**, retirados da distribuição, com o roteador **C**, que permanece. Mesmo sem receptor local, C leva até F. Os enlaces podados continuam disponíveis para outros tráfegos, e o ramo pode voltar a ser usado se surgir um receptor.
+
+Após a poda, economiza-se banda nos envios seguintes. Há, porém, um custo inicial ao alcançar ramos sem interessados, além das mensagens de controle e das informações mantidas para cada combinação de origem e grupo.
+
+### Árvore Compartilhada:
+
+Vários emissores também podem utilizar uma **árvore compartilhada pelo grupo**. Na abordagem baseada em núcleo, os roteadores com receptores interessados solicitam a entrada na árvore em direção a um ponto comum, chamado **núcleo**.
+
+![Árvore multicast compartilhada em torno de um núcleo](images/screenshot056.png)<br>
+*Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 322.*
+
+Formar a árvore pela adesão dos interessados evita a inundação inicial. Uma única estrutura atende a vários emissores, mas sua posição em relação ao núcleo pode produzir percursos mais longos ou concentrar tráfego em certos enlaces. A disponibilidade do núcleo também importa para a adesão de novos ramos. A.2.7 mostra como CBT e PIM-SM organizam essa participação.
 
 ## MTU e Fragmentação:
 
@@ -684,7 +763,7 @@ Em uma VPN **IPsec em modo túnel**, com proteção criptográfica, o percurso d
 ![Pacote destinado ao servidor do laboratório encapsulado para envio ao gateway da VPN](images/screenshot057.png)<br>
 *Fonte: [preencher após a escolha da imagem].*
 
-Esse é um exemplo de **acesso remoto**, em que um dispositivo se conecta à rede da instituição. Em uma VPN **entre redes** (*site-to-site*), os dois extremos do túnel podem ser gateways, por exemplo, um em cada campus. O encapsulamento acrescenta cabeçalhos e informações de proteção: para a mesma MTU externa, sobra menos espaço para o pacote interno.
+Esse é um exemplo de **acesso remoto**, em que um dispositivo se conecta à rede da instituição. Em uma VPN **entre redes** (*site-to-site*), os dois extremos do túnel podem ser gateways, por exemplo, um em cada campus. O encapsulamento acrescenta cabeçalhos e informações de proteção. Para a mesma MTU externa, sobra menos espaço para o pacote interno.
 
 ### Roteamento em Cebola (*Onion Routing*):
 
@@ -696,7 +775,7 @@ No **roteamento em cebola**, o cliente prepara camadas de criptografia para retr
 | **Intermediário** (*middle relay*) | Remove sua camada e encaminha os dados à saída. Na troca normal, vê os retransmissores adjacentes. |
 | **Saída** (*exit relay*) | Remove a última camada de proteção do circuito e abre a conexão com o site público. O site recebe a conexão a partir do endereço da saída. |
 
-A imagem da **cebola** vem dessas camadas sucessivas: o cliente prepara os dados para que cada retransmissor consiga remover apenas a camada correspondente à sua etapa. O caminho de volta recebe proteção na direção inversa. O objetivo é distribuir o conhecimento do percurso entre os participantes.
+A imagem da **cebola** vem dessas camadas sucessivas. O cliente prepara os dados para que cada retransmissor consiga remover apenas a camada correspondente à sua etapa. No caminho de volta, os retransmissores acrescentam suas camadas, e o cliente as remove. O objetivo é distribuir o conhecimento do percurso entre os participantes.
 
 ![Circuito Tor entre o cliente e um site público, com retransmissores de entrada, intermediário e saída](images/screenshot058.png)<br>
 *Fonte: [preencher após a escolha da imagem].*
@@ -1014,7 +1093,7 @@ Se laboratório e administração ocupam dois prédios, um *trunk* entre os swit
 
 ### Interfaces, Endereços e Pacotes IP:
 
-No Linux, `ip a` é a forma abreviada de `ip address`. A saída é organizada por **interface**: primeiro aparecem seu nome, estado e MTU; abaixo, o endereço de enlace e os endereços IP configurados. Uma saída abreviada do notebook do laboratório poderia ser:
+No Linux, `ip a` é a forma abreviada de `ip address`. A saída é organizada por **interface**. Primeiro aparecem seu nome, estado e MTU. Abaixo, o endereço de enlace e os endereços IP configurados. Uma saída abreviada do notebook do laboratório poderia ser:
 
 ```text
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536
@@ -1034,13 +1113,13 @@ No Linux, `ip a` é a forma abreviada de `ip address`. A saída é organizada po
 | Nome ou campo | Como interpretar |
 | --- | --- |
 | **`lo`** | Interface de *loopback*. Os endereços `127.0.0.1` e `::1` permitem acessar serviços no próprio computador. |
-| **`en...`** | Na convenção de nomes previsíveis, `en` identifica Ethernet. Em `enp2s0`, o restante indica a localização do dispositivo no barramento PCI. |
-| **`wl...`** | `wl` identifica Wi-Fi. Em `wlo1`, `o1` indica um índice de dispositivo integrado atribuído pelo firmware. Outros equipamentos podem ter nomes como `wlp2s0`. |
+| **`en...`** | Na convenção de nomes previsíveis, `en` indica Ethernet. Em `enp2s0`, o restante identifica a localização do dispositivo no barramento PCI. |
+| **`wl...`** | `wl` indica Wi-Fi. Em `wlo1`, `o1` indica um índice de dispositivo integrado atribuído pelo firmware. Outros equipamentos podem ter nomes como `wlp2s0`. |
 | **`<interface>.<ID>`** | Nome convencional de uma interface VLAN. Por exemplo, `enp2s0.10` costuma representar a VLAN 10 sobre `enp2s0`. Como o nome é configurável, `ip -d link show` permite confirmar o tipo e o ID. |
 | **`UP`, `LOWER_UP` e `NO-CARRIER`** | `UP` indica que a interface está administrativamente habilitada. `LOWER_UP` indica que a camada inferior sinaliza enlace ativo. No exemplo, a Ethernet está habilitada, mas `NO-CARRIER` indica ausência de enlace, como ocorre com um cabo desconectado. |
 | **`link/ether`** | Mostra o MAC utilizado pela interface Ethernet ou Wi-Fi. Na mesma linha, `brd ff:ff:ff:ff:ff:ff` é o endereço de *broadcast* de enlace. |
 | **`inet` e `inet6`** | Identificam IPv4 e IPv6. Na linha `inet`, `brd 192.168.10.63` é o *broadcast* IPv4 da sub-rede. |
-| **`scope`** | Indica alcance. `host` corresponde ao próprio equipamento e `link` ao enlace local. O Linux também pode exibir `scope global` para um IPv4 privado, como `.34`; esse rótulo não implica que o endereço seja público. |
+| **`scope`** | Indica alcance. `host` corresponde ao próprio equipamento e `link` ao enlace local. O Linux também pode exibir `scope global` para um IPv4 privado, como `.34`. Esse rótulo, por si só, não indica acesso pela Internet. |
 | **`mtu`** | Tamanho máximo do pacote de rede que a interface pode transportar pelo enlace como uma unidade. |
 
 > Os números antes dos dois-pontos (`1:`, `2:`, `3:`) são índices das interfaces no sistema. Já os números dentro de nomes como `enp2s0` descrevem atributos do dispositivo. Assim, as únicas duas interfaces Ethernet de um computador poderiam se chamar `enp2s0` e `enp5s0`.
@@ -1058,11 +1137,13 @@ Para consultar apenas os endereços, use `ip -br addr`. Para examinar uma interf
 | Identificar o que vem em seguida | **Protocol**, como TCP, UDP ou ICMP. | **Next Header**, que pode identificar um cabeçalho de extensão ou o protocolo transportado. |
 | Informar o tamanho | **Total Length**, incluindo o cabeçalho IPv4. | **Payload Length**, contando o que vem depois do cabeçalho IPv6 básico. |
 
+> **Circuito virtual na prática — ATM.** No ATM (*Asynchronous Transfer Mode*), os dados são transportados em células de 53 bytes. O caminho lógico é estabelecido previamente. A cada salto, o equipamento consulta os identificadores da célula para escolher a saída e os identificadores usados no trecho seguinte. Vários circuitos virtuais compartilham o enlace, e a capacidade garantida depende do serviço da conexão.
+
 ### Máscaras, Sub-redes e Agregação:
 
 **Como localizar um endereço no seu bloco.** Considere `192.168.10.34/27`. Os primeiros 24 bits ocupam os três primeiros octetos. Para completar o prefixo, a máscara usa mais três bits no quarto octeto.
 
-1. **Máscara:** O quarto octeto é `11100000`, equivalente a `224`. A máscara completa é `255.255.255.224`.
+1. **Máscara:** O quarto octeto fica `11100000`, equivalente a `224`. A máscara completa é `255.255.255.224`.
 2. **Tamanho do bloco:** Sobram cinco bits, portanto cada bloco contém $2^5 = 32$ endereços.
 3. **Início do bloco:** Os blocos começam em `.0`, `.32`, `.64`, `.96` e assim por diante. O endereço `.34` está no bloco iniciado em `.32`.
 4. **Fim do bloco:** O próximo bloco começa em `.64`. O último endereço do bloco atual é `.63`.
@@ -1087,16 +1168,16 @@ O mesmo resultado pode ser obtido por uma operação **AND** entre endereço e m
 | 20 interfaces | `192.168.20.192/27` | `.193` a `.222` | `.223` |
 | Reserva | `192.168.20.224/27` | `.225` a `.254` | `.255` |
 
-**Agregação de rotas.** Agora, considere o caminho inverso: um roteador deseja anunciar vários blocos por um prefixo menor. `192.168.10.0/27` e `192.168.10.32/27` cobrem `.0` a `.63`. Juntos, correspondem exatamente a `192.168.10.0/26`. O anúncio agregado é apropriado quando a rede que o anuncia pode encaminhar o tráfego destinado ao conjunto.
-
-O **alinhamento** importa. Os blocos `192.168.10.32/27` e `192.168.10.64/27` também são vizinhos, mas cobrem `.32` a `.95`. Os blocos `/26` começam em `.0`, `.64`, `.128` e `.192`. Portanto, nenhum `/26` representa exatamente aquele intervalo. Um anúncio mais abrangente incluiria endereços adicionais.
+**Agregação de rotas.** Agora, considere o caminho inverso. Um roteador deseja anunciar vários blocos por um prefixo mais curto. `192.168.10.0/27` e `192.168.10.32/27` cobrem `.0` a `.63`. Juntos, correspondem exatamente a `192.168.10.0/26`. O anúncio agregado é apropriado quando a rede que o anuncia pode encaminhar o tráfego destinado ao conjunto.
 
 ![Agregação de rotas por prefixo CIDR](images/screenshot043.png)<br>
 *Fonte: Elaborado pelo autor com auxílio do ChatGPT, 2026.*
 
-> No endereçamento histórico por **classes**, as classes A, B e C associavam faixas de endereços a prefixos padrão `/8`, `/16` e `/24`. A classe D destinava-se ao *multicast* e a E era reservada. Com CIDR, a tabela informa o prefixo explicitamente: para interpretar `192.168.10.34/27`, usa-se o `/27` fornecido.
+O **alinhamento** importa. Os blocos `192.168.10.32/27` e `192.168.10.64/27` também são vizinhos, mas cobrem `.32` a `.95`. Os blocos `/26` começam em `.0`, `.64`, `.128` e `.192`. Portanto, nenhum `/26` representa exatamente aquele intervalo. Um anúncio mais abrangente incluiria endereços adicionais.
 
 ### Consulta de Rotas e Resolução de Vizinhos:
+
+O encaminhamento pode ser feito por um **roteador especializado** ou por um **computador de uso geral**. Um equipamento dedicado pode encaminhar pacotes com chips especializados e calcular rotas em software. Um computador Linux com encaminhamento habilitado também pode rotear entre interfaces físicas ou virtuais. Em ambos os casos, a decisão depende da tabela de encaminhamento.
 
 No capítulo 4, o notebook alcançava a impressora `.50` diretamente e usava o gateway `.33` para o servidor `.70`. Considere agora uma mudança: o laboratório instalou um segundo roteador, `.62`, para atender à rede do servidor. Uma consulta com `ip -4 route` poderia produzir a seguinte saída abreviada:
 
@@ -1128,9 +1209,9 @@ A ordem em que as linhas aparecem na tela não determina a escolha. Entre os pre
 ![Tabela de encaminhamento com gateway](images/screenshot046.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 292.*
 
-> **Consulta prática:** `ip route get 192.168.10.70` mostra a decisão que o sistema tomaria para esse destino. Com a tabela acima, o resultado indica `via 192.168.10.62 dev wlo1`. O comando consulta o roteamento local; a disponibilidade do servidor precisa ser verificada separadamente.
+> **Consulta prática:** `ip route get 192.168.10.70` mostra a decisão que o sistema tomaria para esse destino. Com a tabela acima, o resultado indica `via 192.168.10.62 dev wlo1`. O comando consulta o roteamento local. A disponibilidade do servidor precisa ser verificada separadamente.
 
-**Resolução de vizinhos.** Depois da escolha da rota, o notebook precisa do endereço de enlace do vizinho. Um mapeamento **estático** é configurado manualmente. No mapeamento **dinâmico** por ARP, a máquina consulta o cache e, se necessário, envia uma solicitação IPv4 por *broadcast* local. No caso do servidor, a pergunta é “quem tem `192.168.10.62`?”. O roteador responde com seu MAC, e a associação pode ser reutilizada nos envios seguintes.
+**Resolução de vizinhos.** Depois da escolha da rota, o notebook precisa do endereço de enlace do vizinho. Um mapeamento **estático** é configurado manualmente. No mapeamento **dinâmico** por ARP, a máquina consulta o cache e, se necessário, envia uma solicitação ARP por *broadcast* de enlace. No caso do servidor `.70`, a pergunta é “quem tem `192.168.10.62`?”. O roteador responde com seu MAC, e a associação pode ser reutilizada nos envios seguintes.
 
 Uma saída ilustrativa de `ip neigh show dev wlo1` seria:
 
@@ -1139,7 +1220,7 @@ Uma saída ilustrativa de `ip neigh show dev wlo1` seria:
 192.168.10.62 lladdr 02:11:22:33:44:62 STALE
 ```
 
-`lladdr` indica o endereço de enlace. `REACHABLE` indica que a alcançabilidade foi confirmada recentemente. `STALE` indica que a associação é conhecida, mas pode precisar de nova confirmação quando utilizada. É possível ter uma rota válida para `.70` antes de existir uma entrada para `.62` no cache: a descoberta ocorre quando necessária.
+`lladdr` indica o endereço de enlace. `REACHABLE` indica que a alcançabilidade foi confirmada recentemente. `STALE` indica que a associação é conhecida, mas pode precisar de nova confirmação quando utilizada. É possível ter uma rota válida para `.70` antes de existir uma entrada para `.62` no cache. A descoberta ocorre quando necessária.
 
 Em IPv6, o **Neighbor Discovery** utiliza mensagens ICMPv6 de solicitação e anúncio de vizinho. O Linux também mostra essas associações em `ip neigh`. Para consultar somente rotas e vizinhos IPv6, use `ip -6 route` e `ip -6 neigh`. No Windows, `route print` exibe as rotas e `arp -a` mostra o cache ARP do IPv4.
 
@@ -1153,12 +1234,12 @@ Os três blocos IPv4 reservados para redes privadas são:
 | `172.16.0.0/12` | `172.16.0.0` a `172.31.255.255` |
 | `192.168.0.0/16` | `192.168.0.0` a `192.168.255.255` |
 
-Esses endereços podem se repetir em organizações diferentes. Para conexões de saída pela Internet IPv4, um roteador de borda pode realizar **NAT** (*Network Address Translation*). No NAT básico, a tradução altera endereços IP. No **NAPT**, também chamado de **PAT**, a tradução inclui identificadores de transporte, como as portas TCP ou UDP. Isso permite compartilhar um único IPv4 público entre várias conexões.
+Esses endereços podem se repetir em organizações diferentes. Para conexões de saída pela Internet IPv4, um roteador de borda pode realizar **NAT** (*Network Address Translation*). No NAT básico, a tradução altera endereços IP. No **NAPT**, também chamado de **PAT**, a tradução inclui identificadores de transporte, como as portas TCP ou UDP. Isso permite compartilhar um único IPv4 público entre vários dispositivos.
 
 ![Endereços públicos e privados em uma rede com tradução](images/screenshot044.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 288.*
 
-Considere dois computadores que acessam o mesmo servidor HTTPS, ambos utilizando a porta local `51000`. A tabela mostra um exemplo de traduções TCP; os endereços externos utilizados são reservados para documentação.
+Considere dois computadores que acessam o mesmo servidor HTTPS, ambos utilizando a porta local `51000`. A tabela mostra um exemplo de traduções TCP. Os endereços externos utilizados são reservados para documentação.
 
 | Origem interna | Origem apresentada externamente | Destino |
 | --- | --- | --- |
@@ -1169,7 +1250,7 @@ Considere dois computadores que acessam o mesmo servidor HTTPS, ambos utilizando
 2. **Resposta:** O servidor responde para `198.51.100.20:40001`. O roteador consulta a associação e traduz o destino de volta para `192.168.10.34:51000`.
 3. **Segunda conexão:** Uma resposta destinada à porta externa `40002` pertence ao segundo computador, mesmo que ambos tenham escolhido a mesma porta interna.
 
-> Um equipamento pode atuar como **gateway padrão** e executar **NAT**. O encaminhamento escolhe por onde o pacote segue; a tradução modifica campos para permitir a comunicação entre os espaços de endereçamento.
+> **Gateway, NAT e firewall.** Um roteador doméstico pode desempenhar as três funções. Como gateway, encaminha o pacote para outra rede. O NAT traduz endereços e, no exemplo, portas. O firewall aplica as regras que permitem ou bloqueiam o tráfego. Ao publicar um serviço, a tradução pode indicar qual servidor interno receberá a conexão, e o firewall pode restringir quais origens têm permissão para acessá-lo.
 
 ### Fragmentação e Diagnóstico da MTU:
 
@@ -1190,42 +1271,22 @@ Se o bit **DF** (*Don't Fragment*) estiver ativo, o roteador descarta o datagram
 
 ### Algoritmos e Protocolos de Roteamento:
 
-Considere quatro roteadores, **A**, **B**, **C** e **D**. Os enlaces são bidirecionais, e o exemplo utiliza custos ilustrativos:
+**Vetor de distância no RIP.** O RIP usa a quantidade de saltos como métrica. O valor `16` representa um destino inalcançável e exerce o papel de `∞` no exemplo do capítulo 4. Depois de uma falha, anúncios desatualizados podem levar dois vizinhos a acreditar, cada um, que o outro ainda alcança o destino. A cada troca, o custo anunciado aumenta até atingir o limite. Esse fenômeno é chamado de **contagem ao infinito**.
 
-| Enlace | A–B | A–C | B–D | C–D |
-| --- | --- | --- | --- | --- |
-| **Custo** | 1 | 2 | 2 | 4 |
+**Cálculo de caminhos mínimos com Dijkstra.** O OSPF usa informações de estado de enlace para calcular caminhos. Retomando a rede de oito roteadores da figura 049, A começa com custo 0 para si mesmo. A cada etapa, confirma o destino de menor custo provisório e verifica se passar por ele melhora o caminho até algum vizinho.
 
-**Vetor de distância.** Para alcançar D, A compara o custo do enlace até cada vizinho com a distância que esse vizinho anuncia para D.
-
-| Informação recebida por A | Cálculo | Decisão |
+| Roteador confirmado | Custo a partir de A | O que muda no cálculo |
 | --- | --- | --- |
-| B anuncia custo `2` para D. | `1 + 2 = 3` | Candidato via B. |
-| C anuncia custo `4` para D. | `2 + 4 = 6` | Candidato via C. |
-| Os anúncios estão atualizados. | `3 < 6` | A registra D com próximo salto B e custo 3. |
+| **A** | 0 | B recebe custo provisório 2, e G recebe 6. |
+| **B** | 2 | Chegar a E por B custa 4. Chegar a C por B custa 9. |
+| **E** | 4 | O custo até G cai de 6 para 5. F recebe custo 6. |
+| **G** | 5 | H recebe custo provisório 9. |
+| **F** | 6 | O custo até H cai de 9 para 8. O caminho até C por F também custa 9. |
+| **H** | 8 | D recebe custo 10. |
+| **C** | 9 | Passar por C para chegar a D custaria 12. Permanece o custo 10. |
+| **D** | 10 | Todos os destinos estão confirmados. |
 
-Se **B–D falhar**, B perde sua rota direta e pode anunciar que o destino ficou inalcançável por aquele caminho. Quando A recebe essa alteração e conhece o anúncio válido de C, passa a alcançar D **via C, com custo 6**. A ordem e o tempo de propagação dos anúncios importam: durante a convergência, um roteador pode agir com base em uma informação antiga de outro. Isso pode produzir ciclos e aumentos sucessivos de custo, fenômeno conhecido como **contagem ao infinito**.
-
-O **RIP** aplica vetor de distância com uma métrica própria: a quantidade de saltos. Um custo `16` indica destino inalcançável. Os pesos arbitrários da tabela acima servem para demonstrar o algoritmo geral.
-
-**Estado de enlace.** Cada roteador anuncia informações sobre seus enlaces. Depois que essas informações se propagam pela área, A consegue calcular caminhos usando um mapa da topologia. O **OSPF** aplica esse princípio e utiliza o algoritmo de **Dijkstra** para calcular caminhos de menor custo a partir dos dados conhecidos.
-
-![Topologia utilizada no material original para roteamento por estado de enlace](images/screenshot049.png)<br>
-*Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 308.*
-
-Com os custos do exemplo numérico, Dijkstra parte de A e confirma, a cada etapa, o destino ainda pendente de menor custo:
-
-| Etapa | Resultado a partir de A |
-| --- | --- |
-| **Examinar A** | Descobre B com custo `1` e C com custo `2`. D ainda não tem caminho conhecido. |
-| **Confirmar B** | O caminho A–B–D custa `1 + 2 = 3`. D passa a ter custo provisório `3`, via B. |
-| **Confirmar C** | A alternativa A–C–D custa `2 + 4 = 6`. O melhor caminho conhecido para D continua custando `3`. |
-| **Confirmar D** | O caminho escolhido é A–B–D. Para encaminhar um pacote a D, a informação necessária em A é o primeiro salto: **B**. |
-
-![Caminhos obtidos a partir do roteador A no exemplo original](images/screenshot050.png)<br>
-*Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 310.*
-
-Se B–D falhar, a mudança é anunciada. Com o mapa atualizado, A recalcula e passa a usar A–C–D. O resultado final coincide com o do exemplo de vetor de distância, mas A chegou a ele a partir de informações diferentes.
+A figura 050 mostra uma árvore resultante. O caminho até C admite empate: `A–B–C` e `A–B–E–F–C` custam 9. Os dois têm B como primeiro salto a partir de A. Assim, a rota que A usa para encaminhar a C pode ser a mesma mesmo que o desempate produza árvores diferentes.
 
 | Protocolo | Âmbito típico | Informação usada na decisão |
 | --- | --- | --- |
@@ -1235,35 +1296,22 @@ Se B–D falhar, a mudança é anunciada. Com o mapa atualizado, A recalcula e p
 
 ### Broadcast e Multicast em IPv4:
 
-**Broadcast limitado e direcionado.** Um mesmo quadro Ethernet de difusão pode carregar destinos IPv4 com significados diferentes:
+**Broadcast limitado e direcionado.** Um quadro Ethernet de difusão pode transportar um pacote destinado a um dos seguintes endereços IPv4:
 
 | Tipo | Endereço no laboratório | Comportamento |
 | --- | --- | --- |
 | **Broadcast limitado** | `255.255.255.255` | Destina-se ao enlace local. Os roteadores não o encaminham para outra rede. |
-| **Broadcast direcionado** | `192.168.10.63` para a sub-rede `192.168.10.32/27` | Identifica todas as interfaces daquela sub-rede. Em roteadores, o encaminhamento de *broadcast* direcionado vindo de outra rede é desabilitado por padrão. |
+| **Broadcast direcionado** | `192.168.10.63` para a sub-rede `192.168.10.32/27` | Identifica a difusão daquela sub-rede. Em roteadores, o encaminhamento de *broadcast* direcionado vindo de outra rede é desabilitado por padrão. |
 
-**Participação em grupos.** No IPv4, `224.0.0.0/4` é a faixa de endereços *multicast*. Um endereço, como `239.1.1.1`, representa um grupo. Uma interface pode manter seu endereço individual e participar desse grupo. O endereço escolhido e a configuração da rede influenciam o alcance da distribuição.
+**Participação em grupos — IGMP.** No IPv4, `224.0.0.0/4` é a faixa de endereços *multicast*. Uma interface pode manter seu endereço individual e participar de um grupo, como `239.1.1.1`. Quando um programa solicita a recepção, o **IGMP** (*Internet Group Management Protocol*) permite informar ao roteador local que há interesse naquele grupo. Levar o tráfego de uma rede até outra cabe ao roteamento *multicast*.
 
-Quando um programa solicita a recepção de um grupo, o **IGMP** (*Internet Group Management Protocol*) permite informar aos roteadores do enlace que existem receptores interessados. O roteador pode usar essa informação para decidir se precisa entregar o tráfego naquela rede local. Para trazer o tráfego desde outra rede, os roteadores precisam também de informações de **roteamento multicast**.
+**Verificação do caminho reverso — RPF.** Para avaliar um pacote recebido de uma origem S, o roteador consulta qual interface usaria para voltar em direção a S. A verificação de caminho reverso (*Reverse Path Forwarding*, RPF) compara essa interface com a de chegada. No exemplo de RPM das figuras 054 e 055, essa verificação orienta a distribuição inicial. A poda posterior retira os ramos sem receptores.
 
-**Caminho reverso e poda.** Para avaliar um pacote recebido de uma origem S, o roteador consulta qual interface usaria para voltar em direção a S. A verificação de **caminho reverso** (*Reverse Path Forwarding*, RPF) compara essa interface com a de chegada. Isso ajuda a impedir que uma cópia recebida pelo lado errado seja reencaminhada pela topologia.
+**Árvore baseada em núcleo — CBT.** No **CBT** (*Core Based Trees*), o roteador que atende um receptor solicita a entrada na árvore em direção ao núcleo. Se a solicitação alcançar um roteador que já participa da árvore, o novo ramo pode se ligar ali. A figura 056 mostra a estrutura compartilhada pelos emissores.
 
-No **RPM** (*Reverse Path Multicasting*), a distribuição inicial pode alcançar ramos sem receptores. A **poda** informa aos roteadores anteriores quais ramos podem deixar de receber aquele tráfego.
+**Ponto de encontro — PIM-SM.** No **PIM-SM** (*Protocol Independent Multicast — Sparse Mode*), o **ponto de encontro** (*Rendezvous Point*, RP) permite que o tráfego de uma fonte alcance inicialmente a árvore dos receptores. Do lado dos receptores, o roteador solicita a entrada na árvore em direção ao RP. Do lado da fonte, o primeiro roteador pode encapsular os pacotes iniciais e enviá-los ao RP para distribuição. Depois, o roteador do lado dos receptores pode passar a usar uma árvore de menor custo até aquela fonte, dispensando a passagem pelo RP nesse fluxo.
 
-![Topologia da rede e árvore antes da poda no RPM](images/screenshot054.png)<br>
-*Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 322.*
-
-![Árvore de distribuição após a poda no RPM](images/screenshot055.png)<br>
-*Fonte: **Adaptado** de MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 322.*
-
-**Árvore compartilhada baseada em núcleo.** No **CBT** (*Core Based Trees*), um roteador com receptores interessados solicita a entrada na árvore em direção a um núcleo. O ramo se conecta ao núcleo ou a uma parte da árvore já estabelecida. Diferentes emissores podem usar essa estrutura para alcançar os receptores do grupo.
-
-![Árvore compartilhada baseada em núcleo](images/screenshot056.png)<br>
-*Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 322.*
-
-Uma árvore por origem pode aproveitar melhor a posição de cada emissor, mas exige manter informações específicas para diferentes origens. Uma árvore compartilhada concentra a distribuição em uma estrutura comum, com percursos que podem ser mais longos para alguns emissores.
-
-> Uma aplicação prática é a distribuição de canais de IPTV em uma rede administrada. Se vários receptores de um mesmo canal estão atrás de um roteador, uma cópia pode percorrer o enlace comum e ser replicada apenas a partir do ponto em que os caminhos se separam.
+> Uma aplicação prática é a distribuição de canais de IPTV em uma rede administrada. Se vários receptores do mesmo canal estão atrás de um roteador, uma cópia pode percorrer o enlace comum e ser replicada apenas no ponto em que os caminhos se separam.
 
 ---
 
