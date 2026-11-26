@@ -13,10 +13,10 @@ Enquanto a camada de enlace realiza a comunicação local entre dispositivos adj
 
 Permite que dispositivos se comuniquem através de equipamentos intermediários, sem exigir uma conexão direta entre as extremidades.
 
-![Rede de Interconexão](images/screenshot039.png)<br>
+![Rede de Interconexão](images/screenshot013.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 261.*
 
-![Roteadores na Rede de Interconexão](images/screenshot040.png)<br>
+![Roteadores na Rede de Interconexão](images/screenshot014.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 262.*
 
 Nos diagramas de camadas, os roteadores executam apenas até a Camada de Rede porque esse é o nível necessário ao encaminhamento IP básico. É como um centro de distribuição dos correios: basta consultar o endereço no envelope, sem interpretar o conteúdo da carta.
@@ -33,7 +33,7 @@ Estabelece um caminho entre a origem e o destino antes da transmissão. Esse **c
 
 > Funciona como uma ligação telefônica tradicional: primeiro disca-se e estabelece-se a chamada; depois ocorre a conversa; ao desligar, o circuito é liberado.
 
-![Comutação por Circuito](images/screenshot041.png)<br>
+![Comutação por Circuito](images/screenshot015.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 263.*
 
 - **Caminho predefinido:** Os dados seguem pelo circuito estabelecido, simplificando seu encaminhamento durante a transmissão.
@@ -44,7 +44,7 @@ Estabelece um caminho entre a origem e o destino antes da transmissão. Esse **c
 
 Organiza os dados em pequenos blocos chamados **pacotes**, encaminhados pelos equipamentos intermediários até o destino. Uma mensagem maior pode ser dividida em vários pacotes, e os enlaces são compartilhados por diferentes comunicações.
 
-![Comutação por Pacotes](images/screenshot042.png)<br>
+![Comutação por Pacotes](images/screenshot016.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 265.*
 
 - **Compartilhamento sob demanda:** Pacotes de várias comunicações utilizam a infraestrutura conforme há dados para enviar, aproveitando os intervalos de ociosidade. Esse funcionamento não exige reserva fixa de capacidade, embora determinados serviços possam reservar recursos.
@@ -227,7 +227,7 @@ Para um pacote destinado à máquina `146.164.2.70/26`, uma organização possí
 
 O destino continua sendo `146.164.2.70`; varia o detalhamento das rotas utilizadas. Um mesmo roteador pode conhecer vários desses blocos. A representação externa depende das rotas divulgadas, não apenas de existir uma subdivisão.
 
-![Roteamento CIDR](images/screenshot043.png)<br>
+![Roteamento CIDR](images/screenshot062.png)<br>
 *Fonte: Elaborado pelo autor com auxílio do ChatGPT, 2026.*
 
 ## Mapeamento de Endereços:
@@ -276,7 +276,7 @@ O IPv4 possui aproximadamente 4,3 bilhões de combinações (`2^32`), das quais 
 - **Públicos:** São globalmente únicos no contexto de sua atribuição e utilizáveis no roteamento da Internet. O acesso ao dispositivo ainda depende das rotas e das regras de filtragem.
 - **Privados:** Destinam-se ao uso interno e não são encaminhados como destinos globais pela Internet pública. Podem ser reutilizados em redes independentes, mas precisam ser coordenados entre redes interligadas para evitar conflitos.
 
-![Endereço púlico e privado](images/screenshot044.png)<br>
+![Endereço púlico e privado](images/screenshot064.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 288.*
 
 As faixas privadas do IPv4 são:
@@ -316,7 +316,7 @@ O roteador interliga redes e encaminha pacotes entre elas. Pode ser implementado
 
 Cada entrada da **tabela de rotas** associa um prefixo de destino à interface de saída e, quando necessário, ao próximo roteador. Entre entradas compatíveis, utiliza-se a de **prefixo mais longo**, por ser a mais específica.
 
-![Tabela de Endereços Completa](images/screenshot045.png)<br>
+![Tabela de Endereços Completa](images/tabela-enderecos-completa.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 291.*
 
 Para `146.164.2.70`, a rota `146.164.2.64/26` tem precedência sobre `146.164.2.0/24`, pois representa um grupo menor de endereços que contém o destino.
@@ -327,7 +327,7 @@ Para `146.164.2.70`, a rota `146.164.2.64/26` tem precedência sobre `146.164.2.
 
 A **rota padrão** (*default route*) atende aos destinos sem rota mais específica. No IPv4, `0.0.0.0/0` corresponde a qualquer endereço, com a menor especificidade possível. O ***gateway* padrão** é o próximo roteador indicado por essa rota, quando necessário.
 
-![Tabela de Endereços com *gateway*](images/screenshot046.png)<br>
+![Tabela de Endereços com *gateway*](images/screenshot063.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 292.*
 
 Na figura, os números identificam redes; tabelas IPv4 reais utilizam prefixos. Nem todo roteador possui rota padrão: **sem rota aplicável, o pacote é descartado**.
@@ -397,7 +397,7 @@ Cada roteador divulga aos vizinhos os destinos conhecidos e seus custos. O **vet
 
 Nos exemplos, **Caminho** indica o enlace de saída e **Custo**, o custo total até o destino. Cada enlace tem custo `1`.
 
-![Rede de Interconexão](images/screenshot047.png)<br>
+![Rede de Interconexão](images/screenshot017.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 301.*
 
 **T0 - Inicialização:** Cada roteador conhece apenas a si mesmo, com custo zero.
@@ -468,7 +468,7 @@ Nos exemplos, **Caminho** indica o enlace de saída e **Custo**, o custo total a
 
 Ao detectar uma falha, diretamente ou por ausência de atualizações, o roteador **invalida as rotas afetadas** e pode anunciá-las com custo **infinito** (inalcançável). Os vizinhos atualizam suas rotas e procuram alternativas, quando disponíveis.
 
-![Rede de Interconexão com Falha](images/screenshot048.png)<br>
+![Rede de Interconexão com Falha](images/screenshot018.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 305.*
 
 **T0 - Detecção da Falha:** Apenas A e B detectam a falha em C1 e invalidam as rotas dependentes desse enlace.
@@ -606,7 +606,7 @@ No **estado do enlace**, cada roteador conhece a topologia do domínio considera
 
 > O mapa é comum, mas cada roteador mantém sua cópia e calcula suas rotas. Não existe uma tabela central consultada por todos.
 
-![Rede de Interconexão do Enlace](images/screenshot049.png)<br>
+![Rede de Interconexão do Enlace](images/screenshot019.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 308.*
 
 **T0 - Identificação dos Enlaces:** Cada roteador registra seus vizinhos e os custos dos enlaces.
@@ -665,7 +665,7 @@ No **estado do enlace**, cada roteador conhece a topologia do domínio considera
 
 A **árvore de caminhos mínimos** tem o próprio roteador na raiz. É uma seleção lógica: os enlaces fora dela permanecem disponíveis para outros caminhos. Para A, o resultado é:
 
-![Rede de Interconexão do Enlace em A](images/screenshot050.png)<br>
+![Rede de Interconexão do Enlace em A](images/screenshot020.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 310.*
 
 Mudanças são divulgadas e provocam o recálculo das rotas afetadas, sem exigir sempre uma reconstrução completa. Manter o mapa e calcular caminhos consome memória e processamento; durante a convergência, ainda podem ocorrer *loops* temporários.
@@ -678,7 +678,7 @@ O **roteamento hierárquico** limita o detalhamento das informações ao organiz
 - **Roteamento externo:** Troca informações de alcance entre AS, considerando políticas de interconexão.
 - **Roteadores de borda:** Interligam o AS a outros. Rotas externas ou uma rota padrão orientam o tráfego até a saída.
 
-![Roteamento Hierárquico](images/screenshot051.png)<br>
+![Roteamento Hierárquico](images/screenshot021.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 317.*
 
 **Tabela de A1:**
@@ -698,7 +698,7 @@ O **roteamento hierárquico** limita o detalhamento das informações ao organiz
 
 Envia a mesma informação a todos os participantes de um âmbito definido, evitando transmissões individuais para cada destinatário (economia massiva de banda, já que os pacotes não são copiados e enviados como mensagens separadas).
 
-![Comparação entre roteamento *unicast* e *broadcast*](images/screenshot052.png)<br>
+![Comparação entre roteamento *unicast* e *broadcast*](images/screenshot022.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 318.*
 
 > A difusão em uma sub-rede IPv4 e a distribuição por uma topologia de roteadores têm funcionamentos distintos.
@@ -713,7 +713,7 @@ Envia a mesma informação a todos os participantes de um âmbito definido, evit
 
 Cada roteador replica a mensagem pelas saídas participantes, exceto pela interface de chegada.
 
-![*Broadcast* por inundação iniciado em A](images/screenshot053.png)<br>
+![*Broadcast* por inundação iniciado em A](images/screenshot023.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 318.*
 
 Esse método alcança os nós conectados, mas permite cópias repetidas e *loops* por outros caminhos. Dois mecanismos complementares limitam essa circulação:
@@ -760,14 +760,14 @@ O **RPM** (*Reverse Path Multicasting*) utiliza as tabelas de roteamento para de
 
 > Esse teste utiliza o caminho de menor custo conhecido até a origem. Não verifica se o pacote já chegou antes nem garante que ele seja o primeiro a chegar.
 
-![Topologia da rede e árvore antes da poda no RPM](images/screenshot054.png)<br>
+![Topologia da rede e árvore antes da poda no RPM](images/screenshot024.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 322.*
 
 Na figura, **a)** apresenta as conexões da rede; **b)** mostra a árvore resultante do teste de caminho reverso. Ainda são alcançados roteadores que não levam a receptores interessados, como **H** e o ramo **D–I**.
 
 A **poda** (*pruning*) elimina esses envios desnecessários: um roteador informa ao anterior que seu ramo não possui receptores interessados, e este deixa de encaminhar os próximos pacotes por aquela saída. O processo pode avançar em direção à origem, retirando todo um ramo sem receptores.
 
-![Árvore de distribuição do RPM após a poda](images/screenshot055.png)<br>
+![Árvore de distribuição do RPM após a poda](images/screenshot025.png)<br>
 *Fonte: **Adaptado** de MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 322.*
 
 Após a poda, são retirados da distribuição os ramos **B–H** e **A–D–I**. Já C permanece, mesmo sem receptor local, pois leva até F. As conexões continuam fisicamente disponíveis; apenas deixam de transportar aquele tráfego.
@@ -783,7 +783,7 @@ No **CBT** (*Core Based Trees*), roteadores com receptores interessados solicita
 
 **O núcleo não precisa estar no centro físico da rede nem possuir um receptor do grupo**, mas sua escolha influencia os caminhos e o desempenho da distribuição.
 
-![Árvore compartilhada baseada em núcleo](images/screenshot056.png)<br>
+![Árvore compartilhada baseada em núcleo](images/screenshot026.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 322.*
 
 - **Vantagem:** Evita a inundação inicial do domínio e compartilha a estrutura de distribuição entre emissores.

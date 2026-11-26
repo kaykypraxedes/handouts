@@ -68,12 +68,12 @@ A escolha e a avaliação de uma rede dependem dos requisitos da aplicação:
 - **Conexão Ponto a Ponto em Malha (*Mesh*):** Uma conexão ponto a ponto é um *link* direto entre dois dispositivos. Ao conectar todos diretamente uns aos outros (**malha completa**), obtém-se alta redundância, mas o custo e a quantidade de conexões prejudicam a escalabilidade.
 - **Conexão Ponto a Ponto em Redes Comutadas:** Dispositivos intermediários, como *switches* e roteadores, interligam as extremidades sem exigir conexões diretas entre todos os participantes. Quando existem caminhos redundantes, a rede pode redirecionar a informação em caso de falha.
 
-![Redes Ponto a Ponto](images/screenshot001.png)<br>
+![Redes Ponto a Ponto](images/screenshot002.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 37.*
 
 - **Conexão Multiponto:** Três ou mais dispositivos compartilham o mesmo meio de comunicação, como um barramento ou um canal sem fio.
 
-![Redes Multiponto](images/screenshot002.png)<br>
+![Redes Multiponto](images/screenshot003.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 38.*
 
 ## Comutação por Pacotes:
@@ -82,7 +82,7 @@ Os dados são organizados em pequenos blocos chamados **pacotes**, encaminhados 
 
 Em redes de datagramas, pacotes de uma mesma comunicação podem percorrer caminhos diferentes. Rotas alternativas podem ajudar em caso de falha, mas sua utilização depende da topologia e dos mecanismos de roteamento; o caminho não precisa mudar a cada pacote.
 
-![Redes com comutação por Pacotes](images/screenshot003.png)<br>
+![Redes com comutação por Pacotes](images/screenshot017.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 41.*
 
 ## Serviços Oferecidos pelas Redes:
@@ -193,19 +193,19 @@ O transmissor converte os dados para sinais adequados ao meio. É importante dis
 - **Causas:** Incluem interferências eletromagnéticas externas, ruído térmico (agitação dos portadores de carga) e *crosstalk* (acoplamento indesejado entre canais próximos).
 - **Relação Sinal-Ruído (*Signal-to-Noise Ratio*, SNR):** Razão entre a potência do sinal e a do ruído no mesmo ponto de observação. Na recepção, uma SNR maior facilita a distinção do sinal útil em relação ao ruído.
 
-![Representação da interferência por ruído](images/screenshot004.png)<br>
+![Representação da interferência por ruído](images/screenshot008.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 98.*
 
 ### Atenuação:
 
 É a redução da potência do sinal ao percorrer o meio. Se os níveis recebidos ficarem difíceis de distinguir entre si ou do ruído, o receptor poderá interpretar os *bits* incorretamente.
 
-![Representação da interferência por atenuação](images/screenshot005.png)<br>
+![Representação da interferência por atenuação](images/screenshot009.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 100.*
 
 **Circuitos Regeneradores (Repetidores):** Recebem o sinal digital e reconstroem seus níveis e temporização antes de repassá-lo. Permitem estender a comunicação, desde que ainda seja possível reconhecer os símbolos recebidos.
 
-![Circuito regenerador](images/screenshot006.png)<br>
+![Circuito regenerador](images/screenshot051.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 100.*
 
 Se o sinal chegar demasiadamente degradado ao regenerador, um símbolo poderá ser interpretado incorretamente. Nesse caso, o equipamento regenera o sinal, mas repassa o erro de informação.
@@ -263,7 +263,7 @@ Uma técnica comum para digitalizar áudio é o **PCM** (*Pulse Code Modulation*
 2. Cada amostra é aproximada a um dos **níveis de quantização** disponíveis.
 3. Cada nível de quantização recebe um conjunto de *bits*.
 
-![Digitalização](images/screenshot007.png)<br>
+![Digitalização](images/screenshot004.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 117.*
 
 ## Técnicas para Transmissão da Informação:
@@ -274,17 +274,17 @@ Utiliza estados ou níveis distinguíveis para representar dados digitais, como 
 
 - **NRZ-L (*Non Return to Zero-Level*):** Associa um valor de voltagem fixo (arbitrário) a cada *bit*.
 
-![NRZ-L](images/screenshot008.png)<br>
+![NRZ-L](images/screenshot005.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 118.*
 
 - **NRZ-I (*Non Return to Zero Invert* - codificação diferencial):** Se o sinal se mantém constante, representa o 0; se houver transição de nível no início do período, representa o 1 (convenção adotada aqui).
 
-![NRZ-I](images/screenshot009.png)<br>
+![NRZ-I](images/screenshot036.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 118.*
 
 - **Codificação Manchester:** Existe sempre uma transição no meio do período de cada *bit*. Na convenção descrita, a transição de alto para baixo representa 0; de baixo para alto, 1 (a associação pode ser invertida em outras convenções). Essa transição regular facilita a recuperação do relógio e o sincronismo entre transmissor e receptor.
 
-![Codificação Manchester](images/screenshot010.png)<br>
+![Codificação Manchester](images/screenshot037.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 119.*
 
 ### Sinalização Analógica:
@@ -293,29 +293,29 @@ Utiliza uma portadora cuja amplitude, frequência ou fase é modificada para rep
 
 - **ASK (*Amplitude Shift Keying*):** A amplitude da onda representa os *bits* (por exemplo, ausência de amplitude = *bit* 0 e presença de amplitude = *bit* 1). É **simples de implementar**, mas **mais suscetível a ruídos e interferências**.
 
-![ASK](images/screenshot011.png)<br>
+![ASK](images/screenshot038.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 121.*
 
 - **FSK (*Frequency Shift Keying*):** A frequência da onda representa os *bits* (cada *bit* corresponde a uma frequência diferente).
 
-![FSK](images/screenshot012.png)<br>
+![FSK](images/screenshot006.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 121.*
 
 - **PSK (*Phase Shift Keying*):** A fase da onda representa os *bits*.
 
-![PSK](images/screenshot013.png)<br>
+![PSK](images/screenshot039.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 122.*
 
 - **QAM (*Quadrature Amplitude Modulation*):** Combina componentes em quadratura, formando símbolos definidos por amplitude e fase. Isso permite representar vários *bits* por símbolo, conforme a constelação utilizada.
 
-![QAM](images/screenshot014.png)<br>
+![QAM](images/screenshot040.png)<br>
 *Fonte: FRAGA, Marcelo Caramuru Pimentel. Redes de Computadores - 6ª Aula, p. 23.*
 
 ## Sinalização Multinível:
 
 Uma sinalização pode representar **um *bit* por símbolo** (monobit) ou **vários *bits* por símbolo** (utilizando mais estados de sinalização). Para representar $\displaystyle n$ *bits* por símbolo, são necessários $\displaystyle 2^n$ estados distinguíveis, como níveis de amplitude ou combinações de amplitude e fase em QAM.
 
-![Sinal Multinível](images/screenshot015.png)<br>
+![Sinal Multinível](images/screenshot007.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 123.*
 
 - **Baud:** Taxa de símbolos por segundo.
@@ -395,7 +395,7 @@ Um quadro (*frame*) transporta os dados e as informações necessárias à comun
 
 O **enquadramento** permite reconhecer onde cada quadro começa e termina. Alguns protocolos usam *flags* (marcadores), representadas por caracteres ou sequências de *bits*; outros utilizam comprimento, preâmbulos e mecanismos próprios da tecnologia.
 
-![Enquadramento](images/screenshot016.png)<br>
+![Enquadramento](images/screenshot010.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 153.*
 
 ### Problemas na Utilização de *Flags*:
@@ -424,7 +424,7 @@ O transmissor calcula um **CDE** a partir dos dados protegidos e o envia com o q
 
 - **Paridade Múltipla:** Organiza os dados em linhas e colunas e calcula suas paridades, podendo incluir a paridade dos próprios *bits* adicionais. A verificação cruzada permite detectar mais padrões de erro e, em configurações apropriadas, localizar um erro simples.
 
-![Paridade múltipla](images/screenshot017.png)<br>
+![Paridade múltipla](images/screenshot041.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 159.*
 
 - ***Checksum*:** Código obtido por uma operação sobre blocos de dados, frequentemente uma soma. Em um exemplo simples com *bytes*, somam-se seus valores e toma-se o resto da divisão por 256 como CDE. Outros protocolos utilizam regras diferentes de soma e representação.
@@ -433,7 +433,7 @@ O transmissor calcula um **CDE** a partir dos dados protegidos e o envia com o q
 
 - **CRC (*Cyclic Redundancy Check*):** Técnica de detecção de erros baseada em uma divisão binária feita com operações `XOR`. O transmissor e o receptor usam a mesma sequência de *bits*, chamada **polinômio gerador**. Para calcular o CRC, o transmissor acrescenta temporariamente zeros ao fim dos dados, faz a divisão e coloca o **resto obtido** no lugar desses zeros. O receptor divide o conjunto recebido pelo mesmo gerador. Neste modelo simplificado, um resto diferente de zero indica erro; um resto igual a zero indica apenas que **nenhum erro foi detectado**. O CRC é muito utilizado pela boa capacidade de detecção com baixo custo de implementação.
 
-![CRC](images/screenshot018.png)<br>
+![CRC](images/screenshot042.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 161.*
 
 ## Hamming:
@@ -475,15 +475,15 @@ A recuperação pode ser feita por **retransmissão** ou por **correção no rec
 
 No **Stop-and-Wait**, o transmissor envia um quadro e aguarda um reconhecimento (**ACK**, *acknowledgement*) antes de enviar o próximo. O receptor confirma os quadros aceitos após a verificação de erros. Esse controle se aplica ao enlace considerado; outros trechos da rota podem utilizar mecanismos diferentes.
 
-![Transmissão *Stop-and-Wait*](images/screenshot019.png)<br>
+![Transmissão *Stop-and-Wait*](images/screenshot011.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 163.*
 
 O quadro ou seu ACK podem se perder. Por isso, no **Stop-and-Wait ARQ**, o transmissor inicia um temporizador ao enviar e retransmite se o ***timeout*** expirar sem a confirmação esperada. A ausência de ACK indica uma tentativa sem confirmação, não necessariamente a perda do quadro.
 
-![*Timeout*](images/screenshot020.png)<br>
+![*Timeout*](images/screenshot043.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 163.*
 
-![Falha no envio do ACK](images/screenshot021.png)<br>
+![Falha no envio do ACK](images/screenshot012.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 164.*
 
 ### Tratamento de Transmissões com Erro:
@@ -499,17 +499,17 @@ Quando a verificação detecta um quadro corrompido, o tratamento depende do pro
 
 - **Protocolo de Bit Alternado:** Aplica Stop-and-Wait com um número de sequência de um *bit*, alternado entre quadros novos. Se um ACK se perder, o receptor reconhece o quadro retransmitido como duplicata, não entrega os dados novamente e repete a confirmação. É simples, mas a espera a cada quadro pode deixar o enlace ocioso.
 
-![*Bit* alternado](images/screenshot022.png)<br>
+![*Bit* alternado](images/screenshot044.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 167.*
 
 - **Retransmissão Integral (*Go-Back-N*):** O transmissor mantém vários quadros pendentes em uma **janela**, sem esperar um ACK individual para cada envio. O receptor aceita os quadros em ordem e descarta os que chegam fora dela. Se um quadro se perder ou falhar, retransmitem-se o pendente e os seguintes ainda não confirmados.
 
-![Retransmissão Integral](images/screenshot023.png)<br>
+![Retransmissão Integral](images/screenshot045.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 170.*
 
 - **Retransmissão Seletiva (*Selective Repeat*):** Também utiliza uma janela de quadros numerados, mas o receptor armazena os recebidos fora de ordem e o transmissor reenvia apenas os pendentes. Se o quadro 1 falhar, por exemplo, os quadros 2, 3 e 4 podem aguardar no *buffer*. Quando a lacuna é resolvida, os dados disponíveis são entregues em ordem e o espaço correspondente é liberado.
 
-![Retransmissão Seletiva](images/screenshot024.png)<br>
+![Retransmissão Seletiva](images/screenshot046.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 175.*
 
 ## Controle de Fluxo:
@@ -551,7 +551,7 @@ Cada dispositivo recebe uma parte do meio, como uma faixa de frequência, um int
 
 > Na prática, sinais simultâneos ainda podem interferir uns nos outros se o sistema não for bem controlado.
 
-![CDMA](images/screenshot025.png)<br>
+![CDMA](images/screenshot047.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 188.*
 
 ### Acesso Aleatório:
@@ -580,12 +580,12 @@ Os dispositivos tentam transmitir quando têm dados. Se houver colisão, aguarda
 
 **Estação Escondida:** X e Z conseguem se comunicar com Y, mas não se ouvem. X pode julgar o canal livre enquanto Z transmite para Y. Uma resposta CTS de Y pode avisar as estações ao seu alcance para aguardar, reduzindo esse problema.
 
-![Estação escondida no CSMA/CA](images/screenshot026.png)<br>
+![Estação escondida no CSMA/CA](images/screenshot048.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 196.*
 
 **Estação Exposta:** Uma estação ouve uma transmissão próxima e deixa de enviar, mesmo quando seu destinatário está fora da área de interferência daquela comunicação.
 
-![Estação exposta no CSMA/CA](images/screenshot027.png)<br>
+![Estação exposta no CSMA/CA](images/screenshot049.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 197.*
 
 ### Acesso Ordenado:
@@ -613,7 +613,7 @@ O quadro *Ethernet* especifica os campos necessários para uma entrega local. Al
 - **Dados:** Transportam a informação recebida da camada superior.
 - **Sequência de verificação de quadro (*Frame Check Sequence*, FCS):** Contém o resultado da verificação de erros feita com CRC.
 
-![Quadro *Ethernet* DIX x IEEE 802.3](images/screenshot028.png)<br>
+![Quadro *Ethernet* DIX x IEEE 802.3](images/screenshot050.png)<br>
 *Fonte: FRAGA, Marcelo Caramuru Pimentel. Redes de Computadores - 11ª Aula, p. 15.*
 
 A comparação histórica entre **IEEE 802.3 com LLC** e ***Ethernet* II (DIX)** está no campo de 2 *bytes* após os endereços: o primeiro o utiliza como comprimento; o segundo, como tipo de protocolo. O padrão IEEE 802.3 atual contempla o campo **Comprimento/Tipo**, distinguindo os usos pelo valor, sem tornar *Ethernet* II incompatível com ele.
@@ -638,22 +638,22 @@ Nas redes compartilhadas, aumentar a taxa reduz o tempo de transmissão do quadr
 
 - **Repetidor:** Atua na **Camada Física**. Recebe um sinal enfraquecido, regenera-o e o envia ao trecho seguinte. Ele permite estender a comunicação, mas não lê os endereços do quadro nem decide quais dispositivos deveriam recebê-lo.
 
-![Repetidor](images/screenshot029.png)<br>
+![Repetidor](images/screenshot052.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 220.*
 
 - ***Hub*:** Repetidor com várias portas: o sinal recebido por uma é enviado às demais. Embora os cabos formem uma estrela, o meio continua compartilhado, com possibilidade de colisões.
 
-![Hub](images/screenshot030.png)<br>
+![Hub](images/screenshot053.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 220.*
 
 - **Ponte:** Atua na **Camada de Enlace**. Ao observar os endereços MAC, consegue **evitar o encaminhamento** de quadros para segmentos onde eles não são necessários, separando os domínios de colisão.
 
-![Pontes](images/screenshot031.png)<br>
+![Pontes](images/screenshot054.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 223.*
 
 - ***Switch*:** Ponte com várias portas. Aprende a localização das interfaces observando o **MAC de origem** dos quadros recebidos e associando-o à porta de entrada. Quando conhece um destino *unicast*, encaminha à porta correspondente; se ele estiver na própria porta de entrada, filtra o quadro. Um destino *unicast* desconhecido é distribuído pelas demais portas elegíveis da mesma VLAN. Ligações diretas a dispositivos podem operar em *full-duplex*, sem colisões.
 
-![*Switches*](images/screenshot032.png)<br>
+![*Switches*](images/screenshot055.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 224.*
 
 > Se X enviar um quadro para Y, em um *hub* o sinal é repetido para todas as outras portas; em um *switch* que já sabe onde Y está conectado, o quadro é encaminhado à porta de Y. **Separar colisões não é a mesma coisa que separar todos os tipos de tráfego**.
@@ -673,14 +673,14 @@ Em uma rede IEEE 802.11, um grupo de estações que se comunica constitui um con
 - **Infraestrutura:** As estações se associam a um **AP** (*Access Point*), que intermedeia a comunicação e pode conectar o BSS ao sistema de distribuição.
 - ***Ad Hoc*:** As estações se comunicam diretamente, sem AP, formando um BSS independente (IBSS).
 
-![BSS](images/screenshot033.png)<br>
+![BSS](images/screenshot056.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 229.*
 
 Vários BSS com pontos de acesso podem ser interligados por um sistema de distribuição (*Distribution System*, DS). Juntos, formam um conjunto estendido de serviços (*Extended Service Set*, ESS).
 
 Em um prédio, cada AP pode atender uma região. A integração dos BSS em um ESS permite mobilidade entre essas áreas, conforme os mecanismos de associação utilizados.
 
-![BSS, DS e ESS](images/screenshot034.png)<br>
+![BSS, DS e ESS](images/screenshot057.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 230.*
 
 ### Acesso ao Meio:
@@ -688,7 +688,7 @@ Em um prédio, cada AP pode atender uma região. A integração dos BSS em um ES
 - **DCF (*Distributed Coordination Function*):** Distribui a decisão entre as estações, com base em CSMA/CA. Combina observação do canal, intervalos entre quadros e ***backoff* aleatório**: a estação sorteia uma espera em *slots*, decrementa o contador enquanto o canal permanece livre e o congela quando fica ocupado, retomando após o intervalo exigido. Ainda podem ocorrer colisões.
 - **PCF (*Point Coordination Function*):** Mecanismo opcional do modelo clássico que utiliza o AP para consultar estações (*polling*), organizando períodos sem a disputa normal da DCF. É apresentado aqui pelo seu papel no modelo original de acesso.
 
-![DCF e PCF](images/screenshot035.png)<br>
+![DCF e PCF](images/screenshot058.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 233.*
 
 ### RTS, CTS, ACK e NAV:
@@ -732,17 +732,17 @@ O **STP** identifica esses caminhos redundantes e deixa alguns deles temporariam
 
 > É como fechar uma das ruas de um circuito para impedir que veículos fiquem dando voltas.
 
-![STP](images/screenshot036.png)<br>
+![STP](images/screenshot059.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 241.*
 
 ## VLANs (*Virtual Local Area Networks*):
 
 Um *switch* separa os domínios de colisão de suas portas, mas, sem outra configuração, um ***broadcast*** ainda alcança os dispositivos da mesma rede lógica. Uma **VLAN** permite dividir essa rede em grupos: cada VLAN constitui, em condições normais, seu próprio domínio de *broadcast*. A associação à VLAN pode vir da configuração da **porta de acesso** ou de políticas específicas; entre equipamentos, a identificação também pode ser transportada por uma *tag* no quadro.
 
-![Switch sem VLAN](images/screenshot037.png)<br>
+![Switch sem VLAN](images/screenshot060.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 243.*
 
-![Switch com VLAN](images/screenshot038.png)<br>
+![Switch com VLAN](images/screenshot061.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 246.*
 
 Uma ligação de **entroncamento** (*trunk*) transporta várias VLANs entre equipamentos, normalmente identificadas por *tags* IEEE 802.1Q. Conforme a configuração, o tráfego de uma VLAN nativa pode circular sem *tag*; por isso, associação à VLAN e presença de uma marca no quadro não são a mesma coisa.
