@@ -1540,6 +1540,22 @@ O gerente pode então consultar `ifOperStatus.2` novamente para verificar o esta
 
 # Apêndice B. Modelo OSI
 
+A ISO desenvolveu o **modelo OSI** (*Open Systems Interconnection*) para orientar a criação de padrões que permitissem a comunicação entre sistemas de diferentes fabricantes. O modelo organiza essa comunicação em sete camadas. Cada camada oferece um serviço à camada superior e utiliza os serviços da camada inferior. Assim, dois sistemas podem implementar uma função de maneiras diferentes e ainda se comunicar, desde que sigam as mesmas regras na troca de dados.
+
+As três primeiras camadas — **Física**, **Enlace** e **Rede** — tratam da transmissão de sinais, da entrega de quadros em cada enlace e do encaminhamento de pacotes entre redes. A partir da quarta camada, o foco passa para os processos nas extremidades: como os dados chegam, como o diálogo é coordenado, como o conteúdo é representado e qual serviço a aplicação utiliza.
+
+- **4. Transporte:** Cuida da entrega de dados de um processo a outro, de ponta a ponta. Pode dividir os dados em segmentos, controlar o fluxo e, quando o serviço exige entrega confiável, recuperar trechos perdidos e colocá-los em ordem. Em uma transferência de arquivo, por exemplo, cabe ao transporte confiável entregar à aplicação os bytes na sequência correta.
+
+- **5. Sessão:** Estabelece, coordena e encerra o diálogo entre as aplicações. Pode organizar de quem é a vez de transmitir e inserir **pontos de sincronização** ao longo de uma operação. Em uma transferência longa, esses pontos permitem retomar o trabalho a partir de uma etapa já concluída após uma interrupção.
+
+- **6. Apresentação:** Define como os dados são representados para que ambos os sistemas atribuam o mesmo significado aos bytes recebidos. Dois computadores podem, por exemplo, usar codificações de caracteres diferentes internamente e adotar uma codificação comum para trocar um texto. O modelo também atribui a essa camada funções como compressão e criptografia.
+
+- **7. Aplicação:** Oferece os serviços de rede utilizados pelos programas, como transferência de arquivos, correio eletrônico e acesso remoto. É nessa camada que se define o significado de um pedido ou de uma resposta. Em um serviço de arquivos, por exemplo, uma mensagem pode solicitar a listagem de um diretório ou a leitura de um arquivo.
+
+![Modelo OSI](images/screenshot065.png)<br>
+*Fonte: Delta Protect - Capas del Modelo OSI. Disponível em: [https://www.deltaprotect.com/blog/modelo-osi](https://www.deltaprotect.com/blog/modelo-osi). Acesso em: 26 nov. 2026.*
+
+> No modelo de cinco camadas usado nesta apostila, o Transporte continua responsável pela comunicação fim a fim. As funções que o OSI distribui entre **Sessão**, **Apresentação** e **Aplicação** ficam reunidas na camada de Aplicação e podem ser realizadas pelos próprios programas, por protocolos ou por bibliotecas.
 
 ---
 
@@ -1630,6 +1646,7 @@ O gerente pode então consultar `ifOperStatus.2` novamente para verificar o esta
 
 - MAIA, Luiz Paulo. *Arquitetura de Redes de Computadores*. 2. ed. Rio de Janeiro: LTC, 2013.
 - TANENBAUM, Andrew; FEAMSTER, Nick; WETHERALL, David. *Redes de Computadores*. 6. ed. São Paulo: Pearson, 2021.
+- FOROUZAN, Behrouz A. *Comunicação de Dados e Redes de Computadores*. 4. ed. Porto Alegre: AMGH, 2010.
 - FRAGA, Marcelo Caramuru Pimentel. *Disciplina: Redes de Computadores I*. Curso de graduação em Engenharia de Computação - Centro Federal de Educação Tecnológica de Minas Gerais (CEFET-MG), 2026.
 - NEWMAN-WOLFE, Richard E. *Multiplexing*. CEN 4500C: Fundamentals of Computer Communication Networks. Gainesville: University of Florida, 1995. Disponível em: [https://www.cise.ufl.edu/~nemo/cen4500/mux.html](https://www.cise.ufl.edu/~nemo/cen4500/mux.html). Acesso em: 24 set. 2026.
 - BRADEN, R. (ed.). *Requirements for Internet Hosts - Communication Layers*. RFC 1122. Marina del Rey: RFC Editor, 1989. Disponível em: [https://www.rfc-editor.org/rfc/rfc1122.html](https://www.rfc-editor.org/rfc/rfc1122.html). Acesso em: 8 out. 2026.
