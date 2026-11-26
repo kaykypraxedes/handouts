@@ -23,7 +23,7 @@ ______            _                   _
 
 ## O que é uma Rede de Computadores:
 
-“É um conjunto de computadores autônomos e interconectados por uma única tecnologia.” - Tanenbaum.
+"É um conjunto de computadores autônomos e interconectados por uma única tecnologia." - Tanenbaum.
 
 Em uma rede, os dispositivos conectados podem trocar informações e compartilhar recursos. Em um laboratório, vários computadores podem enviar trabalhos para a mesma impressora. Em casa, um celular pode receber a imagem de uma câmera pelo Wi-Fi. Na faculdade, professores e alunos podem acessar o mesmo portal para publicar e consultar notas.
 
@@ -602,7 +602,7 @@ Quando mais de uma rota corresponde ao destino, prevalece o **prefixo mais longo
 
 Depois de escolher o próximo salto, o notebook precisa descobrir seu endereço de enlace. No laboratório, essa associação é feita por **ARP**. Para imprimir, o notebook procura o MAC de `.50`. Para enviar ao servidor `.70`, procura o MAC de `.33`. O endereço IP de destino do pacote continua sendo o do servidor. Em IPv6, a resolução do endereço de enlace faz parte da **descoberta de vizinhos** (*Neighbor Discovery*).
 
-> A tabela de rotas responde “por onde envio este pacote?”. A tabela de vizinhos responde “qual endereço de enlace uso para entregá-lo no próximo salto?”.
+> A tabela de rotas responde "por onde envio este pacote?". A tabela de vizinhos responde "qual endereço de enlace uso para entregá-lo no próximo salto?".
 
 ## Roteamento e Descoberta de Caminhos:
 
@@ -665,12 +665,12 @@ Na figura, cada enlace tem custo 1. A tabela acompanha as informações disponí
 
 | Etapa | O que muda | O que A registra |
 | --- | --- | --- |
-| **T0 - Detecção** | A e B detectam a falha e invalidam as rotas selecionadas que dependiam de C1. | As entradas para B e E passam a custo `∞`. O enlace direto até D continua válido. |
-| **T1 - Propagação** | Os vizinhos recebem os anúncios e reavaliam suas próprias entradas. | Nesta etapa do exemplo, A ainda registra `∞` para B e E. |
-| **T2 - Alternativas** | Anúncios recebidos por D revelam caminhos válidos. | A volta a alcançar E por `A-D-E`, a custo 2. Ainda registra `∞` para B. |
+| **T0 - Detecção** | A e B detectam a falha e invalidam as rotas selecionadas que dependiam de C1. | As entradas para B e E passam a custo $\infty$. O enlace direto até D continua válido. |
+| **T1 - Propagação** | Os vizinhos recebem os anúncios e reavaliam suas próprias entradas. | Nesta etapa do exemplo, A ainda registra $\infty$ para B e E. |
+| **T2 - Alternativas** | Anúncios recebidos por D revelam caminhos válidos. | A volta a alcançar E por `A-D-E`, a custo 2. Ainda registra $\infty$ para B. |
 | **T3 - Nova convergência** | As rotas se estabilizam sem utilizar C1. | A alcança B por `A-D-E-B`, a custo 3. Antes da falha, o enlace direto custava 1. |
 
-> O custo `∞` indica que o roteador considera o destino inalcançável com as informações disponíveis naquele instante. E continuava fisicamente acessível por D. A sequência T0-T3 ilustra uma ordem possível de atualização. Um roteador que já mantenha uma alternativa válida pode utilizá-la mais cedo.
+> O custo $\infty$ indica que o roteador considera o destino inalcançável com as informações disponíveis naquele instante. E continuava fisicamente acessível por D. A sequência T0-T3 ilustra uma ordem possível de atualização. Um roteador que já mantenha uma alternativa válida pode utilizá-la mais cedo.
 
 ### Estado de Enlace:
 
@@ -762,25 +762,27 @@ Considere um pacote IP de **1.500 bytes** que chega a um roteador cuja próxima 
 
 Remontar um datagrama exige receber **todos** os seus fragmentos. Se um deles se perder, o destino não consegue entregar o datagrama completo. Conhecer a MTU do caminho permite à origem ajustar o tamanho dos pacotes antes do envio.
 
-> **No Linux:** o campo `mtu` de `ip a` ou `ip link show` informa a MTU **da interface local**. Um valor de `1500` no notebook, por si só, não informa qual é a menor MTU do percurso até o servidor.
+> Uma MTU de 1.500 bytes no notebook informa o limite da interface local. Um enlace mais adiante pode ter uma MTU menor.
 
-## Túneis e VPNs:
+## VPN:
 
-Um aluno em casa precisa acessar `192.168.10.70`, endereço privado do servidor da faculdade. Para que o pacote atravesse a Internet e chegue à rede do laboratório, uma **VPN** (*Virtual Private Network*) pode estabelecer um **túnel** entre o notebook e um gateway da instituição. O princípio do túnel é encapsular o pacote original para transportá-lo entre suas extremidades.
+Uma **VPN** (*Virtual Private Network*) pode estabelecer um **túnel** para transportar pacotes privados pela Internet. Em uma VPN **IPsec em modo túnel** com criptografia, uma extremidade protege o pacote original e acrescenta um cabeçalho IP externo. Os roteadores da Internet consultam o destino **externo**. A outra extremidade verifica a proteção, remove o encapsulamento e encaminha o pacote conforme o destino **interno**. Para a mesma MTU externa, os cabeçalhos e a proteção do túnel deixam menos espaço para o pacote interno.
 
-Em uma VPN **IPsec em modo túnel**, com proteção criptográfica, o percurso de ida pode ser entendido em três etapas:
+### *Remote Access* VPN: 
 
-1. **No notebook:** Uma rota direciona o tráfego do laboratório para o túnel. O pacote interno mantém `192.168.10.70` como destino. O encapsulamento adiciona um cabeçalho IP externo cujo destino é o endereço público do gateway da VPN.
-2. **Na Internet:** Os roteadores intermediários consultam o destino **externo** para encaminhar o pacote até a faculdade. A proteção do túnel cobre o pacote **interno** no trecho entre as extremidades.
-3. **Na faculdade:** O gateway verifica a proteção, remove o encapsulamento e consulta o destino **interno**. A partir daí, encaminha o pacote ao servidor pelas rotas da instituição.
+Um aluno em casa precisa acessar `192.168.10.70`, endereço privado do servidor da faculdade. O notebook envia o pacote pelo túnel até o endereço público do *gateway* da instituição. Dentro do túnel, o destino continua sendo `192.168.10.70`. Ao receber o pacote, o *gateway* remove o encapsulamento e o encaminha ao servidor.
 
 ![VPN Remote Access](images/screenshot059.png)<br>
 *Fonte: Elaborado pelo autor com auxílio do ChatGPT, 2026.*
 
+> Se o aluno acessar um site pelo túnel e o *gateway* traduzir a origem, o site verá o *socket* de saída da VPN (IP público e porta). A associação entre esse *socket* e o *socket* público do aluno que se conectou à VPN fica no *gateway*. Esse é o sentido do "anonimato" nesse exemplo. O site ainda pode reconhecer o aluno se ele entrar em sua conta.
+
+### *Site-to-site* VPN: 
+
+Dois campi podem compartilhar um túnel entre seus *gateways*. Quando um computador envia um pacote ao outro campus, o *gateway* local o encapsula e o do campus de destino o encaminha pela rede interna. O mesmo túnel atende aos computadores das duas redes.
+
 ![VPN site-to-site](images/screenshot060.png)<br>
 *Fonte: Elaborado pelo autor com auxílio do ChatGPT, 2026.*
-
-Esse é um exemplo de **acesso remoto**, em que um dispositivo se conecta à rede da instituição. Em uma VPN **entre redes** (*site-to-site*), os dois extremos do túnel podem ser gateways, por exemplo, um em cada campus. O encapsulamento acrescenta cabeçalhos e informações de proteção. Para a mesma MTU externa, sobra menos espaço para o pacote interno.
 
 ## *Onion Routing*:
 
@@ -1010,7 +1012,7 @@ No formato **Ethernet II** (DIX), um valor como `0x0800` identifica IPv4. No for
 
 O tamanho mínimo do quadro básico é **64 bytes**, do MAC de destino ao FCS. No Ethernet compartilhado clássico, esse mínimo e o limite de extensão do segmento permitiam que uma colisão distante fosse percebida enquanto a estação ainda transmitia.
 
-**Endereço MAC.** Um endereço Ethernet tem 48 bits, geralmente escritos como seis pares hexadecimais. Pode ser administrado globalmente, com identificadores atribuídos à organização responsável, ou localmente, inclusive por software. Para consultar o endereço de uma interface, use `ip a` no Linux (campo `link/ether`) ou `ipconfig /all` no Windows (campo “Endereço Físico”).
+**Endereço MAC.** Um endereço Ethernet tem 48 bits, geralmente escritos como seis pares hexadecimais. Pode ser administrado globalmente, com identificadores atribuídos à organização responsável, ou localmente, inclusive por software.
 
 **Evolução do meio.** Em **10BASE5** e **10BASE2**, várias estações compartilhavam um barramento coaxial. O **10BASE-T** levou um cabo de par trançado de cada estação a um ponto central. O equipamento instalado nesse ponto determina se as estações ainda compartilham o meio ou se cada ligação opera de forma independente. Entre as taxas posteriores estão **Fast Ethernet** (100 Mbit/s) e **Gigabit Ethernet** (1 Gbit/s).
 
@@ -1126,42 +1128,11 @@ Se laboratório e administração ocupam dois prédios, um *trunk* entre os swit
 
 ### Interfaces, Endereços e Pacotes IP:
 
-No Linux, `ip a` é a forma abreviada de `ip address`. A saída é organizada por **interface**. Primeiro aparecem seu nome, estado e MTU. Abaixo, o endereço de enlace e os endereços IP configurados. Uma saída abreviada do notebook do laboratório poderia ser:
-
-```text
-1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536
-    link/loopback 00:00:00:00:00:00
-    inet 127.0.0.1/8 scope host lo
-    inet6 ::1/128 scope host
-
-2: enp2s0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500
-    link/ether 02:11:22:33:44:54 brd ff:ff:ff:ff:ff:ff
-
-3: wlo1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500
-    link/ether 02:11:22:33:44:55 brd ff:ff:ff:ff:ff:ff
-    inet 192.168.10.34/27 brd 192.168.10.63 scope global wlo1
-    inet6 fe80::1234:5678:9abc:def0/64 scope link
-```
-
-| Nome ou campo | Como interpretar |
-| --- | --- |
-| **`lo`** | Interface de *loopback*. Os endereços `127.0.0.1` e `::1` permitem acessar serviços no próprio computador. |
-| **`en...`** | Na convenção de nomes previsíveis, `en` indica Ethernet. Em `enp2s0`, o restante identifica a localização do dispositivo no barramento PCI. |
-| **`wl...`** | `wl` indica Wi-Fi. Em `wlo1`, `o1` indica um índice de dispositivo integrado atribuído pelo firmware. Outros equipamentos podem ter nomes como `wlp2s0`. |
-| **`<interface>.<ID>`** | Nome convencional de uma interface VLAN. Por exemplo, `enp2s0.10` costuma representar a VLAN 10 sobre `enp2s0`. Como o nome é configurável, `ip -d link show` permite confirmar o tipo e o ID. |
-| **`UP`, `LOWER_UP` e `NO-CARRIER`** | `UP` indica que a interface está administrativamente habilitada. `LOWER_UP` indica que a camada inferior sinaliza enlace ativo. No exemplo, a Ethernet está habilitada, mas `NO-CARRIER` indica ausência de enlace, como ocorre com um cabo desconectado. |
-| **`link/ether`** | Mostra o MAC utilizado pela interface Ethernet ou Wi-Fi. Na mesma linha, `brd ff:ff:ff:ff:ff:ff` é o endereço de *broadcast* de enlace. |
-| **`inet` e `inet6`** | Identificam IPv4 e IPv6. Na linha `inet`, `brd 192.168.10.63` é o *broadcast* IPv4 da sub-rede. |
-| **`scope`** | Indica alcance. `host` corresponde ao próprio equipamento e `link` ao enlace local. O Linux também pode exibir `scope global` para um IPv4 privado, como `.34`. Esse rótulo, por si só, não indica acesso pela Internet. |
-| **`mtu`** | Tamanho máximo do pacote de rede que a interface pode transportar pelo enlace como uma unidade. |
-
-> Os números antes dos dois-pontos (`1:`, `2:`, `3:`) são índices das interfaces no sistema. Já os números dentro de nomes como `enp2s0` descrevem atributos do dispositivo. Assim, as únicas duas interfaces Ethernet de um computador poderiam se chamar `enp2s0` e `enp5s0`.
-
-Para consultar apenas os endereços, use `ip -br addr`. Para examinar uma interface, use `ip addr show dev wlo1`, substituindo `wlo1` pelo nome exibido no computador. No Windows, `ipconfig /all` reúne os adaptadores, endereços físicos, endereços IP, configuração DHCP e gateways.
+No notebook do laboratório, a interface Wi-Fi tem o IPv4 `192.168.10.34/27` e um endereço IPv6 de alcance local ao enlace. A interface de *loopback* permite acessar serviços no próprio computador por `127.0.0.1` ou `::1`. O Apêndice C mostra como consultar os endereços, a MTU e o estado de cada interface.
 
 **Leitura de um IPv6.** Cada grupo hexadecimal representa 16 bits. Zeros à esquerda de um grupo podem ser omitidos. Uma sequência de grupos inteiramente zerados pode ser abreviada por `::`, uma única vez no endereço. Assim, `fe80::70db:aa5b:82c0:622c` corresponde a `fe80:0000:0000:0000:70db:aa5b:82c0:622c`. O `/64`, quando presente, é o comprimento do prefixo.
 
-**Da interface para o pacote.** `ip a` mostra a configuração local. Em um pacote transmitido por essa interface, alguns dos campos que orientam o processamento são:
+**Da interface para o pacote.** Em um pacote transmitido pela interface, alguns dos campos que orientam o processamento são:
 
 | Função | IPv4 | IPv6 |
 | --- | --- | --- |
@@ -1212,23 +1183,7 @@ O **alinhamento** importa. Os blocos `192.168.10.32/27` e `192.168.10.64/27` tam
 
 O encaminhamento pode ser feito por um **roteador especializado** ou por um **computador de uso geral**. Um equipamento dedicado pode encaminhar pacotes com chips especializados e calcular rotas em software. Um computador Linux com encaminhamento habilitado também pode rotear entre interfaces físicas ou virtuais. Em ambos os casos, a decisão depende da tabela de encaminhamento.
 
-No capítulo 4, o notebook alcançava a impressora `.50` diretamente e usava o gateway `.33` para o servidor `.70`. Considere agora uma mudança: o laboratório instalou um segundo roteador, `.62`, para atender à rede do servidor. Uma consulta com `ip -4 route` poderia produzir a seguinte saída abreviada:
-
-```text
-default via 192.168.10.33 dev wlo1
-192.168.10.32/27 dev wlo1 proto kernel scope link src 192.168.10.34
-192.168.10.64/27 via 192.168.10.62 dev wlo1
-```
-
-| Trecho da saída | Significado |
-| --- | --- |
-| **`dev wlo1`** | Interface pela qual o pacote deve sair. |
-| **`scope link`** | A rota alcança diretamente o destino pelo enlace. |
-| **`via 192.168.10.62`** | O próximo salto é o roteador `.62`. |
-| **`src 192.168.10.34`** | Endereço de origem preferido para essa rota. |
-| **`default`** | Rota utilizada quando não há uma correspondência mais específica. |
-
-A ordem em que as linhas aparecem na tela não determina a escolha. Entre os prefixos correspondentes, prevalece o mais longo.
+No capítulo 4, o notebook alcançava a impressora `.50` diretamente e usava o gateway `.33` para o servidor `.70`. Considere agora uma mudança: o laboratório instalou um segundo roteador, `.62`, para atender à rede do servidor. A rota para `192.168.10.64/27` passa por esse roteador. Como o prefixo é mais longo que o da rota padrão, o notebook usa `.62` para alcançar o servidor. A rota padrão continua passando por `.33`.
 
 ![Tabela com destinos de encaminhamento](images/screenshot045.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 291.*
@@ -1242,20 +1197,9 @@ A ordem em que as linhas aparecem na tela não determina a escolha. Entre os pre
 ![Tabela de encaminhamento com gateway](images/screenshot046.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 292.*
 
-> **Consulta prática:** `ip route get 192.168.10.70` mostra a decisão que o sistema tomaria para esse destino. Com a tabela acima, o resultado indica `via 192.168.10.62 dev wlo1`. O comando consulta o roteamento local. A disponibilidade do servidor precisa ser verificada separadamente.
+**Resolução de vizinhos.** Depois da escolha da rota, o notebook precisa do endereço de enlace do vizinho. Um mapeamento **estático** é configurado manualmente. No mapeamento **dinâmico** por ARP, a máquina consulta o cache e, se necessário, envia uma solicitação ARP por *broadcast* de enlace. No caso do servidor `.70`, a pergunta é "quem tem `192.168.10.62`?". O roteador responde com seu MAC, e a associação pode ser reutilizada nos envios seguintes.
 
-**Resolução de vizinhos.** Depois da escolha da rota, o notebook precisa do endereço de enlace do vizinho. Um mapeamento **estático** é configurado manualmente. No mapeamento **dinâmico** por ARP, a máquina consulta o cache e, se necessário, envia uma solicitação ARP por *broadcast* de enlace. No caso do servidor `.70`, a pergunta é “quem tem `192.168.10.62`?”. O roteador responde com seu MAC, e a associação pode ser reutilizada nos envios seguintes.
-
-Uma saída ilustrativa de `ip neigh show dev wlo1` seria:
-
-```text
-192.168.10.50 lladdr 02:11:22:33:44:50 REACHABLE
-192.168.10.62 lladdr 02:11:22:33:44:62 STALE
-```
-
-`lladdr` indica o endereço de enlace. `REACHABLE` indica que a alcançabilidade foi confirmada recentemente. `STALE` indica que a associação é conhecida, mas pode precisar de nova confirmação quando utilizada. É possível ter uma rota válida para `.70` antes de existir uma entrada para `.62` no cache. A descoberta ocorre quando necessária.
-
-Em IPv6, o **Neighbor Discovery** utiliza mensagens ICMPv6 de solicitação e anúncio de vizinho. O Linux também mostra essas associações em `ip neigh`. Para consultar somente rotas e vizinhos IPv6, use `ip -6 route` e `ip -6 neigh`. No Windows, `route print` exibe as rotas e `arp -a` mostra o cache ARP do IPv4.
+É possível ter uma rota válida para `.70` antes de existir uma entrada para `.62` no cache. A descoberta ocorre quando necessária. Em IPv6, o **Neighbor Discovery** utiliza mensagens ICMPv6 de solicitação e anúncio de vizinho.
 
 ### Endereços Privados e Tradução por NAT:
 
@@ -1287,7 +1231,7 @@ Considere dois computadores que acessam o mesmo servidor HTTPS, ambos utilizando
 
 ### Fragmentação e Diagnóstico da MTU:
 
-Um roteador recebe um datagrama **IPv4 de 1.500 bytes**, com cabeçalho de 20 bytes, sem opções e com fragmentação permitida. A interface de saída tem MTU de **1.280 bytes**. Como cada fragmento precisa de seu próprio cabeçalho, sobram no máximo `1.280 − 20 = 1.260 bytes` para dados por fragmento.
+Um roteador recebe um datagrama **IPv4 de 1.500 bytes**, com cabeçalho de 20 bytes, sem opções e com fragmentação permitida. A interface de saída tem MTU de **1.280 bytes**. Como cada fragmento precisa de seu próprio cabeçalho, sobram no máximo `1.280 - 20 = 1.260 bytes` para dados por fragmento.
 
 O campo **Fragment Offset** mede posições em blocos de **8 bytes** a partir do início dos dados originais. Por isso, a carga de cada fragmento anterior ao último precisa ser múltipla de oito. O maior múltiplo de oito que cabe em `1.260` é `1.256`.
 
@@ -1300,11 +1244,11 @@ O segundo offset vale `1.256 / 8 = 157`. O indicador **MF** (*More Fragments*) v
 
 Se o bit **DF** (*Don't Fragment*) estiver ativo, o roteador descarta o datagrama grande demais e o funcionamento previsto é informar o problema por ICMP. Em IPv6, roteadores também descartam pacotes que excedem a MTU de saída e informam a origem por **ICMPv6 Packet Too Big**. A origem pode então ajustar o tamanho dos pacotes.
 
-> **Consulta prática:** `ip link show dev wlo1` mostra a MTU local. Quando disponível, `tracepath <destino>` pode ajudar a estimar a MTU do caminho. O resultado depende das respostas recebidas. Em uma VPN, parte da MTU externa é consumida pelos cabeçalhos e pela proteção do túnel, reduzindo o espaço disponível para o pacote interno.
+> Em uma VPN, parte da MTU externa é consumida pelos cabeçalhos e pela proteção do túnel, reduzindo o espaço disponível para o pacote interno.
 
 ### Algoritmos e Protocolos de Roteamento:
 
-**Vetor de distância no RIP.** O RIP usa a quantidade de saltos como métrica. O valor `16` representa um destino inalcançável e exerce o papel de `∞` no exemplo do capítulo 4. Depois de uma falha, anúncios desatualizados podem levar dois vizinhos a acreditar, cada um, que o outro ainda alcança o destino. A cada troca, o custo anunciado aumenta até atingir o limite. Esse fenômeno é chamado de **contagem ao infinito**.
+**Vetor de distância no RIP.** O RIP usa a quantidade de saltos como métrica. O valor `16` representa um destino inalcançável e exerce o papel de $\infty$ no exemplo do capítulo 4. Depois de uma falha, anúncios desatualizados podem levar dois vizinhos a acreditar, cada um, que o outro ainda alcança o destino. A cada troca, o custo anunciado aumenta até atingir o limite. Esse fenômeno é chamado de **contagem ao infinito**.
 
 **Cálculo de caminhos mínimos com Dijkstra.** O OSPF usa informações de estado de enlace para calcular caminhos. Retomando a rede de oito roteadores da figura 049, A começa com custo 0 para si mesmo. A cada etapa, confirma o destino de menor custo provisório e verifica se passar por ele melhora o caminho até algum vizinho.
 
@@ -1357,6 +1301,89 @@ A figura 050 mostra uma árvore resultante. O caminho até C admite empate: `A-B
 
 # Apêndice B. Modelo OSI
 
+
+---
+
+# Apêndice C. Comandos Importantes
+
+> Nos modelos de sintaxe, **elementos entre chaves indicam conteúdo a ser substituído** (como comandos, valores, *flags*, etc.), e devem ser retiradas no uso real. `{opções}` e `{função}` indicam modificadores opcionais; a descrição principal apresenta o comportamento sem eles, considerando os argumentos indicados. Os demais elementos entre chaves são obrigatórios na forma apresentada.
+
+## Linux:
+
+### Consultar Interfaces e Endereços:
+
+- `ip {opções} link {função}` - Mostra os dados de enlace das interfaces, incluindo o endereço MAC e a MTU local (limite do enlace).
+
+    - `ip link show dev {interface}` - Mostra apenas a interface indicada, como `wlo1`.
+    - `ip -d link` - Exibe detalhes do enlace. Em uma interface VLAN, permite confirmar o tipo e o ID da VLAN.
+
+- `ip {opções} address {função}` - Lista as interfaces, o estado do enlace, a MTU e os endereços configurados. `ip a` é a forma abreviada de `ip address`.
+
+    - `ip -br a` - Resume o nome, o estado e os endereços IP de cada interface em uma linha.
+    - `ip a show dev {interface}` - Mostra apenas a interface indicada, como `wlo1`.
+
+### Consultar Rotas e Vizinhos:
+
+- `ip {opções} route {função}` - Lista as rotas IPv4 por padrão.
+
+    - `ip -6 route` - Mostra apenas as rotas IPv6.
+    - `ip route get {destino}` - Mostra como o sistema encaminharia um pacote para o destino. No exemplo do laboratório, `ip route get 192.168.10.70` indica `via 192.168.10.62 dev wlo1`. A consulta é local e independe de o servidor estar disponível.
+
+- `ip {opções} neigh {função}` - Mostra os vizinhos IPv4 e IPv6, seus endereços de enlace e o estado de cada entrada.
+
+    - `ip neigh show dev {interface}` - Mostra apenas os vizinhos da interface indicada.
+    - `ip -6 neigh` - Mostra apenas os vizinhos IPv6. Use `-4` para consultar os vizinhos IPv4.
+
+- `tracepath {destino}` - Mostra os saltos que respondem às sondas e estima a MTU do caminho com base nas respostas recebidas.
+
+- `traceroute {opções} {destino}` - Rastreia o caminho até o destino enviando sondas com limites de saltos crescentes. Para cada salto que responde, mostra o endereço IP e os tempos de ida e volta.
+
+    - `traceroute -n {destino}` - Exibe os endereços IP dos saltos sem consultar seus nomes.
+
+> O `traceroute` usa UDP por padrão e permite escolher outros tipos de sonda, como ICMP. O `tracepath` usa UDP e estima a MTU do caminho. No modo UDP padrão, ambos podem rastrear o percurso sem privilégios administrativos.
+
+### Testar a Conectividade:
+
+- `ping {opções} {destino}` - Envia solicitações de eco ICMP e mede o tempo de ida e volta de cada resposta. Por padrão, continua até ser interrompido com `Ctrl+C`.
+
+    - `ping -c {quantidade} {destino}` - Define quantas solicitações enviar.
+
+## Windows:
+
+### Consultar a Configuração de Rede:
+
+- `ipconfig /all` - Exibe a configuração dos adaptadores, incluindo endereços IP, configuração DHCP e *gateways*. O campo "Endereço Físico" mostra o endereço MAC do adaptador.
+
+### Consultar Rotas e Vizinhos:
+
+- `route print` - Lista as rotas IPv4 e IPv6 por padrão.
+
+- `Get-NetNeighbor {opções}` - Mostra os vizinhos IPv4 e IPv6, seus endereços de enlace e o estado de cada entrada. Execute no PowerShell.
+
+    - `Get-NetNeighbor -AddressFamily IPv6` - Mostra apenas os vizinhos IPv6. Use `IPv4` para consultar os vizinhos IPv4.
+
+- `tracert {opções} {destino}` - Rastreia o caminho até o destino enviando sondas com limites de saltos crescentes. Para cada salto que responde, mostra o endereço IP e os tempos de ida e volta. As sondas são solicitações de eco ICMP.
+
+    - `tracert /d {destino}` - Exibe os endereços IP dos saltos sem consultar seus nomes.
+
+- `pathping {destino}` - Identifica os saltos do percurso e depois envia várias sondas para estimar a perda de pacotes ao longo do caminho. Um roteador pode responder a poucas sondas e ainda encaminhar normalmente o tráfego para os saltos seguintes.
+
+### Testar a Conectividade e Portas:
+
+- `ping {opções} {destino}` - Envia solicitações de eco ICMP e mede o tempo de ida e volta de cada resposta. Por padrão, envia quatro solicitações.
+
+    - `ping /n {quantidade} {destino}` - Define quantas solicitações enviar.
+
+- `Test-NetConnection -ComputerName {destino} -Port {porta}` - Testa se é possível estabelecer uma conexão TCP com a porta indicada. Execute no PowerShell. Por exemplo, `Test-NetConnection -ComputerName 192.168.10.70 -Port 443` testa a porta HTTPS do servidor do laboratório. O campo `TcpTestSucceeded` indica se a conexão foi estabelecida.
+
+## Multiplataforma:
+
+### Consultar o DNS:
+
+- `nslookup {opções} {nome}` - Consulta o servidor DNS configurado no computador para obter os registros associados a um nome. Execute `nslookup` sem argumentos para abrir o modo interativo.
+
+    - `nslookup -type={tipo} {nome}` - Escolhe o tipo de registro. Por exemplo, `nslookup -type=A example.org` consulta endereços IPv4 e `nslookup -type=AAAA example.org` consulta endereços IPv6.
+    - `nslookup {nome} {servidor_DNS}` - Envia a consulta ao servidor indicado. Por exemplo, `nslookup example.org 1.1.1.1` permite comparar a resposta com a do DNS configurado no computador.
 
 ---
 
