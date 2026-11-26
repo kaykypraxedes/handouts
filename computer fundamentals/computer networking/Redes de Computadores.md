@@ -64,7 +64,7 @@ As redes podem ser classificadas pela área que abrangem. A escala dá uma ideia
 | **PAN** (*Personal Area Network*) | Próxima a uma pessoa. | Conectar dispositivos próximos, considerando alcance e consumo de energia (camada física). | Celular e fones conectados por Bluetooth. |
 | **LAN** (*Local Area Network*) | Casa, laboratório ou prédio. | Ligar vários dispositivos e entregar os dados ao equipamento correto dentro da rede local (camada de enlace). | Computadores e impressoras de um laboratório. |
 | **MAN** (*Metropolitan Area Network*) | Cidade ou região metropolitana. | Interligar redes locais com capacidade suficiente entre as unidades (enlaces metropolitanos e, quando necessário, roteamento na camada de rede). | Rede que interliga unidades de uma faculdade na mesma cidade.|
-| **WAN** (*Wide Area Network*) | Grandes distâncias, como entre estados ou países. | Alcançar redes distantes e escolher os caminhos pelos quais os dados seguem (roteamento na camada de rede). | Rede que conecta filiais de uma empresa em estados diferentes.|
+| **WAN** (*Wide Area Network*) | Grandes distâncias, como entre estados ou países. | Alcançar redes distantes e escolher os caminhos pelos quais os dados seguem (roteamento na camada de rede). | Rede que conecta filiais de uma empresa em estados diferentes. |
 
 ## Parâmetros para Avaliação de Redes:
 
@@ -102,7 +102,7 @@ Essa divisão traz três vantagens principais:
 
 - **Menor complexidade:** Cada parte pode ser estudada e desenvolvida a partir de um problema específico, como transmitir sinais ou escolher um caminho entre redes.
 - **Diagnóstico de falhas:** Identificar o que já funciona ajuda a localizar o problema. Um *notebook* pode estar conectado ao Wi-Fi e alcançar a impressora local, por exemplo, mesmo que o roteador esteja sem acesso à Internet.
-- **Manutenção e evolução:** Uma tecnologia pode ser substituída preservando os serviços e as interfaces dos quais as outras camadas dependem.
+- **Manutenção e evolução:** Uma tecnologia pode ser substituída preservando os serviços e as interfaces das quais as outras camadas dependem.
 
 ## Serviço, Interface e Protocolo:
 
@@ -124,13 +124,13 @@ A **comunicação vertical** ocorre entre camadas vizinhas do mesmo dispositivo.
 2. **Transporte:** O TCP acrescenta seu cabeçalho aos dados do pedido, formando um segmento.
 3. **Rede:** O IP acrescenta seu cabeçalho ao segmento, formando um pacote.
 4. **Enlace:** A camada de Enlace envolve o pacote em um quadro para enviá-lo pelo enlace local.
-5. **Física:** A camada Física representa os bits do quadro em sinais e os transmite pelo meio.
+5. **Física:** A camada Física representa os *bits* do quadro em sinais e os transmite pelo meio.
 
 Esse processo de envolver os dados da camada superior com as informações de controle da camada atual é o **encapsulamento**. Para o IP, por exemplo, o segmento TCP inteiro é o conteúdo do pacote.
 
 ### Comunicação Horizontal:
 
-A **comunicação horizontal** é a relação lógica entre camadas correspondentes de dispositivos diferentes. No enlace entre o *notebook* e o roteador, a Física do roteador recebe os sinais e recupera os bits. Seu Enlace interpreta o quadro enviado pelo Enlace do *notebook* e entrega o pacote à Rede. A Rede interpreta o cabeçalho IP para decidir por onde encaminhar o pacote.
+A **comunicação horizontal** é a relação lógica entre camadas correspondentes de dispositivos diferentes. No enlace entre o *notebook* e o roteador, a Física do roteador recebe os sinais e recupera os *bits*. Seu Enlace interpreta o quadro enviado pelo Enlace do *notebook* e entrega o pacote à Rede. A Rede interpreta o cabeçalho IP para decidir por onde encaminhar o pacote.
 
 No servidor, os dados sobem uma camada por vez. O Enlace retira as informações do quadro e entrega o pacote à Rede. O IP interpreta seu cabeçalho e entrega o segmento ao Transporte. O TCP interpreta seu cabeçalho, reúne os dados na ordem correta e os entrega à aplicação. Por fim, o servidor Web interpreta o pedido HTTP criado pelo navegador. A retirada das informações de controle em cada etapa é o **desencapsulamento**.
 
@@ -174,7 +174,7 @@ No modelo de cinco camadas, protocolos e bibliotecas usados pelas aplicações p
 
 ## Dados, Sinais e Símbolos:
 
-Quando um *notebook* envia um arquivo pelo *Wi-Fi*, sua antena emite ondas de rádio. Se o arquivo seguir por fibra óptica no trecho seguinte, a informação passa a ser representada por variações na luz. Os dados podem permanecer os mesmos enquanto sua representação física muda de um enlace para outro.
+Quando um *notebook* envia um arquivo pelo Wi-Fi, sua antena emite ondas de rádio. Se o arquivo seguir por fibra óptica no trecho seguinte, a informação passa a ser representada por variações na luz. Os dados podem permanecer os mesmos enquanto sua representação física muda de um enlace para outro.
 
 | Conceito | Significado | Exemplo |
 | --- | --- | --- |
@@ -252,7 +252,7 @@ A pressão sonora captada por um microfone varia continuamente. Em uma chamada d
 
 1. **Amostragem:** Mede a amplitude do sinal do microfone em intervalos regulares.
 2. **Quantização:** Aproxima o valor de cada amostra por um dos níveis disponíveis.
-3. **Codificação:** Representa o nível escolhido por uma sequência de bits.
+3. **Codificação:** Representa o nível escolhido por uma sequência de *bits*.
 
 ![Digitalização de um sinal analógico](images/screenshot007.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 117.*
@@ -287,7 +287,7 @@ Um símbolo pode representar vários *bits*. Se o receptor consegue distinguir *
 - **Taxa de símbolos:** Quantidade de símbolos transmitidos por segundo, medida em *baud* (Bd).
 - **Taxa de *bits*:** Quantidade de *bits* transmitidos por segundo, medida em bps.
 
-Com dois *bits* por símbolo, `1.000 Bd` correspondem a `2.000 bps`. 
+Com dois *bits* por símbolo, $1.000 \text{ Bd}$ correspondem a $2.000 \text{ bps}$. 
 
 > Usar mais níveis permite transmitir mais *bits* no mesmo intervalo, mas exige que o receptor consiga distinguir estados mais próximos entre si para uma mesma faixa de amplitude (maior complexidade).
 
@@ -303,17 +303,17 @@ Uma transmissão pode ser classificada pelo sentido da comunicação, pela dispo
 
 ### Disposição:
 
-- **Serial:** Os bits seguem em sequência em cada via de transmissão. Uma interface pode combinar várias vias seriais em paralelo, como ocorre no PCIe.
+- **Serial:** Os *bits* seguem em sequência em cada via de transmissão. Uma interface pode combinar várias vias seriais em paralelo, como ocorre no PCIe.
 - **Paralela:** Vários *bits* são enviados simultaneamente por vias distintas, como em um barramento de oito linhas de dados.
 
 > Atualmente, mesmo que intuitivamente o envio paralelo aparente ser mais rápido, a maioria das tecnologias atuais utiliza comunicação serial (principalmente pelo o *overhead* de organização dos *bits*, a interferência que os canais causam um no outro em altas frequências e sua dificuldade de operação).
 
 ### Sincronismo:
 
-- **Assíncrona (*start/stop*):** O receptor usa uma taxa combinada e ajusta o instante de leitura ao detectar o bit de início de cada caractere. Um ou mais bits de parada marcam o fim da unidade.
-- **Síncrona:** O receptor mantém uma referência de tempo durante um bloco ou fluxo de dados. O relógio pode ser enviado por uma linha própria ou recuperado do sinal, dispensando bits de início e parada a cada caractere.
+- **Assíncrona (*start/stop*):** O receptor usa uma taxa combinada e ajusta o instante de leitura ao detectar o *bit* de início de cada caractere. Um ou mais *bits* de parada marcam o fim da unidade.
+- **Síncrona:** O receptor mantém uma referência de tempo durante um bloco ou fluxo de dados. O relógio pode ser enviado por uma linha própria ou recuperado do sinal, dispensando *bits* de início e parada a cada caractere.
 
-> Em uma UART configurada com oito bits de dados, um de início e um de parada, cada byte ocupa dez intervalos de bit no meio. Nesse formato, 80% do tempo de transmissão do caractere corresponde aos dados.
+> Em uma UART configurada com oito *bits* de dados, um de início e um de parada, cada *byte* ocupa dez intervalos de *bit* no meio. Nesse formato, $80\%$ do tempo de transmissão do caractere corresponde aos dados.
 
 ## Limitações do Canal e Capacidade de Transmissão:
 
@@ -330,7 +330,7 @@ Ao percorrer o meio, o sinal pode chegar mais fraco e sofrer interferências. Se
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 100.*
 
 - **Relação sinal-ruído (SNR):** Razão entre a potência do sinal e a potência do ruído no receptor. Se a atenuação reduz a potência do sinal recebido e a potência do ruído permanece aproximadamente constante, a SNR diminui e os símbolos ficam mais difíceis de distinguir.
-- **Largura de banda:** Extensão da faixa de frequências disponível para a transmissão, medida em hertz (Hz). Um canal que vai de `1 kHz` a `4 kHz` tem largura de banda de `3 kHz`.
+- **Largura de banda:** Extensão da faixa de frequências disponível para a transmissão, medida em hertz (Hz). Um canal que vai de $1 \text{ kHz}$ a $4 \text{ kHz}$ tem largura de banda de $3 \text{ kHz}$.
 
 A **capacidade de transmissão** expressa uma taxa em *bit*/s. Dois limites teóricos mostram como ela se relaciona com a largura de banda e com as condições do canal:
 
@@ -343,7 +343,7 @@ Em Nyquist, cada símbolo representa $\log_2(N)$ *bits*. Por exemplo, passar de 
 
 Shannon explica por que esse ganho encontra um limite em um canal real: para uma largura de banda e uma relação sinal-ruído fixas, aumentar o número de níveis indefinidamente acaba tornando os símbolos difíceis demais de distinguir.
 
-> Nas fórmulas, $W$ é dado em hertz. Em Shannon, a SNR entra como razão entre potências. Se estiver expressa em decibéis, a conversão é $\mathrm{SNR}=10^{\mathrm{SNR}_{\mathrm{dB}}/10}$. Por exemplo, `20 dB` correspondem a uma razão de `100`.
+> Nas fórmulas, $W$ é dado em hertz. Em Shannon, a SNR entra como razão entre potências. Se estiver expressa em decibéis, a conversão é $\mathrm{SNR}=10^{\mathrm{SNR}_{\mathrm{dB}}/10}$. Por exemplo, $20 \text{ dB}$ correspondem a uma razão de $100$.
 
 ## Multiplexação:
 
@@ -383,7 +383,7 @@ Um **quadro** (*frame*) é a unidade de dados utilizada na comunicação de enla
 | --- | --- |
 | **Cabeçalho** | Contém informações de controle, como os endereços locais de origem e destino ou a identificação do protocolo transportado. |
 | **Carga útil** | Contém os dados transportados pelo quadro, como um pacote recebido da camada de Rede. |
-| **Campo final** | Pode conter um código que permite ao receptor verificar se houve alteração nos bits protegidos. |
+| **Campo final** | Pode conter um código que permite ao receptor verificar se houve alteração nos *bits* protegidos. |
 
 O **enquadramento** permite ao receptor reconhecer onde um quadro começa e termina. Alguns protocolos usam sequências reservadas chamadas *flags* para marcar esses limites. Outros utilizam informações de comprimento ou sinais de início e fim definidos pela tecnologia.
 
@@ -392,8 +392,8 @@ O **enquadramento** permite ao receptor reconhecer onde um quadro começa e term
 
 O uso de uma *flag* cria um problema: a mesma sequência pode aparecer por acaso na carga útil. Para que o receptor consiga distinguir o marcador dos dados, o transmissor pode inserir elementos extras, removidos na recepção. Essa técnica é chamada de ***stuffing***.
 
-- ***Byte stuffing*:** O transmissor insere um byte de escape antes de um valor reservado que aparece nos dados. Ao encontrar o escape, o receptor sabe que deve interpretar o valor seguinte como dado.
-- ***Bit stuffing*:** O transmissor insere um bit quando a sequência de dados está prestes a formar um marcador. O receptor reconhece a inserção pela mesma regra e remove esse bit para recuperar a sequência original.
+- ***Byte stuffing*:** O transmissor insere um *byte* de escape antes de um valor reservado que aparece nos dados. Ao encontrar o escape, o receptor sabe que deve interpretar o valor seguinte como dado.
+- ***Bit stuffing*:** O transmissor insere um *bit* quando a sequência de dados está prestes a formar um marcador. O receptor reconhece a inserção pela mesma regra e remove esse *bit* para recuperar a sequência original.
 
 ## Endereçamento e Encaminhamento Local:
 
@@ -405,7 +405,7 @@ Em tecnologias como Ethernet, os **endereços MAC** identificam as interfaces en
 | ***Multicast*** | Um grupo de interfaces. | Um equipamento envia dados a um grupo de receptores de vídeo. |
 | ***Broadcast*** | Todas as interfaces no mesmo domínio de *broadcast*. | O *notebook* faz uma consulta a toda a rede local para descobrir o endereço de um vizinho. |
 
-Uma **ponte** ou um ***switch*** usa o endereço de destino para decidir por onde encaminhar o quadro. Se o switch já sabe em qual porta está a impressora, pode encaminhar o quadro *unicast* apenas por essa porta. Se recebe um *broadcast*, distribui o quadro pelas demais portas que pertencem àquela rede lógica. O alcance dessa distribuição define o **domínio de broadcast**.
+Uma **ponte** ou um ***switch*** usa o endereço de destino para decidir por onde encaminhar o quadro. Se o *switch* já sabe em qual porta está a impressora, pode encaminhar o quadro *unicast* apenas por essa porta. Se recebe um *broadcast*, distribui o quadro pelas demais portas que pertencem àquela rede lógica. O alcance dessa distribuição define o **domínio de broadcast**.
 
 ## Controle de Acesso ao Meio:
 
@@ -421,30 +421,30 @@ Quando vários dispositivos compartilham um canal, dois deles podem tentar trans
 
 ## Erros:
 
-Se um bit se altera durante a transmissão, o receptor pode receber uma sequência diferente da enviada. Para identificar esse tipo de falha, o transmissor acrescenta **redundância**: bits calculados a partir dos dados protegidos. O receptor verifica se a relação entre os dados e os bits adicionais continua válida. Uma inconsistência revela um erro. Se a verificação passa, sabe-se apenas que o método **não detectou erro**.
+Se um *bit* se altera durante a transmissão, o receptor pode receber uma sequência diferente da enviada. Para identificar esse tipo de falha, o transmissor acrescenta **redundância**: *bits* calculados a partir dos dados protegidos. O receptor verifica se a relação entre os dados e os *bits* adicionais continua válida. Uma inconsistência revela um erro. Se a verificação passa, sabe-se apenas que o método **não detectou erro**.
 
 ### Detecção de Erros:
 
 | Método | Como funciona |
 | --- | --- |
-| **Bit de paridade** | Acrescenta um bit para que a quantidade total de bits `1` seja par (**paridade par**) ou ímpar (**paridade ímpar**). |
+| **Bit de paridade** | Acrescenta um *bit* para que a quantidade total de *bits* `1` seja par (**paridade par**) ou ímpar (**paridade ímpar**). |
 | ***Checksum*** | Combina blocos de dados, geralmente por meio de uma soma, para obter um valor de verificação. A regra de cálculo depende do protocolo. |
 | **CRC** (*Cyclic Redundancy Check*) | Calcula um valor de verificação por uma divisão binária baseada em `XOR`. É utilizado, por exemplo, na verificação de quadros Ethernet. |
 
-Na **paridade par**, os dados `1011` contêm três bits `1`. O transmissor acrescenta `1` e envia `10111`, agora com quatro bits `1`. Se o receptor ler `10011`, contará três e detectará o erro. Se dois bits forem invertidos, a contagem continuará par e a alteração passará despercebida.
+Na **paridade par**, os dados `1011` contêm três *bits* `1`. O transmissor acrescenta `1` e envia `10111`, agora com quatro *bits* `1`. Se o receptor ler `10011`, contará três e detectará o erro. Se dois *bits* forem invertidos, a contagem continuará par e a alteração passará despercebida.
 
 ### Distância de Hamming:
 
 Detectar uma alteração exige reconhecer que o valor recebido é inválido. **Corrigir** exige também identificar qual valor foi enviado. A **distância de Hamming** ajuda a entender quando isso é possível: ela corresponde à quantidade de posições em que duas sequências de mesmo tamanho diferem. Por exemplo, `111000` e `110001` diferem em duas posições e têm distância 2.
 
-A **distância mínima** ($d_{\min}$) de um código é a menor distância entre duas de suas palavras válidas. Ela determina quantas inversões de bits o código pode garantir que detecta ou corrige:
+A **distância mínima** ($d_{\min}$) de um código é a menor distância entre duas de suas palavras válidas. Ela determina quantas inversões de *bits* o código pode garantir que detecta ou corrige:
 
 | Objetivo | Distância mínima necessária |
 | --- | --- |
-| Detectar até $n$ inversões de bits por palavra | $d_{\min} \geq n + 1$ |
-| Corrigir até $n$ inversões de bits por palavra | $d_{\min} \geq 2n + 1$ |
+| Detectar até $n$ inversões de *bits* por palavra | $d_{\min} \geq n + 1$ |
+| Corrigir até $n$ inversões de *bits* por palavra | $d_{\min} \geq 2n + 1$ |
 
-Imagine um código cujas únicas palavras válidas são `000` e `111`. A distância entre elas é 3. Se o receptor lê `010` e houve no máximo uma inversão, consegue recuperar `000`: basta alterar um bit para chegar a `000`, enquanto seriam necessárias duas alterações para chegar a `111`. O código de Hamming aplica esse princípio usando bits de paridade em posições específicas. Sua construção é detalhada no Apêndice A.
+Imagine um código cujas únicas palavras válidas são `000` e `111`. A distância entre elas é 3. Se o receptor lê `010` e houve no máximo uma inversão, consegue recuperar `000`: basta alterar um *bit* para chegar a `000`, enquanto seriam necessárias duas alterações para chegar a `111`. O código de Hamming aplica esse princípio usando *bits* de paridade em posições específicas. Sua construção é detalhada no Apêndice A.
 
 ### Recuperação por Retransmissão:
 
@@ -481,18 +481,18 @@ Uma **confirmação** informa o que já foi recebido. Um **crédito** informa qu
 
 # 4. Camada de Rede
 
-> Como é possível identificar um dispositivo em outra rede? Como os roteadores decidem por onde os dados devem passar? O que acontece se houver um problema em um nó? 
+> Como é possível identificar um dispositivo em outra rede? Como os roteadores decidem por onde os dados devem passar? O que acontece se houver um problema em um nó?
 
 ## Entrega entre Redes:
 
-Considere um notebook que precisa imprimir um documento e, depois, enviá-lo a um servidor da faculdade. A impressora está na mesma rede local. O servidor está em outra rede, acessível por um roteador. Como o notebook decide a quem entregar cada transmissão?
+Considere um *notebook* que precisa imprimir um documento e, depois, enviá-lo a um servidor da faculdade. A impressora está na mesma rede local. O servidor está em outra rede, acessível por um roteador. Como o *notebook* decide a quem entregar cada transmissão?
 
 A **Camada de Rede** utiliza endereços lógicos para identificar as interfaces de origem e destino e encaminha **pacotes** entre redes. Na Internet, essa função é desempenhada pelo **IP** (*Internet Protocol*). O computador consulta suas rotas para decidir se pode entregar o pacote diretamente ao destino ou se deve enviá-lo a um equipamento intermediário, o **próximo salto**.
 
 ![Rede de interconexão entre dispositivos](images/screenshot039.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 261.*
 
-Um **roteador** interliga redes por meio de suas interfaces. Ao receber um pacote, consulta o endereço IP de destino, escolhe uma saída e prepara a transmissão pelo enlace seguinte. Cada roteador faz sua própria consulta. Assim, o notebook pode alcançar o servidor conhecendo apenas o primeiro roteador do percurso.
+Um **roteador** interliga redes por meio de suas interfaces. Ao receber um pacote, consulta o endereço IP de destino, escolhe uma saída e prepara a transmissão pelo enlace seguinte. Cada roteador faz sua própria consulta. Assim, o *notebook* pode alcançar o servidor conhecendo apenas o primeiro roteador do percurso.
 
 ![Roteadores na rede de interconexão](images/screenshot040.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 262.*
@@ -535,37 +535,37 @@ Uma rede de pacotes pode tomar a decisão de encaminhamento de duas maneiras:
 
 ## Endereçamento Lógico e Sub-redes:
 
-Um endereço IP identifica uma **interface de rede**. Um notebook conectado por cabo e por Wi-Fi pode ter um endereço em cada interface. Uma mesma interface também pode possuir endereços IPv4 e IPv6 ao mesmo tempo.
+Um endereço IP identifica uma **interface de rede**. Um *notebook* conectado por cabo e por Wi-Fi pode ter um endereço em cada interface. Uma mesma interface também pode possuir endereços IPv4 e IPv6 ao mesmo tempo.
 
-O **IPv4** utiliza 32 bits, representados como quatro números decimais de 0 a 255 separados por pontos. O **IPv6** utiliza 128 bits, organizados em grupos hexadecimais.
+O **IPv4** utiliza 32 *bits*, representados como quatro números decimais de 0 a 255 separados por pontos. O **IPv6** utiliza 128 *bits*, organizados em grupos hexadecimais.
 
 O endereço de uma interface pode ser interpretado em duas partes. O **identificador de rede** (*NetID*) é o prefixo comum às interfaces da mesma sub-rede. O **identificador de host** (*HostID*) distingue a interface dentro dessa sub-rede. O comprimento do prefixo indica onde termina uma parte e começa a outra.
 
-Por exemplo, em `192.168.10.34/27`, os primeiros 27 bits identificam a sub-rede `192.168.10.32/27`. Os cinco bits restantes identificam a interface dentro dela. No último octeto, `34` corresponde a `00100010` em binário. Os três primeiros bits (`001`) ainda pertencem ao prefixo, e os cinco últimos (`00010`) formam o HostID.
+Por exemplo, em `192.168.10.34/27`, os primeiros 27 *bits* identificam a sub-rede `192.168.10.32/27`. Os cinco *bits* restantes identificam a interface dentro dela. No último octeto, `34` corresponde a `00100010` em binário. Os três primeiros *bits* (`001`) ainda pertencem ao prefixo, e os cinco últimos (`00010`) formam o *HostID*.
 
 ### Atribuição de Endereços:
 
-O endereço pode ser configurado **manualmente** na interface ou recebido **dinamicamente**. Em redes IPv4, é comum que um servidor **DHCP** (*Dynamic Host Configuration Protocol*) forneça o endereço, a máscara e outras informações, como o gateway padrão.
+O endereço pode ser configurado **manualmente** na interface ou recebido **dinamicamente**. Em redes IPv4, é comum que um servidor **DHCP** (*Dynamic Host Configuration Protocol*) forneça o endereço, a máscara e outras informações, como o *gateway* padrão.
 
-- **Concessão:** O notebook recebe um endereço por determinado período e pode renovar a concessão para continuar usando-o. Quando ela expira, o servidor pode voltar a oferecer o endereço.
+- **Concessão:** O *notebook* recebe um endereço por determinado período e pode renovar a concessão para continuar usando-o. Quando ela expira, o servidor pode voltar a oferecer o endereço.
 - **Reserva:** O administrador pode associar um endereço a um cliente identificado. A impressora, por exemplo, continua usando DHCP, mas recebe sempre o mesmo IP, facilitando sua localização.
-- **Conflito de IP:** Se alguém configurar manualmente em outro equipamento o endereço que a impressora já utiliza na mesma sub-rede, ambos podem responder pelo mesmo IP. O notebook pode acabar enviando os dados ao equipamento errado, e o acesso à impressora pode ficar intermitente.
+- **Conflito de IP:** Se alguém configurar manualmente em outro equipamento o endereço que a impressora já utiliza na mesma sub-rede, ambos podem responder pelo mesmo IP. O *notebook* pode acabar enviando os dados ao equipamento errado, e o acesso à impressora pode ficar intermitente.
 
 ### Endereçamento por Classes e CIDR:
 
-No modelo histórico de **endereçamento por classes**, os bits iniciais do endereço IPv4 indicavam sua classe. Para A, B e C, a classe determinava o tamanho inicial da parte de rede. As classes D e E tinham finalidades próprias.
+No modelo histórico de **endereçamento por classes**, os *bits* iniciais do endereço IPv4 indicavam sua classe. Para A, B e C, a classe determinava o tamanho inicial da parte de rede. As classes D e E tinham finalidades próprias.
 
-| Classe | Bits iniciais | Faixa do primeiro octeto | Divisão ou finalidade |
+| Classe | *Bits* iniciais | Faixa do primeiro octeto | Divisão ou finalidade |
 | --- | --- | --- | --- |
-| **A** | `0` | 0 a 127 | 8 bits de rede e 24 de host (`/8`). |
-| **B** | `10` | 128 a 191 | 16 bits de rede e 16 de host (`/16`). |
-| **C** | `110` | 192 a 223 | 24 bits de rede e 8 de host (`/24`). |
+| **A** | `0` | 0 a 127 | 8 *bits* de rede e 24 de *host* (`/8`). |
+| **B** | `10` | 128 a 191 | 16 *bits* de rede e 16 de *host* (`/16`). |
+| **C** | `110` | 192 a 223 | 24 *bits* de rede e 8 de *host* (`/24`). |
 | **D** | `1110` | 224 a 239 | Endereçamento de grupos (*multicast*). |
 | **E** | `1111` | 240 a 255 | Faixa historicamente reservada, com endereços de uso especial. |
 
 > A tabela mostra como identificar as classes. Algumas faixas têm uso especial, como `127.0.0.0/8`, utilizada para *loopback*.
 
-Para uma organização com **500 interfaces**, uma rede classe C oferecia 254 endereços de host utilizáveis, enquanto uma classe B oferecia 65.534, reservando muito mais endereços que o necessário. 
+Para uma organização com **500 interfaces**, uma rede classe C oferecia 254 endereços de *host* utilizáveis, enquanto uma classe B oferecia 65.534, reservando muito mais endereços que o necessário. 
 
 > Receber duas redes classe C reduziria o desperdício, mas cada rede poderia exigir uma entrada própria nas tabelas de roteamento.
 
@@ -575,14 +575,14 @@ O **CIDR** (*Classless Inter-Domain Routing*) tornou explícito o tamanho do pre
 
 ### Exemplo de uma Sub-rede IPv4:
 
-Com `/27`, cada bloco contém $2^5 = 32$ endereços. A máscara correspondente é `255.255.255.224`. No exemplo, o notebook pertence ao bloco que começa em `.32` e termina em `.63`.
+Com `/27`, cada bloco contém $2^5 = 32$ endereços. A máscara correspondente é `255.255.255.224`. No exemplo, o *notebook* pertence ao bloco que começa em `.32` e termina em `.63`.
 
 | Elemento | Endereço | Interpretação |
 | --- | --- | --- |
 | **Endereço da sub-rede** | `192.168.10.32/27` | Identifica o bloco de endereços. |
-| **Roteador local** | `192.168.10.33` | Interface do roteador que o notebook consegue alcançar diretamente. |
+| **Roteador local** | `192.168.10.33` | Interface do roteador que o *notebook* consegue alcançar diretamente. |
 | **Notebook** | `192.168.10.34` | Interface Wi-Fi utilizada neste exemplo. |
-| **Impressora** | `192.168.10.50` | Pertence ao mesmo bloco do notebook. |
+| **Impressora** | `192.168.10.50` | Pertence ao mesmo bloco do *notebook*. |
 | ***Broadcast* da sub-rede** | `192.168.10.63` | Endereço de difusão desse bloco IPv4. |
 | **Servidor** | `192.168.10.70` | Pertence ao bloco seguinte, `192.168.10.64/27`. |
 
@@ -590,22 +590,22 @@ Embora os três primeiros números sejam iguais, a impressora e o servidor estã
 
 ### Endereços Públicos e Privados:
 
-Os endereços das sub-redes são **privados** e podem ser reutilizados em redes independentes. A escassez de IPv4 públicos motivou o uso amplo da **tradução de endereços de rede** (*Network Address Translation*, NAT). Em casa, por exemplo, o notebook e o celular podem acessar a Internet pelo mesmo IPv4 público do roteador. Na modalidade mais comum, o roteador também traduz portas e registra as associações para entregar cada resposta ao dispositivo correto.
+Os endereços das sub-redes são **privados** e podem ser reutilizados em redes independentes. A escassez de IPv4 públicos motivou o uso amplo da **tradução de endereços de rede** (*Network Address Translation*, NAT). Em casa, por exemplo, o *notebook* e o celular podem acessar a Internet pelo mesmo IPv4 público do roteador. Na modalidade mais comum, o roteador também traduz portas e registra as associações para entregar cada resposta ao dispositivo correto.
 
 ## Encaminhamento e Próximo Salto:
 
 Uma **tabela de rotas** associa redes de destino a interfaces de saída. Quando o destino precisa ser alcançado por um roteador, a rota também indica o **próximo salto**.
 
-No laboratório, considere que o notebook possui apenas duas rotas para o encaminhamento do exemplo: uma para a rede diretamente conectada `192.168.10.32/27` e uma **rota padrão** pelo roteador `192.168.10.33`.
+No laboratório, considere que o *notebook* possui apenas duas rotas para o encaminhamento do exemplo: uma para a rede diretamente conectada `192.168.10.32/27` e uma **rota padrão** pelo roteador `192.168.10.33`.
 
-| Destino do pacote | Decisão do notebook | Destino do quadro local |
+| Destino do pacote | Decisão do *notebook* | Destino do quadro local |
 | --- | --- | --- |
 | **Impressora `192.168.10.50`** | A impressora pertence à sub-rede diretamente conectada. | MAC da impressora. |
-| **Servidor `192.168.10.70`** | O servidor está em outra sub-rede. O notebook usa a rota padrão. | MAC do roteador `192.168.10.33`. |
+| **Servidor `192.168.10.70`** | O servidor está em outra sub-rede. O *notebook* usa a rota padrão. | MAC do roteador `192.168.10.33`. |
 
-Quando mais de uma rota corresponde ao destino, prevalece o **prefixo mais longo**, que descreve o bloco mais específico. A rota padrão tem prefixo de comprimento zero (`0.0.0.0/0` em IPv4 ou `::/0` em IPv6) e atende aos destinos sem correspondência mais específica. O roteador indicado por ela é o **gateway padrão**.
+Quando mais de uma rota corresponde ao destino, prevalece o **prefixo mais longo**, que descreve o bloco mais específico. A rota padrão tem prefixo de comprimento zero (`0.0.0.0/0` em IPv4 ou `::/0` em IPv6) e atende aos destinos sem correspondência mais específica. O roteador indicado por ela é o ***gateway* padrão**.
 
-Depois de escolher o próximo salto, o notebook precisa descobrir seu endereço de enlace. No laboratório, essa associação é feita por **ARP**. Para imprimir, o notebook procura o MAC de `.50`. Para enviar ao servidor `.70`, procura o MAC de `.33`. O endereço IP de destino do pacote continua sendo o do servidor. Em IPv6, a resolução do endereço de enlace faz parte da **descoberta de vizinhos** (*Neighbor Discovery*).
+Depois de escolher o próximo salto, o *notebook* precisa descobrir seu endereço de enlace. No laboratório, essa associação é feita por **ARP**. Para imprimir, o *notebook* procura o MAC de `.50`. Para enviar ao servidor `.70`, procura o MAC de `.33`. O endereço IP de destino do pacote continua sendo o do servidor. Em IPv6, a resolução do endereço de enlace faz parte da **descoberta de vizinhos** (*Neighbor Discovery*).
 
 > A tabela de rotas responde "por onde envio este pacote?". A tabela de vizinhos responde "qual endereço de enlace uso para entregá-lo no próximo salto?".
 
@@ -617,7 +617,7 @@ O **encaminhamento** acontece quando chega um pacote e o equipamento escolhe por
 
 | Origem | Como a rota aparece | Exemplo |
 | --- | --- | --- |
-| **Rede diretamente conectada** | O sistema reconhece um prefixo como alcançável pela própria interface. | A configuração `192.168.10.34/27` normalmente cria uma rota para `192.168.10.32/27` pela interface do notebook. |
+| **Rede diretamente conectada** | O sistema reconhece um prefixo como alcançável pela própria interface. | A configuração `192.168.10.34/27` normalmente cria uma rota para `192.168.10.32/27` pela interface do *notebook*. |
 | **Rota estática** | Um administrador configura o destino e a saída. | Encaminhar `192.168.10.64/27` pelo roteador `.62`. |
 | **Rota dinâmica** | Roteadores trocam informações e atualizam os caminhos conforme o protocolo utilizado. | Após uma falha, um roteador aprende que a rede passou a ser alcançável por outro vizinho. |
 
@@ -660,7 +660,7 @@ Na figura, cada enlace tem custo 1. A tabela acompanha as informações disponí
 | --- | --- | --- |
 | **T0 - Inicialização** | Cada roteador começa com sua própria entrada. | Chegar a A custa 0. |
 | **T1 - Vizinhos** | Os roteadores identificam seus enlaces diretos. | B e D estão a custo 1. |
-| **T2 - Troca de vetores** | Os vizinhos anunciam os destinos que alcançam. | B anuncia E a custo 1. A calcula `1 + 1 = 2` até E por B. D também oferece uma rota de custo 2 até E. |
+| **T2 - Troca de vetores** | Os vizinhos anunciam os destinos que alcançam. | B anuncia E a custo 1. A calcula $1 + 1 = 2$ até E por B. D também oferece uma rota de custo 2 até E. |
 | **T3 - Convergência** | Novas trocas mantêm os menores custos encontrados. | A pode alcançar E por B ou por D. Para acompanhar a falha, considere que escolheu B no desempate. |
 
 **O que acontece quando o enlace A-B falha?** O enlace C1 fica indisponível para todos no mesmo instante, mas a notícia leva tempo para alcançar cada roteador.
@@ -686,7 +686,7 @@ No **estado de enlace**, cada roteador anuncia quais são seus vizinhos e quanto
 
 1. **Conhecimento local:** A identifica dois enlaces diretos. Chegar a B custa 2, e chegar a G custa 6.
 2. **Construção do mapa:** B anuncia, entre outros, seu enlace até E, de custo 2. E anuncia seu enlace até G, de custo 1. Os anúncios dos oito roteadores permitem reconstruir a topologia da figura.
-3. **Escolha do próximo salto:** A compara o enlace direto até G, de custo 6, com `A-B-E-G`, de custo `2 + 2 + 1 = 5`. Para chegar a G pelo caminho de menor custo, A envia o pacote primeiro a B.
+3. **Escolha do próximo salto:** A compara o enlace direto até G, de custo 6, com `A-B-E-G`, de custo $2 + 2 + 1 = 5$. Para chegar a G pelo caminho de menor custo, A envia o pacote primeiro a B.
 
 ![Árvore de caminhos mínimos calculada a partir de A](images/screenshot050.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 310.*
@@ -757,7 +757,7 @@ Formar a árvore pela adesão dos interessados evita a inundação inicial. Uma 
 
 A **MTU** (*Maximum Transmission Unit*) de um enlace limita o tamanho do pacote de rede que ele pode transportar como uma unidade. A **MTU do caminho** é a menor MTU entre os enlaces do percurso.
 
-Considere um pacote IP de **1.500 bytes** que chega a um roteador cuja próxima saída aceita apenas **1.280 bytes**. O pacote cabe no primeiro enlace e excede o limite do seguinte. O resultado depende da versão de IP e, no IPv4, da autorização para fragmentar.
+Considere um pacote IP de **1.500 *bytes*** que chega a um roteador cuja próxima saída aceita apenas **1.280 *bytes***. O pacote cabe no primeiro enlace e excede o limite do seguinte. O resultado depende da versão de IP e, no IPv4, da autorização para fragmentar.
 
 | Situação | O que acontece |
 | --- | --- |
@@ -767,24 +767,24 @@ Considere um pacote IP de **1.500 bytes** que chega a um roteador cuja próxima 
 
 Remontar um datagrama exige receber **todos** os seus fragmentos. Se um deles se perder, o destino não consegue entregar o datagrama completo. Conhecer a MTU do caminho permite à origem ajustar o tamanho dos pacotes antes do envio.
 
-> Uma MTU de 1.500 bytes no notebook informa o limite da interface local. Um enlace mais adiante pode ter uma MTU menor.
+> Uma MTU de 1.500 *bytes* no *notebook* informa o limite da interface local. Um enlace mais adiante pode ter uma MTU menor.
 
 ## VPN:
 
-Uma **VPN** (*Virtual Private Network*) pode estabelecer um **túnel** para transportar pacotes privados pela Internet. Em uma VPN **IPsec em modo túnel** com criptografia, uma extremidade protege o pacote original e acrescenta um cabeçalho IP externo. Os roteadores da Internet consultam o destino **externo**. A outra extremidade verifica a proteção, remove o encapsulamento e encaminha o pacote conforme o destino **interno**. Para a mesma MTU externa, os cabeçalhos e a proteção do túnel deixam menos espaço para o pacote interno.
+Uma **VPN** (*Virtual Private Network*) estabelece um **túnel** entre duas extremidades para transportar tráfego privado por uma rede como a Internet. Com criptografia, o conteúdo dos pacotes fica protegido durante a travessia do túnel.
 
-### *Remote Access* VPN: 
+### *Remote Access* VPN:
 
-Um aluno em casa precisa acessar `192.168.10.70`, endereço privado do servidor da faculdade. O notebook envia o pacote pelo túnel até o endereço público do *gateway* da instituição. Dentro do túnel, o destino continua sendo `192.168.10.70`. Ao receber o pacote, o *gateway* remove o encapsulamento e o encaminha ao servidor.
+O *notebook* estabelece um túnel com o *gateway* da VPN. Quando o usuário acessa um site pelo túnel, o *gateway* desencapsula o pacote e, neste exemplo, traduz o IP e a porta de origem para seu próprio IP público e uma porta de saída. Funciona como uma segunda tradução por NAT: a resposta chega ao *gateway*, que a encaminha pelo túnel de volta ao *notebook*.
 
 ![VPN Remote Access](images/screenshot059.png)<br>
 *Fonte: Elaborado pelo autor com auxílio do ChatGPT, 2026.*
 
-> Se o aluno acessar um site pelo túnel e o *gateway* traduzir a origem, o site verá o *socket* de saída da VPN (IP público e porta). A associação entre esse *socket* e o *socket* público do aluno que se conectou à VPN fica no *gateway*. Esse é o sentido do "anonimato" nesse exemplo. O site ainda pode reconhecer o aluno se ele entrar em sua conta.
+> A criptografia protege o conteúdo entre o *notebook* e o *gateway*. O site vê como origem apenas o *socket* de saída da VPN. A associação entre esse *socket* de saída do VPN e o *socket* público do usuário fica no VPN (apenas ele tem essa informação). Daí que vem o “anonimato” dos VPNs, mas esse é limitado: sites ainda podem reconhecer o usuário se ele entrar em sua conta, ou se houver outras informações pessoais no conteúdo da mensagem.
 
-### *Site-to-site* VPN: 
+### *Site-to-site* VPN:
 
-Dois campi podem compartilhar um túnel entre seus *gateways*. Quando um computador envia um pacote ao outro campus, o *gateway* local o encapsula e o do campus de destino o encaminha pela rede interna. O mesmo túnel atende aos computadores das duas redes.
+Dois *gateways* mantêm um túnel entre as redes de dois campi. No envio, o *gateway* de origem encapsula o pacote IP inteiro e acrescenta um cabeçalho externo para entregá-lo ao outro *gateway*. Na chegada, o *gateway* remove o encapsulamento e encaminha o pacote original pela rede interna. Assim, mesmo em sub-redes distintas, os computadores se comunicam por seus endereços privados, e o destinatário vê o IP privado do emissor.
 
 ![VPN site-to-site](images/screenshot060.png)<br>
 *Fonte: Elaborado pelo autor com auxílio do ChatGPT, 2026.*
@@ -799,12 +799,16 @@ No ***onion routing***, o cliente prepara camadas de criptografia para retransmi
 | **Intermediário** (*middle relay*) | Remove sua camada e encaminha os dados à saída. Na troca normal, vê os retransmissores adjacentes. |
 | **Saída** (*exit relay*) | Remove a última camada de proteção do circuito e abre a conexão com o site público. O site recebe a conexão a partir do endereço da saída. |
 
-A imagem da **cebola** vem dessas camadas sucessivas. O cliente prepara os dados para que cada retransmissor consiga remover apenas a camada correspondente à sua etapa. No caminho de volta, os retransmissores acrescentam suas camadas, e o cliente as remove. O objetivo é distribuir o conhecimento do percurso entre os participantes.
+A imagem da **cebola** vem dessas camadas sucessivas. O cliente prepara os dados para que cada retransmissor consiga remover apenas a camada correspondente à sua etapa. No caminho de volta, os retransmissores acrescentam suas camadas, e o cliente as remove. 
+
+> O objetivo é distribuir o conhecimento do percurso entre os participantes (descentralizar a informação, e deixar a associação mais difícil de ser rastreada).
 
 ![Circuito Tor com retransmissores de entrada, intermediário e saída](images/screenshot058.png)<br>
 *Fonte: Tga.D - Tor Circuit Diagram, Wikimedia Commons. Disponível em: [https://en.wikipedia.org/wiki/File:Tor_Circuit_Diagram.svg](https://en.wikipedia.org/wiki/File:Tor_Circuit_Diagram.svg). Acesso em: 24 nov. 2026.*
 
-O Tor é uma **rede sobreposta**. A entrada, o intermediário e a saída são os nós escolhidos para o circuito Tor. Entre quaisquer dois deles, os pacotes continuam atravessando os roteadores IP da Internet. A proteção do circuito alcança o nó de saída. Ao acessar um site por **HTTPS**, a conexão criptográfica entre o navegador e o site continua protegendo o conteúdo também no trecho entre a saída e o servidor.
+O Tor é uma **rede sobreposta**. A entrada, o intermediário e a saída são os nós escolhidos para o circuito Tor. Entre quaisquer dois deles, os pacotes continuam atravessando os roteadores IP da Internet. A proteção do circuito alcança o nó de saída. 
+
+> Ao acessar um site por **HTTPS**, a conexão criptográfica entre o navegador e o site continua protegendo o conteúdo também no trecho entre a saída e o servidor.
 
 > Já sabemos como encaminhar dados até o dispositivo de destino. Mas como entregá-los ao processo certo?
 
@@ -832,30 +836,30 @@ Como duas aplicações combinam o formato e o significado das mensagens? Por exe
 
 ### Sinalização Digital:
 
-Na **codificação de linha**, os bits são representados por níveis do sinal ou por transições entre esses níveis.
+Na **codificação de linha**, os *bits* são representados por níveis do sinal ou por transições entre esses níveis.
 
-- **NRZ-L (*Non-Return-to-Zero Level*):** O nível do sinal durante o intervalo indica o bit transmitido. Os dois níveis podem ser, por exemplo, +5 V e -5 V ou +5 V e 0 V.
+- **NRZ-L (*Non-Return-to-Zero Level*):** O nível do sinal durante o intervalo indica o *bit* transmitido. Os dois níveis podem ser, por exemplo, $+5 \text{ V}$ e $-5 \text{ V}$ ou $+5 \text{ V}$ e $0 \text{ V}$.
 
 ![Codificação NRZ-L](images/screenshot008.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 118.*
 
 > A correspondência é uma convenção. Na figura, por exemplo, o nível alto representa `0` e o nível baixo representa `1`.
 
-- **NRZ-I (*Non-Return-to-Zero Inverted*):** O bit é indicado pela mudança ou manutenção do nível no início do intervalo. Na figura, o nível muda para transmitir `1` e permanece igual para transmitir `0`.
+- **NRZ-I (*Non-Return-to-Zero Inverted*):** O *bit* é indicado pela mudança ou manutenção do nível no início do intervalo. Na figura, o nível muda para transmitir `1` e permanece igual para transmitir `0`.
 
 ![Codificação NRZ-I](images/screenshot009.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 118.*
 
-- **Manchester:** O sinal muda de nível no meio de cada intervalo. O sentido da transição, de baixo para alto ou de alto para baixo, indica o bit conforme a convenção adotada.
+- **Manchester:** O sinal muda de nível no meio de cada intervalo. O sentido da transição, de baixo para alto ou de alto para baixo, indica o *bit* conforme a convenção adotada.
 
 ![Codificação Manchester](images/screenshot010.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 119.*
 
-> A transição central ocorre até quando vários bits iguais se repetem. O receptor usa essas transições para sincronizar seu relógio com o do transmissor, dispensando um sinal de relógio separado.
+> A transição central ocorre até quando vários *bits* iguais se repetem. O receptor usa essas transições para sincronizar seu relógio com o do transmissor, dispensando um sinal de relógio separado.
 
 ### Sinalização Analógica:
 
-- **ASK (*Amplitude Shift Keying*):** Cada símbolo corresponde a uma amplitude da portadora. No caso mais simples, a presença da onda representa um bit e sua ausência representa o outro.
+- **ASK (*Amplitude Shift Keying*):** Cada símbolo corresponde a uma amplitude da portadora. No caso mais simples, a presença da onda representa um *bit* e sua ausência representa o outro.
 
 ![Modulação por deslocamento de amplitude - ASK](images/screenshot011.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 121.*
@@ -865,12 +869,12 @@ Na **codificação de linha**, os bits são representados por níveis do sinal o
 ![Modulação por deslocamento de frequência - FSK](images/screenshot012.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 121.*
 
-- **PSK (*Phase Shift Keying*):** Cada símbolo corresponde a uma fase da portadora. Na PSK binária, as duas fases diferem em 180°, de modo que uma onda aparece invertida em relação à outra.
+- **PSK (*Phase Shift Keying*):** Cada símbolo corresponde a uma fase da portadora. Na PSK binária, as duas fases diferem em $180^\circ$, de modo que uma onda aparece invertida em relação à outra.
 
 ![Modulação por deslocamento de fase - PSK](images/screenshot013.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 122.*
 
-- **QAM (*Quadrature Amplitude Modulation*):** Cada símbolo combina as amplitudes de duas componentes da portadora defasadas de 90°. Na 16-QAM, cada uma das 16 combinações é um ponto da **constelação** e representa quatro bits.
+- **QAM (*Quadrature Amplitude Modulation*):** Cada símbolo combina as amplitudes de duas componentes da portadora defasadas de $90^\circ$. Na 16-QAM, cada uma das 16 combinações é um ponto da **constelação** e representa quatro *bits*.
 
 ![Representação da modulação QAM](images/screenshot014.png)<br>
 *Fonte: FRAGA, Marcelo Caramuru Pimentel. Redes de Computadores - 6ª Aula, p. 23.*
@@ -879,25 +883,25 @@ Na **codificação de linha**, os bits são representados por níveis do sinal o
 
 ### Verificação de Erros:
 
-**Paridade em duas dimensões.** Os dados são organizados em linhas e colunas, cada uma com sua verificação de paridade. Se um único bit de dados mudar, falham a linha e a coluna que o contêm. A interseção indica a posição. Com vários erros, algumas alterações podem se compensar: inverter os quatro cantos de um retângulo altera dois bits em cada linha e coluna envolvida, preservando suas paridades.
+**Paridade em duas dimensões.** Os dados são organizados em linhas e colunas, cada uma com sua verificação de paridade. Se um único *bit* de dados mudar, falham a linha e a coluna que o contêm. A interseção indica a posição. Com vários erros, algumas alterações podem se compensar: inverter os quatro cantos de um retângulo altera dois *bits* em cada linha e coluna envolvida, preservando suas paridades.
 
 ![Verificação de paridade por linhas e colunas](images/screenshot017.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 159.*
 
-- ***Checksum*.** Uma regra simples consiste em somar os bytes e guardar o resto da divisão por 256. Para a mensagem `MODEM!`, os valores ASCII são `77, 79, 68, 69, 77, 33`. A soma é `403`, e o valor de verificação é `403 mod 256 = 147`. O receptor repete a operação. Essa regra deixa passar, por exemplo, a troca de posição de dois bytes, pois a soma permanece igual.
+- ***Checksum*.** Uma regra simples consiste em somar os *bytes* e guardar o resto da divisão por 256. Para a mensagem `MODEM!`, os valores ASCII são `77, 79, 68, 69, 77, 33`. A soma é `403`, e o valor de verificação é `403 mod 256 = 147`. O receptor repete a operação. Essa regra deixa passar, por exemplo, a troca de posição de dois *bytes*, pois a soma permanece igual.
 
-- **CRC** (*Cyclic Redundancy Check*). O transmissor e o receptor usam o mesmo **polinômio gerador**, representado por uma sequência de bits. No modelo simplificado, um gerador de quatro bits produz um resto de três bits:
+- **CRC** (*Cyclic Redundancy Check*). O transmissor e o receptor usam o mesmo **polinômio gerador**, representado por uma sequência de *bits*. No modelo simplificado, um gerador de quatro *bits* produz um resto de três *bits*:
 
     1. Para proteger os dados `1101` com o gerador `1011`, o transmissor acrescenta três zeros e obtém `1101000`.
-    2. Ele divide `1101000` por `1011` em aritmética binária módulo 2. A cada etapa, combina os bits por `XOR`, sem empréstimo. O resto é `001`.
+    2. Ele divide `1101000` por `1011` em aritmética binária módulo 2. A cada etapa, combina os *bits* por `XOR`, sem empréstimo. O resto é `001`.
     3. Substitui os três zeros pelo resto e transmite `1101001`. Ao dividir essa sequência pelo mesmo gerador, o receptor obtém resto zero. Um resto diferente de zero revela erro.
 
 ![Cálculo do CRC por divisão binária](images/screenshot018.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 161.*
 
-- **Código de Hamming.** Para proteger $n$ bits de dados e corrigir um erro simples, escolhe-se a menor quantidade $r$ de bits de paridade que satisfaça $2^r \geq n+r+1$. As combinações dos resultados de paridade precisam identificar cada posição da palavra e o caso em que nenhuma verificação falha.
+- **Código de Hamming.** Para proteger $n$ *bits* de dados e corrigir um erro simples, escolhe-se a menor quantidade $r$ de *bits* de paridade que satisfaça $2^r \geq n+r+1$. As combinações dos resultados de paridade precisam identificar cada posição da palavra e o caso em que nenhuma verificação falha.
 
-Com **16 bits de dados**, são necessários **5 bits de paridade**, totalizando 21 posições. As paridades ocupam as potências de dois (`1`, `2`, `4`, `8` e `16`), e os dados ocupam as demais posições. Cada posição participa das verificações indicadas por sua representação binária. A posição `5`, por exemplo, corresponde a `00101` e participa das paridades `1` e `4`.
+Com **16 *bits* de dados**, são necessários **5 *bits* de paridade**, totalizando 21 posições. As paridades ocupam as potências de dois (`1`, `2`, `4`, `8` e `16`), e os dados ocupam as demais posições. Cada posição participa das verificações indicadas por sua representação binária. A posição `5`, por exemplo, corresponde a `00101` e participa das paridades `1` e `4`.
 
 | Paridade | Posições verificadas | Resultado do exemplo |
 | --- | --- | --- |
@@ -907,7 +911,7 @@ Com **16 bits de dados**, são necessários **5 bits de paridade**, totalizando 
 | `8` | 8 a 15 | Correta |
 | `16` | 16 a 21 | Correta |
 
-Somando as posições das paridades que falharam, obtém-se `1 + 4 = 5`. Sob a hipótese de um único erro, basta inverter o bit da posição 5. Esse código tem distância mínima 3. Se dois bits forem alterados, um decodificador que tente corrigir um erro simples pode inverter a posição errada.
+Somando as posições das paridades que falharam, obtém-se `1 + 4 = 5`. Sob a hipótese de um único erro, basta inverter o *bit* da posição 5. Esse código tem distância mínima 3. Se dois *bits* forem alterados, um decodificador que tente corrigir um erro simples pode inverter a posição errada.
 
 ### Retransmissão:
 
@@ -957,7 +961,7 @@ Quando várias estações compartilham um meio de transmissão, o método de ace
 | **ALOHA com *slots*** | A estação só pode iniciar a transmissão no começo de um intervalo. Duas estações que escolhem o mesmo intervalo ainda podem colidir. |
 | **CSMA** (*Carrier Sense Multiple Access*) | A estação escuta o canal antes de transmitir. Como o sinal leva tempo para se propagar, duas estações ainda podem perceber o canal livre e transmitir juntas. |
 
-> No modelo clássico do ALOHA, com quadros de mesma duração e tentativas aleatórias independentes, alinhar o início das transmissões aos *slots* reduz o período em que pode ocorrer colisão. A utilização máxima ideal passa de cerca de **18%** para **37%**.
+> No modelo clássico do ALOHA, com quadros de mesma duração e tentativas aleatórias independentes, alinhar o início das transmissões aos *slots* reduz o período em que pode ocorrer colisão. A utilização máxima ideal passa de cerca de $18\%$ para $37\%$.
 
 No **CSMA**, a regra de **persistência** define o que fazer quando o canal está ocupado. Já **CD** e **CA** indicam como o método lida com possíveis colisões.
 
@@ -1014,42 +1018,42 @@ Antes do quadro, o transmissor envia um **preâmbulo** para sincronização e um
 
 | Campo | Tamanho | Função |
 | --- | --- | --- |
-| **MAC de destino** | 6 bytes | Identifica a interface ou o grupo a que o quadro se destina. |
-| **MAC de origem** | 6 bytes | Identifica a interface que enviou o quadro. |
-| **Comprimento/Tipo** | 2 bytes | Indica o comprimento dos dados ou identifica o protocolo transportado, conforme o valor. |
-| **Dados e eventual preenchimento** | 46 a 1.500 bytes | Transporta a carga útil. Se ela for curta, o transmissor acrescenta preenchimento (*padding*). |
-| **FCS** | 4 bytes | Contém o CRC usado para detectar alterações no quadro. |
+| **MAC de destino** | 6 *bytes* | Identifica a interface ou o grupo a que o quadro se destina. |
+| **MAC de origem** | 6 *bytes* | Identifica a interface que enviou o quadro. |
+| **Comprimento/Tipo** | 2 *bytes* | Indica o comprimento dos dados ou identifica o protocolo transportado, conforme o valor. |
+| **Dados e eventual preenchimento** | 46 a 1.500 *bytes* | Transporta a carga útil. Se ela for curta, o transmissor acrescenta preenchimento (*padding*). |
+| **FCS** | 4 *bytes* | Contém o CRC usado para detectar alterações no quadro. |
 
 No formato **Ethernet II** (DIX), um valor como `0x0800` identifica IPv4. No formato com **comprimento**, o protocolo superior é identificado com auxílio de LLC e, quando aplicável, SNAP. A figura compara os dois usos do campo após o MAC de origem.
 
 ![Quadro Ethernet II e quadro IEEE 802.3 com LLC](images/screenshot028.png)<br>
 *Fonte: FRAGA, Marcelo Caramuru Pimentel. Redes de Computadores - 11ª Aula, p. 15.*
 
-O tamanho mínimo do quadro básico é **64 bytes**, do MAC de destino ao FCS. No Ethernet compartilhado clássico, esse mínimo e o limite de extensão do segmento permitiam que uma colisão distante fosse percebida enquanto a estação ainda transmitia.
+O tamanho mínimo do quadro básico é **64 *bytes***, do MAC de destino ao FCS. No Ethernet compartilhado clássico, esse mínimo e o limite de extensão do segmento permitiam que uma colisão distante fosse percebida enquanto a estação ainda transmitia.
 
-**Endereço MAC.** Um endereço Ethernet tem 48 bits, geralmente escritos como seis pares hexadecimais. Pode ser administrado globalmente, com identificadores atribuídos à organização responsável, ou localmente, inclusive por software.
+**Endereço MAC.** Um endereço Ethernet tem 48 *bits*, geralmente escritos como seis pares hexadecimais. Pode ser administrado globalmente, com identificadores atribuídos à organização responsável, ou localmente, inclusive por *software*.
 
-**Evolução do meio.** Em **10BASE5** e **10BASE2**, várias estações compartilhavam um barramento coaxial. O **10BASE-T** levou um cabo de par trançado de cada estação a um ponto central. O equipamento instalado nesse ponto determina se as estações ainda compartilham o meio ou se cada ligação opera de forma independente. Entre as taxas posteriores estão **Fast Ethernet** (100 Mbps) e **Gigabit Ethernet** (1 Gbps).
+**Evolução do meio.** Em **10BASE5** e **10BASE2**, várias estações compartilhavam um barramento coaxial. O **10BASE-T** levou um cabo de par trançado de cada estação a um ponto central. O equipamento instalado nesse ponto determina se as estações ainda compartilham o meio ou se cada ligação opera de forma independente. Entre as taxas posteriores estão **Fast Ethernet** ($100 \text{ Mbps}$) e **Gigabit Ethernet** ($1 \text{ Gbps}$).
 
 ### Equipamentos de Interconexão:
 
 - **Repetidor:** Atua na camada Física. Recebe o sinal digital em um trecho do enlace, recupera sua temporização e o retransmite com os níveis de sinal restabelecidos. Para isso, seu circuito **regenerador** precisa identificar os símbolos recebidos. Se interpretar um símbolo incorretamente, o repetidor poderá retransmitir um sinal bem formado com o dado errado.
 
-    ![Circuito regenerador](images/screenshot006.png)<br>
-    *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 100.*
+![Circuito regenerador](images/screenshot006.png)<br>
+*Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 100.*
 
-    ![Repetidor entre segmentos](images/screenshot029.png)<br>
-    *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 220.*
+![Repetidor entre segmentos](images/screenshot029.png)<br>
+*Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 220.*
 
 - ***Hub*:** Funciona como um repetidor de várias portas. O sinal recebido em uma porta é repetido nas demais. Embora os cabos formem uma estrela, as estações compartilham o meio e pertencem ao mesmo **domínio de colisão**.
 
-    ![Hub com várias estações](images/screenshot030.png)<br>
-    *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 220.*
+![Hub com várias estações](images/screenshot030.png)<br>
+*Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 220.*
 
 - **Ponte:** Atua na camada de Enlace. Interliga segmentos e usa o endereço MAC de destino para decidir se um quadro precisa passar de um segmento para outro. Quando sabe que o destino está no mesmo segmento da origem, a ponte **filtra** o quadro e evita que ele ocupe o outro segmento.
 
-    ![Pontes interligando segmentos](images/screenshot031.png)<br>
-    *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 223.*
+![Pontes interligando segmentos](images/screenshot031.png)<br>
+*Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 223.*
 
 - ***Switch*:** Funciona como uma ponte de várias portas. Usa o MAC de **origem** de cada quadro para aprender em qual porta está o remetente e consulta o MAC de **destino** para decidir por onde encaminhar o quadro. Considere A na porta 1 e B na porta 4, ambos na mesma VLAN, com a tabela MAC inicialmente vazia.
 
@@ -1057,10 +1061,10 @@ O tamanho mínimo do quadro básico é **64 bytes**, do MAC de destino ao FCS. N
     2. **B responde a A.** O *switch* aprende `B → porta 4`. Como já conhece a porta de A, encaminha a resposta apenas pela porta 1.
     3. **A volta a enviar para B.** A tabela já indica `B → porta 4`, e o quadro segue apenas por essa porta. Se a porta indicada para um destino coincidir com a de entrada, o *switch* filtra o quadro.
 
-    ![Encaminhamento em switches](images/screenshot032.png)<br>
-    *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 224.*
+![Encaminhamento em switches](images/screenshot032.png)<br>
+*Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 224.*
 
-    > Em uma ligação Ethernet *full-duplex* entre estação e *switch*, as duas extremidades podem transmitir ao mesmo tempo, dispensando o CSMA/CD. Um quadro de *broadcast* é encaminhado por todas as demais portas que podem transmitir naquela VLAN.
+> Em uma ligação Ethernet *full-duplex* entre estação e *switch*, as duas extremidades podem transmitir ao mesmo tempo, dispensando o CSMA/CD. Um quadro de *broadcast* é encaminhado por todas as demais portas que podem transmitir naquela VLAN.
 
 ### Wi-Fi e IEEE 802.11:
 
@@ -1072,12 +1076,12 @@ O tamanho mínimo do quadro básico é **64 bytes**, do MAC de destino ao FCS. N
 ![Organização das estações em BSS](images/screenshot033.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 229.*
 
-- **ESS (*Extended Service Set*):** Um sistema de distribuição (DS) interliga os BSS de infraestrutura em uma mesma rede lógica. Assim, um notebook pode mudar de AP ao passar de um corredor para outro da faculdade.
+- **ESS (*Extended Service Set*):** Um sistema de distribuição (DS) interliga os BSS de infraestrutura em uma mesma rede lógica. Assim, um *notebook* pode mudar de AP ao passar de um corredor para outro da faculdade.
 
 ![Relação entre BSS, DS e ESS](images/screenshot034.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 230.*
 
-- **Entrega de quadros:** O receptor de um quadro no enlace de rádio pode ser diferente do destino dos dados. Quando um notebook envia dados a uma impressora cabeada na mesma rede, o **AP** recebe o quadro pelo rádio e o encaminha à **impressora**. Para identificar quem transmite e recebe em cada trecho, além da origem e do destino dos dados, um quadro 802.11 pode conter até quatro campos de endereço.
+- **Entrega de quadros:** O receptor de um quadro no enlace de rádio pode ser diferente do destino dos dados. Quando um *notebook* envia dados a uma impressora cabeada na mesma rede, o **AP** recebe o quadro pelo rádio e o encaminha à **impressora**. Para identificar quem transmite e recebe em cada trecho, além da origem e do destino dos dados, um quadro 802.11 pode conter até quatro campos de endereço.
 
 - **Acesso ao meio:** No modelo clássico do IEEE 802.11, o uso do canal pode ser distribuído entre as estações ou coordenado pelo AP.
 
@@ -1106,14 +1110,14 @@ No **modo pessoal**, os usuários normalmente compartilham uma senha. No **modo 
 
 ### Organização de Redes Locais:
 
-Dois switches podem reunir várias conexões físicas em uma ligação lógica (**agregação de enlaces**). O tráfego de diferentes fluxos é distribuído entre os enlaces participantes. Isso aumenta a capacidade total e permite manter a ligação ativa caso um deles falhe, com capacidade reduzida.
+Dois *switches* podem reunir várias conexões físicas em uma ligação lógica (**agregação de enlaces**). O tráfego de diferentes fluxos é distribuído entre os enlaces participantes. Isso aumenta a capacidade total e permite manter a ligação ativa caso um deles falhe, com capacidade reduzida.
 
-- **STP (*Spanning Tree Protocol*):** Considere três switches ligados em triângulo. Se todos encaminharem um *broadcast* pelas duas direções, cópias do quadro poderão circular repetidamente. O STP seleciona uma **árvore de encaminhamento**: os switches continuam fisicamente conectados, mas algumas portas ficam fora do encaminhamento de dados para eliminar ciclos. Se o caminho ativo falhar, o protocolo pode ativar um caminho alternativo.
+- **STP (*Spanning Tree Protocol*):** Considere três *switches* ligados em triângulo. Se todos encaminharem um *broadcast* pelas duas direções, cópias do quadro poderão circular repetidamente. O STP seleciona uma **árvore de encaminhamento**: os *switches* continuam fisicamente conectados, mas algumas portas ficam fora do encaminhamento de dados para eliminar ciclos. Se o caminho ativo falhar, o protocolo pode ativar um caminho alternativo.
 
 ![Árvore de encaminhamento formada pelo STP](images/screenshot036.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 241.*
 
-**VLAN (*Virtual Local Area Network*):**  Em um switch cujas portas pertencem à mesma VLAN, um *broadcast* enviado pelo laboratório pode chegar também às máquinas da administração. Ao atribuir os dois grupos a VLANs distintas, cada grupo passa a ter seu próprio domínio de *broadcast*, mesmo compartilhando o equipamento.
+**VLAN (*Virtual Local Area Network*):**  Em um *switch* cujas portas pertencem à mesma VLAN, um *broadcast* enviado pelo laboratório pode chegar também às máquinas da administração. Ao atribuir os dois grupos a VLANs distintas, cada grupo passa a ter seu próprio domínio de *broadcast*, mesmo compartilhando o equipamento.
 
 ![Distribuição de broadcast em um switch sem separação por VLAN](images/screenshot037.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 243.*
@@ -1123,20 +1127,20 @@ Dois switches podem reunir várias conexões físicas em uma ligação lógica (
 
 | Tipo de porta ou ligação | Uso |
 | --- | --- |
-| **Porta de acesso** | Normalmente associa o tráfego de um dispositivo final a uma VLAN. O computador pode enviar um quadro sem marca, e o switch identifica a VLAN pela porta de entrada. |
+| **Porta de acesso** | Normalmente associa o tráfego de um dispositivo final a uma VLAN. O computador pode enviar um quadro sem marca, e o *switch* identifica a VLAN pela porta de entrada. |
 | ***Trunk* (entroncamento)** | Transporta várias VLANs entre equipamentos. A marca IEEE 802.1Q identifica a VLAN de um quadro. Conforme a configuração, uma VLAN nativa pode trafegar sem marca. |
 
-Se laboratório e administração ocupam dois prédios, um *trunk* entre os switches pode transportar as duas VLANs preservando a separação dos grupos. Um *broadcast* do laboratório pode atravessar esse enlace e alcançar as portas do laboratório no outro prédio. Para enviar um pacote à rede da administração, é necessário **roteamento entre as VLANs**, realizado por um roteador ou por um switch com função de camada de Rede.
+Se laboratório e administração ocupam dois prédios, um *trunk* entre os *switches* pode transportar as duas VLANs preservando a separação dos grupos. Um *broadcast* do laboratório pode atravessar esse enlace e alcançar as portas do laboratório no outro prédio. Para enviar um pacote à rede da administração, é necessário **roteamento entre as VLANs**, realizado por um roteador ou por um *switch* com função de camada de Rede.
 
 ## 2. Camada de Rede:
 
 ### Interfaces e Endereços IP:
 
-O notebook do laboratório tem o endereço IPv4 `192.168.10.34/27` na interface Wi-Fi. A mesma interface também pode ter endereços IPv6. O alcance de cada endereço determina onde ele pode ser usado.
+O *notebook* do laboratório tem o endereço IPv4 `192.168.10.34/27` na interface Wi-Fi. A mesma interface também pode ter endereços IPv6. O alcance de cada endereço determina onde ele pode ser usado.
 
-- **Loopback:** Os endereços `127.0.0.1` (IPv4) e `::1` (IPv6) permitem acessar um serviço no próprio notebook. O tráfego permanece no equipamento.
+- **Loopback:** Os endereços `127.0.0.1` (IPv4) e `::1` (IPv6) permitem acessar um serviço no próprio *notebook*. O tráfego permanece no equipamento.
 
-- **IPv4 privado:** O endereço do notebook pertence a um dos três blocos reservados para redes privadas. Organizações diferentes podem usar os mesmos endereços em suas redes internas.
+- **IPv4 privado:** O endereço do *notebook* pertence a um dos três blocos reservados para redes privadas. Organizações diferentes podem usar os mesmos endereços em suas redes internas.
 
 | Prefixo | Faixa |
 | --- | --- |
@@ -1154,14 +1158,14 @@ Os cabeçalhos IPv4 e IPv6 são estruturalmente os mesmos, com a maior modifica�
 
 | Item | IPv4 | IPv6 |
 | --- | --- | --- |
-| Identificador de origem e destino | Endereços de 32 bits. | Endereços de 128 bits. |
+| Identificador de origem e destino | Endereços de 32 *bits*. | Endereços de 128 *bits*. |
 | Limitador da circulação do pacote (decrementado a cada roteador) | **TTL** (*Time to Live*). | **Hop Limit** |
 | Identificador do que vem em seguida | **Protocol**, como TCP, UDP ou ICMP. | **Next Header**, que pode identificar um cabeçalho de extensão ou o protocolo transportado. |
 | Tamanho | **Total Length**, incluindo o cabeçalho IPv4. | **Payload Length**, que é o tamanho total menos o cabeçalho IPv6. |
 
 ### Cálculo de uma Sub-rede IPv4:
 
-Em `192.168.10.34/27`, o prefixo deixa `32 − 27 = 5` bits para os endereços dentro da sub-rede. Cada bloco contém `2^5 = 32` endereços. Como `.34` está no bloco de `.32` a `.63`, o notebook pertence à sub-rede **`192.168.10.32/27`**.
+Em `192.168.10.34/27`, o prefixo deixa $32 - 27 = 5$ *bits* para os endereços dentro da sub-rede. Cada bloco contém $2^5 = 32$ endereços. Como `.34` está no bloco de `.32` a `.63`, o *notebook* pertence à sub-rede **`192.168.10.32/27`**.
 
 - **Identificador da sub-rede:** `192.168.10.32`, o primeiro endereço do bloco.
 - **Endereços úteis:** de `192.168.10.33` a `192.168.10.62`. Por convenção, costuma-se atribuir o primeiro (`.33`) ao *gateway* da sub-rede, embora ele possa usar outro endereço útil.
@@ -1200,9 +1204,9 @@ Se nenhuma entrada mais específica corresponder ao destino, usa a **rota padrã
 
 ### Resolução de Vizinhos:
 
-Para alcançar o servidor `.70`, o notebook já escolheu o roteador `.62`. Falta descobrir o **endereço MAC de `.62`** para montar o quadro. Uma associação entre IP e MAC pode ser configurada manualmente ou aprendida quando houver tráfego para aquele vizinho.
+Para alcançar o servidor `.70`, o *notebook* já escolheu o roteador `.62`. Falta descobrir o **endereço MAC de `.62`** para montar o quadro. Uma associação entre IP e MAC pode ser configurada manualmente ou aprendida quando houver tráfego para aquele vizinho.
 
-- **ARP no IPv4:** O notebook consulta seu cache. Se ainda não conhece a associação, envia uma solicitação por *broadcast* no enlace: “Quem tem `192.168.10.62`?”. O roteador responde com seu MAC, e o notebook guarda a associação para os próximos envios.
+- **ARP no IPv4:** O *notebook* consulta seu cache. Se ainda não conhece a associação, envia uma solicitação por *broadcast* no enlace: “Quem tem `192.168.10.62`?”. O roteador responde com seu MAC, e o *notebook* guarda a associação para os próximos envios.
 - **Neighbor Discovery no IPv6:** A interface usa mensagens ICMPv6 de solicitação e anúncio de vizinho para descobrir o endereço de enlace do próximo salto. A associação também pode ser reutilizada.
 
 ### Tradução de Endereços e Portas:
@@ -1220,25 +1224,25 @@ Para alcançar o servidor `.70`, o notebook já escolheu o roteador `.62`. Falta
 
 A **MTU do caminho** é a menor MTU entre os enlaces do percurso. Se um pacote excede a MTU da próxima saída, o comportamento depende da versão do IP e, no IPv4, da permissão para fragmentar.
 
-- **IPv4 com DF:** Com o bit *Don't Fragment* ativo, o roteador descarta o pacote grande demais e informa à origem, por ICMP, que seria necessário fragmentá-lo.
+- **IPv4 com DF:** Com o *bit* *Don't Fragment* ativo, o roteador descarta o pacote grande demais e informa à origem, por ICMP, que seria necessário fragmentá-lo.
 - **IPv6:** O roteador descarta o pacote grande demais e envia à origem uma mensagem ICMPv6 *Packet Too Big* com a MTU da saída. A origem pode ajustar o tamanho dos pacotes.
 
 > Em uma VPN, os cabeçalhos e a proteção do túnel ocupam parte do espaço disponível para o pacote interno.
 
 ### Fragmentação em IPv4:
 
-Um roteador recebe um datagrama de **1.500 bytes**, com cabeçalho de 20 bytes, e precisa enviá-lo por um enlace com **MTU de 1.280 bytes**. Neste exemplo, a fragmentação é permitida.
+Um roteador recebe um datagrama de **1.500 *bytes***, com cabeçalho de 20 *bytes*, e precisa enviá-lo por um enlace com **MTU de 1.280 *bytes***. Neste exemplo, a fragmentação é permitida.
 
-1. **Descontar o cabeçalho.** Cada fragmento terá seu próprio cabeçalho de 20 bytes. Restam até `1.280 − 20 = 1.260` bytes para dados.
-2. **Alinhar a carga.** O *Fragment Offset* indica a posição dos dados em unidades de oito bytes. A carga de cada fragmento anterior ao último precisa ser múltipla de oito. O primeiro leva `1.256` bytes.
-3. **Posicionar o restante.** Dos `1.480` bytes de dados originais, sobram `224`. O segundo fragmento começa na posição `1.256 / 8 = 157`.
+1. **Descontar o cabeçalho.** Cada fragmento terá seu próprio cabeçalho de 20 *bytes*. Restam até $1.280 - 20 = 1.260$ *bytes* para dados.
+2. **Alinhar a carga.** O *Fragment Offset* indica a posição dos dados em unidades de oito *bytes*. A carga de cada fragmento anterior ao último precisa ser múltipla de oito. O primeiro leva `1.256` *bytes*.
+3. **Posicionar o restante.** Dos `1.480` *bytes* de dados originais, sobram `224`. O segundo fragmento começa na posição $1.256 / 8 = 157$.
 
-| Fragmento | Bytes dos dados originais | Carga | Total com cabeçalho | Offset | MF |
+| Fragmento | *Bytes* dos dados originais | Carga | Total com cabeçalho | Offset | MF |
 | --- | --- | --- | --- | --- | --- |
-| **1** | 0 a 1.255 | 1.256 bytes | 1.276 bytes | `0` | `1` |
-| **2** | 1.256 a 1.479 | 224 bytes | 244 bytes | `157` | `0` |
+| **1** | 0 a 1.255 | 1.256 *bytes* | 1.276 *bytes* | `0` | `1` |
+| **2** | 1.256 a 1.479 | 224 *bytes* | 244 *bytes* | `157` | `0` |
 
-Na remontagem, a identificação comum associa os fragmentos ao datagrama, e o *offset* posiciona cada trecho. O indicador **MF** (*More Fragments*) vale `1` no primeiro fragmento e `0` no último. Com os dois trechos, o destino recupera os `1.480` bytes de dados.
+Na remontagem, a identificação comum associa os fragmentos ao datagrama, e o *offset* posiciona cada trecho. O indicador **MF** (*More Fragments*) vale `1` no primeiro fragmento e `0` no último. Com os dois trechos, o destino recupera os `1.480` *bytes* de dados.
 
 ### Protocolos de Roteamento:
 
