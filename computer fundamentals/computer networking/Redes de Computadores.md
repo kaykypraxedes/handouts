@@ -21,7 +21,7 @@ ______            _                   _
 
 > O que é uma rede de computadores e como ela permite que dispositivos troquem informações e compartilhem recursos?
 
-## Redes de Computadores:
+## O que é uma Rede de Computadores:
 
 “É um conjunto de computadores autônomos e interconectados por uma única tecnologia.” - Tanenbaum.
 
@@ -114,7 +114,7 @@ Essa divisão traz três vantagens principais:
 
 ## Comunicação Vertical e Horizontal:
 
-A **comunicação vertical** ocorre dentro de um dispositivo, entre camadas vizinhas. Na transmissão, os dados descem a partir da aplicação. Na recepção, sobem até a aplicação de destino.
+A **comunicação vertical** ocorre dentro de um dispositivo, entre camadas vizinhas (**há comunicação apenas entre camadas diretamente conectadas)**. Na transmissão, os dados descem a partir da aplicação. Na recepção, sobem até a aplicação de destino.
 
 Considere um pedido de página enviado por HTTP sobre TCP:
 
@@ -123,11 +123,13 @@ Considere um pedido de página enviado por HTTP sobre TCP:
 3. A camada de Rede acrescenta seu cabeçalho, que inclui o endereço IP de destino, formando um **pacote IP**.
 4. A camada de Enlace coloca o pacote em um **quadro** para entregá-lo pelo enlace local. A camada Física representa os dados desse quadro em sinais e os transmite pelo meio.
 
-Esse processo de envolver os dados recebidos da camada superior com informações de controle é o **encapsulamento**. Por exemplo, o pacote IP inteiro passa a ser o conteúdo transportado pelo quadro. Além do cabeçalho, algumas tecnologias de enlace acrescentam um campo de verificação ao final do quadro.
+Esse processo de envolver os dados recebidos da camada superior com informações de controle é o **encapsulamento**. Por exemplo, o pacote IP inteiro passa a ser o conteúdo transportado pelo quadro. 
+
+> Além do cabeçalho, algumas tecnologias de enlace acrescentam um campo de verificação ao final do quadro.
 
 No servidor ocorre o **desencapsulamento**. A camada de Enlace interpreta o quadro e entrega o pacote à camada de Rede. A Rede interpreta o cabeçalho IP e entrega o segmento ao Transporte. O TCP reúne os dados na ordem correta e os disponibiliza à aplicação, que pode então interpretar o pedido HTTP.
 
-A **comunicação horizontal** é a relação lógica entre participantes da mesma camada. O pedido HTTP é produzido pelo navegador e interpretado pelo servidor Web. Já o quadro que sai do *notebook* em direção ao roteador vale para aquele enlace. Ao encaminhar o pacote por outro enlace, o roteador o encapsula em um novo quadro adequado à saída.
+A **comunicação horizontal** é a relação lógica entre participantes da mesma camada (**cada camada interpreta apenas seus dados e cabeça-los**). O pedido HTTP é produzido pelo navegador e interpretado pelo servidor Web. Já o quadro que sai do *notebook* em direção ao roteador vale para aquele enlace. Ao encaminhar o pacote por outro enlace, o roteador o encapsula em um novo quadro adequado à saída.
 
 ## Modelo de Cinco Camadas:
 
@@ -145,7 +147,7 @@ A **comunicação horizontal** é a relação lógica entre participantes da mes
 
 O modelo TCP/IP, ou modelo *Internet*, organiza a comunicação em **Acesso à Rede**, ***Internet***, **Transporte** e **Aplicação**. A diferença principal está na base: **Acesso à Rede** reúne a transmissão de sinais e a entrega de quadros, funções que o modelo de cinco camadas separa em **Física** e **Enlace**. A camada chamada ***Internet*** corresponde à **Rede**.
 
-> O modelo de cinco camadas representa a arquitetura TCP/IP com uma divisão mais explícita das responsabilidades de Acesso à Rede (na prática, **são o mesmo modelo, mas com níveis de detalhamento diferentes**). A Física cuida de como o sinal atravessa o meio. O Enlace cuida de como os dados são organizados em quadros e entregues no trecho local. Assim, uma mesma tecnologia de enlace, como Ethernet, pode manter suas regras de enquadramento ao usar cobre ou fibra para transmitir os sinais.
+> O modelo de cinco camadas apenas representa a arquitetura TCP/IP com uma divisão mais explícita das responsabilidades de Acesso à Rede (na prática, **são o mesmo modelo, mas com níveis de detalhamento diferentes**).
 
 ## Modelo OSI (Sete Camadas):
 
@@ -156,13 +158,13 @@ O modelo de referência OSI organiza a comunicação em **Física**, **Enlace**,
 
 No modelo de cinco camadas, protocolos e bibliotecas usados pelas aplicações podem desempenhar essas funções.
 
-> O OSI permaneceu como modelo de referência. Sua suíte de protocolos perdeu espaço para o TCP/IP, que já estava em uso enquanto os padrões do OSI ainda eram discutidos e implementados. A complexidade da suíte também dificultou sua adoção. Na prática, uma aplicação pode usar a conexão oferecida pelo transporte e recorrer a protocolos ou bibliotecas para funções como codificação de dados e retomada de uma operação. Quando um recurso exige mensagens de controle ou processamento adicional, aplicá-lo apenas onde é necessário evita esse custo nas demais aplicações. O Apêndice B detalha como o OSI as organiza.
+> O OSI permaneceu como modelo de referência. Sua suíte de protocolos perdeu espaço para o TCP/IP, que já estava em uso enquanto os padrões do OSI ainda eram discutidos. A complexidade da suíte também dificultou sua adoção. Na prática, uma aplicação pode usar a conexão oferecida pelo transporte e recorrer a protocolos ou bibliotecas para funções como codificação de dados e retomada de uma operação. Quando um recurso exige mensagens de controle ou processamento adicional, aplicá-lo apenas onde é necessário evita esse custo nas demais aplicações. O Apêndice B detalha como o OSI as organiza.
 
 ---
 
 # 2. Camada Física
 
-> Como uma sequência de *bits* atravessa um cabo, uma fibra ou o ar e volta a ser reconhecida pelo receptor?
+> Como envio uma mensagem de um ponto a outro? Como o receptor reconhece e interpreta essa mensagem? O que pode atrapalhar a transmissão?
 
 ## Dados, Sinais e Símbolos:
 
@@ -206,13 +208,13 @@ Na **fibra óptica**, o núcleo e seu revestimento guiam a luz por terem índice
 
 > Um satélite **geoestacionário** permanece na mesma direção para um observador em solo, o que facilita o uso de antenas fixas. Como sua órbita fica a cerca de 36.000 km de altitude, o sinal leva aproximadamente 250 ms para ir de uma estação terrestre a outra passando pelo satélite. Esse valor corresponde a um único sentido da comunicação.
 
-Nos meios não guiados, transmissões que chegam ao mesmo receptor ao mesmo tempo e em frequências sobrepostas podem interferir entre si. Uma antena omnidirecional pode captar sinais vindos de várias direções, enquanto uma antena direcional favorece a recepção em uma direção. Para reduzir a interferência, sistemas sem fio podem usar canais de frequência distintos ou coordenar os instantes de transmissão. Se ainda ocorrerem erros, técnicas de correção ajudam a recuperar os dados e a reduzir a necessidade de reenvios.
+Nos meios não guiados, transmissões que chegam ao mesmo receptor ao mesmo tempo e em frequências sobrepostas podem interferir entre si. Para reduzir a interferência, sistemas sem fio podem usar canais de frequência distintos ou coordenar os instantes de transmissão. Se ainda ocorrerem erros, técnicas de correção ajudam a recuperar os dados e a reduzir a necessidade de reenvios.
 
 ## Enlaces e Topologias:
 
 Um **enlace** é um trecho de comunicação entre dispositivos. 
 
-### Topologias com Enlaces Ponto a Ponto:
+### Topologias Ponto a Ponto:
 
 Cada enlace liga dois equipamentos. A topologia descreve como esses enlaces se combinam para formar a rede.
 
@@ -226,7 +228,7 @@ Cada enlace liga dois equipamentos. A topologia descreve como esses enlaces se c
 ![Redes Ponto a Ponto](images/screenshot001.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 37.*
 
-### Topologias com Meio Compartilhado (Multiponto):
+### Topologias Multiponto (Meio Compartilhado):
 
 Vários dispositivos utilizam o mesmo meio para se comunicar. O acesso ao meio precisa ser coordenado para evitar ou lidar com transmissões que interferem entre si.
 
@@ -290,15 +292,23 @@ Com dois *bits* por símbolo, `1.000 Bd` correspondem a `2.000 bit/s`. Usar mais
 
 Uma transmissão pode ser classificada pelo sentido da comunicação, pela disposição dos dados e pela forma de sincronizar o receptor.
 
-| Critério | Modo | Funcionamento |
-| --- | --- | --- |
-| **Sentido** | *Simplex* | A informação segue em um único sentido, como na radiodifusão de uma emissora para seus ouvintes. |
-| **Sentido** | *Half-duplex* | As duas extremidades podem transmitir, uma de cada vez, como em um par de rádios comunicadores. |
-| **Sentido** | *Full-duplex* | As duas extremidades podem transmitir simultaneamente, como em um enlace Ethernet de um computador a um switch operando nesse modo. |
-| **Disposição** | Serial | Os bits seguem em sequência em cada via de transmissão. Uma interface pode combinar várias vias seriais em paralelo, como ocorre no PCIe. |
-| **Disposição** | Paralela | Vários *bits* são enviados simultaneamente por vias distintas, como em um barramento de oito linhas de dados. |
-| **Sincronismo** | Assíncrona (*start/stop*) | O receptor usa uma taxa combinada e ajusta o instante de leitura ao detectar o bit de início de cada caractere. Um ou mais bits de parada marcam o fim da unidade. |
-| **Sincronismo** | Síncrona | O receptor mantém uma referência de tempo durante um bloco ou fluxo de dados. O relógio pode ser enviado por uma linha própria ou recuperado do sinal, dispensando bits de início e parada a cada caractere. |
+### Sentido:
+
+- ***Simplex*:** A informação segue em um único sentido, como na radiodifusão de uma emissora para seus ouvintes.
+- ***Half-duplex*:** As duas extremidades podem transmitir, uma de cada vez, como em um par de *walkie-talkies*.
+- ***Full-duplex*:** As duas extremidades podem transmitir simultaneamente, como em um par de celulares em ligação.
+
+### Disposição:
+
+- **Serial:** Os bits seguem em sequência em cada via de transmissão. Uma interface pode combinar várias vias seriais em paralelo, como ocorre no PCIe.
+- **Paralela:** Vários *bits* são enviados simultaneamente por vias distintas, como em um barramento de oito linhas de dados.
+
+> Atualmente, mesmo que intuitivamente o envio paralelo aparente ser mais rápido, a maioria das tecnologias atuais utiliza comunicação serial (principalmente pelo o *overhead* de organização dos *bits*, a interferência que os canais causam um no outro em altas frequências e sua dificuldade de operação).
+
+### Sincronismo:
+
+- **Assíncrona (*start/stop*):** O receptor usa uma taxa combinada e ajusta o instante de leitura ao detectar o bit de início de cada caractere. Um ou mais bits de parada marcam o fim da unidade.
+- **Síncrona:** O receptor mantém uma referência de tempo durante um bloco ou fluxo de dados. O relógio pode ser enviado por uma linha própria ou recuperado do sinal, dispensando bits de início e parada a cada caractere.
 
 > Em uma UART configurada com oito bits de dados, um de início e um de parada, cada byte ocupa dez intervalos de bit no meio. Nesse formato, 80% do tempo de transmissão do caractere corresponde aos dados.
 
@@ -326,7 +336,9 @@ A **capacidade de transmissão** expressa uma taxa em *bit*/s. Dois limites teó
 | **Nyquist** | Canal ideal sem ruído, com largura de banda $W$ e $N$ níveis de sinalização. | $C = 2W\log_2(N)$ |
 | **Shannon** | Canal de largura de banda $W$ com ruído branco gaussiano aditivo. | $C = W\log_2(1+\mathrm{SNR})$ |
 
-Em Nyquist, cada símbolo representa $\log_2(N)$ *bits*. Por exemplo, passar de dois para quatro níveis permite passar de um para dois *bits* por símbolo. Shannon explica por que esse ganho encontra um limite em um canal real: para uma largura de banda e uma relação sinal-ruído fixas, aumentar o número de níveis indefinidamente acaba tornando os símbolos difíceis demais de distinguir.
+Em Nyquist, cada símbolo representa $\log_2(N)$ *bits*. Por exemplo, passar de dois para quatro níveis permite passar de um para dois *bits* por símbolo. 
+
+Shannon explica por que esse ganho encontra um limite em um canal real: para uma largura de banda e uma relação sinal-ruído fixas, aumentar o número de níveis indefinidamente acaba tornando os símbolos difíceis demais de distinguir.
 
 > Nas fórmulas, $W$ é dado em hertz. Em Shannon, a SNR entra como razão entre potências. Se estiver expressa em decibéis, a conversão é $\mathrm{SNR}=10^{\mathrm{SNR}_{\mathrm{dB}}/10}$. Por exemplo, `20 dB` correspondem a uma razão de `100`.
 
@@ -348,11 +360,13 @@ Na **divisão de tempo (TDM)**, os intervalos de transmissão (*slots*) podem se
 
 Quando vários dispositivos podem iniciar transmissões por conta própria, surge outra questão: **como decidir quem pode transmitir em cada momento?** Esse é um dos problemas tratados pela camada de Enlace.
 
+> Já sabemos como transmitir uma mensagem. Mas como eu direciono esses dados para um dispositivo?
+
 ---
 
 # 3. Camada de Enlace
 
-> Como um dispositivo organiza os dados em quadros e os entrega ao próximo equipamento no caminho?
+> Como envio dados a um ou mais dispositivos? Como eu faço para confirmar a entrega e descobrir se ocorreu algum erro?
 
 ## Entrega em um Enlace:
 
@@ -440,14 +454,14 @@ Quando um quadro se perde ou chega com um erro que o receptor só consegue detec
 No esquema de **parada e espera** (*Stop-and-Wait*), o transmissor envia um quadro e aguarda a confirmação de recebimento (**ACK**, *acknowledgement*) antes de enviar o próximo.
 
 ![Transmissão Stop-and-Wait](images/screenshot019.png)<br>
-*Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 163.*
+*Fonte: **Adaptado** de MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 163.*
 
 Para recuperar perdas, o transmissor pode iniciar um **temporizador** após o envio. Se o prazo expirar (*timeout*) sem o ACK esperado, ele retransmite. Alguns protocolos também permitem que o receptor sinalize a falha com uma confirmação negativa (**NAK**), antecipando o reenvio.
 
 O próprio **ACK pode se perder**. Nesse caso, o receptor já aceitou o quadro, mas o transmissor chega ao fim do prazo e envia uma segunda cópia.
 
 ![Falha no envio do ACK](images/screenshot021.png)<br>
-*Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 164.*
+*Fonte: **Adaptado** de MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 164.*
 
 Um **número de sequência** permite ao receptor reconhecer a duplicata e repetir a confirmação sem entregar os mesmos dados duas vezes. A combinação de verificação de erros, confirmações e retransmissões recebe o nome de **ARQ** (*Automatic Repeat reQuest*).
 
@@ -462,11 +476,13 @@ Mesmo quando todos os quadros chegam sem erro, um transmissor rápido pode envi�
 
 Uma **confirmação** informa o que já foi recebido. Um **crédito** informa quanto ainda pode ser enviado. Um protocolo pode comunicar as duas informações na mesma mensagem. Já o **controle de congestionamento** trata da sobrecarga no caminho pela rede, que pode ocorrer mesmo quando o receptor final tem espaço disponível.
 
+> Já sabemos como entregar dados à um pequeno grupo de dispositivos diretamente conectados. Como fazemos para alcançar um dispositivo em outra rede?
+
 ---
 
 # 4. Camada de Rede
 
-> Quando o destino está em outra rede, como cada equipamento decide para onde enviar o pacote até que ele chegue ao destino?
+> Como identifico um dispositivo em outra rede? Como os roteadores decidem por onde os dados devem passar?
 
 ## Entrega entre Redes:
 
@@ -637,24 +653,24 @@ Na figura, cada enlace tem custo 1. A tabela acompanha as informações disponí
 
 | Etapa | O que acontece | O que A sabe |
 | --- | --- | --- |
-| **T0 — Inicialização** | Cada roteador começa com sua própria entrada. | Chegar a A custa 0. |
-| **T1 — Vizinhos** | Os roteadores identificam seus enlaces diretos. | B e D estão a custo 1. |
-| **T2 — Troca de vetores** | Os vizinhos anunciam os destinos que alcançam. | B anuncia E a custo 1. A calcula `1 + 1 = 2` até E por B. D também oferece uma rota de custo 2 até E. |
-| **T3 — Convergência** | Novas trocas mantêm os menores custos encontrados. | A pode alcançar E por B ou por D. Para acompanhar a falha, considere que escolheu B no desempate. |
+| **T0 - Inicialização** | Cada roteador começa com sua própria entrada. | Chegar a A custa 0. |
+| **T1 - Vizinhos** | Os roteadores identificam seus enlaces diretos. | B e D estão a custo 1. |
+| **T2 - Troca de vetores** | Os vizinhos anunciam os destinos que alcançam. | B anuncia E a custo 1. A calcula `1 + 1 = 2` até E por B. D também oferece uma rota de custo 2 até E. |
+| **T3 - Convergência** | Novas trocas mantêm os menores custos encontrados. | A pode alcançar E por B ou por D. Para acompanhar a falha, considere que escolheu B no desempate. |
 
-**O que acontece quando o enlace A–B falha?** O enlace C1 fica indisponível para todos no mesmo instante, mas a notícia leva tempo para alcançar cada roteador.
+**O que acontece quando o enlace A-B falha?** O enlace C1 fica indisponível para todos no mesmo instante, mas a notícia leva tempo para alcançar cada roteador.
 
 ![Rede após a falha do enlace C1 entre A e B](images/screenshot048.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 305.*
 
 | Etapa | O que muda | O que A registra |
 | --- | --- | --- |
-| **T0 — Detecção** | A e B detectam a falha e invalidam as rotas selecionadas que dependiam de C1. | As entradas para B e E passam a custo `∞`. O enlace direto até D continua válido. |
-| **T1 — Propagação** | Os vizinhos recebem os anúncios e reavaliam suas próprias entradas. | Nesta etapa do exemplo, A ainda registra `∞` para B e E. |
-| **T2 — Alternativas** | Anúncios recebidos por D revelam caminhos válidos. | A volta a alcançar E por `A–D–E`, a custo 2. Ainda registra `∞` para B. |
-| **T3 — Nova convergência** | As rotas se estabilizam sem utilizar C1. | A alcança B por `A–D–E–B`, a custo 3. Antes da falha, o enlace direto custava 1. |
+| **T0 - Detecção** | A e B detectam a falha e invalidam as rotas selecionadas que dependiam de C1. | As entradas para B e E passam a custo `∞`. O enlace direto até D continua válido. |
+| **T1 - Propagação** | Os vizinhos recebem os anúncios e reavaliam suas próprias entradas. | Nesta etapa do exemplo, A ainda registra `∞` para B e E. |
+| **T2 - Alternativas** | Anúncios recebidos por D revelam caminhos válidos. | A volta a alcançar E por `A-D-E`, a custo 2. Ainda registra `∞` para B. |
+| **T3 - Nova convergência** | As rotas se estabilizam sem utilizar C1. | A alcança B por `A-D-E-B`, a custo 3. Antes da falha, o enlace direto custava 1. |
 
-> O custo `∞` indica que o roteador considera o destino inalcançável com as informações disponíveis naquele instante. E continuava fisicamente acessível por D. A sequência T0–T3 ilustra uma ordem possível de atualização. Um roteador que já mantenha uma alternativa válida pode utilizá-la mais cedo.
+> O custo `∞` indica que o roteador considera o destino inalcançável com as informações disponíveis naquele instante. E continuava fisicamente acessível por D. A sequência T0-T3 ilustra uma ordem possível de atualização. Um roteador que já mantenha uma alternativa válida pode utilizá-la mais cedo.
 
 ### Estado de Enlace:
 
@@ -665,12 +681,12 @@ No **estado de enlace**, cada roteador anuncia quais são seus vizinhos e quanto
 
 1. **Conhecimento local:** A identifica dois enlaces diretos. Chegar a B custa 2, e chegar a G custa 6.
 2. **Construção do mapa:** B anuncia, entre outros, seu enlace até E, de custo 2. E anuncia seu enlace até G, de custo 1. Os anúncios dos oito roteadores permitem reconstruir a topologia da figura.
-3. **Escolha do próximo salto:** A compara o enlace direto até G, de custo 6, com `A–B–E–G`, de custo `2 + 2 + 1 = 5`. Para chegar a G pelo caminho de menor custo, A envia o pacote primeiro a B.
+3. **Escolha do próximo salto:** A compara o enlace direto até G, de custo 6, com `A-B-E-G`, de custo `2 + 2 + 1 = 5`. Para chegar a G pelo caminho de menor custo, A envia o pacote primeiro a B.
 
 ![Árvore de caminhos mínimos calculada a partir de A](images/screenshot050.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 310.*
 
-A figura mostra a **árvore de caminhos mínimos de A**. O enlace A–G continua disponível e pode ser escolhido se algum custo mudar. Quando um enlace falha, a mudança é anunciada. À medida que os roteadores recebem a atualização, recalculam os caminhos afetados. Até que os mapas sejam atualizados, podem ocorrer perdas ou ciclos temporários. O cálculo para os oito roteadores aparece em A.2.6.
+A figura mostra a **árvore de caminhos mínimos de A**. O enlace A-G continua disponível e pode ser escolhido se algum custo mudar. Quando um enlace falha, a mudança é anunciada. À medida que os roteadores recebem a atualização, recalculam os caminhos afetados. Até que os mapas sejam atualizados, podem ocorrer perdas ou ciclos temporários. O cálculo para os oito roteadores aparece em A.2.6.
 
 ### Hierarquia e Sistemas Autônomos:
 
@@ -719,7 +735,7 @@ A **poda** retira essas saídas da distribuição. Se o ramo de um roteador não
 ![Árvore de distribuição após a poda no RPM](images/screenshot055.png)<br>
 *Fonte: **Adaptado** de MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 322.*
 
-Compare **B–H** e **A–D–I**, retirados da distribuição, com o roteador **C**, que permanece. Mesmo sem receptor local, C leva até F. Os enlaces podados continuam disponíveis para outros tráfegos, e o ramo pode voltar a ser usado se surgir um receptor.
+Compare **B-H** e **A-D-I**, retirados da distribuição, com o roteador **C**, que permanece. Mesmo sem receptor local, C leva até F. Os enlaces podados continuam disponíveis para outros tráfegos, e o ramo pode voltar a ser usado se surgir um receptor.
 
 Após a poda, economiza-se banda nos envios seguintes. Há, porém, um custo inicial ao alcançar ramos sem interessados, além das mensagens de controle e das informações mantidas para cada combinação de origem e grupo.
 
@@ -748,9 +764,7 @@ Remontar um datagrama exige receber **todos** os seus fragmentos. Se um deles se
 
 > **No Linux:** o campo `mtu` de `ip a` ou `ip link show` informa a MTU **da interface local**. Um valor de `1500` no notebook, por si só, não informa qual é a menor MTU do percurso até o servidor.
 
-## Túneis, VPNs e Roteamento em Cebola:
-
-### Túneis e VPNs:
+## Túneis e VPNs:
 
 Um aluno em casa precisa acessar `192.168.10.70`, endereço privado do servidor da faculdade. Para que o pacote atravesse a Internet e chegue à rede do laboratório, uma **VPN** (*Virtual Private Network*) pode estabelecer um **túnel** entre o notebook e um gateway da instituição. O princípio do túnel é encapsular o pacote original para transportá-lo entre suas extremidades.
 
@@ -760,14 +774,17 @@ Em uma VPN **IPsec em modo túnel**, com proteção criptográfica, o percurso d
 2. **Na Internet:** Os roteadores intermediários consultam o destino **externo** para encaminhar o pacote até a faculdade. A proteção do túnel cobre o pacote **interno** no trecho entre as extremidades.
 3. **Na faculdade:** O gateway verifica a proteção, remove o encapsulamento e consulta o destino **interno**. A partir daí, encaminha o pacote ao servidor pelas rotas da instituição.
 
-![Pacote destinado ao servidor do laboratório encapsulado para envio ao gateway da VPN](images/screenshot057.png)<br>
-*Fonte: [preencher após a escolha da imagem].*
+![VPN Remote Access](images/screenshot059.png)<br>
+*Fonte: Elaborado pelo autor com auxílio do ChatGPT, 2026.*
+
+![VPN site-to-site](images/screenshot060.png)<br>
+*Fonte: Elaborado pelo autor com auxílio do ChatGPT, 2026.*
 
 Esse é um exemplo de **acesso remoto**, em que um dispositivo se conecta à rede da instituição. Em uma VPN **entre redes** (*site-to-site*), os dois extremos do túnel podem ser gateways, por exemplo, um em cada campus. O encapsulamento acrescenta cabeçalhos e informações de proteção. Para a mesma MTU externa, sobra menos espaço para o pacote interno.
 
-### Roteamento em Cebola (*Onion Routing*):
+## *Onion Routing*:
 
-No **roteamento em cebola**, o cliente prepara camadas de criptografia para retransmissores sucessivos. No **Tor**, esses retransmissores formam um **circuito** sobre a Internet. Para acessar um site público, um circuito típico passa por três papéis:
+No ***onion routing***, o cliente prepara camadas de criptografia para retransmissores sucessivos. No **Tor**, esses retransmissores formam um **circuito** sobre a Internet. Para acessar um site público, um circuito típico passa por três papéis:
 
 | Retransmissor | O que faz no percurso de ida |
 | --- | --- |
@@ -777,10 +794,26 @@ No **roteamento em cebola**, o cliente prepara camadas de criptografia para retr
 
 A imagem da **cebola** vem dessas camadas sucessivas. O cliente prepara os dados para que cada retransmissor consiga remover apenas a camada correspondente à sua etapa. No caminho de volta, os retransmissores acrescentam suas camadas, e o cliente as remove. O objetivo é distribuir o conhecimento do percurso entre os participantes.
 
-![Circuito Tor entre o cliente e um site público, com retransmissores de entrada, intermediário e saída](images/screenshot058.png)<br>
-*Fonte: [preencher após a escolha da imagem].*
+![Circuito Tor com retransmissores de entrada, intermediário e saída](images/screenshot058.png)<br>
+*Fonte: Tga.D - Tor Circuit Diagram, Wikimedia Commons. Disponível em: [https://en.wikipedia.org/wiki/File:Tor_Circuit_Diagram.svg](https://en.wikipedia.org/wiki/File:Tor_Circuit_Diagram.svg). Acesso em: 24 nov. 2026.*
 
 O Tor é uma **rede sobreposta**. A entrada, o intermediário e a saída são os nós escolhidos para o circuito Tor. Entre quaisquer dois deles, os pacotes continuam atravessando os roteadores IP da Internet. A proteção do circuito alcança o nó de saída. Ao acessar um site por **HTTPS**, a conexão criptográfica entre o navegador e o site continua protegendo o conteúdo também no trecho entre a saída e o servidor.
+
+> Já sabemos como encaminhar dados até o dispositivo de destino. Mas como entregá-los ao processo certo?
+
+---
+
+# 5. Camada de Transporte
+
+> Como vários processos podem se comunicar ao mesmo tempo? Quando a entrega precisa ser confiável, como lidar com perdas e dados fora de ordem?
+
+> Já sabemos como os dados chegam ao processo certo. Agora, como as aplicações interpretam o que recebem?
+
+---
+
+# 6. Camada de Aplicação
+
+Como duas aplicações combinam o formato e o significado das mensagens? Por exemplo, como um navegador pede uma página e entende a resposta do servidor?
 
 ---
 
@@ -821,16 +854,16 @@ Na codificação **Manchester**, todo bit tem uma transição central. Mesmo qua
 | **PSK** (*Phase Shift Keying*) | Fase. | O símbolo determina a posição da onda dentro do ciclo. Na PSK binária, os dois estados podem estar separados por 180°. |
 | **QAM** (*Quadrature Amplitude Modulation*) | Duas componentes da portadora defasadas de 90°. | As combinações formam pontos de uma **constelação**, cada um associado a um símbolo. Em 16-QAM, 16 pontos permitem representar quatro bits por símbolo. |
 
-![Modulação por deslocamento de amplitude — ASK](images/screenshot011.png)<br>
+![Modulação por deslocamento de amplitude - ASK](images/screenshot011.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 121.*
 
-![Modulação por deslocamento de fase — PSK](images/screenshot013.png)<br>
+![Modulação por deslocamento de fase - PSK](images/screenshot013.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 122.*
 
 ![Representação da modulação QAM](images/screenshot014.png)<br>
 *Fonte: FRAGA, Marcelo Caramuru Pimentel. Redes de Computadores - 6ª Aula, p. 23.*
 
-**Exemplo de interface física:** em uma conexão discada com modem externo, o computador pode se comunicar com o modem por uma interface serial **EIA-232-F** (família RS-232). O modem adapta os dados à linha telefônica. A recomendação **V.92** especifica características da comunicação entre o modem do assinante e o equipamento de acesso da operadora. Assim, a ligação computador–modem e o percurso pela rede telefônica têm especificações físicas próprias.
+**Exemplo de interface física:** em uma conexão discada com modem externo, o computador pode se comunicar com o modem por uma interface serial **EIA-232-F** (família RS-232). O modem adapta os dados à linha telefônica. A recomendação **V.92** especifica características da comunicação entre o modem do assinante e o equipamento de acesso da operadora. Assim, a ligação computador-modem e o percurso pela rede telefônica têm especificações físicas próprias.
 
 ### Protocolos de Enlace Ponto a Ponto:
 
@@ -880,7 +913,7 @@ Somando as posições das paridades que falharam, obtém-se `1 + 4 = 5`. Sob a h
 **Retransmissão por parada e espera.** No *Stop-and-Wait* ARQ, o transmissor mantém um quadro pendente, inicia um temporizador e aguarda o ACK. Se o prazo vencer, envia o quadro novamente. Um NAK pode antecipar o reenvio quando o receptor detecta uma falha.
 
 ![Vencimento do temporizador e retransmissão](images/screenshot020.png)<br>
-*Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 163.*
+*Fonte: **Adaptado** de MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 163.*
 
 O **protocolo de bit alternado** usa `0` e `1` para distinguir quadros novos de retransmissões. Se o receptor já aceitou o quadro `0` e o ACK se perdeu, ele continua esperando o `1`. Ao receber outra cópia do `0`, confirma novamente e entrega a carga útil uma única vez.
 
@@ -891,13 +924,13 @@ O **protocolo de bit alternado** usa `0` e `1` para distinguir quadros novos de 
 
 | Protocolo | O que o receptor faz com `2`, `3` e `4` | Como a perda é recuperada |
 | --- | --- | --- |
-| **Go-Back-N** | No funcionamento clássico, descarta os quadros fora de ordem e continua esperando o `1`. | Ao expirar o prazo, o transmissor reenvia o `1` e os quadros seguintes ainda pendentes. |
-| **Selective Repeat** | Guarda os quadros válidos dentro da janela e confirma os que recebeu. | O transmissor reenvia o `1`. Quando ele chega, o receptor pode entregar `1`, `2`, `3` e `4` em ordem. |
+| ***Go-Back-N*** | No funcionamento clássico, descarta os quadros fora de ordem e continua esperando o `1`. | Ao expirar o prazo, o transmissor reenvia o `1` e os quadros seguintes ainda pendentes. |
+| ***Selective Repeat*** | Guarda os quadros válidos dentro da janela e confirma os que recebeu. | O transmissor reenvia o `1`. Quando ele chega, o receptor pode entregar `1`, `2`, `3` e `4` em ordem. |
 
-![Retransmissão integral — Go-Back-N](images/screenshot023.png)<br>
+![Retransmissão integral - Go-Back-N](images/screenshot023.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 170.*
 
-![Retransmissão seletiva — Selective Repeat](images/screenshot024.png)<br>
+![Retransmissão seletiva - Selective Repeat](images/screenshot024.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 175.*
 
 ### Métodos de Acesso ao Meio:
@@ -910,7 +943,7 @@ O **protocolo de bit alternado** usa `0` e `1` para distinguir quadros novos de 
 | **TDMA** | Intervalos de tempo (*slots*) em um canal. | Cada participante transmite na sua vez. Um intervalo reservado pode ficar ocioso se a estação estiver sem dados. |
 | **CDMA** | Um código que distingue a transmissão. | Várias estações podem ocupar a mesma faixa ao mesmo tempo. O receptor usa o código correspondente para recuperar o sinal de interesse. |
 
-![Separação de transmissões por código — CDMA](images/screenshot025.png)<br>
+![Separação de transmissões por código - CDMA](images/screenshot025.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 188.*
 
 **Acesso por disputa.** No **ALOHA puro**, uma estação transmite assim que tem um quadro. Se a tentativa fica sem confirmação, ela aguarda um tempo aleatório antes de repetir. No **ALOHA com slots**, cada tentativa começa no início de um intervalo. No modelo clássico, com quadros de mesma duração e tentativas aleatórias independentes, a utilização máxima ideal passa de cerca de **18%** para **37%**: alinhar os inícios reduz o intervalo em que outra tentativa pode provocar colisão.
@@ -1034,7 +1067,7 @@ Um **sistema de distribuição** (DS) interliga os BSS de infraestrutura. Quando
 - **DCF** (*Distributed Coordination Function*): as estações disputam o meio usando CSMA/CA. Durante o *backoff*, a estação decrementa um contador sorteado enquanto o canal está livre. Se o canal ficar ocupado, congela a contagem e a retoma depois que o meio volta a ficar livre pelo intervalo exigido.
 - **PCF** (*Point Coordination Function*): mecanismo opcional do modelo clássico. O AP pode consultar as estações para conceder oportunidades de transmissão em períodos coordenados.
 
-![Acesso distribuído e coordenado — DCF e PCF](images/screenshot035.png)<br>
+![Acesso distribuído e coordenado - DCF e PCF](images/screenshot035.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 233.*
 
 **Reserva e confirmação.** Em uma transmissão *unicast* convencional com confirmação, a troca básica é `Dados → ACK`. Com a reserva opcional do canal, passa a ser `RTS → CTS → Dados → ACK`.
@@ -1137,7 +1170,7 @@ Para consultar apenas os endereços, use `ip -br addr`. Para examinar uma interf
 | Identificar o que vem em seguida | **Protocol**, como TCP, UDP ou ICMP. | **Next Header**, que pode identificar um cabeçalho de extensão ou o protocolo transportado. |
 | Informar o tamanho | **Total Length**, incluindo o cabeçalho IPv4. | **Payload Length**, contando o que vem depois do cabeçalho IPv6 básico. |
 
-> **Circuito virtual na prática — ATM.** No ATM (*Asynchronous Transfer Mode*), os dados são transportados em células de 53 bytes. O caminho lógico é estabelecido previamente. A cada salto, o equipamento consulta os identificadores da célula para escolher a saída e os identificadores usados no trecho seguinte. Vários circuitos virtuais compartilham o enlace, e a capacidade garantida depende do serviço da conexão.
+> **Circuito virtual na prática - ATM.** No ATM (*Asynchronous Transfer Mode*), os dados são transportados em células de 53 bytes. O caminho lógico é estabelecido previamente. A cada salto, o equipamento consulta os identificadores da célula para escolher a saída e os identificadores usados no trecho seguinte. Vários circuitos virtuais compartilham o enlace, e a capacidade garantida depende do serviço da conexão.
 
 ### Máscaras, Sub-redes e Agregação:
 
@@ -1159,7 +1192,7 @@ O mesmo resultado pode ser obtido por uma operação **AND** entre endereço e m
 
 > A regra de reservar o primeiro e o último endereços vale para a sub-rede IPv4 convencional do exemplo. Em um enlace ponto a ponto com `/31`, os dois endereços podem identificar as extremidades. Um `/32` identifica um único endereço.
 
-**VLSM — máscaras de comprimentos variáveis.** Uma rede pode ser subdividida em blocos de tamanhos diferentes. Suponha que `192.168.20.0/24` precise atender a três grupos de 100, 50 e 20 interfaces. Alocar primeiro o maior bloco facilita respeitar o alinhamento dos demais.
+**VLSM - máscaras de comprimentos variáveis.** Uma rede pode ser subdividida em blocos de tamanhos diferentes. Suponha que `192.168.20.0/24` precise atender a três grupos de 100, 50 e 20 interfaces. Alocar primeiro o maior bloco facilita respeitar o alinhamento dos demais.
 
 | Grupo | Sub-rede atribuída | Faixa de interfaces | *Broadcast* |
 | --- | --- | --- | --- |
@@ -1286,7 +1319,7 @@ Se o bit **DF** (*Don't Fragment*) estiver ativo, o roteador descarta o datagram
 | **C** | 9 | Passar por C para chegar a D custaria 12. Permanece o custo 10. |
 | **D** | 10 | Todos os destinos estão confirmados. |
 
-A figura 050 mostra uma árvore resultante. O caminho até C admite empate: `A–B–C` e `A–B–E–F–C` custam 9. Os dois têm B como primeiro salto a partir de A. Assim, a rota que A usa para encaminhar a C pode ser a mesma mesmo que o desempate produza árvores diferentes.
+A figura 050 mostra uma árvore resultante. O caminho até C admite empate: `A-B-C` e `A-B-E-F-C` custam 9. Os dois têm B como primeiro salto a partir de A. Assim, a rota que A usa para encaminhar a C pode ser a mesma mesmo que o desempate produza árvores diferentes.
 
 | Protocolo | Âmbito típico | Informação usada na decisão |
 | --- | --- | --- |
@@ -1303,15 +1336,27 @@ A figura 050 mostra uma árvore resultante. O caminho até C admite empate: `A�
 | **Broadcast limitado** | `255.255.255.255` | Destina-se ao enlace local. Os roteadores não o encaminham para outra rede. |
 | **Broadcast direcionado** | `192.168.10.63` para a sub-rede `192.168.10.32/27` | Identifica a difusão daquela sub-rede. Em roteadores, o encaminhamento de *broadcast* direcionado vindo de outra rede é desabilitado por padrão. |
 
-**Participação em grupos — IGMP.** No IPv4, `224.0.0.0/4` é a faixa de endereços *multicast*. Uma interface pode manter seu endereço individual e participar de um grupo, como `239.1.1.1`. Quando um programa solicita a recepção, o **IGMP** (*Internet Group Management Protocol*) permite informar ao roteador local que há interesse naquele grupo. Levar o tráfego de uma rede até outra cabe ao roteamento *multicast*.
+**Participação em grupos - IGMP.** No IPv4, `224.0.0.0/4` é a faixa de endereços *multicast*. Uma interface pode manter seu endereço individual e participar de um grupo, como `239.1.1.1`. Quando um programa solicita a recepção, o **IGMP** (*Internet Group Management Protocol*) permite informar ao roteador local que há interesse naquele grupo. Levar o tráfego de uma rede até outra cabe ao roteamento *multicast*.
 
-**Verificação do caminho reverso — RPF.** Para avaliar um pacote recebido de uma origem S, o roteador consulta qual interface usaria para voltar em direção a S. A verificação de caminho reverso (*Reverse Path Forwarding*, RPF) compara essa interface com a de chegada. No exemplo de RPM das figuras 054 e 055, essa verificação orienta a distribuição inicial. A poda posterior retira os ramos sem receptores.
+**Verificação do caminho reverso - RPF.** Para avaliar um pacote recebido de uma origem S, o roteador consulta qual interface usaria para voltar em direção a S. A verificação de caminho reverso (*Reverse Path Forwarding*, RPF) compara essa interface com a de chegada. No exemplo de RPM das figuras 054 e 055, essa verificação orienta a distribuição inicial. A poda posterior retira os ramos sem receptores.
 
-**Árvore baseada em núcleo — CBT.** No **CBT** (*Core Based Trees*), o roteador que atende um receptor solicita a entrada na árvore em direção ao núcleo. Se a solicitação alcançar um roteador que já participa da árvore, o novo ramo pode se ligar ali. A figura 056 mostra a estrutura compartilhada pelos emissores.
+**Árvore baseada em núcleo - CBT.** No **CBT** (*Core Based Trees*), o roteador que atende um receptor solicita a entrada na árvore em direção ao núcleo. Se a solicitação alcançar um roteador que já participa da árvore, o novo ramo pode se ligar ali. A figura 056 mostra a estrutura compartilhada pelos emissores.
 
-**Ponto de encontro — PIM-SM.** No **PIM-SM** (*Protocol Independent Multicast — Sparse Mode*), o **ponto de encontro** (*Rendezvous Point*, RP) permite que o tráfego de uma fonte alcance inicialmente a árvore dos receptores. Do lado dos receptores, o roteador solicita a entrada na árvore em direção ao RP. Do lado da fonte, o primeiro roteador pode encapsular os pacotes iniciais e enviá-los ao RP para distribuição. Depois, o roteador do lado dos receptores pode passar a usar uma árvore de menor custo até aquela fonte, dispensando a passagem pelo RP nesse fluxo.
+**Ponto de encontro - PIM-SM.** No **PIM-SM** (*Protocol Independent Multicast - Sparse Mode*), o **ponto de encontro** (*Rendezvous Point*, RP) permite que o tráfego de uma fonte alcance inicialmente a árvore dos receptores. Do lado dos receptores, o roteador solicita a entrada na árvore em direção ao RP. Do lado da fonte, o primeiro roteador pode encapsular os pacotes iniciais e enviá-los ao RP para distribuição. Depois, o roteador do lado dos receptores pode passar a usar uma árvore de menor custo até aquela fonte, dispensando a passagem pelo RP nesse fluxo.
 
 > Uma aplicação prática é a distribuição de canais de IPTV em uma rede administrada. Se vários receptores do mesmo canal estão atrás de um roteador, uma cópia pode percorrer o enlace comum e ser replicada apenas no ponto em que os caminhos se separam.
+
+## 3. Camada de Transporte:
+
+
+
+## 4. Camada de Aplicação:
+
+
+---
+
+# Apêndice B. Modelo OSI
+
 
 ---
 
