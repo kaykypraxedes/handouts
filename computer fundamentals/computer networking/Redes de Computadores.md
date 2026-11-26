@@ -61,10 +61,10 @@ As redes podem ser classificadas pela área que abrangem. A escala dá uma ideia
 
 | Tipo | Abrangência | O que costuma importar nessa escala | Exemplo |
 | --- | --- | --- | --- |
-| **PAN** (*Personal Area Network*) | Próxima a uma pessoa. | Conectar dispositivos próximos, considerando alcance e consumo de energia (camada física). | Celular e fones conectados por Bluetooth. |
-| **LAN** (*Local Area Network*) | Casa, laboratório ou prédio. | Ligar vários dispositivos e entregar os dados ao equipamento correto dentro da rede local (camada de enlace). | Computadores e impressoras de um laboratório. |
-| **MAN** (*Metropolitan Area Network*) | Cidade ou região metropolitana. | Interligar redes locais com capacidade suficiente entre as unidades (enlaces metropolitanos e, quando necessário, roteamento na camada de rede). | Rede que interliga unidades de uma faculdade na mesma cidade.|
-| **WAN** (*Wide Area Network*) | Grandes distâncias, como entre estados ou países. | Alcançar redes distantes e escolher os caminhos pelos quais os dados seguem (roteamento na camada de rede). | Rede que conecta filiais de uma empresa em estados diferentes. |
+| **PAN (*Personal Area Network*)** | Próxima a uma pessoa. | Conectar dispositivos próximos, considerando alcance e consumo de energia (camada física). | Celular e fones conectados por Bluetooth. |
+| **LAN (*Local Area Network*)** | Casa, laboratório ou prédio. | Ligar vários dispositivos e entregar os dados ao equipamento correto dentro da rede local (camada de enlace). | Computadores e impressoras de um laboratório. |
+| **MAN (*Metropolitan Area Network*)** | Cidade ou região metropolitana. | Interligar redes locais com capacidade suficiente entre as unidades (enlaces metropolitanos e, quando necessário, roteamento na camada de rede). | Rede que interliga unidades de uma faculdade na mesma cidade.|
+| **WAN (*Wide Area Network*)** | Grandes distâncias, como entre estados ou países. | Alcançar redes distantes e escolher os caminhos pelos quais os dados seguem (roteamento na camada de rede). | Rede que conecta filiais de uma empresa em estados diferentes. |
 
 ## Parâmetros para Avaliação de Redes:
 
@@ -73,7 +73,7 @@ O **desempenho** de uma rede pode ser avaliado por diferentes medidas. Três del
 | Medida | O que indica |
 | --- | --- |
 | **Capacidade nominal** | Taxa de transmissão especificada para uma conexão, normalmente expressa em *bits* por segundo (*bit*/s). |
-| **Vazão** (*throughput*) | Quantidade de dados efetivamente transferida por unidade de tempo. |
+| **Vazão (*throughput*)** | Quantidade de dados efetivamente transferida por unidade de tempo. |
 | **Latência** | Tempo que a informação leva para ir da origem ao destino. |
 
 Ao baixar um arquivo grande, uma **vazão** maior reduz o tempo para concluir a transferência. Em uma chamada de voz, a **latência** é fácil de perceber: se a fala chega atrasada, duas pessoas podem começar a responder ao mesmo tempo.
@@ -351,8 +351,8 @@ A **multiplexação** permite transportar vários fluxos de informação por um 
 
 | Técnica | Como os fluxos compartilham o meio | Exemplo |
 | --- | --- | --- |
-| ***Frequency-Division Multiplexing* (FDM)** | Cada fluxo ocupa uma faixa de frequências diferente. Vários podem transmitir ao mesmo tempo. | Emissoras de rádio transmitem simultaneamente em frequências diferentes. O ouvinte seleciona a emissora ao sintonizar sua frequência. |
-| ***Time-Division Multiplexing* (TDM)** | Cada fluxo utiliza o canal durante determinados intervalos de tempo. | Um equipamento reúne medições de três sensores e transmite, em sequência, uma amostra de cada um pelo mesmo enlace. |
+| **FDM (*Frequency-Division Multiplexing*)** | Cada fluxo ocupa uma faixa de frequências diferente. Vários podem transmitir ao mesmo tempo. | Emissoras de rádio transmitem simultaneamente em frequências diferentes. O ouvinte seleciona a emissora ao sintonizar sua frequência. |
+| **TDM (*Time-Division Multiplexing*)** | Cada fluxo utiliza o canal durante determinados intervalos de tempo. | Um equipamento reúne medições de três sensores e transmite, em sequência, uma amostra de cada um pelo mesmo enlace. |
 
 Na TDM, os intervalos de transmissão (*slots*) podem ser distribuídos de duas formas:
 
@@ -429,7 +429,7 @@ Se um *bit* se altera durante a transmissão, o receptor pode receber uma sequê
 | --- | --- |
 | **Bit de paridade** | Acrescenta um *bit* para que a quantidade total de *bits* `1` seja par (**paridade par**) ou ímpar (**paridade ímpar**). |
 | ***Checksum*** | Combina blocos de dados, geralmente por meio de uma soma, para obter um valor de verificação. A regra de cálculo depende do protocolo. |
-| **CRC** (*Cyclic Redundancy Check*) | Calcula um valor de verificação por uma divisão binária baseada em `XOR`. É utilizado, por exemplo, na verificação de quadros Ethernet. |
+| **CRC (*Cyclic Redundancy Check*)** | Calcula um valor de verificação por uma divisão binária baseada em `XOR`. É utilizado, por exemplo, na verificação de quadros Ethernet. |
 
 Na **paridade par**, os dados `1011` contêm três *bits* `1`. O transmissor acrescenta `1` e envia `10111`, agora com quatro *bits* `1`. Se o receptor ler `10011`, contará três e detectará o erro. Se dois *bits* forem invertidos, a contagem continuará par e a alteração passará despercebida.
 
@@ -795,9 +795,9 @@ No ***onion routing***, o cliente prepara camadas de criptografia para retransmi
 
 | Retransmissor | O que faz no percurso de ida |
 | --- | --- |
-| **Entrada** (*guard*) | Recebe a conexão do cliente, remove sua camada de criptografia e encaminha os dados ao retransmissor intermediário. Conhece o endereço do cliente e o próximo nó do circuito. |
-| **Intermediário** (*middle relay*) | Remove sua camada e encaminha os dados à saída. Na troca normal, vê os retransmissores adjacentes. |
-| **Saída** (*exit relay*) | Remove a última camada de proteção do circuito e abre a conexão com o site público. O site recebe a conexão a partir do endereço da saída. |
+| **Entrada (*guard*)** | Recebe a conexão do cliente, remove sua camada de criptografia e encaminha os dados ao retransmissor intermediário. Conhece o endereço do cliente e o próximo nó do circuito. |
+| **Intermediário (*middle relay*)** | Remove sua camada e encaminha os dados à saída. Na troca normal, vê os retransmissores adjacentes. |
+| **Saída (*exit relay*)** | Remove a última camada de proteção do circuito e abre a conexão com o site público. O site recebe a conexão a partir do endereço da saída. |
 
 A imagem da **cebola** vem dessas camadas sucessivas. O cliente prepara os dados para que cada retransmissor consiga remover apenas a camada correspondente à sua etapa. No caminho de volta, os retransmissores acrescentam suas camadas, e o cliente as remove. 
 
@@ -818,6 +818,59 @@ O Tor é uma **rede sobreposta**. A entrada, o intermediário e a saída são os
 
 > Como vários processos podem se comunicar ao mesmo tempo? Quando a entrega precisa ser confiável, como lidar com perdas e dados fora de ordem?
 
+## Comunicação Fim a Fim e Portas:
+
+A **Camada de Transporte** permite a comunicação **fim a fim** entre processos. Os roteadores encaminham os pacotes ao longo do caminho. Nas extremidades, o sistema operacional entrega os dados à aplicação correspondente.
+
+Um *notebook* pode, por exemplo, receber uma página da Web e uma resposta DNS pelo mesmo endereço IP. O cabeçalho IP identifica o protocolo de transporte, como TCP ou UDP. O cabeçalho de transporte contém as **portas de origem e de destino**, usadas para distinguir as comunicações. Reunir os dados de várias aplicações para transmissão é a **multiplexação**. Separá-los na recepção é a **demultiplexação**.
+
+- **Porta de origem:** Identifica a extremidade que envia. Ao iniciar uma comunicação, o cliente geralmente recebe do sistema uma porta temporária, chamada **efêmera**.
+- **Porta de destino:** Identifica a extremidade que deve receber. O cliente normalmente conhece a porta do serviço. Na resposta, a porta do servidor passa a ser a origem, e a do cliente, o destino.
+
+As portas têm **16 bits**. A IANA divide seus números em três faixas:
+
+| Faixa | Classificação | Uso |
+| --- | --- | --- |
+| `0–1023` | Portas de sistema ou bem conhecidas | Incluem portas padrão de serviços como SSH (`22/TCP`) e HTTPS (`443/TCP`). A porta `0` é reservada. |
+| `1024–49151` | Portas de usuário ou registradas | Podem ser atribuídas pela IANA a serviços específicos. |
+| `49152–65535` | Portas dinâmicas ou privadas | Disponíveis para escolha local. A faixa que o sistema usa para portas efêmeras pode variar. |
+
+> Uma **porta padrão** indica onde o cliente normalmente encontra um serviço. O servidor pode usar outra porta, desde que o cliente saiba qual usar. TCP e UDP têm espaços de portas independentes: `53/TCP` e `53/UDP` podem coexistir no mesmo dispositivo.
+
+## *Sockets*:
+
+Um ***socket*** é uma extremidade de comunicação que o sistema operacional disponibiliza a um processo. Em uma comunicação por IP, o endereço dessa extremidade costuma ser escrito como `IP:porta`, considerando o protocolo de transporte utilizado.
+
+Uma **conexão TCP** é identificada pelo par de extremidades. Em `192.168.10.34:51000 - 192.168.10.70:443`, a primeira pertence ao navegador e a segunda, ao servidor. Se o navegador abrir outra conexão pela porta local `51001`, o servidor poderá distinguir as duas, embora ambas cheguem à sua porta `443`.
+
+## UDP:
+
+O **UDP** (*User Datagram Protocol*) envia mensagens em **datagramas**, sem estabelecer uma conexão prévia. Cada datagrama conserva seu limite: se uma aplicação enviar duas mensagens e ambas chegarem, o receptor poderá lê-las separadamente.
+
+O UDP permite detectar erros pelo *checksum*, mas não garante entrega, ordem ou retransmissão. Em uma consulta DNS por UDP, por exemplo, cabe ao cliente decidir se repetirá a consulta quando a resposta demorar.
+
+## TCP:
+
+O **TCP** (*Transmission Control Protocol*) estabelece uma conexão e oferece à aplicação um **fluxo ordenado de bytes** em cada sentido. Para transmitir, divide os dados em **segmentos**. Na recepção, recompõe o fluxo. Por isso, duas escritas do remetente podem chegar juntas em uma única leitura da aplicação.
+
+### Controle de Erros e Entrega em Ordem:
+
+- **Detecção de erros:** O receptor verifica o *checksum* do segmento. Se detectar corrupção, descarta o segmento.
+- **Confirmação e retransmissão:** O emissor conserva no ***buffer* de transmissão** os bytes enviados que ainda aguardam confirmação. Os ACKs indicam o próximo byte esperado. Se o emissor detectar indícios de perda ou se o prazo de confirmação expirar, poderá retransmitir os dados pendentes.
+- **Ordenação:** Os números de sequência indicam a posição dos bytes no fluxo. Se um trecho chegar antes do anterior, o receptor pode guardá-lo no ***buffer* de recepção**. Quando a lacuna for preenchida, os dados poderão ser entregues em ordem à aplicação.
+
+### Controle de Fluxo:
+
+O **controle de fluxo** evita que o emissor sobrecarregue o **receptor**. O receptor informa, no cabeçalho TCP, quanto pode receber a partir do próximo byte esperado. Esse valor é a **janela de recepção** (*receive window*, `rwnd`) e depende do espaço disponível em seu *buffer*.
+
+Se os dados chegam mais rápido do que a aplicação os lê, o *buffer* vai enchendo e o receptor anuncia uma janela menor. Se anunciar zero, o emissor suspende o envio normal de novos dados. Conforme a aplicação lê os bytes e libera espaço, o receptor pode anunciar uma janela maior.
+
+### Controle de Congestionamento:
+
+O **controle de congestionamento** ajusta o envio às condições da **rede**. O emissor mantém uma **janela de congestionamento** (*congestion window*, `cwnd`), calculada a partir do que observa na comunicação. No TCP clássico, ACKs duplicados podem indicar uma perda, e uma demora que ultrapasse o prazo de retransmissão também leva o emissor a reduzir o envio. Alguns algoritmos consideram ainda o aumento do tempo de ida e volta como sinal de formação de filas.
+
+> Os dois controles atuam ao mesmo tempo. O limite para os dados enviados e ainda não confirmados é o **menor valor entre `rwnd` e `cwnd`**. Assim, tanto um receptor com pouco espaço quanto um caminho congestionado podem limitar a transmissão.
+
 > Já sabemos como os dados chegam ao processo certo. Agora, como as aplicações interpretam o que recebem?
 
 ---
@@ -825,6 +878,117 @@ O Tor é uma **rede sobreposta**. A entrada, o intermediário e a saída são os
 # 6. Camada de Aplicação
 
 Como duas aplicações combinam o formato e o significado das mensagens? Por exemplo, como um navegador pede uma página e entende a resposta do servidor?
+
+Um **protocolo de aplicação** define o formato das mensagens, o que elas significam e como os participantes devem agir ao recebê-las. No modelo **cliente-servidor**, o cliente inicia uma solicitação e o servidor oferece o serviço. Um mesmo programa pode assumir os dois papéis: ao receber o pedido de um navegador, um servidor Web pode atuar como cliente de um banco de dados para preparar a resposta.
+
+## Resolução de Nomes - DNS:
+
+O **DNS** (*Domain Name System*) permite consultar informações associadas a um nome. Por exemplo, o navegador pode consultar `www.faculdade.br` para descobrir o endereço IP do servidor. No DNS convencional, a porta padrão é `53`, tanto em UDP quanto em TCP. Consultas comuns geralmente usam UDP. Se a resposta vier truncada, o cliente pode repetir a consulta por TCP.
+
+> Ao ingressar na rede, o computador pode receber por **DHCP** seu endereço IPv4, a máscara, o *gateway* padrão e o endereço do servidor DNS que deverá consultar.
+
+### Espaço de Nomes e Zonas de Autoridade:
+
+Os nomes do DNS formam uma **árvore**. Em `www.faculdade.br.`, o ponto final representa a raiz e costuma ser omitido. A partir dela, `br` identifica um domínio de primeiro nível, `faculdade` identifica um domínio dentro de `br`, e `www` identifica um nome dentro de `faculdade.br`.
+
+![Níveis da hierarquia de nomes do DNS](images/screenshot062.png)<br>
+*Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 408.*
+
+- **Domínio:** É uma parte da árvore de nomes. O domínio `faculdade.br` abrange também os nomes abaixo dele, como `www.faculdade.br` e `lab.faculdade.br`.
+- **Zona de autoridade:** É a parte da árvore cujos registros são administrados em conjunto. A faculdade pode delegar `lab.faculdade.br` a outros servidores. Nesse caso, o laboratório continua dentro do domínio `faculdade.br`, mas passa a ter sua própria zona.
+
+![Delegação de autoridade entre zonas do DNS](images/screenshot067.png)<br>
+*Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 410.*
+
+O tipo de **registro** indica qual informação está sendo consultada:
+
+| Registro | Informação fornecida |
+| --- | --- |
+| **A / AAAA** | Endereço IPv4 ou IPv6 associado ao nome, respectivamente. |
+| **CNAME** | Outro nome DNS do qual o nome consultado é um *alias*. |
+| **NS** | Nome de um servidor de autoridade da zona. |
+| **MX** | Nome de um servidor que recebe e-mail para o domínio e sua preferência de uso. |
+
+### Consultas Recursivas e Iterativas:
+
+- **Iterativa:** Quando precisa buscar a informação, o resolvedor consulta outros servidores. Cada um responde com o que conhece ou indica quais servidores consultar em seguida. Assim, o resolvedor pode partir da raiz e chegar ao servidor de autoridade da zona.
+
+![Resolução de nomes por consultas iterativas](images/screenshot063.png)<br>
+*Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 413.*
+
+- **Recursiva:** O computador pede ao **resolvedor recursivo** que obtenha a resposta final. Se já tiver uma resposta válida em *cache*, o resolvedor pode devolvê-la imediatamente.
+ 
+![Resolução de nomes por consulta recursiva](images/screenshot064.png)<br>
+*Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 414.*
+
+O **TTL** (*Time to Live*) de um registro indica por quanto tempo ele pode permanecer em *cache*. Enquanto a informação estiver válida, outras consultas podem aproveitar o resultado.
+
+## Páginas Web - HTTP e HTTPS:
+
+O **HTTP** (*Hypertext Transfer Protocol*) organiza a comunicação entre o navegador e o servidor em **requisições e respostas**. Na URL `https://www.faculdade.br/horarios`, `https` indica o esquema de acesso, `www.faculdade.br` identifica o servidor e `/horarios` indica o recurso solicitado.
+
+- **Requisição:** O navegador informa o método, o recurso e os cabeçalhos pertinentes. O método `GET` solicita uma representação do recurso. O `POST` envia dados para processamento, como os campos de um formulário.
+- **Resposta:** O servidor devolve um código de estado, cabeçalhos e, quando aplicável, um corpo. Por exemplo, `200 OK` indica sucesso e `404 Not Found` informa que o recurso solicitado não foi encontrado.
+
+### Conteúdo Estático e Dinâmico:
+
+- **Conteúdo estático:** O servidor lê um arquivo armazenado, como uma imagem ou um documento HTML, e envia seu conteúdo.
+- **Conteúdo dinâmico:** O servidor executa código para produzir a resposta. Por exemplo, ao receber `/horarios`, pode consultar as disciplinas do aluno e gerar a página correspondente. O caminho da URL pode, portanto, identificar uma operação da aplicação.
+
+Um *script* também pode executar **no navegador**. Nesse caso, o servidor envia o código junto dos recursos da página, e o navegador o executa para atualizar a interface ou solicitar novos dados.
+
+### HTTPS e *Cookies*:
+
+- **HTTPS:** É o uso de HTTP em uma comunicação protegida por TLS. O navegador verifica o certificado apresentado pelo servidor, e a conexão protege a confidencialidade e a integridade dos dados em trânsito. HTTP/1.1 e HTTP/2 usam TCP. HTTP/3 usa QUIC sobre UDP, com TLS integrado ao QUIC.
+- ***Cookie*:** É um dado que o servidor pede ao navegador que armazene e devolva em requisições posteriores, conforme as regras do *cookie*. Depois da autenticação, por exemplo, um identificador de sessão permite ao servidor associar o próximo pedido à sessão já aberta pelo aluno.
+
+## Transferência de Arquivos - FTP, TFTP e SFTP:
+
+| Protocolo | Transporte e porta padrão | Como funciona |
+| --- | --- | --- |
+| **FTP** (*File Transfer Protocol*) | TCP, porta `21` para controle. | Mantém uma conexão para comandos e respostas e abre outra para os dados, como o conteúdo de um arquivo. No FTP clássico, credenciais e dados trafegam em texto claro. |
+| **TFTP** (*Trivial File Transfer Protocol*) | UDP, porta `69` para o pedido inicial. | Transfere o arquivo em blocos. O próprio TFTP confirma os blocos recebidos e prevê retransmissão em caso de perda. É usado, por exemplo, para carregar arquivos de inicialização em uma rede local. |
+| **SFTP** (*SSH File Transfer Protocol*) | SSH sobre TCP, normalmente na porta `22`. | Usa um canal SSH para listar diretórios e transferir arquivos com autenticação e criptografia. |
+
+> **SFTP** e **FTPS** são protocolos distintos. SFTP usa SSH. FTPS acrescenta proteção TLS ao FTP.
+
+## Acesso Remoto - Telnet e SSH:
+
+O acesso remoto permite usar um terminal local para executar comandos em outro equipamento. O cliente envia a entrada do usuário, e o equipamento remoto executa o comando e devolve a saída.
+
+- **Telnet:** Usa TCP, normalmente na porta `23`. Em seu uso clássico, envia os dados do terminal, inclusive as credenciais digitadas, em texto claro.
+- **SSH** (*Secure Shell*): Usa TCP, normalmente na porta `22`. O cliente verifica a identidade do servidor por sua chave, e o usuário pode se autenticar por senha ou chave pública. A sessão é criptografada. A mesma conexão SSH pode oferecer serviços como SFTP.
+
+## Correio Eletrônico - SMTP, POP3 e IMAP:
+
+O percurso de um e-mail tem três etapas:
+
+1. **Submissão:** O cliente do remetente entrega a mensagem ao seu servidor de saída por **SMTP** (*Simple Mail Transfer Protocol*). A porta `587/TCP` é usual para submissão autenticada com negociação de TLS. A porta `465/TCP` é usada para submissão com TLS desde o início.
+2. **Transferência:** Para entregar a mensagem a outro domínio, o servidor de saída consulta o registro **MX** desse domínio e abre uma conexão SMTP com o servidor indicado, normalmente na porta `25/TCP`. Após a entrega, a mensagem fica disponível na caixa postal do destinatário.
+3. **Acesso à caixa postal:** O cliente do destinatário pode usar **POP3** ou **IMAP** para acessar as mensagens armazenadas.
+
+| Protocolo de acesso | Como o cliente usa a caixa postal | Portas TCP usuais |
+| --- | --- | --- |
+| **POP3** (*Post Office Protocol Version 3*) | Obtém mensagens para leitura local. Conforme a configuração, pode conservar ou remover a cópia do servidor. | `110`; `995` com TLS desde o início. |
+| **IMAP** (*Internet Message Access Protocol*) | Sincroniza mensagens, pastas e estados mantidos no servidor. Uma mensagem marcada como lida no celular também pode aparecer como lida no computador. | `143`; `993` com TLS desde o início. |
+
+![Envio e transferência de e-mail por SMTP e acesso à caixa postal por POP3 ou IMAP](images/screenshot065.png)<br>
+*Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 425.*
+
+> **MIME** (*Multipurpose Internet Mail Extensions*) permite organizar uma mensagem em partes e indicar o tipo e a codificação de cada uma. Assim, o mesmo e-mail pode conter texto, uma versão em HTML e um arquivo anexo.
+
+## Gerenciamento de Redes - SNMP:
+
+O **SNMP** (*Simple Network Management Protocol*) permite consultar informações de equipamentos de rede, alterar parâmetros quando houver permissão e receber notificações de eventos.
+
+- **Gerente:** Aplicação de gerenciamento que consulta os equipamentos. Pode perguntar, por exemplo, se uma interface do roteador está operacional.
+- **Agente:** Componente do equipamento que atende às solicitações e fornece os valores dos objetos gerenciados. Normalmente recebe consultas na porta `161/UDP`.
+- **MIB** (*Management Information Base*): Define os objetos que podem ser gerenciados, com seus nomes, tipos e significados. Cada objeto é identificado por um **OID** (*Object Identifier*). A MIB define, por exemplo, como interpretar o estado operacional de uma interface; o agente fornece seu valor atual.
+
+![Gerenciamento por SNMP](images/screenshot066.png)<br>
+*Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 432.*
+
+Em uma **consulta**, o gerente solicita um valor e o agente responde. Em uma **notificação**, o equipamento toma a iniciativa: pode enviar um *trap* quando uma interface perde o enlace. O gerente normalmente recebe notificações na porta `162/UDP`.
 
 ---
 
@@ -959,18 +1123,18 @@ Quando várias estações compartilham um meio de transmissão, o método de ace
 | --- | --- |
 | **ALOHA puro** | A estação transmite assim que tem um quadro. Se a confirmação não chegar, espera um tempo aleatório antes de tentar novamente. |
 | **ALOHA com *slots*** | A estação só pode iniciar a transmissão no começo de um intervalo. Duas estações que escolhem o mesmo intervalo ainda podem colidir. |
-| **CSMA** (*Carrier Sense Multiple Access*) | A estação escuta o canal antes de transmitir. Como o sinal leva tempo para se propagar, duas estações ainda podem perceber o canal livre e transmitir juntas. |
+| **CSMA (*Carrier Sense Multiple Access*)** | A estação escuta o canal antes de transmitir. Como o sinal leva tempo para se propagar, duas estações ainda podem perceber o canal livre e transmitir juntas. |
 
 > No modelo clássico do ALOHA, com quadros de mesma duração e tentativas aleatórias independentes, alinhar o início das transmissões aos *slots* reduz o período em que pode ocorrer colisão. A utilização máxima ideal passa de cerca de $18\%$ para $37\%$.
 
 No **CSMA**, a regra de **persistência** define o que fazer quando o canal está ocupado. Já **CD** e **CA** indicam como o método lida com possíveis colisões.
 
-| Aspecto | Variante | Como funciona |
+| Variante | Aspecto | Como funciona |
 | --- | --- | --- |
-| Persistência | **CSMA 1-persistente** | A estação continua escutando e transmite assim que percebe o canal livre. Várias estações em espera podem tentar juntas. |
-| Persistência | **CSMA não persistente** | A estação espera um tempo aleatório antes de voltar a escutar. Isso reduz a chance de tentativas simultâneas, mas pode deixar o canal ocioso. |
-| Colisões | **CSMA/CD** (*Collision Detection*) | A estação monitora o meio enquanto transmite. Ao detectar uma colisão, sinaliza o evento, interrompe o envio e aguarda antes de tentar novamente. No Ethernet compartilhado clássico, a faixa de espera aumenta após colisões sucessivas, até um limite. |
-| Colisões | **CSMA/CA** (*Collision Avoidance*) | A estação escuta o canal e usa intervalos de espera e um tempo aleatório de recuo (*backoff*) para reduzir a chance de transmissões simultâneas. É a base do acesso por disputa no Wi-Fi. |
+| **CSMA 1-persistente** | Persistência | A estação continua escutando e transmite assim que percebe o canal livre. Várias estações em espera podem tentar juntas. |
+| **CSMA não persistente** | Persistência | A estação espera um tempo aleatório antes de voltar a escutar. Isso reduz a chance de tentativas simultâneas, mas pode deixar o canal ocioso. |
+| **CSMA/CD (*Collision Detection*)** | Colisões | A estação monitora o meio enquanto transmite. Ao detectar uma colisão, sinaliza o evento, interrompe o envio e aguarda antes de tentar novamente. No Ethernet compartilhado clássico, a faixa de espera aumenta após colisões sucessivas, até um limite. |
+| **CSMA/CA (*Collision Avoidance*)** | Colisões | A estação escuta o canal e usa intervalos de espera e um tempo aleatório de recuo (*backoff*) para reduzir a chance de transmissões simultâneas. É a base do acesso por disputa no Wi-Fi. |
 
 No meio sem fio, o transmissor e o receptor podem perceber o canal de maneiras diferentes. Isso explica dois casos:
 
@@ -989,7 +1153,7 @@ No meio sem fio, o transmissor e o receptor podem perceber o canal de maneiras d
 
 | Método | Como funciona |
 | --- | --- |
-| **Consulta centralizada** (*polling*) | Um controlador consulta as estações e concede a vez a quem tem dados. Cada consulta consome tempo, mesmo quando a estação está sem dados para enviar. |
+| **Consulta centralizada (*polling*)** | Um controlador consulta as estações e concede a vez a quem tem dados. Cada consulta consome tempo, mesmo quando a estação está sem dados para enviar. |
 | **Passagem de *token*** | Uma autorização, o *token*, circula entre as estações. Em *Token Ring*, quem recebe o *token* livre pode transmitir. Se ele se perder, o protocolo precisa restabelecê-lo. |
 
 ### Família de Padrões IEEE 802:
@@ -1009,8 +1173,8 @@ No meio sem fio, o transmissor e o receptor podem perceber o canal de maneiras d
 
 Na organização IEEE 802, duas funções de enlace aparecem com frequência:
 
-- **MAC** (*Medium Access Control*): trata do acesso ao meio e de aspectos do quadro, como endereçamento e verificação de erros. A expressão **endereço MAC** designa um endereço utilizado nessa subcamada.
-- **LLC** (*Logical Link Control*): oferece uma interface lógica para protocolos superiores. O modelo clássico prevê serviços sem conexão, com ou sem confirmação, e serviços orientados à conexão. No formato Ethernet II, o próprio campo **EtherType** identifica diretamente o protocolo transportado.
+- **MAC (*Medium Access Control*)**: trata do acesso ao meio e de aspectos do quadro, como endereçamento e verificação de erros. A expressão **endereço MAC** designa um endereço utilizado nessa subcamada.
+- **LLC (*Logical Link Control*)**: oferece uma interface lógica para protocolos superiores. O modelo clássico prevê serviços sem conexão, com ou sem confirmação, e serviços orientados à conexão. No formato Ethernet II, o próprio campo **EtherType** identifica diretamente o protocolo transportado.
 
 ### Quadro Ethernet:
 
@@ -1057,9 +1221,9 @@ O tamanho mínimo do quadro básico é **64 *bytes***, do MAC de destino ao FCS.
 
 - ***Switch*:** Funciona como uma ponte de várias portas. Usa o MAC de **origem** de cada quadro para aprender em qual porta está o remetente e consulta o MAC de **destino** para decidir por onde encaminhar o quadro. Considere A na porta 1 e B na porta 4, ambos na mesma VLAN, com a tabela MAC inicialmente vazia.
 
-    1. **A envia para B.** O *switch* aprende `A → porta 1`. Como ainda desconhece a porta de B, envia uma cópia pelas demais portas que podem encaminhar tráfego nessa VLAN.
-    2. **B responde a A.** O *switch* aprende `B → porta 4`. Como já conhece a porta de A, encaminha a resposta apenas pela porta 1.
-    3. **A volta a enviar para B.** A tabela já indica `B → porta 4`, e o quadro segue apenas por essa porta. Se a porta indicada para um destino coincidir com a de entrada, o *switch* filtra o quadro.
+    1. **A envia para B.** O *switch* aprende `A - porta 1`. Como ainda desconhece a porta de B, envia uma cópia pelas demais portas que podem encaminhar tráfego nessa VLAN.
+    2. **B responde a A.** O *switch* aprende `B - porta 4`. Como já conhece a porta de A, encaminha a resposta apenas pela porta 1.
+    3. **A volta a enviar para B.** A tabela já indica `B - porta 4`, e o quadro segue apenas por essa porta. Se a porta indicada para um destino coincidir com a de entrada, o *switch* filtra o quadro.
 
 ![Encaminhamento em switches](images/screenshot032.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 224.*
@@ -1087,13 +1251,13 @@ O tamanho mínimo do quadro básico é **64 *bytes***, do MAC de destino ao FCS.
 
 | Método | Como funciona |
 | --- | --- |
-| **DCF** (*Distributed Coordination Function*) | As estações disputam o canal por CSMA/CA. Durante o *backoff*, o contador diminui enquanto o canal está livre e pausa quando ele fica ocupado. A estação transmite quando a contagem chega a zero. |
-| **PCF** (*Point Coordination Function*) | Em períodos coordenados, o AP consulta as estações e concede a vez de transmitir. É um mecanismo opcional. |
+| **DCF (*Distributed Coordination Function*)** | As estações disputam o canal por CSMA/CA. Durante o *backoff*, o contador diminui enquanto o canal está livre e pausa quando ele fica ocupado. A estação transmite quando a contagem chega a zero. |
+| **PCF (*Point Coordination Function*)** | Em períodos coordenados, o AP consulta as estações e concede a vez de transmitir. É um mecanismo opcional. |
 
 ![Acesso distribuído e coordenado - DCF e PCF](images/screenshot035.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 233.*
 
-- **Confirmação e reserva:** Em uma entrega *unicast* com confirmação, a sequência é `Dados → ACK`. Com reserva, passa a ser `RTS → CTS → Dados → ACK`: o transmissor solicita o envio e o receptor autoriza. Uma estação escondida que ouve o CTS pode usar a duração anunciada para ajustar seu temporizador **NAV** e aguardar o fim da troca.
+- **Confirmação e reserva:** Em uma entrega *unicast* com confirmação, a sequência é `Dados - ACK`. Com reserva, passa a ser `RTS - CTS - Dados - ACK`: o transmissor solicita o envio e o receptor autoriza. Uma estação escondida que ouve o CTS pode usar a duração anunciada para ajustar seu temporizador **NAV** e aguardar o fim da troca.
 - **Intervalos entre quadros:** No modelo clássico, `SIFS < PIFS < DIFS`. Respostas como CTS e ACK usam o intervalo mais curto (SIFS), o coordenador da PCF usa PIFS e uma nova disputa pela DCF aguarda DIFS. Assim, uma troca em andamento tem prioridade.
 - **Fragmentação:** Dividir os dados em quadros menores reduz o volume a retransmitir em caso de erro, mas acrescenta cabeçalhos e confirmações.
 
@@ -1207,7 +1371,7 @@ Se nenhuma entrada mais específica corresponder ao destino, usa a **rota padrã
 Para alcançar o servidor `.70`, o *notebook* já escolheu o roteador `.62`. Falta descobrir o **endereço MAC de `.62`** para montar o quadro. Uma associação entre IP e MAC pode ser configurada manualmente ou aprendida quando houver tráfego para aquele vizinho.
 
 - **ARP no IPv4:** O *notebook* consulta seu cache. Se ainda não conhece a associação, envia uma solicitação por *broadcast* no enlace: “Quem tem `192.168.10.62`?”. O roteador responde com seu MAC, e o *notebook* guarda a associação para os próximos envios.
-- **Neighbor Discovery no IPv6:** A interface usa mensagens ICMPv6 de solicitação e anúncio de vizinho para descobrir o endereço de enlace do próximo salto. A associação também pode ser reutilizada.
+- ***Neighbor Discovery* no IPv6:** A interface usa mensagens ICMPv6 de solicitação e anúncio de vizinho para descobrir o endereço de enlace do próximo salto. A associação também pode ser reutilizada.
 
 ### Tradução de Endereços e Portas:
 
@@ -1287,10 +1451,93 @@ Em uma rede de IPTV, vários receptores podem assistir ao mesmo canal. Uma cópi
 
 ## 3. Camada de Transporte:
 
+### Portas de Serviços e Conexões Simultâneas:
 
+| Serviço | Protocolo de transporte | Porta padrão |
+| --- | --- | --- |
+| SSH | TCP | `22` |
+| DNS | UDP ou TCP | `53` |
+| HTTP/1.1 | TCP | `80` |
+| HTTPS com HTTP/1.1 ou HTTP/2 | TCP | `443` |
+| HTTPS com HTTP/3 | QUIC sobre UDP | `443` |
+
+Um servidor pode manter um *socket* de escuta na porta `443` e atender várias conexões nessa mesma porta. Considere duas conexões TCP abertas pelo navegador do laboratório:
+
+| Conexão | Extremidade do navegador | Extremidade do servidor |
+| --- | --- | --- |
+| **1** | `192.168.10.34:51000` | `192.168.10.70:443` |
+| **2** | `192.168.10.34:51001` | `192.168.10.70:443` |
+
+Os endereços IP e a porta do servidor são iguais nas duas conexões. A porta do navegador distingue os pares de extremidades. Ao receber um segmento vindo de `192.168.10.34:51001`, o servidor o entrega ao *socket* da **conexão 2**.
+
+### Cabeçalhos UDP e TCP:
+
+| Informação | UDP | TCP |
+| --- | --- | --- |
+| **Portas** | Origem e destino. | Origem e destino. |
+| **Comprimento** | *Length* informa o tamanho do datagrama, incluindo o cabeçalho. | *Data Offset* indica onde começam os dados e, portanto, o tamanho do cabeçalho TCP. |
+| **Verificação de erros** | *Checksum*, opcional no UDP sobre IPv4. | *Checksum* obrigatório. |
+| **Sequência e confirmação** | - | O número de sequência posiciona os bytes no fluxo. O número de confirmação indica o próximo byte esperado. |
+| **Janela de recepção** | - | O campo *Window* anuncia quanto o receptor aceita receber a partir do próximo byte esperado. |
+| **Sinalizadores** | - | SYN, ACK e FIN participam da abertura, das confirmações e do encerramento da conexão. |
+
+> A janela anunciada no cabeçalho TCP é a **janela de recepção** (`rwnd`). Cada emissor calcula e mantém localmente sua própria **janela de congestionamento** (`cwnd`).
+
+### Aplicação das Duas Janelas:
+
+Considere o envio do *notebook* para o servidor. O servidor anuncia `rwnd`, e o *notebook* calcula `cwnd`. Os valores da tabela se aplicam a esse sentido da conexão.
+
+| Situação | `rwnd` do servidor | `cwnd` do notebook | Limite de dados em trânsito |
+| --- | --- | --- | --- |
+| A aplicação do servidor demora a ler os dados | 4.000 bytes | 10.000 bytes | **4.000 bytes**, pelo controle de fluxo. |
+| O emissor detecta indícios de congestionamento | 12.000 bytes | 3.000 bytes | **3.000 bytes**, pelo controle de congestionamento. |
+
+Na segunda situação, se o *notebook* já enviou **2.000 bytes** que aguardam confirmação, pode enviar mais **1.000 bytes** antes de atingir o limite. À medida que os ACKs chegam, liberam espaço para novos envios. Por isso, o tempo de ida e volta também influencia a taxa alcançada.
+
+### Uma Conexão TCP Passo a Passo:
+
+1. **Abertura - *three-way handshake*.** O navegador envia **SYN** com seu número inicial de sequência. O servidor responde com **SYN + ACK**, confirma o SYN recebido e informa seu próprio número inicial. O navegador confirma com **ACK**. A sequência é `SYN - SYN + ACK - ACK`.
+
+2. **Transferência e confirmação.** Suponha que o servidor espere o byte `1001`. Se receber os bytes `1101` a `1200` primeiro, pode guardá-los e continuar indicando `ACK = 1001`. Quando chegarem os bytes `1001` a `1100`, o trecho estará completo. O servidor poderá entregar os 200 bytes em ordem e enviar `ACK = 1201`. Essa **confirmação cumulativa** cobre todos os bytes até `1200`.
+
+3. **Encerramento - *four-way handshake*.** O navegador envia **FIN** para indicar que terminou de transmitir. O servidor confirma com **ACK** e ainda pode enviar dados no sentido inverso. Quando também termina, envia seu próprio **FIN**, e o navegador confirma com **ACK**. Com os envios separados, a sequência é `FIN - ACK - FIN - ACK`. Se o servidor já estiver pronto para encerrar, pode reunir seu ACK e seu FIN no mesmo segmento.
 
 ## 4. Camada de Aplicação:
 
+### Da URL à Página:
+
+Um aluno digita `https://www.faculdade.br/horarios` no navegador. Considere um primeiro acesso, sem resposta DNS em *cache*, usando HTTP/1.1.
+
+1. **Resolver o nome.** O computador envia ao resolvedor uma consulta recursiva por `www.faculdade.br`. O resolvedor consulta a raiz, recebe uma indicação para `br` e segue as delegações até o servidor de autoridade de `faculdade.br`. Esse servidor fornece o registro de endereço. O resolvedor guarda o resultado pelo TTL e devolve o IP ao computador.
+2. **Estabelecer a conexão.** O navegador abre uma conexão TCP com o IP recebido, na porta `443`, e negocia TLS. Durante a negociação, verifica se o certificado é válido para `www.faculdade.br`.
+3. **Solicitar o recurso.** Pela conexão protegida, o navegador envia `GET /horarios HTTP/1.1` com o cabeçalho `Host: www.faculdade.br`. O servidor pode gerar a página consultando o sistema de horários e responder com `200 OK`. O cabeçalho `Content-Type: text/html` informa como interpretar o corpo.
+4. **Manter a sessão.** Se o aluno se autenticar, o servidor pode incluir `Set-Cookie: sessao=abc123; Path=/; Secure; HttpOnly` na resposta. Em outra requisição HTTPS ao mesmo servidor, o navegador envia `Cookie: sessao=abc123`. O servidor usa esse identificador para localizar a sessão do aluno.
+
+> O DNS recebe o nome `www.faculdade.br` para resolução. O caminho `/horarios` segue depois, na requisição HTTP enviada ao servidor Web.
+
+### Percurso de um E-mail:
+
+Ana usa um aplicativo de e-mail para enviar uma mensagem a `bruno@faculdade.br`. Bruno lê a mensagem em dois dispositivos.
+
+| Etapa | Quem se comunica | Protocolo e resultado |
+| --- | --- | --- |
+| **1. Envio por Ana** | Aplicativo de Ana → servidor de saída | **SMTP:** o aplicativo se autentica e submete a mensagem. |
+| **2. Localização do servidor** | Servidor de saída → DNS | **DNS:** a consulta ao registro `MX` de `faculdade.br` fornece o nome do servidor de correio. O endereço IP desse nome permite estabelecer a conexão. |
+| **3. Entrega à faculdade** | Servidor de saída → servidor de correio da faculdade | **SMTP:** a mensagem é transferida e encaminhada à caixa postal de Bruno. |
+| **4. Leitura por Bruno** | Celular e computador → servidor da caixa postal | **IMAP:** os dispositivos sincronizam a mensagem e seu estado de leitura. Com POP3, cada cliente poderia obter uma cópia para leitura local. |
+
+> No *webmail*, o navegador de Bruno se comunica por **HTTPS** com a aplicação Web do provedor. A aplicação acessa a caixa postal do lado do servidor. A entrega entre os provedores continua usando **SMTP**.
+
+### Consulta e Notificação por SNMP:
+
+Uma estação de gerenciamento acompanha a interface de índice `2` de um roteador. Na MIB de interfaces, `ifOperStatus` representa o **estado operacional**. A instância `ifOperStatus.2` corresponde àquela interface.
+
+| Situação | Troca | O que o gerente descobre |
+| --- | --- | --- |
+| **Consulta periódica** | O gerente envia um `GET` para `ifOperStatus.2`. O agente responde com `up(1)`. | A interface estava operacional no momento da consulta. A MIB define o significado do valor `1`. |
+| **Queda do enlace** | Se as notificações estiverem habilitadas, o agente envia um *trap* `linkDown` que identifica a interface afetada. | O gerente recebe o aviso sem precisar esperar a próxima consulta periódica. |
+
+O gerente pode então consultar `ifOperStatus.2` novamente para verificar o estado atual. O *trap* informa que ocorreu uma mudança; a consulta mostra qual é o estado no momento da resposta.
 
 ---
 
