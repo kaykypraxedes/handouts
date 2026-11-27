@@ -45,7 +45,7 @@ Na **arquitetura cliente-servidor**, o **cliente** é o programa que solicita um
 
 - **Serviço Web:** Permite acessar páginas e sistemas pelo navegador, como o portal da faculdade.
 - **Transferência de arquivos:** Permite enviar ou receber arquivos, como ao copiar um relatório do computador do laboratório para um servidor.
-- **Acesso e gerenciamento remoto:** Permitem operar ou configurar um equipamento a partir de outro, como ao acessar pelo *notebook* as configurações do roteador.
+- **Acesso e gerenciamento remotos:** Permitem operar ou configurar um equipamento a partir de outro, como ao acessar pelo *notebook* as configurações do roteador.
 - **Comunicação em tempo real:** Permite acompanhar a informação à medida que ela é produzida, como em uma chamada de voz ou videoconferência.
 
 ## Meios de Transmissão:
@@ -59,12 +59,12 @@ Uma mesma comunicação pode utilizar os dois tipos de meio. Ao abrir o portal n
 
 As redes podem ser classificadas pela área que abrangem. A escala dá uma ideia de quais decisões costumam ter mais peso em cada caso.
 
-| Tipo                                  | Abrangência                                       | O que costuma importar nessa escala                                                                                                              | Exemplo                                                        |
-| ------------------------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------- |
-| **PAN (*Personal Area Network*)**     | Próxima a uma pessoa.                             | Conectar dispositivos próximos, considerando alcance e consumo de energia (camada física).                                                       | Celular e fones conectados por Bluetooth.                      |
-| **LAN (*Local Area Network*)**        | Casa, laboratório ou prédio.                      | Ligar vários dispositivos e entregar os dados ao equipamento correto dentro da rede local (camada de enlace).                                    | Computadores e impressoras de um laboratório.                  |
-| **MAN (*Metropolitan Area Network*)** | Cidade ou região metropolitana.                   | Interligar redes locais com capacidade suficiente entre as unidades (enlaces metropolitanos e, quando necessário, roteamento na camada de rede). | Rede que interliga unidades de uma faculdade na mesma cidade.  |
-| **WAN (*Wide Area Network*)**         | Grandes distâncias, como entre estados ou países. | Alcançar redes distantes e escolher os caminhos pelos quais os dados seguem (roteamento na camada de rede).                                      | Rede que conecta filiais de uma empresa em estados diferentes. |
+| Tipo | Abrangência | O que costuma importar nessa escala | Exemplo |
+| --- | --- | --- | --- |
+| **PAN (*Personal Area Network*)** | Próxima a uma pessoa. | Conectar dispositivos próximos, considerando alcance e consumo de energia (camada física). | Celular e fones conectados por Bluetooth. |
+| **LAN (*Local Area Network*)** | Casa, laboratório ou prédio. | Ligar vários dispositivos e entregar os dados ao equipamento correto dentro da rede local (camada de enlace). | Computadores e impressoras de um laboratório. |
+| **MAN (*Metropolitan Area Network*)** | Cidade ou região metropolitana. | Interligar redes locais com capacidade suficiente entre as unidades (enlaces metropolitanos e, quando necessário, roteamento na camada de rede). | Rede que interliga unidades de uma faculdade na mesma cidade. |
+| **WAN (*Wide Area Network*)** | Grandes distâncias, como entre estados ou países. | Alcançar redes distantes e escolher os caminhos pelos quais os dados seguem (roteamento na camada de rede). | Rede que conecta filiais de uma empresa em estados diferentes. |
 
 ## Parâmetros para Avaliação de Redes:
 
@@ -94,7 +94,7 @@ Outros critérios dependem da finalidade da rede:
 
 ## Divisão de Responsabilidades:
 
-Ao acessar um site, o navegador prepara um pedido que o servidor sabe interpretar. Para chegar até ele, os dados precisam atravessar a rede de casa, passar por roteadores e percorrer trechos que podem usar rádio, cabos de cobre ou fibra óptica.
+Ao acessar um *site*, o navegador prepara um pedido que o servidor sabe interpretar. Para chegar até ele, os dados precisam atravessar a rede de casa, passar por roteadores e percorrer trechos que podem usar rádio, cabos de cobre ou fibra óptica.
 
 Um **modelo de camadas** organiza essas tarefas por responsabilidade. Cada camada utiliza os serviços da camada inferior e oferece um serviço à superior. Assim, o navegador pode pedir a mesma página tanto pelo Wi-Fi quanto por uma conexão cabeada (a forma de transmitir os dados muda, mas as regras para pedir a página continuam as mesmas).
 
@@ -266,7 +266,7 @@ Na sinalização digital, o receptor distingue um conjunto de estados ou transi�
 ![NRZ-L](images/screenshot005.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 118.*
 
-> Os dois últimos *bits* têm o mesmo valor e, nessa representação, a tensão permanece alta durante ambos. Para reconhecer que recebeu **dois *bits***, o receptor precisa conhecer a duração de cada intervalo. Outras formas de codificação introduzem transições que ajudam o receptor a manter esse sincronismo.
+> Os dois últimos *bits* têm o mesmo valor e, nessa representação, a tensão permanece baixa durante ambos. Para reconhecer que recebeu **dois *bits***, o receptor precisa conhecer a duração de cada intervalo. Outras formas de codificação introduzem transições que ajudam o receptor a manter esse sincronismo.
 
 ### Sinalização Analógica e Modulação:
 
@@ -306,7 +306,7 @@ Uma transmissão pode ser classificada pelo sentido da comunicação, pela dispo
 - **Serial:** Os *bits* seguem em sequência em cada via de transmissão. Uma interface pode combinar várias vias seriais em paralelo, como ocorre no PCIe.
 - **Paralela:** Vários *bits* são enviados simultaneamente por vias distintas, como em um barramento de oito linhas de dados.
 
-> Atualmente, mesmo que intuitivamente o envio paralelo aparente ser mais rápido, a maioria das tecnologias atuais utiliza comunicação serial (principalmente pelo o *overhead* de organização dos *bits*, a interferência que os canais causam um no outro em altas frequências e sua dificuldade de operação).
+> Embora o envio paralelo possa parecer mais rápido, muitas tecnologias atuais utilizam comunicação serial. Em altas frequências, a transmissão paralela exige sincronizar os *bits* que percorrem canais distintos e lidar com a interferência entre esses canais.
 
 ### Sincronismo:
 
@@ -356,10 +356,10 @@ A **multiplexação** permite transportar vários fluxos de informação por um 
 
 Na TDM, os intervalos de transmissão (*slots*) podem ser distribuídos de duas formas:
 
-- **TDM síncrono:** Cada canal recebe uma posição fixa que se repete a cada ciclo. Se três sensores transmitem nas posições A, B e C e o sensor B está sem dados, seu intervalo fica ocioso.
-- **TDM estatístico (assíncrono):** Os intervalos são atribuídos conforme a demanda. Se B está sem dados, o sistema pode aproveitar esse tempo para transmitir dados de A ou C. O receptor precisa conseguir identificar a qual canal pertence cada bloco recebido.
+- **TDM síncrona:** Cada canal recebe uma posição fixa que se repete a cada ciclo. Se três sensores transmitem nas posições A, B e C e o sensor B está sem dados, seu intervalo fica ocioso.
+- **TDM estatística (assíncrona):** Os intervalos são atribuídos conforme a demanda. Se B está sem dados, o sistema pode aproveitar esse tempo para transmitir dados de A ou C. O receptor precisa conseguir identificar a qual canal pertence cada bloco recebido.
 
-**FDM e TDM podem ser combinados**. Um sistema pode separar canais por frequência e, dentro de cada faixa, dividir o tempo entre várias transmissões.
+**FDM e TDM podem ser combinadas.** Um sistema pode separar canais por frequência e, dentro de cada faixa, dividir o tempo entre várias transmissões.
 
 > Já sabemos como transmitir uma mensagem. Mas como esses dados são direcionados para um dispositivo? Como decidir quem pode transmitir em cada momento?
 
@@ -405,7 +405,7 @@ Em tecnologias como Ethernet, os **endereços MAC** identificam as interfaces en
 | ***Multicast*** | Um grupo de interfaces. | Um equipamento envia dados a um grupo de receptores de vídeo. |
 | ***Broadcast*** | Todas as interfaces no mesmo domínio de *broadcast*. | O *notebook* faz uma consulta a toda a rede local para descobrir o endereço de um vizinho. |
 
-Uma **ponte** ou um ***switch*** usa o endereço de destino para decidir por onde encaminhar o quadro. Se o *switch* já sabe em qual porta está a impressora, pode encaminhar o quadro *unicast* apenas por essa porta. Se recebe um *broadcast*, distribui o quadro pelas demais portas que pertencem àquela rede lógica. O alcance dessa distribuição define o **domínio de broadcast**.
+Uma **ponte** ou um ***switch*** usa o endereço de destino para decidir por onde encaminhar o quadro. Se o *switch* já sabe em qual porta está a impressora, pode encaminhar o quadro *unicast* apenas por essa porta. Se recebe um *broadcast*, distribui o quadro pelas demais portas que pertencem àquela rede lógica. O alcance dessa distribuição define o **domínio de *broadcast***.
 
 ## Controle de Acesso ao Meio:
 
@@ -427,7 +427,7 @@ Se um *bit* se altera durante a transmissão, o receptor pode receber uma sequê
 
 | Método | Como funciona |
 | --- | --- |
-| **Bit de paridade** | Acrescenta um *bit* para que a quantidade total de *bits* `1` seja par (**paridade par**) ou ímpar (**paridade ímpar**). |
+| ***Bit* de paridade** | Acrescenta um *bit* para que a quantidade total de *bits* `1` seja par (**paridade par**) ou ímpar (**paridade ímpar**). |
 | ***Checksum*** | Combina blocos de dados, geralmente por meio de uma soma, para obter um valor de verificação. A regra de cálculo depende do protocolo. |
 | **CRC (*Cyclic Redundancy Check*)** | Calcula um valor de verificação por uma divisão binária baseada em `XOR`. É utilizado, por exemplo, na verificação de quadros Ethernet. |
 
@@ -475,7 +475,7 @@ Mesmo quando todos os quadros chegam sem erro, um transmissor rápido pode envi�
 
 Uma **confirmação** informa o que já foi recebido. Um **crédito** informa quanto ainda pode ser enviado. Um protocolo pode comunicar as duas informações na mesma mensagem. Já o **controle de congestionamento** trata da sobrecarga no caminho pela rede, que pode ocorrer mesmo quando o receptor final tem espaço disponível.
 
-> Já sabemos como entregar dados à um pequeno grupo de dispositivos diretamente conectados. Mas como alcançar um dispositivo em outra rede?
+> Já sabemos como entregar dados a um pequeno grupo de dispositivos diretamente conectados. Mas como alcançar um dispositivo em outra rede?
 
 ---
 
@@ -527,8 +527,8 @@ Os dados são enviados em pacotes, que compartilham os enlaces com pacotes de ou
 
 Uma rede de pacotes pode tomar a decisão de encaminhamento de duas maneiras:
 
-- **Datagrama:** Cada pacote traz o endereço de destino e é encaminhado de acordo com a tabela disponível em cada roteador. Pacotes de uma comunicação podem seguir percorrer caminhos diferentes, sem garantia de entrega ou de ordem.
-- **Circuito virtual:** Antes do envio, a rede estabelece um caminho lógico e registra nos equipamentos como encaminhar os pacotes daquele circuito (como na comutação por circuitos, mas permitindo compartilhar o mesmo enlace físico - não é exclusivo). Esse modelo é utilizado por ATMs, por exemplo.
+- **Datagrama:** Cada pacote traz o endereço de destino e é encaminhado de acordo com a tabela disponível em cada roteador. Pacotes de uma comunicação podem percorrer caminhos diferentes, sem garantia de entrega ou de ordem.
+- **Circuito virtual:** Antes do envio, a rede estabelece um caminho lógico e registra nos equipamentos como encaminhar os pacotes daquele circuito (como na comutação por circuitos, mas permitindo compartilhar o mesmo enlace físico). Esse modelo é utilizado em redes ATM, por exemplo.
 
 ## Endereçamento Lógico e Sub-redes:
 
@@ -536,7 +536,7 @@ Um endereço IP identifica uma **interface de rede**. Um *notebook* conectado po
 
 O **IPv4** utiliza 32 *bits*, representados como quatro números decimais de 0 a 255 separados por pontos. O **IPv6** utiliza 128 *bits*, organizados em grupos hexadecimais.
 
-O endereço de uma interface pode ser interpretado em duas partes. O **identificador de rede** (*NetID*) é o prefixo comum às interfaces da mesma sub-rede. O **identificador de host** (*HostID*) distingue a interface dentro dessa sub-rede. O comprimento do prefixo indica onde termina uma parte e começa a outra.
+O endereço de uma interface pode ser interpretado em duas partes. O **identificador de rede** (*NetID*) é o prefixo comum às interfaces da mesma sub-rede. O **identificador de *host*** (*HostID*) distingue a interface dentro dessa sub-rede. O comprimento do prefixo indica onde termina uma parte e começa a outra.
 
 Por exemplo, em `192.168.10.34/27`, os primeiros 27 *bits* identificam a sub-rede `192.168.10.32/27`. Os cinco *bits* restantes identificam a interface dentro dela. No último octeto, `34` corresponde a `00100010` em binário. Os três primeiros *bits* (`001`) ainda pertencem ao prefixo, e os cinco últimos (`00010`) formam o *HostID*.
 
@@ -562,7 +562,7 @@ No modelo histórico de **endereçamento por classes**, os *bits* iniciais do en
 
 > A tabela mostra como identificar as classes. Algumas faixas têm uso especial, como `127.0.0.0/8`, utilizada para *loopback*.
 
-Para uma organização com **500 interfaces**, uma rede classe C oferecia 254 endereços de *host* utilizáveis, enquanto uma classe B oferecia 65.534, reservando muito mais endereços que o necessário. 
+Para uma organização com **500 interfaces**, uma rede classe C oferecia 254 endereços de *host* utilizáveis, enquanto uma classe B oferecia 65.534, reservando muito mais endereços do que o necessário. 
 
 > Receber duas redes classe C reduziria o desperdício, mas cada rede poderia exigir uma entrada própria nas tabelas de roteamento.
 
@@ -587,7 +587,7 @@ Embora os três primeiros números sejam iguais, a impressora e o servidor estã
 
 ### Endereços Públicos e Privados:
 
-Os endereços das sub-redes são **privados** e podem ser reutilizados em redes independentes. A escassez de IPv4 públicos motivou o uso amplo da **tradução de endereços de rede** (*Network Address Translation*, NAT). Em casa, por exemplo, o *notebook* e o celular podem acessar a Internet pelo mesmo IPv4 público do roteador. Na modalidade mais comum, o roteador também traduz portas e registra as associações para entregar cada resposta ao dispositivo correto.
+Os endereços das sub-redes do exemplo são **privados** e podem ser reutilizados em redes independentes. A escassez de IPv4 públicos motivou o uso amplo da **tradução de endereços de rede** (*Network Address Translation*, NAT). Em casa, por exemplo, o *notebook* e o celular podem acessar a Internet pelo mesmo IPv4 público do roteador. Na modalidade mais comum, o roteador também traduz portas e registra as associações para entregar cada resposta ao dispositivo correto.
 
 ## Encaminhamento e Próximo Salto:
 
@@ -688,7 +688,7 @@ No **estado de enlace**, cada roteador anuncia quais são seus vizinhos e quanto
 ![Árvore de caminhos mínimos calculada a partir de A](images/screenshot020.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 310.*
 
-A figura mostra a **árvore de caminhos mínimos de A**. O enlace A-G continua disponível e pode ser escolhido se algum custo mudar. Quando um enlace falha, a mudança é anunciada. À medida que os roteadores recebem a atualização, recalculam os caminhos afetados. Até que os mapas sejam atualizados, podem ocorrer perdas ou ciclos temporários. O cálculo para os oito roteadores aparece em A.2.6.
+A figura mostra a **árvore de caminhos mínimos de A**. O enlace `A-G` continua disponível e pode ser escolhido se algum custo mudar. Quando um enlace falha, a mudança é anunciada. À medida que os roteadores recebem a atualização, recalculam os caminhos afetados. Até que os mapas sejam atualizados, podem ocorrer perdas ou ciclos temporários. O cálculo para os oito roteadores aparece no tópico “Cálculo de Caminhos com Dijkstra”, no Apêndice A.
 
 ### Hierarquia e Sistemas Autônomos:
 
@@ -723,7 +723,7 @@ Uma **árvore de cobertura** (*spanning tree*) seleciona enlaces que alcançam t
 
 > A inundação é uma técnica de distribuição usada por protocolos específicos. O *broadcast* local do laboratório fica no seu domínio de difusão. Em IPv6, funções de entrega a grupos utilizam *multicast*.
 
-### Grupos Multicast e Poda:
+### Grupos *Multicast* e Poda:
 
 Um endereço de *multicast* identifica um **grupo**. Em um **grupo permanente**, o endereço continua atribuído à sua finalidade mesmo quando ninguém recebe a transmissão. Um **grupo temporário** pode existir durante um evento, como a distribuição de uma aula ao vivo. Em ambos os casos, os dispositivos podem entrar e sair do grupo.
 
@@ -737,7 +737,7 @@ A **poda** retira essas saídas da distribuição. Se o ramo de um roteador não
 ![Árvore de distribuição após a poda no RPM](images/screenshot025.png)<br>
 *Fonte: **Adaptado** de MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 322.*
 
-Compare **B-H** e **A-D-I**, retirados da distribuição, com o roteador **C**, que permanece. Mesmo sem receptor local, C leva até F. Os enlaces podados continuam disponíveis para outros tráfegos, e o ramo pode voltar a ser usado se surgir um receptor.
+Compare `B-H` e `A-D-I`, retirados da distribuição, com o roteador `C`, que permanece. Mesmo sem receptor local, `C` leva até `F`. Os enlaces podados continuam disponíveis para outros tráfegos, e o ramo pode voltar a ser usado se surgir um receptor.
 
 Após a poda, economiza-se banda nos envios seguintes. Há, porém, um custo inicial ao alcançar ramos sem interessados, além das mensagens de controle e das informações mantidas para cada combinação de origem e grupo.
 
@@ -748,7 +748,7 @@ Vários emissores também podem utilizar uma **árvore compartilhada pelo grupo*
 ![Árvore multicast compartilhada em torno de um núcleo](images/screenshot026.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 322.*
 
-Formar a árvore pela adesão dos interessados evita a inundação inicial. Uma única estrutura atende a vários emissores, mas sua posição em relação ao núcleo pode produzir percursos mais longos ou concentrar tráfego em certos enlaces. A disponibilidade do núcleo também importa para a adesão de novos ramos. A.2.7 mostra como CBT e PIM-SM organizam essa participação.
+Formar a árvore pela adesão dos interessados evita a inundação inicial. Uma única estrutura atende a vários emissores, mas sua posição em relação ao núcleo pode produzir percursos mais longos ou concentrar tráfego em certos enlaces. A disponibilidade do núcleo também importa para a adesão de novos ramos. O tópico “Roteamento *Multicast*”, no Apêndice A, mostra como CBT e PIM-SM organizam essa participação.
 
 ## MTU e Fragmentação:
 
@@ -772,12 +772,12 @@ Uma **VPN** (*Virtual Private Network*) estabelece um **túnel** entre duas extr
 
 ### *Remote Access* VPN:
 
-O *notebook* estabelece um túnel com o *gateway* da VPN. Quando o usuário acessa um site pelo túnel, o *gateway* desencapsula o pacote e, neste exemplo, traduz o IP e a porta de origem para seu próprio IP público e uma porta de saída. Funciona como uma segunda tradução por NAT: a resposta chega ao *gateway*, que a encaminha pelo túnel de volta ao *notebook*.
+O *notebook* estabelece um túnel com o *gateway* da VPN. Quando o usuário acessa um *site* pelo túnel, o *gateway* desencapsula o pacote e, neste exemplo, traduz o IP e a porta de origem para seu próprio IP público e uma porta de saída. Funciona como uma segunda tradução por NAT: a resposta chega ao *gateway*, que a encaminha pelo túnel de volta ao *notebook*.
 
 ![VPN Remote Access](images/screenshot027.png)<br>
 *Fonte: Elaborado pelo autor com auxílio do ChatGPT, 2026.*
 
-> A criptografia protege o conteúdo entre o *notebook* e o *gateway*. O site vê como origem apenas o *socket* de saída da VPN. A associação entre esse *socket* de saída do VPN e o *socket* público do usuário fica no VPN (apenas ele tem essa informação). Daí que vem o “anonimato” dos VPNs, mas esse é limitado: sites ainda podem reconhecer o usuário se ele entrar em sua conta, ou se houver outras informações pessoais no conteúdo da mensagem.
+> A criptografia protege o conteúdo entre o *notebook* e o *gateway*. O *site* vê como origem o *socket* de saída da VPN. O *gateway* mantém a associação entre esse *socket* e o *socket* público do usuário. Esse é o sentido do “anonimato” no exemplo. O *site* ainda pode reconhecer o usuário pela conta ou por informações pessoais no conteúdo da mensagem.
 
 ### *Site-to-site* VPN:
 
@@ -788,24 +788,24 @@ Dois *gateways* mantêm um túnel entre as redes de dois campi. No envio, o *gat
 
 ## *Onion Routing*:
 
-No ***onion routing***, o cliente prepara camadas de criptografia para retransmissores sucessivos. No **Tor**, esses retransmissores formam um **circuito** sobre a Internet. Para acessar um site público, um circuito típico passa por três papéis:
+No ***onion routing***, o cliente prepara camadas de criptografia para retransmissores sucessivos. No **Tor**, esses retransmissores formam um **circuito** sobre a Internet. Para acessar um *site* público, um circuito típico passa por três papéis:
 
 | Retransmissor | O que faz no percurso de ida |
 | --- | --- |
 | **Entrada (*guard*)** | Recebe a conexão do cliente, remove sua camada de criptografia e encaminha os dados ao retransmissor intermediário. Conhece o endereço do cliente e o próximo nó do circuito. |
 | **Intermediário (*middle relay*)** | Remove sua camada e encaminha os dados à saída. Na troca normal, vê os retransmissores adjacentes. |
-| **Saída (*exit relay*)** | Remove a última camada de proteção do circuito e abre a conexão com o site público. O site recebe a conexão a partir do endereço da saída. |
+| **Saída (*exit relay*)** | Remove a última camada de proteção do circuito e abre a conexão com o *site* público. O *site* recebe a conexão a partir do endereço da saída. |
 
 A imagem da **cebola** vem dessas camadas sucessivas. O cliente prepara os dados para que cada retransmissor consiga remover apenas a camada correspondente à sua etapa. No caminho de volta, os retransmissores acrescentam suas camadas, e o cliente as remove. 
 
-> O objetivo é distribuir o conhecimento do percurso entre os participantes (descentralizar a informação, e deixar a associação mais difícil de ser rastreada).
+> O objetivo é distribuir o conhecimento do percurso entre os participantes (descentralizar a informação e deixar a associação mais difícil de ser rastreada).
 
 ![Circuito Tor com retransmissores de entrada, intermediário e saída](images/screenshot029.png)<br>
 *Fonte: Tga.D - Tor Circuit Diagram, Wikimedia Commons. Disponível em: [https://en.wikipedia.org/wiki/File:Tor_Circuit_Diagram.svg](https://en.wikipedia.org/wiki/File:Tor_Circuit_Diagram.svg). Acesso em: 24 nov. 2026.*
 
 O Tor é uma **rede sobreposta**. A entrada, o intermediário e a saída são os nós escolhidos para o circuito Tor. Entre quaisquer dois deles, os pacotes continuam atravessando os roteadores IP da Internet. A proteção do circuito alcança o nó de saída. 
 
-> Ao acessar um site por **HTTPS**, a conexão criptográfica entre o navegador e o site continua protegendo o conteúdo também no trecho entre a saída e o servidor.
+> Ao acessar um *site* por **HTTPS**, a conexão criptográfica entre o navegador e o *site* continua protegendo o conteúdo também no trecho entre a saída e o servidor.
 
 > Já sabemos como encaminhar dados até o dispositivo de destino. Mas como entregá-los ao processo certo?
 
@@ -824,7 +824,7 @@ Um *notebook* pode, por exemplo, receber uma página da Web e uma resposta DNS p
 - **Porta de origem:** Identifica a extremidade que envia. Ao iniciar uma comunicação, o cliente geralmente recebe do sistema uma porta temporária, chamada **efêmera**.
 - **Porta de destino:** Identifica a extremidade que deve receber. O cliente normalmente conhece a porta do serviço. Na resposta, a porta do servidor passa a ser a origem, e a do cliente, o destino.
 
-As portas têm **16 bits**. A IANA divide seus números em três faixas:
+As portas têm **16 *bits***. A IANA divide seus números em três faixas:
 
 | Faixa | Classificação | Uso |
 | --- | --- | --- |
@@ -848,19 +848,19 @@ O UDP permite detectar erros pelo *checksum*, mas não garante entrega, ordem ou
 
 ## TCP:
 
-O **TCP** (*Transmission Control Protocol*) estabelece uma conexão e oferece à aplicação um **fluxo ordenado de bytes** em cada sentido. Para transmitir, divide os dados em **segmentos**. Na recepção, recompõe o fluxo. Por isso, duas escritas do remetente podem chegar juntas em uma única leitura da aplicação.
+O **TCP** (*Transmission Control Protocol*) estabelece uma conexão e oferece à aplicação um **fluxo ordenado de *bytes*** em cada sentido. Para transmitir, divide os dados em **segmentos**. Na recepção, recompõe o fluxo. Por isso, duas escritas do remetente podem chegar juntas em uma única leitura da aplicação.
 
 ### Controle de Erros e Entrega em Ordem:
 
 - **Detecção de erros:** O receptor verifica o *checksum* do segmento. Se detectar corrupção, descarta o segmento.
-- **Confirmação e retransmissão:** O emissor conserva no ***buffer* de transmissão** os bytes enviados que ainda aguardam confirmação. Os ACKs indicam o próximo byte esperado. Se o emissor detectar indícios de perda ou se o prazo de confirmação expirar, poderá retransmitir os dados pendentes.
-- **Ordenação:** Os números de sequência indicam a posição dos bytes no fluxo. Se um trecho chegar antes do anterior, o receptor pode guardá-lo no ***buffer* de recepção**. Quando a lacuna for preenchida, os dados poderão ser entregues em ordem à aplicação.
+- **Confirmação e retransmissão:** O emissor conserva no ***buffer* de transmissão** os *bytes* enviados que ainda aguardam confirmação. Os ACKs indicam o próximo *byte* esperado. Se o emissor detectar indícios de perda ou se o prazo de confirmação expirar, poderá retransmitir os dados pendentes.
+- **Ordenação:** Os números de sequência indicam a posição dos *bytes* no fluxo. Se um trecho chegar antes do anterior, o receptor pode guardá-lo no ***buffer* de recepção**. Quando a lacuna for preenchida, os dados poderão ser entregues em ordem à aplicação.
 
 ### Controle de Fluxo:
 
-O **controle de fluxo** evita que o emissor sobrecarregue o **receptor**. O receptor informa, no cabeçalho TCP, quanto pode receber a partir do próximo byte esperado. Esse valor é a **janela de recepção** (*receive window*, `rwnd`) e depende do espaço disponível em seu *buffer*.
+O **controle de fluxo** evita que o emissor sobrecarregue o **receptor**. O receptor informa, no cabeçalho TCP, quanto pode receber a partir do próximo *byte* esperado. Esse valor é a **janela de recepção** (*receive window*, `rwnd`) e depende do espaço disponível em seu *buffer*.
 
-Se os dados chegam mais rápido do que a aplicação os lê, o *buffer* vai enchendo e o receptor anuncia uma janela menor. Se anunciar zero, o emissor suspende o envio normal de novos dados. Conforme a aplicação lê os bytes e libera espaço, o receptor pode anunciar uma janela maior.
+Se os dados chegam mais rápido do que a aplicação os lê, o *buffer* vai enchendo e o receptor anuncia uma janela menor. Se anunciar zero, o emissor suspende o envio normal de novos dados. Conforme a aplicação lê os *bytes* e libera espaço, o receptor pode anunciar uma janela maior.
 
 ### Controle de Congestionamento:
 
@@ -932,7 +932,7 @@ O **HTTP** (*Hypertext Transfer Protocol*) organiza a comunicação entre o nave
 - **Conteúdo estático:** O servidor lê um arquivo armazenado, como uma imagem ou um documento HTML, e envia seu conteúdo.
 - **Conteúdo dinâmico:** O servidor executa código para produzir a resposta. Por exemplo, ao receber `/horarios`, pode consultar as disciplinas do aluno e gerar a página correspondente. O caminho da URL pode, portanto, identificar uma operação da aplicação.
 
-Um *script* também pode executar **no navegador**. Nesse caso, o servidor envia o código junto dos recursos da página, e o navegador o executa para atualizar a interface ou solicitar novos dados.
+Um *script* também pode ser executado **no navegador**. Nesse caso, o servidor envia o código junto dos recursos da página, e o navegador o executa para atualizar a interface ou solicitar novos dados.
 
 ### HTTPS e *Cookies*:
 
@@ -1044,14 +1044,14 @@ Na **codificação de linha**, os *bits* são representados por níveis do sinal
 
 ### Verificação de Erros:
 
-**Paridade em duas dimensões.** Os dados são organizados em linhas e colunas, cada uma com sua verificação de paridade. Se um único *bit* de dados mudar, falham a linha e a coluna que o contêm. A interseção indica a posição. Com vários erros, algumas alterações podem se compensar: inverter os quatro cantos de um retângulo altera dois *bits* em cada linha e coluna envolvida, preservando suas paridades.
+- **Paridade em duas dimensões:** Os dados são organizados em linhas e colunas, cada uma com sua verificação de paridade. Se um único *bit* de dados mudar, falham a linha e a coluna que o contêm. A interseção indica a posição. Com vários erros, algumas alterações podem se compensar: inverter os quatro cantos de um retângulo altera dois *bits* em cada linha e coluna envolvida, preservando suas paridades.
 
 ![Verificação de paridade por linhas e colunas](images/screenshot041.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 159.*
 
-- ***Checksum*.** Uma regra simples consiste em somar os *bytes* e guardar o resto da divisão por 256. Para a mensagem `MODEM!`, os valores ASCII são `77, 79, 68, 69, 77, 33`. A soma é `403`, e o valor de verificação é `403 mod 256 = 147`. O receptor repete a operação. Essa regra deixa passar, por exemplo, a troca de posição de dois *bytes*, pois a soma permanece igual.
+- ***Checksum*:** Uma regra simples consiste em somar os *bytes* e guardar o resto da divisão por 256. Para a mensagem `MODEM!`, os valores ASCII são `77, 79, 68, 69, 77, 33`. A soma é `403`, e o valor de verificação é $403 \bmod 256 = 147$. O receptor repete a operação. Essa regra deixa passar, por exemplo, a troca de posição de dois *bytes*, pois a soma permanece igual.
 
-- **CRC** (*Cyclic Redundancy Check*). O transmissor e o receptor usam o mesmo **polinômio gerador**, representado por uma sequência de *bits*. No modelo simplificado, um gerador de quatro *bits* produz um resto de três *bits*:
+- **CRC (*Cyclic Redundancy Check*):** O transmissor e o receptor usam o mesmo **polinômio gerador**, representado por uma sequência de *bits*. No modelo simplificado, um gerador de quatro *bits* produz um resto de três *bits*:
 
     1. Para proteger os dados `1101` com o gerador `1011`, o transmissor acrescenta três zeros e obtém `1101000`.
     2. Ele divide `1101000` por `1011` em aritmética binária módulo 2. A cada etapa, combina os *bits* por `XOR`, sem empréstimo. O resto é `001`.
@@ -1060,7 +1060,7 @@ Na **codificação de linha**, os *bits* são representados por níveis do sinal
 ![Cálculo do CRC por divisão binária](images/screenshot042.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 161.*
 
-- **Código de Hamming.** Para proteger $n$ *bits* de dados e corrigir um erro simples, escolhe-se a menor quantidade $r$ de *bits* de paridade que satisfaça $2^r \geq n+r+1$. As combinações dos resultados de paridade precisam identificar cada posição da palavra e o caso em que nenhuma verificação falha.
+- **Código de Hamming:** Para proteger $n$ *bits* de dados e corrigir um erro simples, escolhe-se a menor quantidade $r$ de *bits* de paridade que satisfaça $2^r \geq n+r+1$. As combinações dos resultados de paridade precisam identificar cada posição da palavra e o caso em que nenhuma verificação falha.
 
 Com **16 *bits* de dados**, são necessários **5 *bits* de paridade**, totalizando 21 posições. As paridades ocupam as potências de dois (`1`, `2`, `4`, `8` e `16`), e os dados ocupam as demais posições. Cada posição participa das verificações indicadas por sua representação binária. A posição `5`, por exemplo, corresponde a `00101` e participa das paridades `1` e `4`.
 
@@ -1072,11 +1072,11 @@ Com **16 *bits* de dados**, são necessários **5 *bits* de paridade**, totaliza
 | `8` | 8 a 15 | Correta |
 | `16` | 16 a 21 | Correta |
 
-Somando as posições das paridades que falharam, obtém-se `1 + 4 = 5`. Sob a hipótese de um único erro, basta inverter o *bit* da posição 5. Esse código tem distância mínima 3. Se dois *bits* forem alterados, um decodificador que tente corrigir um erro simples pode inverter a posição errada.
+Somando as posições das paridades que falharam, obtém-se $1 + 4 = 5$. Sob a hipótese de um único erro, basta inverter o *bit* da posição 5. Esse código tem distância mínima 3. Se dois *bits* forem alterados, um decodificador que tente corrigir um erro simples pode inverter a posição errada.
 
 ### Retransmissão:
 
-- **ARQ (*Automatic Repeat Query*):** O transmissor mantém um quadro pendente, inicia um temporizador e aguarda o ACK. Se o prazo vencer, envia o quadro novamente (retransmissão *stop-and-wait*). Um NAK pode antecipar o reenvio quando o receptor detecta uma falha.
+- **ARQ:** O transmissor mantém um quadro pendente, inicia um temporizador e aguarda o ACK. Se o prazo vencer, envia o quadro novamente (retransmissão *stop-and-wait*). Um NAK pode antecipar o reenvio quando o receptor detecta uma falha.
 
 ![Vencimento do temporizador e retransmissão](images/screenshot043.png)<br>
 *Fonte: **Adaptado** de MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 163.*
@@ -1170,8 +1170,8 @@ No meio sem fio, o transmissor e o receptor podem perceber o canal de maneiras d
 
 Na organização IEEE 802, duas funções de enlace aparecem com frequência:
 
-- **MAC (*Medium Access Control*)**: trata do acesso ao meio e de aspectos do quadro, como endereçamento e verificação de erros. A expressão **endereço MAC** designa um endereço utilizado nessa subcamada.
-- **LLC (*Logical Link Control*)**: oferece uma interface lógica para protocolos superiores. O modelo clássico prevê serviços sem conexão, com ou sem confirmação, e serviços orientados à conexão. No formato Ethernet II, o próprio campo **EtherType** identifica diretamente o protocolo transportado.
+- **MAC (*Medium Access Control*):** Trata do acesso ao meio e de aspectos do quadro, como endereçamento e verificação de erros. A expressão **endereço MAC** designa um endereço utilizado nessa subcamada.
+- **LLC (*Logical Link Control*):** Oferece uma interface lógica para protocolos superiores. O modelo clássico prevê serviços sem conexão, com ou sem confirmação, e serviços orientados à conexão. No formato Ethernet II, o próprio campo **EtherType** identifica diretamente o protocolo transportado.
 
 ### Quadro Ethernet:
 
@@ -1229,9 +1229,9 @@ O tamanho mínimo do quadro básico é **64 *bytes***, do MAC de destino ao FCS.
 
 ### Wi-Fi e IEEE 802.11:
 
-- **BSS (*Basic Service Set*):** Pequenas estações de dispositivos próximos próximos se comunicando:
+- **BSS (*Basic Service Set*):** Conjunto de estações que se comunicam em uma rede Wi-Fi. Pode se organizar de duas formas:
 
-    - **Rede Infraestruturada:** A estações se comunicam com um ponto central intermediário (AP - *Access Point*).
+    - **Rede de infraestrutura:** As estações se comunicam por meio de um ponto de acesso (AP, *Access Point*).
     - ***Ad hoc*:** As estações se comunicam diretamente e formam um conjunto independente.
 
 ![Organização das estações em BSS](images/screenshot056.png)<br>
@@ -1278,7 +1278,7 @@ Dois *switches* podem reunir várias conexões físicas em uma ligação lógica
 ![Árvore de encaminhamento formada pelo STP](images/screenshot059.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 241.*
 
-**VLAN (*Virtual Local Area Network*):**  Em um *switch* cujas portas pertencem à mesma VLAN, um *broadcast* enviado pelo laboratório pode chegar também às máquinas da administração. Ao atribuir os dois grupos a VLANs distintas, cada grupo passa a ter seu próprio domínio de *broadcast*, mesmo compartilhando o equipamento.
+**VLAN (*Virtual Local Area Network*):** Em um *switch* cujas portas pertencem à mesma VLAN, um *broadcast* enviado pelo laboratório pode chegar também às máquinas da administração. Ao atribuir os dois grupos a VLANs distintas, cada grupo passa a ter seu próprio domínio de *broadcast*, mesmo compartilhando o equipamento.
 
 ![Distribuição de broadcast em um switch sem separação por VLAN](images/screenshot060.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 243.*
@@ -1299,7 +1299,7 @@ Se laboratório e administração ocupam dois prédios, um *trunk* entre os *swi
 
 O *notebook* do laboratório tem o endereço IPv4 `192.168.10.34/27` na interface Wi-Fi. A mesma interface também pode ter endereços IPv6. O alcance de cada endereço determina onde ele pode ser usado.
 
-- **Loopback:** Os endereços `127.0.0.1` (IPv4) e `::1` (IPv6) permitem acessar um serviço no próprio *notebook*. O tráfego permanece no equipamento.
+- ***Loopback*:** Os endereços `127.0.0.1` (IPv4) e `::1` (IPv6) permitem acessar um serviço no próprio *notebook*. O tráfego permanece no equipamento.
 
 - **IPv4 privado:** O endereço do *notebook* pertence a um dos três blocos reservados para redes privadas. Organizações diferentes podem usar os mesmos endereços em suas redes internas.
 
@@ -1315,14 +1315,14 @@ O Apêndice C mostra como consultar os endereços, o estado e a MTU de cada inte
 
 ### Cabeçalhos IPv4 e IPv6:
 
-Os cabeçalhos IPv4 e IPv6 são estruturalmente os mesmos, com a maior modificação no tamanho dos seus dados:
+Os cabeçalhos IPv4 e IPv6 têm formatos diferentes. A tabela compara os campos que desempenham funções semelhantes:
 
 | Item | IPv4 | IPv6 |
 | --- | --- | --- |
 | Identificador de origem e destino | Endereços de 32 *bits*. | Endereços de 128 *bits*. |
-| Limitador da circulação do pacote (decrementado a cada roteador) | **TTL** (*Time to Live*). | **Hop Limit** |
-| Identificador do que vem em seguida | **Protocol**, como TCP, UDP ou ICMP. | **Next Header**, que pode identificar um cabeçalho de extensão ou o protocolo transportado. |
-| Tamanho | **Total Length**, incluindo o cabeçalho IPv4. | **Payload Length**, que é o tamanho total menos o cabeçalho IPv6. |
+| Limitador da circulação do pacote (decrementado a cada roteador) | **TTL** (*Time to Live*). | *Hop Limit*. |
+| Identificador do que vem em seguida | *Protocol*, como TCP, UDP ou ICMP. | *Next Header*, que pode identificar um cabeçalho de extensão ou o protocolo transportado. |
+| Tamanho | *Total Length*, incluindo o cabeçalho IPv4. | *Payload Length*, que conta os *bytes* após o cabeçalho básico, incluindo eventuais cabeçalhos de extensão. |
 
 ### Cálculo de uma Sub-rede IPv4:
 
@@ -1365,9 +1365,9 @@ Se nenhuma entrada mais específica corresponder ao destino, usa a **rota padrã
 
 ### Resolução de Vizinhos:
 
-Para alcançar o servidor `.70`, o *notebook* já escolheu o roteador `.62`. Falta descobrir o **endereço MAC de `.62`** para montar o quadro. Uma associação entre IP e MAC pode ser configurada manualmente ou aprendida quando houver tráfego para aquele vizinho.
+Suponha que a rota para o servidor `192.168.10.70` indique o roteador `192.168.10.62` como próximo salto. Falta descobrir o **endereço MAC de `.62`** para montar o quadro. Uma associação entre IP e MAC pode ser configurada manualmente ou aprendida quando houver tráfego para aquele vizinho.
 
-- **ARP no IPv4:** O *notebook* consulta seu cache. Se ainda não conhece a associação, envia uma solicitação por *broadcast* no enlace: “Quem tem `192.168.10.62`?”. O roteador responde com seu MAC, e o *notebook* guarda a associação para os próximos envios.
+- **ARP no IPv4:** O *notebook* consulta seu *cache*. Se ainda não conhece a associação, envia uma solicitação por *broadcast* no enlace: “Quem tem `192.168.10.62`?”. O roteador responde com seu MAC, e o *notebook* guarda a associação para os próximos envios.
 - ***Neighbor Discovery* no IPv6:** A interface usa mensagens ICMPv6 de solicitação e anúncio de vizinho para descobrir o endereço de enlace do próximo salto. A associação também pode ser reutilizada.
 
 ### Tradução de Endereços e Portas:
@@ -1377,7 +1377,7 @@ Para alcançar o servidor `.70`, o *notebook* já escolheu o roteador `.62`. Fal
 ![Endereços públicos e privados em uma rede com tradução](images/screenshot064.png)<br>
 *Fonte: MAIA, Luiz Paulo. Arquitetura de Redes de Computadores, 2ª ed., 2013, p. 288.*
 
-- **PAT (*Port Address Translation*):** Evolução do NAT, que realiza a tradução também considerando as portas. Assim, vários dispositivos podem compartilhar o mesmo IPv4 público (se diferenciando pela porta) e acessar a internet ao mesmo tempo (limitação do NAT). O funcionamento mais detalhado está no tópico de Camada de Transporte.
+- **PAT (*Port Address Translation*):** Modalidade de NAT que também traduz portas. O roteador pode distinguir as conexões pelas portas externas e permitir que vários dispositivos compartilhem um IPv4 público ao acessar a Internet.
 
 > Um roteador doméstico pode exercer três funções. Como *gateway*, encaminha pacotes para outra rede. Com NAT, traduz endereços e, no PAT, também portas. Com o *firewall*, aplica as regras que permitem ou bloqueiam tráfego.
 
@@ -1395,15 +1395,15 @@ A **MTU do caminho** é a menor MTU entre os enlaces do percurso. Se um pacote e
 Um roteador recebe um datagrama de **1.500 *bytes***, com cabeçalho de 20 *bytes*, e precisa enviá-lo por um enlace com **MTU de 1.280 *bytes***. Neste exemplo, a fragmentação é permitida.
 
 1. **Descontar o cabeçalho.** Cada fragmento terá seu próprio cabeçalho de 20 *bytes*. Restam até $1.280 - 20 = 1.260$ *bytes* para dados.
-2. **Alinhar a carga.** O *Fragment Offset* indica a posição dos dados em unidades de oito *bytes*. A carga de cada fragmento anterior ao último precisa ser múltipla de oito. O primeiro leva `1.256` *bytes*.
-3. **Posicionar o restante.** Dos `1.480` *bytes* de dados originais, sobram `224`. O segundo fragmento começa na posição $1.256 / 8 = 157$.
+2. **Alinhar a carga.** O *Fragment Offset* indica a posição dos dados em unidades de oito *bytes*. A carga de cada fragmento anterior ao último precisa ser múltipla de oito. O primeiro leva 1.256 *bytes*.
+3. **Posicionar o restante.** Dos 1.480 *bytes* de dados originais, sobram 224. O segundo fragmento começa na posição $1.256 / 8 = 157$.
 
 | Fragmento | *Bytes* dos dados originais | Carga | Total com cabeçalho | Offset | MF |
 | --- | --- | --- | --- | --- | --- |
 | **1** | 0 a 1.255 | 1.256 *bytes* | 1.276 *bytes* | `0` | `1` |
 | **2** | 1.256 a 1.479 | 224 *bytes* | 244 *bytes* | `157` | `0` |
 
-Na remontagem, a identificação comum associa os fragmentos ao datagrama, e o *offset* posiciona cada trecho. O indicador **MF** (*More Fragments*) vale `1` no primeiro fragmento e `0` no último. Com os dois trechos, o destino recupera os `1.480` *bytes* de dados.
+Na remontagem, a identificação comum associa os fragmentos ao datagrama, e o *offset* posiciona cada trecho. O indicador **MF** (*More Fragments*) vale `1` no primeiro fragmento e `0` no último. Com os dois trechos, o destino recupera os 1.480 *bytes* de dados.
 
 ### Protocolos de Roteamento:
 
@@ -1442,7 +1442,7 @@ Na rede de **Estado de Enlace** do capítulo 4, o roteador A começa com custo z
 
 Em uma rede de IPTV, vários receptores podem assistir ao mesmo canal. Uma cópia do fluxo percorre o trecho comum, e os roteadores a replicam onde os caminhos para os receptores se separam.
 
-- **Caminho reverso e poda:** No exemplo de RPM das **figuras 054 e 055**, o roteador verifica se o pacote chegou pela interface que usaria para retornar à origem. Essa verificação (*Reverse Path Forwarding*, RPF) orienta a distribuição inicial. A poda retira da árvore os ramos sem receptores.
+- **Caminho reverso e poda:** No exemplo de RPM das **figuras 024 e 025**, o roteador verifica se o pacote chegou pela interface que usaria para retornar à origem. Essa verificação (*Reverse Path Forwarding*, RPF) orienta a distribuição inicial. A poda retira da árvore os ramos sem receptores.
 - **Árvore baseada em núcleo (CBT):** O roteador que atende um receptor solicita adesão em direção ao núcleo. Ao encontrar um roteador que já participa da árvore, o novo ramo pode se ligar a ele.
 - **Ponto de encontro (PIM-SM):** Os roteadores dos receptores formam uma árvore em direção ao ponto de encontro (*Rendezvous Point*, RP). O roteador da fonte pode encapsular os pacotes iniciais e enviá-los ao RP para distribuição. Depois, o ramo que atende um receptor pode passar a seguir um caminho de menor custo até a fonte.
 
@@ -1474,8 +1474,8 @@ Os endereços IP e a porta do servidor são iguais nas duas conexões. A porta d
 | **Portas** | Origem e destino. | Origem e destino. |
 | **Comprimento** | *Length* informa o tamanho do datagrama, incluindo o cabeçalho. | *Data Offset* indica onde começam os dados e, portanto, o tamanho do cabeçalho TCP. |
 | **Verificação de erros** | *Checksum*, opcional no UDP sobre IPv4. | *Checksum* obrigatório. |
-| **Sequência e confirmação** | - | O número de sequência posiciona os bytes no fluxo. O número de confirmação indica o próximo byte esperado. |
-| **Janela de recepção** | - | O campo *Window* anuncia quanto o receptor aceita receber a partir do próximo byte esperado. |
+| **Sequência e confirmação** | - | O número de sequência posiciona os *bytes* no fluxo. O número de confirmação indica o próximo *byte* esperado. |
+| **Janela de recepção** | - | O campo *Window* anuncia quanto o receptor aceita receber a partir do próximo *byte* esperado. |
 | **Sinalizadores** | - | SYN, ACK e FIN participam da abertura, das confirmações e do encerramento da conexão. |
 
 > A janela anunciada no cabeçalho TCP é a **janela de recepção** (`rwnd`). Cada emissor calcula e mantém localmente sua própria **janela de congestionamento** (`cwnd`).
@@ -1484,18 +1484,18 @@ Os endereços IP e a porta do servidor são iguais nas duas conexões. A porta d
 
 Considere o envio do *notebook* para o servidor. O servidor anuncia `rwnd`, e o *notebook* calcula `cwnd`. Os valores da tabela se aplicam a esse sentido da conexão.
 
-| Situação | `rwnd` do servidor | `cwnd` do notebook | Limite de dados em trânsito |
+| Situação | `rwnd` do servidor | `cwnd` do *notebook* | Limite de dados em trânsito |
 | --- | --- | --- | --- |
-| A aplicação do servidor demora a ler os dados | 4.000 bytes | 10.000 bytes | **4.000 bytes**, pelo controle de fluxo. |
-| O emissor detecta indícios de congestionamento | 12.000 bytes | 3.000 bytes | **3.000 bytes**, pelo controle de congestionamento. |
+| A aplicação do servidor demora a ler os dados | 4.000 *bytes* | 10.000 *bytes* | **4.000 *bytes***, pelo controle de fluxo. |
+| O emissor detecta indícios de congestionamento | 12.000 *bytes* | 3.000 *bytes* | **3.000 *bytes***, pelo controle de congestionamento. |
 
-Na segunda situação, se o *notebook* já enviou **2.000 bytes** que aguardam confirmação, pode enviar mais **1.000 bytes** antes de atingir o limite. À medida que os ACKs chegam, liberam espaço para novos envios. Por isso, o tempo de ida e volta também influencia a taxa alcançada.
+Na segunda situação, se o *notebook* já enviou **2.000 *bytes*** que aguardam confirmação, pode enviar mais **1.000 *bytes*** antes de atingir o limite. À medida que os ACKs chegam, liberam espaço para novos envios. Por isso, o tempo de ida e volta também influencia a taxa alcançada.
 
 ### Uma Conexão TCP Passo a Passo:
 
 1. **Abertura - *three-way handshake*.** O navegador envia **SYN** com seu número inicial de sequência. O servidor responde com **SYN + ACK**, confirma o SYN recebido e informa seu próprio número inicial. O navegador confirma com **ACK**. A sequência é `SYN - SYN + ACK - ACK`.
 
-2. **Transferência e confirmação.** Suponha que o servidor espere o byte `1001`. Se receber os bytes `1101` a `1200` primeiro, pode guardá-los e continuar indicando `ACK = 1001`. Quando chegarem os bytes `1001` a `1100`, o trecho estará completo. O servidor poderá entregar os 200 bytes em ordem e enviar `ACK = 1201`. Essa **confirmação cumulativa** cobre todos os bytes até `1200`.
+2. **Transferência e confirmação.** Suponha que o servidor espere o *byte* `1001`. Se receber os *bytes* `1101` a `1200` primeiro, pode guardá-los e continuar indicando `ACK = 1001`. Quando chegarem os *bytes* `1001` a `1100`, o trecho estará completo. O servidor poderá entregar os 200 *bytes* em ordem e enviar `ACK = 1201`. Essa **confirmação cumulativa** cobre todos os *bytes* até `1200`.
 
 3. **Encerramento - *four-way handshake*.** O navegador envia **FIN** para indicar que terminou de transmitir. O servidor confirma com **ACK** e ainda pode enviar dados no sentido inverso. Quando também termina, envia seu próprio **FIN**, e o navegador confirma com **ACK**. Com os envios separados, a sequência é `FIN - ACK - FIN - ACK`. Se o servidor já estiver pronto para encerrar, pode reunir seu ACK e seu FIN no mesmo segmento.
 
@@ -1518,10 +1518,10 @@ Ana usa um aplicativo de e-mail para enviar uma mensagem a `bruno@faculdade.br`.
 
 | Etapa | Quem se comunica | Protocolo e resultado |
 | --- | --- | --- |
-| **1. Envio por Ana** | Aplicativo de Ana → servidor de saída | **SMTP:** o aplicativo se autentica e submete a mensagem. |
-| **2. Localização do servidor** | Servidor de saída → DNS | **DNS:** a consulta ao registro `MX` de `faculdade.br` fornece o nome do servidor de correio. O endereço IP desse nome permite estabelecer a conexão. |
-| **3. Entrega à faculdade** | Servidor de saída → servidor de correio da faculdade | **SMTP:** a mensagem é transferida e encaminhada à caixa postal de Bruno. |
-| **4. Leitura por Bruno** | Celular e computador → servidor da caixa postal | **IMAP:** os dispositivos sincronizam a mensagem e seu estado de leitura. Com POP3, cada cliente poderia obter uma cópia para leitura local. |
+| **1. Envio por Ana** | Aplicativo de Ana - servidor de saída | **SMTP:** o aplicativo se autentica e submete a mensagem. |
+| **2. Localização do servidor** | Servidor de saída - DNS | **DNS:** a consulta ao registro `MX` de `faculdade.br` fornece o nome do servidor de correio. O endereço IP desse nome permite estabelecer a conexão. |
+| **3. Entrega à faculdade** | Servidor de saída - servidor de correio da faculdade | **SMTP:** a mensagem é transferida e encaminhada à caixa postal de Bruno. |
+| **4. Leitura por Bruno** | Celular e computador - servidor da caixa postal | **IMAP:** os dispositivos sincronizam a mensagem e seu estado de leitura. Com POP3, cada cliente poderia obter uma cópia para leitura local. |
 
 > No *webmail*, o navegador de Bruno se comunica por **HTTPS** com a aplicação Web do provedor. A aplicação acessa a caixa postal do lado do servidor. A entrega entre os provedores continua usando **SMTP**.
 
@@ -1540,17 +1540,15 @@ O gerente pode então consultar `ifOperStatus.2` novamente para verificar o esta
 
 # Apêndice B. Modelo OSI
 
-A ISO desenvolveu o **modelo OSI** (*Open Systems Interconnection*) para orientar a criação de padrões que permitissem a comunicação entre sistemas de diferentes fabricantes. O modelo organiza essa comunicação em sete camadas. Cada camada oferece um serviço à camada superior e utiliza os serviços da camada inferior. Assim, dois sistemas podem implementar uma função de maneiras diferentes e ainda se comunicar, desde que sigam as mesmas regras na troca de dados.
+A ISO desenvolveu o **modelo OSI** (*Open Systems Interconnection*) para orientar a criação de padrões que permitissem a comunicação entre sistemas de diferentes fabricantes. O modelo organiza essa comunicação em sete camadas. Da mesma forma que o modelo TCP/IP, cada camada oferece um serviço à camada superior e utiliza os serviços da camada inferior.
 
-As três primeiras camadas — **Física**, **Enlace** e **Rede** — tratam da transmissão de sinais, da entrega de quadros em cada enlace e do encaminhamento de pacotes entre redes. A partir da quarta camada, o foco passa para os processos nas extremidades: como os dados chegam, como o diálogo é coordenado, como o conteúdo é representado e qual serviço a aplicação utiliza.
+As três primeiras camadas - **Física**, **Enlace**, **Rede** e **Transporte** - tratam da transmissão de sinais, da entrega de quadros em cada enlace, do encaminhamento de pacotes entre redes e processos (funcionamento idêntico). Após a quarta camada, o foco passa para os processos nas extremidades: como o diálogo é coordenado, como o conteúdo é representado e qual serviço a aplicação utiliza.
 
-- **4. Transporte:** Cuida da entrega de dados de um processo a outro, de ponta a ponta. Pode dividir os dados em segmentos, controlar o fluxo e, quando o serviço exige entrega confiável, recuperar trechos perdidos e colocá-los em ordem. Em uma transferência de arquivo, por exemplo, cabe ao transporte confiável entregar à aplicação os bytes na sequência correta.
+5. **Sessão:** Estabelece, coordena e encerra o diálogo entre as aplicações. Pode organizar de quem é a vez de transmitir e inserir **pontos de sincronização** ao longo de uma operação. Em uma transferência longa, esses pontos permitem retomar o trabalho a partir de uma etapa já concluída após uma interrupção.
 
-- **5. Sessão:** Estabelece, coordena e encerra o diálogo entre as aplicações. Pode organizar de quem é a vez de transmitir e inserir **pontos de sincronização** ao longo de uma operação. Em uma transferência longa, esses pontos permitem retomar o trabalho a partir de uma etapa já concluída após uma interrupção.
+6. **Apresentação:** Define como os dados são representados para que ambos os sistemas atribuam o mesmo significado aos *bytes* recebidos. Dois computadores podem, por exemplo, usar codificações de caracteres diferentes internamente e adotar uma codificação comum para trocar um texto. O modelo também atribui a essa camada funções como compressão e criptografia.
 
-- **6. Apresentação:** Define como os dados são representados para que ambos os sistemas atribuam o mesmo significado aos bytes recebidos. Dois computadores podem, por exemplo, usar codificações de caracteres diferentes internamente e adotar uma codificação comum para trocar um texto. O modelo também atribui a essa camada funções como compressão e criptografia.
-
-- **7. Aplicação:** Oferece os serviços de rede utilizados pelos programas, como transferência de arquivos, correio eletrônico e acesso remoto. É nessa camada que se define o significado de um pedido ou de uma resposta. Em um serviço de arquivos, por exemplo, uma mensagem pode solicitar a listagem de um diretório ou a leitura de um arquivo.
+7. **Aplicação:** Oferece os serviços de rede utilizados pelos programas, como transferência de arquivos, correio eletrônico e acesso remoto. É nessa camada que se define o significado de um pedido ou de uma resposta. Em um serviço de arquivos, por exemplo, uma mensagem pode solicitar a listagem de um diretório ou a leitura de um arquivo.
 
 ![Modelo OSI](images/screenshot065.png)<br>
 *Fonte: Delta Protect - Capas del Modelo OSI. Disponível em: [https://www.deltaprotect.com/blog/modelo-osi](https://www.deltaprotect.com/blog/modelo-osi). Acesso em: 26 nov. 2026.*
@@ -1561,7 +1559,7 @@ As três primeiras camadas — **Física**, **Enlace** e **Rede** — tratam da 
 
 # Apêndice C. Comandos Importantes
 
-> Nos modelos de sintaxe, **elementos entre chaves indicam conteúdo a ser substituído** (como comandos, valores, *flags*, etc.), e devem ser retiradas no uso real. `{opções}` e `{função}` indicam modificadores opcionais; a descrição principal apresenta o comportamento sem eles, considerando os argumentos indicados. Os demais elementos entre chaves são obrigatórios na forma apresentada.
+> Nos modelos de sintaxe, **os elementos entre chaves indicam valores a substituir**. Digite o valor sem as chaves. `{opções}` e `{função}` indicam modificadores opcionais; a descrição principal apresenta o comportamento sem eles, considerando os argumentos indicados. Os demais elementos entre chaves são obrigatórios na forma apresentada.
 
 ## Linux:
 
@@ -1582,7 +1580,7 @@ As três primeiras camadas — **Física**, **Enlace** e **Rede** — tratam da 
 - `ip {opções} route {função}` - Lista as rotas IPv4 por padrão.
 
     - `ip -6 route` - Mostra apenas as rotas IPv6.
-    - `ip route get {destino}` - Mostra como o sistema encaminharia um pacote para o destino. No exemplo do laboratório, `ip route get 192.168.10.70` indica `via 192.168.10.62 dev wlo1`. A consulta é local e independe de o servidor estar disponível.
+    - `ip route get {destino}` - Mostra como o sistema encaminharia um pacote para o destino. Se a rota para o servidor passar pelo roteador `.62` na interface `wlo1`, `ip route get 192.168.10.70` indica `via 192.168.10.62 dev wlo1`. A consulta é local e independe de o servidor estar disponível.
 
 - `ip {opções} neigh {função}` - Mostra os vizinhos IPv4 e IPv6, seus endereços de enlace e o estado de cada entrada.
 
